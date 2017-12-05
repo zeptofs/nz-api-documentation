@@ -1,0 +1,48 @@
+a {
+  color: #337ab7;
+  text-decoration: none;
+}
+
+a:focus {
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+h3.parameters + table {
+  thead tr th:first-child, tbody tr td:first-child {
+    white-space: nowrap;
+  }
+}
+
+.toc-wrapper .toc-link.active {
+    background-color: transparent;
+    border-left: 4px solid $nav-active-bg;
+}
+
+.toc-wrapper .toc-link.active-parent {
+    background-color: transparent;
+}
+
+.toc-list-h1 > li:last-child { display: none; }
+
+li img { border: 1px solid $nav-subitem-bg }
+
+.content h1 { background-color: white; }
+
+.content h2, .middle-header {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  margin-right: $examples-width;
+  margin-left: 0;
+  background: white;
+  border-top: 0;
+  padding: .5em 28px;
+  font-size: 18px;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+// Hide some default Slate menu-item behaviour
+a[data-title="Payment Requests"] + ul li:nth-child(-n+3) {
+  display: none;
+}
