@@ -665,7 +665,7 @@ Propose an Agreement to another Split Contact
 |»»» max_amount|body|number|false|Maximum amount in cents a PR can be in order to be auto-approved|
 |»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
 |»»» days|body|number|false|Amount of days to apply against the frequency|
-|»»» max_amount_|body|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
+|»»» max_amount|body|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
 
 
 > Example responses
@@ -3260,7 +3260,7 @@ Create an Open Agreement that can be accepted by anyone
 |»»» max_amount|body|number|false|Maximum amount in cents a PR can be in order to be auto-approved|
 |»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
 |»»» days|body|number|false|Amount of days to apply against the frequency|
-|»»» max_amount_|body|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
+|»»» max_amount|body|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
 
 
 > Example responses
@@ -8915,7 +8915,7 @@ System.out.println(response.toString());
   },
   "per_frequency": {
     "days": 7,
-    "max_amount_": 1000000
+    "max_amount": 1000000
   }
 }
 ```
@@ -8962,7 +8962,7 @@ System.out.println(response.toString());
 ```json
 {
   "days": 7,
-  "max_amount_": 1000000
+  "max_amount": 1000000
 }
 ```
 
@@ -8973,7 +8973,7 @@ System.out.println(response.toString());
 |Name|Type|Required|Description|
 |---|---|---|---|
 |days|number|false|Amount of days to apply against the frequency|
-|max_amount_|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
+|max_amount|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
 
 
 ## ProposeAgreementResponse

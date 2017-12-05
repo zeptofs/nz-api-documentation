@@ -499,8 +499,8 @@ which@^1.2.9:
     isexe "^2.0.0"
 
 widdershins@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/widdershins/-/widdershins-3.0.0.tgz#9bdd8ee2aec5ac1dda3ed161f679bda3b7d376d3"
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/widdershins/-/widdershins-3.0.1.tgz#1fc88afd36fb1605094b2c18f44daabffea450ed"
   dependencies:
     dot "^1.0.3"
     jgexml latest
