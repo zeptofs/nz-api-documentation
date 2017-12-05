@@ -1,239 +1,10927 @@
 ---
-title: API Reference
-
-language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
-
-toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
-
-includes:
-  - errors
-
+title: Split API v1.0
+language_tabs:
+  - shell: Shell
+  - http: HTTP
+  - javascript: JavaScript
+  - javascript--nodejs: Node.JS
+  - ruby: Ruby
+  - python: Python
+  - java: Java
+toc_footers: []
+includes: []
 search: true
+highlight_theme: darkula
+headingLevel: 2
+
+
 ---
 
-# Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+<h1 id="Split-API">Split API v1.0</h1>
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
-This example API documentation page was created with [Slate](https://github.com/lord/slate). Feel free to edit it and use it as a base for your own API's documentation.
+> Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-# Authentication
 
-> To authorize, use this code:
+* Authentication is performed using OAuth2. See the [Get started](/#get-started) and [Authentication & Authorisation](/#authentication-and-authorisation) guides for more.
+* All communication is via `https`.
+* Production API: `https://api.split.cash/`.
+* Production UI: `https://go.split.cash/`.
+* Sandbox API: `https://api-sandbox.split.cash/`.
+* Sandbox UI: `https://go-sandbox.split.cash/`.
+* Data is sent and received as JSON.
+* Currencies are represented by 3 characters as defined in [ISO 4217](http://www.xe.com/iso4217.php).
+* Dates & times are returned in UTC using [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format with second accuracy.
+* Amounts are always in cents with no decimals unless otherwise stated.
 
-```ruby
-require 'kittn'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+# Guides
+
+
+## Try it out
+The best way to familiarise yourself with our API is by interacting with it. We've preloaded a collection of all our endpoints for you to use in Postman.
+
+
+Before you start, load up our API collection:
+
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/988421dc8fb7d55526d5#?env%5BSplit%20Payments%20Public%20Sandbox%5D=W3siZW5hYmxlZCI6dHJ1ZSwia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL2dvLXNhbmRib3guc3BsaXQuY2FzaCIsInR5cGUiOiJ0ZXh0In0seyJlbmFibGVkIjp0cnVlLCJrZXkiOiJhcGlfaG9zdCIsInZhbHVlIjoiaHR0cHM6Ly9hcGktc2FuZGJveC5zcGxpdC5jYXNoIiwidHlwZSI6InRleHQifSx7ImVuYWJsZWQiOnRydWUsImtleSI6Im9hdXRoMl9hcHBsaWNhdGlvbl9pZCIsInZhbHVlIjoiIiwidHlwZSI6InRleHQifSx7ImVuYWJsZWQiOnRydWUsImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsInR5cGUiOiJ0ZXh0In0seyJlbmFibGVkIjp0cnVlLCJrZXkiOiJhdXRob3Jpc2F0aW9uX2NvZGUiLCJ2YWx1ZSI6IiIsInR5cGUiOiJ0ZXh0In0seyJlbmFibGVkIjp0cnVlLCJrZXkiOiJhY2Nlc3NfdG9rZW4iLCJ2YWx1ZSI6IiIsInR5cGUiOiJ0ZXh0In0seyJlbmFibGVkIjp0cnVlLCJrZXkiOiJyZWZyZXNoX3Rva2VuIiwidmFsdWUiOiIiLCJ0eXBlIjoidGV4dCJ9XQ==)
+
+
+Okay, lets get things setup!
+
+
+1. **Create a Split account**
+
+
+    If you haven't already, you'll want to create a sandbox Split account at [https://go-sandbox.split.cash](https://go-sandbox.split.cash)
+
+
+2. **Register your application with Split**
+
+
+    Sign in and create an OAuth2 application: [https://go-sandbox.split.cash/oauth/applications](https://go-sandbox.split.cash/oauth/applications).
+
+
+    [![Split OAuth2 app setup](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_oauth2_app_setup.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_oauth2_app_setup.png)
+
+
+3. **In Postman, setup your environment variables**
+
+
+    Click on **Manage Environments**
+
+
+    [![Postman environment variables](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_environment_gear.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_environment_gear.png)
+
+
+    We've included the **Split Payments Public Sandbox** environment to get you started. Go ahead an click on it.
+
+
+    [![Select Postman environment](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_select_environment.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_select_environment.png)
+
+
+    Using the details from the OAuth2 app you created earlier, fill in the **oauth2_application_id** & **oauth2_secret** fields.
+
+
+    [![Fill in environment values](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_environment_values.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_environment_values.png)
+
+
+4. **Setup the authorization**
+
+
+    Click on the **Authorization** tab and select **OAuth 2.0**
+
+
+    [![Postman Authorization tab](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_authorization_tab.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_authorization_tab.png)
+
+
+    Click the **Get New Access Token** button
+
+
+    [![Postman get new access token](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_get_new_access_token.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_get_new_access_token.png)
+
+
+    Fill in the OAuth2 form as below:
+
+
+    [![Postman OAuth2](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_oauth2_form.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_oauth2_form.png)
+
+
+5. **Get authorised**
+
+
+    Click **Request Token** and wait a few seconds and a browser window will popup
+
+
+    Sign in with your Split account (or any other Split account you want to authorise).
+
+
+    [![Signin Split to authorise via OAuth2](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_oauth2_signin.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_oauth2_signin.png)
+
+
+    Click **Authorise** to allow the app to access the signed in account. Once complete, Postman will automatically exchange the authorisation code it received from Split for the `access_token/refresh_token` pair. It will then store the `access_token/refresh_token` for you to use in subsequent API requests. The `access_token` effectively allows you to send requests via the API as the user who provided you authorisation.
+
+
+    [![Authorise OAuth2 app](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/oauth2_app_authorise.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/oauth2_app_authorise.png)
+
+
+6. **You're now ready to use the API**
+
+
+    Select an endpoint from the Split collection from the left hand side menu. Before you send an API request ensure you select your access token and Postman will automatically add it to the request header.
+
+
+    [![Postman use token](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_use_token.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_use_token.png)
+
+
+<aside class="notice">Remember to select the access token everytime you try a new endpoint. Have fun!</aside>
+
+
+## Get started
+This guide will help you setup your OAuth2 app in order to get authenticated & authorised to communicate with the Split API.
+
+
+**Before you start:**
+
+
+* Often times you'll want to grant your own app access to itself so that you can access the API on your own account. We use the term **user** below but the user can be a third party or the same user that owns the OAuth2 application.
+* As noted below, the access token expires every 2 hours. To get a new access token without going through steps 1 to 4 again, use the [refresh grant strategy](/#authentication-and-authorisation) to swap a refresh token for a new access token.
+
+
+1. **Create a Split account**
+
+
+    If you haven't already, you'll want to create a sandbox Split account at [https://go-sandbox.split.cash](https://go-sandbox.split.cash).
+
+
+2. **Register your application with Split**
+
+
+    Once you've got your account up and running, sign in and create an OAuth2 profile for your application: [https://go-sandbox.split.cash/oauth/applications](https://go-sandbox.split.cash/oauth/applications)
+
+
+    | Parameter | Description |
+    |-----------|-------------|
+    | **Name**  | The name of your application. When using the the *Authorisation Grant Flow*, users will see this name as the application requesting access to their account. |
+    | **Redirect URI** | Set this to your application's endpoint charged with receiving the authorisation code. |
+
+
+3. **Obtain an authorisation code**
+
+
+    Construct the initial URL the user will need to visit in order to grant your application permission to act on his/her behalf. The constructed URL describes the level of permission ([`scope`](/#scopes)), the application requesting permission (`client_id`) and where the user gets redirected once they've granted permission (`redirect_uri`).
+
+
+    The URL should be formatted to look like this:
+    `https://go-sandbox.split.cash/oauth/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&scope={scope}`
+
+
+    | Parameter | Description |
+    |-----------|-------------|
+    | `response_type` | Always set to `code` |
+    | `client_id` | This is your `Application ID` as generated when you registered your application with Split |
+    | `redirect_uri` | URL where the user will get redirected along with the newly generated authorisation code |
+    | `scope` | The [scope](/#scopes) of permission you're requesting |
+
+
+4. **Exchange the authorisation code for an access token**
+
+
+    When the user visits the above-mentioned URL, they will be presented with a Split login screen and then an authorisation screen:
+
+
+    [![Authorise OAuth2 app](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/oauth2_app_authorise.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/oauth2_app_authorise.png)
+
+
+    After the user has authorised your application, they will be returned to your application at the URL specified in `redirect_uri` along with the `code` query parameter as the authorisation code.
+
+
+    Finally, the authorisation code can than be exchanged for an access token and refresh token pair by POSTing to: `https://go-sandbox.split.cash/oauth/token`
+
+
+    | Parameter | Description |
+    |-----------|-------------|
+    | `grant_type` | Set to `authorization_code` |
+    | `client_id` | This is your `Application ID` as generated when you registered your application with Split |
+    | `client_secret` | This is your `Secret` as generated when you registered your application with Split |
+    | `code` | The authorisation code returned with the user |
+    | `redirect_uri` | Same URL used in step 3 |
+
+
+5. **Wrap-up**
+
+
+    Now that you have an access token and refresh token, you can interact with the Split API as the user related to the access token.
+    To do so, you must simply append the access token to the header of any API request: `Authorization: Bearer {access_token}`
+
+
+## Authentication and Authorisation
+
+
+Split uses OAuth2 over https to manage authentication and authorisation.
+
+
+OAuth2 is a protocol that lets external applications request permission from another Split user to send requests on their behalf without getting their password.
+This is preferred over Basic Authentication because access tokens can be limited by scope and can be revoked by the user at any time.
+
+
+New to OAuth2? DigitalOcean has a fantastic 5 minute [introduction to OAuth2](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2#grant-type-authorization-code).
+
+
+We currently support the **authorisation code** and **refresh token** grants.
+
+
+### Authorisation Code Grant
+This type of grant allows your application to act on behalf of a user. If you've ever used a website or application with your
+Google, Twitter or Facebook account, this is the grant being used.
+
+
+See the [Get Started guide](/#get-started) for step by step details on how to use this grant.
+
+
+### Refresh Token Grant
+
+
+> Code sample
+
+
+```
+curl -F "grant_type=refresh_token" \
+     -F "client_id={{oauth2_application_id}}" \
+     -F "client_secret={{oauth2_application_secret }}" \
+     -F "refresh_token={{refresh_token}}" \
+     -X POST https://go-sandbox.split.cash/oauth/token
 ```
 
-```python
-import kittn
 
-api = kittn.authorize('meowmeowmeow')
+> Example response
+
+
+```
+{
+    "access_token":"ad0b5847cb7d254f1e2ff1910275fe9dcb95345c9d54502d156fe35a37b93e80",
+    "token_type":"bearer",
+    "expires_in":7200,
+    "refresh_token":"cc38f78a5b8abe8ee81cdf25b1ca74c3fa10c3da2309de5ac37fde00cbcf2815",
+    "scope":"public"
+}
 ```
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
 
-```javascript
-const kittn = require('kittn');
+When using the authorisation code grant above, Split will return a `refresh token` along with the access token. Access tokens are short lived and last 2 hours but refresh tokens do not expire.
 
-let api = kittn.authorize('meowmeowmeow');
-```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+When the access token expires, instead of sending the user back through the authorisation flow you can use the refresh token to retrieve a new access token with the same permissions as the old one.
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+  The <code>refresh_token</code> gets regenerated and sent alongside the new <code>access_token</code>. In other words, <code>refresh_token</code>s are single use so you'll
+want to store the newly generated <code>refresh_token</code> everytime you use it to get a new <code>acccess_token</code>
 </aside>
 
-# Kittens
 
-## Get All Kittens
+## Making payments
+In order to payout funds, you'll be looking to use the [Payments](/#Split-API-Payments) endpoint.
 
-```ruby
-require 'kittn'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
+Common use cases:
+
+
+* Automated payout disbursement (Referal programs, net/commission payouts, etc...)
+
+
+## Getting paid
+There are 2 ways to get paid:
+
+
+**A [Payment Request](/#Split-API-Payment-Requests)**
+
+
+Provides the ability to send a Payment Request to any contact with a verified bank account in your Split contacts list.
+
+
+* By default, the payer will receive a request that they must approve in order for the funds to flow from their bank account to yours.
+* The approval process can be automated by first entering into an agreement with the payer. Once the agreement is approved, any future Payment Request will be automatically approved and processed per the agreement terms.
+
+
+Common use cases:
+
+
+* Subscriptions
+* On-account balance payments
+* Bill smoothing
+* Repayment plans
+
+
+**An [Open Payment Request](http://help.split.cash/payment-requests/open-payment-requests)**
+
+
+Utilise a [customisable hosted payment request form](http://help.split.cash/payment-requests/open-payment-requests) which takes care of everything from confirming payer bank account access to the transfer of funds.
+
+
+* The secure form can either sit outside your app or embeded within via iframe with ability to whitelabel.
+* The URL for the form contains all the customisation parameters enabling you to generate the form on the fly.
+
+
+Common use cases:
+
+
+* Online or offline purchases (eCommerce, fundraiser, etc...)
+* Invoice payment
+* Group funding (paying for a restaurant bill)
+
+
+## Idempotent requests
+
+
+> Example response
+
+
+```
+{
+  "errors": [
+    {
+      "title": "Duplicate idempotency key"),
+      "detail": "A resource has already been created with this idempotency key",
+      links: {
+        "about": "A resource has already been created with this idempotency key"
+      },
+      "meta": {
+        "resource_ref": "PB.1a4"
+      }
+    }
+  ]
+}
 ```
 
-```python
-import kittn
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+The Split API supports idempotency for safely retrying requests without accidentally performing the same operation twice.
+For example, if a [Payment](#Split-API-Payments) is `POST`ed and a there is a network connection error, you can retry the Payment with the same idempotency key to guarantee that only a single Payment is created.
+
+
+To perform an idempotent request, provide an additional `Idempotency-Key: <key>` header to the request.
+You can pass any value as the key but we suggest that you use [V4 UUIDs](https://www.uuidgenerator.net/) or another appropriately random string.
+
+
+Keys expire after 24 hours. If there is a subsequent request with the same idempotency key within the 24 hour period, we will return a `409 Conflict`.
+
+
+* The `meta.resource_ref` value is the reference of the resource that was previously created with the conflicting idempotency key.
+* The `Idempotency-Key` header is optional but recommended.
+* Only the `POST` action for the Payments, Payment Requests, Refunds, Refund Requests support the use of the `Idempotency-Key`.
+* Endpoints that use the `GET` or `DELETE` actions are idempotent by nature.
+
+
+# Configuration
+
+
+## Scopes
+Scopes define the level of access granted via the OAuth2 authorisation process. As a best practice, only use the scopes your application will require.
+
+
+| Scope | Description |
+|--------|------------|
+| `public` | View user's public information |
+| `agreements` | Manage user's Agreements |
+| `contacts` | Manage user's Contacts |
+| `open_agreements` | Manage user's Open Agreements |
+| `payments` | Manage user's Payments |
+| `payment_requests` | Manage user's Payment Requests |
+| `refund_requests` | Manage user's Refund Requests |
+| `refunds` | Manage user's Refunds |
+| `transactions` | Access user's Transactions |
+
+
+## Pagination
+
+
+> Example response header
+
+
+```
+Link: <https://api-sandbox.split.cash/payments?page=2>; rel="next",
+  <https://api-sandbox.split.cash/payments?page=15>; rel="last"
 ```
 
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+
+All collections are paginated to 100 items by default. You can request the following page by appending `?page=x` where `x` is the page you'd like to retrieve.
+
+
+You can extract the pagination information from the response header.
+
+
+## Webhooks
+
+
+> Example response
+
+
 ```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
+{
+  "event": {
+    "type": "object.action",
+    "at": "yyyy-mm-ddThh:mm:ssZ",
+    "who": {
+      "account_id": "x",
+      "bank_account_id": "x"
+    }
   },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+  "data": [
+    {
+      // The data section will follow the same type of structure
+      // as the event type it is representing. For example, if the
+      // event type was "debit.scheduled", the data representation
+      // structure would be that of a debit object. Too see what a
+      // debit object structure looks like, see the Transactions
+      // section.
+    }
+  ]
+}
 ```
 
-This endpoint retrieves all kittens.
 
-### HTTP Request
+We support two main categories of webhooks:
 
-`GET http://example.com/api/kittens`
 
-### Query Parameters
+1. **Owner**: These webhooks are managed by the owner of the Split account and only report on events owned by the Split account.
+2. **App**: These webhooks are managed by the Split OAuth2 application owner and will report on events relating to any authorised Split account (limited by scope).
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+All events posted to the designated URL fit the same structure.
+
+
+<aside class="notice">
+  The sandbox environment allow both HTTP and HTTPS webhook URLs. The live environment however will only POST to HTTPS URLs.
 </aside>
 
-## Get a Specific Kitten
 
-```ruby
-require 'kittn'
+<h1 id="Split-API-Agreements">Agreements</h1>
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
 
-```python
-import kittn
+Split Agreements are managed on a per Contact basis and allow two parties to agree on terms for which future Payment Requests will be auto-approved.
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+
+Agreement are unidirectional. In other words, if both parties wish for auto-approved Payment Requests, they must each propose an Agreement to the other.
+
+
+Agreements are therefore broken up by direction:
+
+
+1. **Incoming:** Agreement received from another Split account
+2. **Outgoing:** Agreement sent to another Split account
+
+
+## Propose an Agreement
+
+
+<a id="opIdProposeAgreement"></a>
+
+
+> Code samples
+
 
 ```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
+# You can also use wget
+curl -X POST https://api-sandbox.split.cash//agreements \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+
+
 ```
+
+
+```http
+POST https://api-sandbox.split.cash//agreements HTTP/1.1
+Host: api-sandbox.split.cash
+Content-Type: application/json
+Accept: application/json
+
+
+```
+
 
 ```javascript
-const kittn = require('kittn');
+var headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
 
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash//agreements',
+  method: 'post',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
 ```
 
-> The above command returns JSON structured like this:
+
+```javascript--nodejs
+const request = require('node-fetch');
+const inputBody = '{
+  "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash//agreements',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.post 'https://api-sandbox.split.cash//agreements',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash//agreements', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash//agreements");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST /agreements`
+
+
+Propose an Agreement to another Split Contact
+
+
+> Body parameter
+
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
 }
 ```
 
-This endpoint retrieves a specific kitten.
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+<h3 id="Propose-an-Agreement-parameters" class="parameters">Parameters</h3>
 
-### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ProposeAgreementRequest](#schemaproposeagreementrequest)|true|No description|
+|» authoriser_id|body|string|true|The Contact's account ID (`Contact.account.id`)|
+|» terms|body|[Terms](#schematerms)|true|Terms|
+|»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
+|»»» min_amount|body|number|false|Minimum amount in cents a PR can be in order to be auto-approved|
+|»»» max_amount|body|number|false|Maximum amount in cents a PR can be in order to be auto-approved|
+|»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
+|»»» days|body|number|false|Amount of days to apply against the frequency|
+|»»» max_amount_|body|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
 
-### URL Parameters
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+> Example responses
 
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "deleted" : ":("
+  "data": {
+    "ref": "A.2",
+    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+    "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "status": "proposed",
+    "responded_at": null,
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": null
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    }
+  }
 }
 ```
 
-This endpoint deletes a specific kitten.
 
-### HTTP Request
+<h3 id="Propose an Agreement-responses">Responses</h3>
 
-`DELETE http://example.com/kittens/<ID>`
 
-### URL Parameters
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[ProposeAgreementResponse](#schemaproposeagreementresponse)|
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+
+## Approve an Agreement
+
+
+<a id="opIdApproveAgreement"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X POST https://api-sandbox.split.cash//agreements/{agreement_ref}/accept \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+POST https://api-sandbox.split.cash//agreements/{agreement_ref}/accept HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash//agreements/{agreement_ref}/accept',
+  method: 'post',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash//agreements/{agreement_ref}/accept',
+{
+  method: 'POST',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.post 'https://api-sandbox.split.cash//agreements/{agreement_ref}/accept',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash//agreements/{agreement_ref}/accept', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash//agreements/{agreement_ref}/accept");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST /agreements/{agreement_ref}/accept`
+
+
+Approve an incoming Agreement
+
+
+<h3 id="Approve-an-Agreement-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|agreement_ref|path|string|true|Single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "A.2",
+    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+    "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "status": "accepted",
+    "responded_at": "2017-03-20T02:13:11Z",
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": 1
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    }
+  }
+}
+```
+
+
+<h3 id="Approve an Agreement-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ApproveAgreementResponse](#schemaapproveagreementresponse)|
+
+
+## Decline and Agreement
+
+
+<a id="opIdDeclineAgreement"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X POST https://api-sandbox.split.cash//agreements/{agreement_ref}/decline \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+POST https://api-sandbox.split.cash//agreements/{agreement_ref}/decline HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash//agreements/{agreement_ref}/decline',
+  method: 'post',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash//agreements/{agreement_ref}/decline',
+{
+  method: 'POST',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.post 'https://api-sandbox.split.cash//agreements/{agreement_ref}/decline',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash//agreements/{agreement_ref}/decline', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash//agreements/{agreement_ref}/decline");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST /agreements/{agreement_ref}/decline`
+
+
+Decline an incoming Agreement
+
+
+<h3 id="Decline-and-Agreement-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|agreement_ref|path|string|true|Single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "A.2",
+    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+    "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "status": "declined",
+    "responded_at": "2017-03-20T02:13:11Z",
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": 1
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    }
+  }
+}
+```
+
+
+<h3 id="Decline and Agreement-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[DeclineAgreementResponse](#schemadeclineagreementresponse)|
+
+
+## Get an Agreement
+
+
+<a id="opIdGetAgreement"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash//agreements/{agreement_ref} \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash//agreements/{agreement_ref} HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash//agreements/{agreement_ref}',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash//agreements/{agreement_ref}',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash//agreements/{agreement_ref}',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash//agreements/{agreement_ref}', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash//agreements/{agreement_ref}");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET /agreements/{agreement_ref}`
+
+
+Get a single Agreement by its reference
+
+
+<h3 id="Get-an-Agreement-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|agreement_ref|path|string|true|Single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "A.2",
+    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+    "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "status": "approved",
+    "responded_at": "2017-03-20T02:13:11Z",
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": 1
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    }
+  }
+}
+```
+
+
+<h3 id="Get an Agreement-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAgreementResponse](#schemagetagreementresponse)|
+
+
+## Cancel an Agreement
+
+
+<a id="opIdCancelAgreement"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X DELETE https://api-sandbox.split.cash//agreements/{agreement_ref}
+
+
+```
+
+
+```http
+DELETE https://api-sandbox.split.cash//agreements/{agreement_ref} HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+```
+
+
+```javascript
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash//agreements/{agreement_ref}',
+  method: 'delete',
+
+
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+fetch('https://api-sandbox.split.cash//agreements/{agreement_ref}',
+{
+  method: 'DELETE'
+
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+result = RestClient.delete 'https://api-sandbox.split.cash//agreements/{agreement_ref}',
+  params: {
+  }
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+
+
+r = requests.delete('https://api-sandbox.split.cash//agreements/{agreement_ref}', params={
+
+
+)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash//agreements/{agreement_ref}");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("DELETE");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`DELETE /agreements/{agreement_ref}`
+
+
+An agreement can be cancelled by the initiator at any time whilst the authoriser (agreement recipient) can only cancel a previously accepted agreement.
+
+
+<h3 id="Cancel-an-Agreement-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|agreement_ref|path|string|true|Single value, exact match|
+
+
+<h3 id="Cancel an Agreement-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
+
+
+## List incoming Agreements
+
+
+<a id="opIdListIncomingAgreements"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash//agreements/incoming \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash//agreements/incoming HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash//agreements/incoming',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash//agreements/incoming',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash//agreements/incoming',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash//agreements/incoming', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash//agreements/incoming");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET /agreements/incoming`
+
+
+By default, all incoming agreements will be returned. You can apply filters to your query to customise the returned agreements.
+
+
+<h3 id="List-incoming-Agreements-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return|
+|initiator_id|query|string|false|Initiator ID (`contact.id`), single value, exact match|
+|status|query|array[string]|false|Multiple values, exact match|
+
+
+#### Enumerated Values
+
+
+|Parameter|Value|
+|---|---|
+|status|proposed|
+|status|accepted|
+|status|declined|
+|status|cancelled|
+
+
+> Example responses
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "A.2",
+      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+      "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+      "status": "proposed",
+      "responded_at": null,
+      "created_at": "2017-03-20T00:53:27Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": 10000,
+          "min_amount": 1
+        },
+        "per_frequency": {
+          "days": 7,
+          "max_amount": 1000000
+        }
+      }
+    },
+    {
+      "ref": "A.1",
+      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+      "authoriser_id": "56df206a-aaff-471a-b075-11882bc8906a",
+      "status": "proposed",
+      "responded_at": null,
+      "created_at": "2017-03-16T22:51:48Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": 5000,
+          "min_amount": 0
+        },
+        "per_frequency": {
+          "days": "1",
+          "max_amount": 10000
+        }
+      }
+    }
+  ]
+}
+```
+
+
+<h3 id="List incoming Agreements-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListIncomingAgreementsResponse](#schemalistincomingagreementsresponse)|
+
+
+## List outgoing Agreements
+
+
+<a id="opIdListOutgoingAgreements"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash//agreements/outgoing \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash//agreements/outgoing HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash//agreements/outgoing',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash//agreements/outgoing',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash//agreements/outgoing',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash//agreements/outgoing', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash//agreements/outgoing");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET /agreements/outgoing`
+
+
+By default, all outgoing agreements will be returned. You can apply filters to your query to customise the returned agreements.
+
+
+<h3 id="List-outgoing-Agreements-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return|
+|authoriser_id|query|string|false|Authoriser ID (`contact.id`), single value, exact match|
+|status|query|array[string]|false|Exact match|
+
+
+#### Enumerated Values
+
+
+|Parameter|Value|
+|---|---|
+|status|proposed|
+|status|accepted|
+|status|declined|
+|status|cancelled|
+
+
+> Example responses
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "A.4",
+      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+      "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+      "status": "proposed",
+      "responded_at": null,
+      "created_at": "2017-03-20T00:53:27Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": 10000,
+          "min_amount": 1
+        },
+        "per_frequency": {
+          "days": 7,
+          "max_amount": 1000000
+        }
+      }
+    },
+    {
+      "ref": "A.3",
+      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+      "authoriser_id": "56df206a-aaff-471a-b075-11882bc8906a",
+      "status": "proposed",
+      "responded_at": null,
+      "created_at": "2017-03-16T22:51:48Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": 5000,
+          "min_amount": 0
+        },
+        "per_frequency": {
+          "days": "1",
+          "max_amount": 10000
+        }
+      }
+    }
+  ]
+}
+```
+
+
+<h3 id="List outgoing Agreements-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingAgreementsResponse](#schemalistoutgoingagreementsresponse)|
+
+
+<h1 id="Split-API-Contacts">Contacts</h1>
+
+
+Your contacts form an address book of Split accounts and non-Split accounts (Anyone accounts) with whom you can interact. In order to create Payments, Payment Requests or Agreements you must first have the party in your contacts.
+
+
+There are a few IDs supplied within a Contact's response:
+
+
+1. `data.id` represents the Contact resource.
+2. `data.bank_account.id` represents the Contact's bank account and is used when creating Payments or Payment Requests.
+3. `data.account.id` represents the Vontact's Split account and is used when proposing Agreements.
+
+
+## Add a Split Contact
+
+
+<a id="opIdAddASplitContact"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X POST https://api-sandbox.split.cash//contacts \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+POST https://api-sandbox.split.cash//contacts HTTP/1.1
+Host: api-sandbox.split.cash
+Content-Type: application/json
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash//contacts',
+  method: 'post',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+const inputBody = '{
+  "nickname": "outstanding_tours"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash//contacts',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.post 'https://api-sandbox.split.cash//contacts',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash//contacts', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash//contacts");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST /contacts`
+
+
+Add a Split Contact
+
+
+> Body parameter
+
+
+```json
+{
+  "nickname": "outstanding_tours"
+}
+```
+
+
+<h3 id="Add-a-Split-Contact-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[AddASplitContactRequest](#schemaaddasplitcontactrequest)|true|No description|
+|» nickname|body|string|true|No description|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
+    "name": "Oustanding Tours Pty Ltd",
+    "email": null,
+    "type": "Split account",
+    "bank_account": {
+      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+      "account_number": "947434694",
+      "branch_code": "304304",
+      "state": "verified"
+    },
+    "account": {
+      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
+      "nickname": "outstanding_tours",
+      "abn": "123456789",
+      "name": "Outstanding Tours Pty Ltd"
+    }
+  }
+}
+```
+
+
+<h3 id="Add a Split Contact-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddASplitContactResponse](#schemaaddasplitcontactresponse)|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
+
+
+## List all Contacts
+
+
+<a id="opIdListAllContacts"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash//contacts \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash//contacts HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash//contacts',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash//contacts',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash//contacts',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash//contacts', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash//contacts");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET /contacts`
+
+
+By default, all contacts will be returned. You can apply filters to your query to customise the returned contact list.
+
+
+<h3 id="List-all-Contacts-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return|
+|name|query|string|false|Single value, string search|
+|nickname|query|string|false|Single value, string search|
+|bank_account_id|query|string|false|Single value, exact match|
+|bank_account_branch_code|query|string|false|Single value, exact match|
+|bank_account_account_number|query|string|false|Single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": [
+    {
+      "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
+      "name": "Oustanding Tours Pty Ltd",
+      "email": null,
+      "type": "Split account",
+      "bank_account": {
+        "id": "095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc",
+        "account_number": "494307",
+        "branch_code": "435434",
+        "state": "verified"
+      },
+      "account": {
+        "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
+        "nickname": "outstanding_tours",
+        "abn": "123456789",
+        "name": "Oustanding Tours Pty Ltd"
+      }
+    },
+    {
+      "id": "49935c67-c5df-4f00-99f4-1413c18a89a0",
+      "name": "Adventure Dudes Pty Ltd",
+      "email": null,
+      "type": "Split account",
+      "bank_account": {
+        "id": "861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0",
+        "account_number": "4395959",
+        "branch_code": "068231",
+        "state": "verified"
+      },
+      "account": {
+        "id": "362f7fe8-4af2-4902-b3d7-b5ab704ef2e7",
+        "nickname": "adventure_dudes",
+        "abn": "126754389",
+        "name": "Adventure Dudes Pty Ltd"
+      }
+    },
+    {
+      "id": "eb3266f9-e172-4b6c-b802-fe5ac4d3250a",
+      "name": "Surfing World Pty Ltd",
+      "email": null,
+      "type": "Split account",
+      "bank_account": {
+        "id": "N/A",
+        "account_number": "N/A",
+        "branch_code": "N/A",
+        "state": "disabled"
+      },
+      "account": {
+        "id": "a31dc907-9c7a-4736-84c9-1149cf03de42",
+        "nickname": "surfing_world",
+        "abn": "295443789",
+        "name": "Surfing World Pty Ltd"
+      }
+    },
+    {
+      "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
+      "name": "Hunter Thompson",
+      "email": "hunter@batcountry.com",
+      "type": "anyone",
+      "bank_account": {
+        "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+        "account_number": "123456789",
+        "branch_code": "123456",
+        "state": "pending_verification"
+      },
+      "anyone_account": {
+        "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
+      }
+    }
+  ]
+}
+```
+
+
+<h3 id="List all Contacts-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllContactsResponse](#schemalistallcontactsresponse)|
+
+
+## Add an Anyone Contact
+
+
+<a id="opIdAddAnAnyoneContact"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X POST https://api-sandbox.split.cash//contacts/new/anyone \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+POST https://api-sandbox.split.cash//contacts/new/anyone HTTP/1.1
+Host: api-sandbox.split.cash
+Content-Type: application/json
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash//contacts/new/anyone',
+  method: 'post',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+const inputBody = '{
+  "name": "Hunter Thompson",
+  "email": "hunter@batcountry.com",
+  "branch_code": "123456",
+  "account_number": "123456789"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash//contacts/new/anyone',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.post 'https://api-sandbox.split.cash//contacts/new/anyone',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash//contacts/new/anyone', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash//contacts/new/anyone");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST /contacts/new/anyone`
+
+
+When you want to pay somebody that doesn't have a Split account, you can add them as an Anyone Contact.
+
+
+<aside class="notice">
+  Anyone Contacts added this way can be used solely as payout recipients in a Payment.
+</aside>
+
+
+> Body parameter
+
+
+```json
+{
+  "name": "Hunter Thompson",
+  "email": "hunter@batcountry.com",
+  "branch_code": "123456",
+  "account_number": "123456789"
+}
+```
+
+
+<h3 id="Add-an-Anyone-Contact-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[AddAnAnyoneContactRequest](#schemaaddananyonecontactrequest)|true|No description|
+|» name|body|string|true|No description|
+|» email|body|string|true|No description|
+|» branch_code|body|string|true|No description|
+|» account_number|body|string|true|No description|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
+    "name": "Hunter Thompson",
+    "email": "hunter@batcountry.com",
+    "type": "anyone",
+    "bank_account": {
+      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+      "account_number": "123456789",
+      "branch_code": "123456",
+      "state": "pending_verification"
+    },
+    "anyone_account": {
+      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
+    }
+  }
+}
+```
+
+
+<h3 id="Add an Anyone Contact-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddAnAnyoneContactResponse](#schemaaddananyonecontactresponse)|
+
+
+## Get a Contact
+
+
+<a id="opIdGetAContact"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash//contacts/{id} \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash//contacts/{id} HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash//contacts/{id}',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash//contacts/{id}',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash//contacts/{id}',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash//contacts/{id}', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash//contacts/{id}");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET /contacts/{id}`
+
+
+Get a single Contact by its ID
+
+
+<h3 id="Get-a-Contact-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string(UUID)|true|Contact ID|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
+    "name": "Oustanding Tours Pty Ltd",
+    "email": null,
+    "type": "Split account",
+    "bank_account": {
+      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+      "account_number": "947434694",
+      "branch_code": "304304",
+      "state": "pending_verification"
+    },
+    "account": {
+      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
+      "nickname": "outstanding_tours",
+      "abn": "123456789",
+      "name": "Outstanding Tours Pty Ltd"
+    }
+  }
+}
+```
+
+
+<h3 id="Get a Contact-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAContactResponse](#schemagetacontactresponse)|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
+
+
+## Remove a Contact
+
+
+<a id="opIdRemoveAContact"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X DELETE https://api-sandbox.split.cash//contacts/{id}
+
+
+```
+
+
+```http
+DELETE https://api-sandbox.split.cash//contacts/{id} HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+```
+
+
+```javascript
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash//contacts/{id}',
+  method: 'delete',
+
+
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+fetch('https://api-sandbox.split.cash//contacts/{id}',
+{
+  method: 'DELETE'
+
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+result = RestClient.delete 'https://api-sandbox.split.cash//contacts/{id}',
+  params: {
+  }
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+
+
+r = requests.delete('https://api-sandbox.split.cash//contacts/{id}', params={
+
+
+)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash//contacts/{id}");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("DELETE");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`DELETE /contacts/{id}`
+
+
+<aside class="noticed">Removing a contact will not affect your transaction history.</aside>
+
+
+<h3 id="Remove-a-Contact-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string(UUID)|true|Contact ID|
+
+
+<h3 id="Remove a Contact-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No description|None|
+
+
+## Update a Contact
+
+
+<a id="opIdUpdateAContact"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X PATCH https://api-sandbox.split.cash//contacts/{id} \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+PATCH https://api-sandbox.split.cash//contacts/{id} HTTP/1.1
+Host: api-sandbox.split.cash
+Content-Type: application/json
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash//contacts/{id}',
+  method: 'patch',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+const inputBody = '{
+  "name": "My very own alias"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash//contacts/{id}',
+{
+  method: 'PATCH',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.patch 'https://api-sandbox.split.cash//contacts/{id}',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+
+r = requests.patch('https://api-sandbox.split.cash//contacts/{id}', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash//contacts/{id}");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("PATCH");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`PATCH /contacts/{id}`
+
+
+You can update the name of any Contact. This is essentially an alias you can use to provide something contextually meaninful.
+
+
+<aside class="notice">
+  Any previous transactions to that Contact will retain the Contact name that was current at the time.
+</aside>
+
+
+> Body parameter
+
+
+```json
+{
+  "name": "My very own alias"
+}
+```
+
+
+<h3 id="Update-a-Contact-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string|true|Contact ID|
+|body|body|[UpdateAContactRequest](#schemaupdateacontactrequest)|true|No description|
+|» name|body|string|true|No description|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
+    "name": "My very own alias",
+    "email": null,
+    "type": "Split account",
+    "bank_account": {
+      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+      "account_number": "947434694",
+      "branch_code": "304304",
+      "state": "pending_verification"
+    },
+    "account": {
+      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
+      "nickname": "outstanding_tours",
+      "abn": "123456789",
+      "name": "Outstanding Tours Pty Ltd"
+    }
+  }
+}
+```
+
+
+<h3 id="Update a Contact-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[UpdateAContactResponse](#schemaupdateacontactresponse)|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
+
+
+<h1 id="Split-API-Open-Agreements">Open Agreements</h1>
+
+
+## Create an Open Agreement
+
+
+<a id="opIdCreateOpenAgreement"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X POST https://api-sandbox.split.cash/open_agreements \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+POST https://api-sandbox.split.cash/open_agreements HTTP/1.1
+Host: api-sandbox.split.cash
+Content-Type: application/json
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/open_agreements',
+  method: 'post',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+const inputBody = '{
+  "title": "Subscription Plan A",
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/open_agreements',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/open_agreements',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash/open_agreements', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/open_agreements");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST open_agreements`
+
+
+Create an Open Agreement that can be accepted by anyone
+
+
+> Body parameter
+
+
+```json
+{
+  "title": "Subscription Plan A",
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}
+```
+
+
+<h3 id="Create-an-Open-Agreement-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[CreateOpenAgreementRequest](#schemacreateopenagreementrequest)|true|No description|
+|» title|body|string|true|Title of the Open Agreement (Visible to authorisers)|
+|» terms|body|[Terms](#schematerms)|true|Terms|
+|»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
+|»»» min_amount|body|number|false|Minimum amount in cents a PR can be in order to be auto-approved|
+|»»» max_amount|body|number|false|Maximum amount in cents a PR can be in order to be auto-approved|
+|»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
+|»»» days|body|number|false|Amount of days to apply against the frequency|
+|»»» max_amount_|body|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "OA.1",
+    "title": "Subscription Plan A",
+    "status": "active",
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": null
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    }
+  }
+}
+```
+
+
+<h3 id="Create an Open Agreement-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[CreateOpenAgreementResponse](#schemacreateopenagreementresponse)|
+
+
+## List all Open Agreements
+
+
+<a id="opIdListAllOpenAgreements"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash/open_agreements \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/open_agreements HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/open_agreements',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/open_agreements',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/open_agreements',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/open_agreements', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/open_agreements");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET open_agreements`
+
+
+<h3 id="List-all-Open-Agreements-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return|
+
+
+> Example responses
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "OA.1",
+      "title": "Subscription Plan A",
+      "status": "active",
+      "created_at": "2017-03-20T00:53:27Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": 10000,
+          "min_amount": null
+        },
+        "per_frequency": {
+          "days": 7,
+          "max_amount": 1000000
+        }
+      },
+      "link": "https://go-sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+    },
+    {
+      "ref": "OA.2",
+      "title": "Subscription Plan B",
+      "status": "closed",
+      "created_at": "2017-03-20T00:53:27Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": 10000,
+          "min_amount": null
+        },
+        "per_frequency": {
+          "days": null,
+          "max_amount": null
+        }
+      },
+      "link": "https://go-sandbox.split.cash/open_agreements/948e3662-154d-42d1-bdc9-a05c251d3981/agreements/invitation"
+    }
+  ]
+}
+```
+
+
+<h3 id="List all Open Agreements-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllOpenAgreementsResponse](#schemalistallopenagreementsresponse)|
+
+
+## Activate a closed Open Agreement
+
+
+<a id="opIdActivateOpenAgreement"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X POST https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+POST https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate',
+  method: 'post',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate',
+{
+  method: 'POST',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST open_agreements/{open_agreement_ref}/activate`
+
+
+<h3 id="Activate-a-closed-Open-Agreement-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|open_agreement_ref|path|string|true|Single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "OA.1",
+    "title": "Subscription Plan A",
+    "status": "active",
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": null
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    },
+    "link": "https://go-sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+  }
+}
+```
+
+
+<h3 id="Activate a closed Open Agreement-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ActivateOpenAgreementResponse](#schemaactivateopenagreementresponse)|
+
+
+## Close an active Open Agreement
+
+
+<a id="opIdCloseOpenAgreement"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X POST https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+POST https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close',
+  method: 'post',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close',
+{
+  method: 'POST',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST open_agreements/{open_agreement_ref}/close`
+
+
+<h3 id="Close-an-active-Open-Agreement-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|open_agreement_ref|path|string|true|Single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "OA.1",
+    "title": "Subscription Plan A",
+    "status": "closed",
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": null
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    },
+    "link": "https://go-sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+  }
+}
+```
+
+
+<h3 id="Close an active Open Agreement-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[CloseOpenAgreementResponse](#schemacloseopenagreementresponse)|
+
+
+<h1 id="Split-API-Payments">Payments</h1>
+
+
+**A Payment is made up of two parts:**
+
+
+1. General details about the Payment.
+2. One or many Payout recipients with individual amounts and descriptions.
+
+
+## Make a Payment
+
+
+<a id="opIdMakeAPayment"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X POST https://api-sandbox.split.cash/payments \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+POST https://api-sandbox.split.cash/payments HTTP/1.1
+Host: api-sandbox.split.cash
+Content-Type: application/json
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payments',
+  method: 'post',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+const inputBody = '{
+  "description": "The SuperPackage",
+  "matures_at": "2016-09-13T00:00:00Z",
+  "payouts": [
+    {
+      "amount": 30000,
+      "description": "A tandem skydive jump SB23094",
+      "recipient_id": "48b89364-1577-4c81-ba02-96705895d457",
+      "metadata": {
+        "invoice_ref": "BILL-0001",
+        "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    },
+    {
+      "amount": 30000,
+      "description": "A scuba dive SDS5464",
+      "recipient_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+    }
+  ],
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/payments',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/payments',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash/payments', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payments");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST payments`
+
+
+> Body parameter
+
+
+```json
+{
+  "description": "The SuperPackage",
+  "matures_at": "2016-09-13T00:00:00Z",
+  "payouts": [
+    {
+      "amount": 30000,
+      "description": "A tandem skydive jump SB23094",
+      "recipient_id": "48b89364-1577-4c81-ba02-96705895d457",
+      "metadata": {
+        "invoice_ref": "BILL-0001",
+        "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    },
+    {
+      "amount": 30000,
+      "description": "A scuba dive SDS5464",
+      "recipient_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+    }
+  ],
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}
+```
+
+
+<h3 id="Make-a-Payment-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[MakeAPaymentRequest](#schemamakeapaymentrequest)|true|No description|
+|» description|body|string|true|User description. Only visible to the payer|
+|» matures_at|body|string|true|Date & time in UTC ISO8601 the payment should be processed|
+|» payouts|body|[[Payouts](#schemapayouts)]|true|One or many contact to pay (2 recipients in this example)|
+|»» Payouts|body|[Payouts](#schemapayouts)|false|No description|
+|»»» amount|body|number|true|Amount in cents to pay the recipient|
+|»»» description|body|string|true|Description that both the payer an recipient can see|
+|»»» recipient_id|body|string|true|Contact to pay (`Contact.id`)|
+|»»» metadata|body|[Metadata](#schemametadata)|false|No description|
+|»» metadata|body|[Metadata](#schemametadata)|false|No description|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "PB.1",
+    "payouts": [
+      {
+        "ref": "D.1",
+        "invoice_ref": "BILL-0001",
+        "batch_description": "The SuperPackage",
+        "matures_at": "2016-09-13T23:50:44Z",
+        "created_at": "2016-09-10T23:50:44Z",
+        "status": "maturing",
+        "amount": 30000,
+        "description": "A tandem skydive jump SB23094",
+        "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
+        "to_id": "48b89364-1577-4c81-ba02-96705895d457",
+        "metadata": {
+          "invoice_ref": "BILL-0001",
+          "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
+          "custom_key": "Custom string",
+          "another_custom_key": "Maybe a URL"
+        }
+      },
+      {
+        "ref": "D.2",
+        "invoice_ref": null,
+        "batch_description": "The SuperPackage",
+        "matures_at": "2016-09-13T23:50:44Z",
+        "created_at": "2016-09-10T23:50:44Z",
+        "status": "maturing",
+        "amount": 30000,
+        "description": "A scuba dive SDS5464",
+        "from_id": "48b89364-1577-4c81-ba02-96705895d457",
+        "to_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+      }
+    ],
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+<h3 id="Make a Payment-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[MakeAPaymentResponse](#schemamakeapaymentresponse)|
+
+
+## List all Payments
+
+
+<a id="opIdListAllPayments"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash/payments \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/payments HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payments',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/payments',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/payments',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/payments', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payments");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET payments`
+
+
+<h3 id="List-all-Payments-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|page of results to return|
+
+
+> Example responses
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "PB.1",
+      "payouts": [
+        {
+          "ref": "D.1",
+          "invoice_ref": null,
+          "batch_description": "This description is only available to the payer",
+          "matures_at": "2016-09-13T23:50:44Z",
+          "created_at": "2016-09-10T23:50:44Z",
+          "status": "maturing",
+          "amount": 30000,
+          "description": "The recipient will see this description",
+          "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
+          "to_id": "48b89364-1577-4c81-ba02-96705895d457",
+          "metadata": {
+            "invoice_ref": "BILL-0001",
+            "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
+            "custom_key": "Custom string",
+            "another_custom_key": "Maybe a URL"
+          }
+        },
+        {
+          "ref": "D.2",
+          "invoice_ref": null,
+          "batch_description": "This description is only available to the payer",
+          "matures_at": "2016-09-13T23:50:44Z",
+          "created_at": "2016-09-10T23:50:44Z",
+          "status": "maturing",
+          "amount": 30000,
+          "description": "The recipient will see this description",
+          "from_id": "48b89364-1577-4c81-ba02-96705895d457",
+          "to_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+        }
+      ],
+      "metadata": {
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    }
+  ]
+}
+```
+
+
+<h3 id="List all Payments-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllPaymentsResponse](#schemalistallpaymentsresponse)|
+
+
+## Get a Payment
+
+
+<a id="opIdGetAPayment"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash/payments/{payment_ref} \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/payments/{payment_ref} HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payments/{payment_ref}',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/payments/{payment_ref}',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/payments/{payment_ref}',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/payments/{payment_ref}', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payments/{payment_ref}");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET payments/{payment_ref}`
+
+
+Get a single payment by its reference
+
+
+<h3 id="Get-a-Payment-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|payment_ref|path|string|true|Payment reference|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "PB.1",
+    "payouts": [
+      {
+        "ref": "D.1",
+        "invoice_ref": null,
+        "batch_description": "The SuperPackage",
+        "matures_at": "2016-09-13T23:50:44Z",
+        "created_at": "2016-09-10T23:50:44",
+        "status": "maturing",
+        "amount": 30000,
+        "description": "A tandem skydive jump SB23094",
+        "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
+        "to_id": "48b89364-1577-4c81-ba02-96705895d457",
+        "metadata": {
+          "invoice_ref": "BILL-0001",
+          "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
+          "custom_key": "Custom string",
+          "another_custom_key": "Maybe a URL"
+        }
+      },
+      {
+        "ref": "D.2",
+        "invoice_ref": null,
+        "batch_description": "The SuperPackage",
+        "matures_at": "2016-09-13T23:50:44Z",
+        "created_at": "2016-09-10T23:50:44Z",
+        "status": "maturing",
+        "amount": 30000,
+        "description": "A scuba dive SDS5464",
+        "from_id": "48b89364-1577-4c81-ba02-96705895d457",
+        "to_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+      }
+    ],
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+<h3 id="Get a Payment-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAPaymentResponse](#schemagetapaymentresponse)|
+
+
+<h1 id="Split-API-Payouts">Payouts</h1>
+
+
+Payouts are what a compose a Payment. One or all Payouts can be voided individually as part of the larger Payment.
+
+
+## Void a Payout
+
+
+<a id="opIdVoidAPayout"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X DELETE https://api-sandbox.split.cash/payouts/{debit_ref}
+
+
+```
+
+
+```http
+DELETE https://api-sandbox.split.cash/payouts/{debit_ref} HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+```
+
+
+```javascript
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payouts/{debit_ref}',
+  method: 'delete',
+
+
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+fetch('https://api-sandbox.split.cash/payouts/{debit_ref}',
+{
+  method: 'DELETE'
+
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+result = RestClient.delete 'https://api-sandbox.split.cash/payouts/{debit_ref}',
+  params: {
+  }
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+
+
+r = requests.delete('https://api-sandbox.split.cash/payouts/{debit_ref}', params={
+
+
+)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payouts/{debit_ref}");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("DELETE");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`DELETE payouts/{debit_ref}`
+
+
+You can void any Payout debit from your account that has not yet matured. In the case where it has matured, you can send a Payment Request to the Payout recipient once the Payout has successfully cleared.
+
+
+<h3 id="Void-a-Payout-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|debit_ref|path|string|true|Payout debit reference|
+
+
+<h3 id="Void a Payout-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
+
+
+<h1 id="Split-API-Payment-Requests">Payment Requests</h1>
+
+
+A Payment Request (PR) is used to request payment from another party.
+
+
+<div class="middle-header">Applicable scenarios</div>
+
+
+1. **A Split account sends a PR to a Contact that is a Split account:**
+    1. The authoriser must either approve or decline the request; **or**
+    2. Given there is an Agreement in place and the PR is within the terms of the Agreement, then the PR will be automatically approved; **or**
+    3. Given the PR is **not** within the terms of the Agreement, then the authoriser must either approve or decline the request.
+2. **A Split accounts sends a PR to a Contact that is not a Split account:**
+    1. Given there is an Agreement in place and the PR is within the terms of the Agreement, then the PR will be automatically approved; **or**
+    2. Given the PR is **not** within the terms of the Agreement, then the PR will not be created; **or**
+    3. There is no Agreement in place, then the PR will not be created.
+
+
+<div class="middle-header">Direction</div>
+
+
+Payment Requests are broken up by direction:
+
+
+1. **Incoming:** An incoming Payment Request (you are the authoriser/payer)
+2. **Outgoing:** An outgoing Payment Request (you are the initiator/payee)
+
+
+There are two response fields that differ depending on the direction:
+
+
+| Field | Description |
+|-------|-------------|
+| `debit_ref` | Only visible to the PR authoriser (incoming PRs). This reference corresponds to the newly created debit to process the approved PR. |
+| `credit_ref` | Only visible to the PR initiator (outgoing PRs). This reference corresponds to the newly created credit from the approved PR. |
+
+
+<div class="middle-header">Lifecycle</div>
+
+
+A Payment Request can have the following states:
+
+
+| State | Description |
+|-------|-------------|
+| `pending_approval` | Waiting for the authoriser to approve the PR. |
+| `approved` | The authoriser has approved the PR. |
+| `declined` | The payer has declined the PR. |
+| `cancelled` | The initiator has cancelled the PR. |
+
+
+## Request Payment
+
+
+<a id="opIdMakeAPaymentRequest"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X POST https://api-sandbox.split.cash/payment_requests \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+POST https://api-sandbox.split.cash/payment_requests HTTP/1.1
+Host: api-sandbox.split.cash
+Content-Type: application/json
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payment_requests',
+  method: 'post',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+const inputBody = '{
+  "description": "Visible to both initiator and authoriser",
+  "matures_at": "12/19/2016 2:10:56 AM",
+  "amount": 99000,
+  "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/payment_requests',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/payment_requests',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash/payment_requests', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payment_requests");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST payment_requests`
+
+
+> Body parameter
+
+
+```json
+{
+  "description": "Visible to both initiator and authoriser",
+  "matures_at": "12/19/2016 2:10:56 AM",
+  "amount": 99000,
+  "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}
+```
+
+
+<h3 id="Request-Payment-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[MakeAPaymentRequestRequest](#schemamakeapaymentrequestrequest)|true|No description|
+|» description|body|string|true|Description visible to the initiator (payee) & authoriser (payer)|
+|» matures_at|body|string|true|Date & time in UTC ISO8601 that the payment will be processed if the request is approved|
+|» amount|body|number|true|Amount in cents to pay the initiator|
+|» authoriser_id|body|string|false|The Split account's bank account that will be used to pay the PR (`Contact.data.bank_account.id`)'|
+|» metadata|body|[Metadata](#schemametadata)|false|No description|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "PR.3",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+    "status": "pending_approval",
+    "responded_at": null,
+    "created_at": "2016-12-19T02:10:56Z",
+    "credit_ref": null,
+    "payout": {
+      "amount": 99000,
+      "description": "The elite package for 4",
+      "matures_at": "2016-12-25T00:00:00Z"
+    },
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+<h3 id="Request Payment-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[MakeAPaymentRequestResponse](#schemamakeapaymentrequestresponse)|
+
+
+## Approve a Payment Request
+
+
+<a id="opIdApprovePaymentRequest"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X POST https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+POST https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve',
+  method: 'post',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve',
+{
+  method: 'POST',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST payment_requests/{payment_request_ref}/approve`
+
+
+<h3 id="Approve-a-Payment-Request-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|payment_request_ref|path|string|true|Single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "PR.3",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "status": "approved",
+    "responded_at": "2016-12-19T02:38:04Z",
+    "created_at": "2016-12-19T02:10:56Z",
+    "debit_ref": "D.b",
+    "payout": {
+      "amount": 99000,
+      "description": "The elite package for 4",
+      "matures_at": "2016-12-25T00:00:00Z"
+    },
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+<h3 id="Approve a Payment Request-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ApprovePaymentRequestResponse](#schemaapprovepaymentrequestresponse)|
+
+
+## Decline a Payment Request
+
+
+<a id="opIdDeclinePaymentRequest"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X POST https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+POST https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline',
+  method: 'post',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline',
+{
+  method: 'POST',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST payment_requests/{payment_request_ref}/decline`
+
+
+<h3 id="Decline-a-Payment-Request-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|payment_request_ref|path|string|true|Single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "PR.3",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "status": "declined",
+    "responded_at": "2016-12-19T02:38:04Z",
+    "created_at": "2016-12-19T02:10:56Z",
+    "debit_ref": null,
+    "payout": {
+      "amount": 99000,
+      "description": "The elite package for 4",
+      "matures_at": "2016-12-25T00:00:00Z"
+    },
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+<h3 id="Decline a Payment Request-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|No description|[DeclinePaymentRequestResponse](#schemadeclinepaymentrequestresponse)|
+
+
+## Get a Payment Request
+
+
+<a id="opIdGetAPaymentRequest"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash/payment_requests/{payment_request_ref} \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/payment_requests/{payment_request_ref} HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payment_requests/{payment_request_ref}");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET payment_requests/{payment_request_ref}`
+
+
+<h3 id="Get-a-Payment-Request-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|payment_request_ref|path|string|true|Single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "PR.3",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "status": "approved",
+    "responded_at": "2016-12-19T02:38:04Z",
+    "created_at": "2016-12-19T02:10:56Z",
+    "credit_ref": "C.b",
+    "payout": {
+      "amount": 99000,
+      "description": "The elite package for 4",
+      "matures_at": "2016-12-25T00:00:00Z"
+    },
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+<h3 id="Get a Payment Request-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAPaymentRequestResponse](#schemagetapaymentrequestresponse)|
+
+
+## Cancel a Payment Request
+
+
+<a id="opIdCancelAPaymentRequest"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X DELETE https://api-sandbox.split.cash/payment_requests/{payment_request_ref}
+
+
+```
+
+
+```http
+DELETE https://api-sandbox.split.cash/payment_requests/{payment_request_ref} HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+```
+
+
+```javascript
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
+  method: 'delete',
+
+
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
+{
+  method: 'DELETE'
+
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+result = RestClient.delete 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
+  params: {
+  }
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+
+
+r = requests.delete('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', params={
+
+
+)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payment_requests/{payment_request_ref}");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("DELETE");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`DELETE payment_requests/{payment_request_ref}`
+
+
+A PR can only be cancelled if it has not yet matured.
+
+
+<h3 id="Cancel-a-Payment-Request-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|payment_request_ref|path|string|true|Single value, exact match|
+
+
+<h3 id="Cancel a Payment Request-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
+
+
+## List incoming Payment Requests
+
+
+<a id="opIdListIncomingPaymentRequests"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash/payment_requests/incoming \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/payment_requests/incoming HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payment_requests/incoming',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/payment_requests/incoming',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/incoming',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/payment_requests/incoming', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payment_requests/incoming");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET payment_requests/incoming`
+
+
+<h3 id="List-incoming-Payment-Requests-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return, single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "PR.2",
+      "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "authoriser_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "status": "approved",
+      "responded_at": "2016-12-19T02:10:18Z",
+      "created_at": "2016-12-19T02:09:09Z",
+      "debit_ref": "D.a",
+      "payout": {
+        "amount": 30000,
+        "description": "The SuperPackage",
+        "matures_at": "2016-12-20T00:00:00Z"
+      }
+    },
+    {
+      "ref": "PR.3",
+      "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "authoriser_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "status": "pending_approval",
+      "responded_at": null,
+      "created_at": "2016-12-19T02:10:56Z",
+      "debit_ref": null,
+      "payout": {
+        "amount": 99000,
+        "description": "The elite package for 4",
+        "matures_at": "2016-12-25T00:00:00Z"
+      },
+      "metadata": {
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    }
+  ]
+}
+```
+
+
+<h3 id="List incoming Payment Requests-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListIncomingPaymentRequestsResponse](#schemalistincomingpaymentrequestsresponse)|
+
+
+## List outgoing Payment Requests
+
+
+<a id="opIdListOutgoingPaymentRequests"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash/payment_requests/outgoing \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/payment_requests/outgoing HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payment_requests/outgoing',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/payment_requests/outgoing',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/outgoing',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/payment_requests/outgoing', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payment_requests/outgoing");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET payment_requests/outgoing`
+
+
+<h3 id="List-outgoing-Payment-Requests-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return, single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "PR.4",
+      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "status": "approved",
+      "responded_at": "2016-12-19T02:10:18Z",
+      "created_at": "2016-12-19T02:09:09Z",
+      "credit_ref": "C.a",
+      "payout": {
+        "amount": 30000,
+        "description": "The SuperPackage",
+        "matures_at": "2016-12-20T00:00:00Z"
+      }
+    },
+    {
+      "ref": "PR.5",
+      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "status": "pending_approval",
+      "responded_at": null,
+      "created_at": "2016-12-19T02:10:56Z",
+      "credit_ref": null,
+      "payout": {
+        "amount": 99000,
+        "description": "The elite package for 4",
+        "matures_at": "2016-12-25T00:00:00Z"
+      }
+    }
+  ]
+}
+```
+
+
+<h3 id="List outgoing Payment Requests-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingPaymentRequestsResponse](#schemalistoutgoingpaymentrequestsresponse)|
+
+
+## Get a Payment Request's history
+
+
+<a id="opIdGetAPaymentRequest'sHistory"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET payment_requests/{payment_request_ref}/history`
+
+
+Gives you visibility of the entire Payment Request lifecycle including the generated debit and credit transactions.
+
+
+<h3 id="Get-a-Payment-Request's-history-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|payment_request_ref|path|string|true|Single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": [
+    {
+      "type": "payout_request",
+      "event": "requested",
+      "at": "2017-01-05T07:47:45Z",
+      "ref": "PR.3",
+      "by": "Fancy Pants (fancy_pants)"
+    },
+    {
+      "type": "payout_request",
+      "event": "approved",
+      "at": "2017-01-07T06:13:52Z",
+      "ref": "PR.3",
+      "by": "Lycra Co (lycra_co)"
+    },
+    {
+      "type": "debit",
+      "event": "scheduled",
+      "at": "2017-01-07T06:13:52Z",
+      "ref": "D.n",
+      "by": "Split Payments"
+    },
+    {
+      "type": "credit",
+      "event": "scheduled",
+      "at": "2017-01-07T06:13:52Z",
+      "ref": "C.e",
+      "by": "Split Payments"
+    },
+    {
+      "type": "debit",
+      "event": "matured",
+      "at": "2017-01-08T04:30:14Z",
+      "ref": "D.n",
+      "by": "Split Payments"
+    },
+    {
+      "type": "debit",
+      "event": "processing",
+      "at": "2017-01-08T04:30:14Z",
+      "ref": "D.n",
+      "by": "Split Payments"
+    },
+    {
+      "type": "debit",
+      "event": "clearing",
+      "at": "2017-01-08T19:02:20Z",
+      "ref": "D.n",
+      "by": "Split Payments"
+    },
+    {
+      "type": "debit",
+      "event": "cleared",
+      "at": "2017-01-11T19:07:52Z",
+      "ref": "D.n",
+      "by": "Split Payments"
+    },
+    {
+      "type": "credit",
+      "event": "matured",
+      "at": "2017-01-11T19:07:52Z",
+      "ref": "C.e",
+      "by": "Split Payments"
+    },
+    {
+      "type": "credit",
+      "event": "processing",
+      "at": "2017-01-12T04:30:25Z",
+      "ref": "C.e",
+      "by": "Split Payments"
+    },
+    {
+      "type": "credit",
+      "event": "clearing",
+      "at": "2017-01-12T05:17:32Z",
+      "ref": "C.e",
+      "by": "Split Payments"
+    },
+    {
+      "type": "credit",
+      "event": "cleared",
+      "at": "2017-01-15T05:27:12Z",
+      "ref": "C.e",
+      "by": "Split Payments"
+    }
+  ]
+}
+```
+
+
+<h3 id="Get a Payment Request's history-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAPaymentRequestsHistoryResponse](#schemagetapaymentrequestshistoryresponse)|
+
+
+<h1 id="Split-API-Refunds">Refunds</h1>
+
+
+Refunds can be issued for any successfully cleared Payout (credit) transactions.
+
+
+<div class="middle-header">Direction</div>
+
+
+Refunds are broken up by direction:
+
+
+1. **Incoming:** An incoming Refund (you are the recipient of the refund)
+2. **Outgoing:** An outgoing Refund (you are the issuer of the refund)
+
+
+There are two response fields that differ depending on the direction:
+
+
+| Field | Description |
+|-------|-------------|
+| `debit_ref` | Only visible to the Refund issuer (outgoing Refunds). This reference corresponds to the newly created debit to process the Refund. |
+| `credit_ref` | Only visible to the Refund recipient (incoming Refunds). This reference corresponds to the newly created credit to process the Refund. |
+
+
+## Issue a Refund
+
+
+<a id="opIdIssueARefund"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X POST https://api-sandbox.split.cash/credits/{credit_ref}/refunds \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+POST https://api-sandbox.split.cash/credits/{credit_ref}/refunds HTTP/1.1
+Host: api-sandbox.split.cash
+Content-Type: application/json
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/credits/{credit_ref}/refunds',
+  method: 'post',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+const inputBody = '{
+  "amount": 500,
+  "reason": "Because reason",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/credits/{credit_ref}/refunds',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/credits/{credit_ref}/refunds',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash/credits/{credit_ref}/refunds', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/credits/{credit_ref}/refunds");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST credits/{credit_ref}/refunds`
+
+
+Certain rules apply to the issuance of a refund:
+
+
+* Must be applied against a successfully cleared payout (credit)
+* The refund amount may not exceed the original amount of the credit
+
+
+> Body parameter
+
+
+```json
+{
+  "amount": 500,
+  "reason": "Because reason",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}
+```
+
+
+<h3 id="Issue-a-Refund-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|credit_ref|path|string|true|No description|
+|body|body|[IssueARefundRequest](#schemaissuearefundrequest)|true|No description|
+|» amount|body|number|true|Amount in cents refund|
+|» reason|body|string|false|Reason for the refund. Visible to both parties.|
+|» metadata|body|[Metadata](#schemametadata)|false|No description|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "PRF.1",
+    "for_ref": "C.59",
+    "debit_ref": "D.hi",
+    "created_at": "2017-05-08T07:20:24Z",
+    "amount": 500,
+    "reason": "Because reason",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+<h3 id="Issue a Refund-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[IssueARefundResponse](#schemaissuearefundresponse)|
+
+
+## List incoming Refunds
+
+
+<a id="opIdListIncomingRefunds|Get"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash/refunds/incoming \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/refunds/incoming HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/refunds/incoming',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/refunds/incoming',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/refunds/incoming',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/refunds/incoming', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/refunds/incoming");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET refunds/incoming`
+
+
+<h3 id="List-incoming-Refunds-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return, single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "PRF.2",
+      "for_ref": "D.5",
+      "credit_ref": "C.q",
+      "created_at": "2017-05-09T04:45:26Z",
+      "amount": 5,
+      "reason": "Because reason",
+      "metadata": {
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    }
+  ]
+}
+```
+
+
+<h3 id="List incoming Refunds-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListIncomingRefundsResponse](#schemalistincomingrefundsresponse)|
+
+
+## List outgoing Refunds
+
+
+<a id="opIdListOutgoingRefunds"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash/refunds/outgoing \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/refunds/outgoing HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/refunds/outgoing',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/refunds/outgoing',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/refunds/outgoing',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/refunds/outgoing', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/refunds/outgoing");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET refunds/outgoing`
+
+
+<h3 id="List-outgoing-Refunds-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return, single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "PRF.2",
+      "for_ref": "C.5",
+      "debit_ref": "D.5a",
+      "created_at": "2017-05-09T04:45:26Z",
+      "amount": 5,
+      "reason": "Because reason",
+      "metadata": {
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    }
+  ]
+}
+```
+
+
+<h3 id="List outgoing Refunds-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingRefundsResponse](#schemalistoutgoingrefundsresponse)|
+
+
+## Retrieve a Refund
+
+
+<a id="opIdRetrieveARefund"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash/refunds/{refund_ref} \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/refunds/{refund_ref} HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/refunds/{refund_ref}',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/refunds/{refund_ref}',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/refunds/{refund_ref}',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/refunds/{refund_ref}', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/refunds/{refund_ref}");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET refunds/{refund_ref}`
+
+
+Get a single Refund by its reference
+
+
+<h3 id="Retrieve-a-Refund-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|refund_ref|path|string|true|Single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "PRF.1",
+    "for_ref": "C.59",
+    "debit_ref": "D.hi",
+    "created_at": "2017-05-08T07:20:24Z",
+    "amount": 500,
+    "reason": "Because reason",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+<h3 id="Retrieve a Refund-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[RetrieveARefundResponse](#schemaretrievearefundresponse)|
+
+
+<h1 id="Split-API-Refund-Requests">Refund Requests</h1>
+
+
+Manage Refund Requests (RR) applied against successfully cleared Payouts.
+A refunder corresponds to a recipient of a successfully cleared Payout (credit).
+
+
+<div class="middle-header">Direction</div>
+
+
+Refund Requests are broken up by direction:
+
+
+1. **Incoming:** An incoming Refund Request (you are the authoriser/refunder)
+2. **Outgoing:** An outgoing Refund Request (you are the initiator/refundee)
+
+
+There are two response fields that differ depending on the direction:
+
+
+| Field | Description |
+|-------|-------------|
+| `debit_ref` | Only visible to the RR authoriser (incoming RRs). This reference corresponds to the newly created debit to process the approved RR. |
+| `credit_ref` | Only visible to the RR initiator (outgoing RRs). This reference corresponds to the newly created credit from the approved RR. |
+
+
+<div class="middle-header">Lifecycle</div>
+
+
+A Payment Request can have the following states:
+
+
+| State | Description |
+|-------|-------------|
+| `pending_approval` | Waiting for the authoriser to approve the RR. |
+| `approved` | The authoriser has approved the RR. |
+| `declined` | The payer has declined the RR. |
+| `cancelled` | The initiator has cancelled the RR. |
+
+
+## Request a Refund
+
+
+<a id="opIdRequestARefund"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X POST https://api-sandbox.split.cash/payout_refund_requests \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+POST https://api-sandbox.split.cash/payout_refund_requests HTTP/1.1
+Host: api-sandbox.split.cash
+Content-Type: application/json
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payout_refund_requests',
+  method: 'post',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+const inputBody = '{
+  "for_ref": "D.1",
+  "amount": 500,
+  "reason": "Because reason",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/payout_refund_requests',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash/payout_refund_requests', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payout_refund_requests");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST payout_refund_requests`
+
+
+Certain rules apply to the creation of a Refund Request:
+
+
+* Must be applied against a successfully cleared payout (debit)
+* The refund amount requested from a Payout recipient may not exceed the original amount of the Payout
+
+
+> Body parameter
+
+
+```json
+{
+  "for_ref": "D.1",
+  "amount": 500,
+  "reason": "Because reason",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}
+```
+
+
+<h3 id="Request-a-Refund-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[RequestARefundRequest](#schemarequestarefundrequest)|true|No description|
+|» for_ref|body|string|true|The Payout debit reference to refund against|
+|» amount|body|number|true|Amount in cents to request from the original payout recipient|
+|» reason|body|string|false|Reason for the refund request. Visible to both parties.|
+|» metadata|body|[Metadata](#schemametadata)|false|No description|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "RR.2",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "status": "pending_approval",
+    "responded_at": null,
+    "created_at": "2016-12-19T04:34:38Z",
+    "for_ref": "D.1",
+    "credit_ref": null,
+    "amount": 500,
+    "reason": "Because reasons",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+<h3 id="Request a Refund-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[RequestARefundResponse](#schemarequestarefundresponse)|
+
+
+## Approve Refund Request
+
+
+<a id="opIdApproveRefundRequest"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X POST https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+POST https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve',
+  method: 'post',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve',
+{
+  method: 'POST',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST payout_refund_requests/{payout_refund_request_ref}/approve`
+
+
+<h3 id="Approve-Refund-Request-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|payout_refund_request_ref|path|string|true|Single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "RR.2",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "status": "approved",
+    "responded_at": "2016-12-19T04:42:59Z",
+    "created_at": "2016-12-19T04:34:38Z",
+    "for_ref": "C.1",
+    "debit_ref": "D.2c3",
+    "amount": 100,
+    "reason": "Because reasons",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+<h3 id="Approve Refund Request-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ApprovePayoutRefundRequestResponse](#schemaapprovepayoutrefundrequestresponse)|
+
+
+## Decline Refund Request
+
+
+<a id="opIdDeclineRefundRequest"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X POST https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+POST https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline',
+  method: 'post',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline',
+{
+  method: 'POST',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST payout_refund_requests/{payout_refund_request_ref}/decline`
+
+
+<h3 id="Decline-Refund-Request-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|payout_refund_request_ref|path|string|true|Single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "RR.2",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "status": "declined",
+    "responded_at": "2016-12-19T04:42:59Z",
+    "created_at": "2016-12-19T04:34:38Z",
+    "for_ref": "D.1",
+    "debit_ref": null,
+    "amount": 100,
+    "reason": "Because reasons",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+<h3 id="Decline Refund Request-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[DeclinePayoutRefundRequestResponse](#schemadeclinepayoutrefundrequestresponse)|
+
+
+## Retrieve a Refund Request
+
+
+<a id="opIdRetrieveARefundRequest"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref} \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref} HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET /payout_refund_requests/{payout_refund_request_ref}`
+
+
+Get a specific Refund Request by its reference
+
+
+<h3 id="Retrieve-a-Refund-Request-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|payout_refund_request_ref|path|string|true|Single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "RR.2",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "status": "pending_approval",
+    "responded_at": null,
+    "created_at": "2016-12-19T04:34:38Z",
+    "for_ref": "D.1",
+    "credit_ref": null,
+    "amount": 10000,
+    "reason": "Because reasons",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+<h3 id="Retrieve a Refund Request-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[RetrieveARefundRequestResponse](#schemaretrievearefundrequestresponse)|
+
+
+## Cancel a Refund Request
+
+
+<a id="opIdCancelARefundRequest"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X DELETE https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}
+
+
+```
+
+
+```http
+DELETE https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref} HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+```
+
+
+```javascript
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}',
+  method: 'delete',
+
+
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+fetch('https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}',
+{
+  method: 'DELETE'
+
+
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+result = RestClient.delete 'https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}',
+  params: {
+  }
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+
+
+r = requests.delete('https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}', params={
+
+
+)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("DELETE");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`DELETE /payout_refund_requests/{payout_refund_request_ref}`
+
+
+A Refund Request can only be canceled if it is pending approval.
+
+
+<h3 id="Cancel-a-Refund-Request-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|payout_refund_request_ref|path|string|true|Single value, exact match|
+
+
+<h3 id="Cancel a Refund Request-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
+
+
+## List incoming Refund Requests
+
+
+<a id="opIdListIncomingRefundRequests"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash/payout_refund_requests/incoming \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/payout_refund_requests/incoming HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payout_refund_requests/incoming',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/payout_refund_requests/incoming',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/incoming',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/payout_refund_requests/incoming', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payout_refund_requests/incoming");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET payout_refund_requests/incoming`
+
+
+<h3 id="List-incoming-Refund-Requests-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return, single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "RR.2",
+      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "status": "approved",
+      "responded_at": "2016-12-19T04:42:59Z",
+      "created_at": "2016-12-19T04:34:38Z",
+      "for_ref": "C.1",
+      "debit_ref": "D.2c3",
+      "amount": 100,
+      "reason": "Because reasons",
+      "metadata": {
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    }
+  ]
+}
+```
+
+
+<h3 id="List incoming Refund Requests-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListIncomingRefundRequestsResponse](#schemalistincomingrefundrequestsresponse)|
+
+
+## List outgoing Refund Requests
+
+
+<a id="opIdListOutgoingRefundRequests"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash/payout_refund_requests/outgoing \
+  -H 'Accept: text/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/payout_refund_requests/outgoing HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: text/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'text/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/payout_refund_requests/outgoing',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'text/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/payout_refund_requests/outgoing',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'text/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/outgoing',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'text/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/payout_refund_requests/outgoing', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/payout_refund_requests/outgoing");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET payout_refund_requests/outgoing`
+
+
+**Endpoint:** `/payout_refund_requests/outgoing{?page}`
+
+
+<h3 id="List-outgoing-Refund-Requests-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return, single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "RR.2",
+      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "status": "approved",
+      "responded_at": "2016-12-19T04:42:59Z",
+      "created_at": "2016-12-19T04:34:38Z",
+      "for_ref": "C.1",
+      "debit_ref": "D.2c3",
+      "amount": 100,
+      "reason": "Because reasons",
+      "metadata": {
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    }
+  ]
+}
+```
+
+
+<h3 id="List outgoing Refund Requests-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListIncomingRefundRequestsResponse](#schemalistincomingrefundrequestsresponse)|
+
+
+<h1 id="Split-API-Transactions">Transactions</h1>
+
+
+The transactions endpoint provides a detailed look at all past, current and future scheduled debits & credits relating to the Split account. In other words, we not only show the transactions initiated by the Split account but also show transactions where the Split account is on the receiving end - even for payments that have not yet matured.
+
+
+## List all transactions
+
+
+<a id="opIdListAllTransactions"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash/transactions \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/transactions HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/transactions',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/transactions',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/transactions',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/transactions', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/transactions");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET transactions`
+
+
+<h3 id="List-all-transactions-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return, single value, exact match|
+|ref|query|string|false|Single value, exact match|
+|parent_ref|query|string|false|Single value, exact match|
+|bank_ref|query|string|false|Single value, exact match|
+|status|query|array[string]|false|Multiple values, exact match|
+|category|query|array[string]|false|Multiple values, exact match|
+|type|query|array[string]|false|Multiple values, exact match|
+|other_party|query|string|false|Single value, string search|
+|description|query|string|false|Single value, string search|
+|min_amount|query|integer|false|Cents, Single value, exact match|
+|max_amount|query|integer|false|Cents, single value, exact match|
+|min_created_date|query|string(date-time)|false|Date/time UTC ISO 8601 format, Single value, exact match|
+|max_created_date|query|string(date-time)|false|Date/time UTC ISO 8601 format, single value, exact match|
+|min_matured_date|query|string(date-time)|false|Date/time UTC ISO 8601 format, Single value, exact match|
+|max_matured_date|query|string(date-time)|false|Date/time UTC ISO 8601 format, single value, exact match|
+|min_cleared_date|query|string(date-time)|false|Date/time UTC ISO 8601 format, Single value, exact match|
+|max_cleared_date|query|string(date-time)|false|Date/time UTC ISO 8601 format, single value, exact match|
+
+
+#### Enumerated Values
+
+
+|Parameter|Value|
+|---|---|
+|status|maturing|
+|status|matured|
+|status|processing|
+|status|clearing|
+|status|cleared|
+|status|rejected|
+|status|returned|
+|status|voided|
+|status|pending_verification|
+|status|paused|
+|category|payout|
+|category|payout_refund|
+|category|invoice|
+|type|debit|
+|type|credit|
+
+
+> Example responses
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "D.3",
+      "parent_ref": null,
+      "type": "debit",
+      "category": "payout_refund",
+      "created_at": "2016-12-07T23:15:00Z",
+      "matures_at": "2016-12-10T23:15:00Z",
+      "cleared_at": null,
+      "bank_ref": null,
+      "status": "Pending",
+      "party_name": "Sanford-Rees",
+      "party_nickname": "sanford-rees-8",
+      "description": null,
+      "amount": 1
+    },
+    {
+      "ref": "D.2",
+      "parent_ref": "PB.2",
+      "type": "debit",
+      "category": "payout",
+      "created_at": "2016-12-06T23:15:00Z",
+      "matures_at": "2016-12-09T23:15:00Z",
+      "cleared_at": null,
+      "bank_ref": null,
+      "status": " Pending",
+      "party_name": "Gutmann-Schmidt",
+      "party_nickname": "gutmann-schmidt-6",
+      "description": null,
+      "amount": 1
+    },
+    {
+      "ref": "C.2",
+      "parent_ref": null,
+      "type": "credit",
+      "category": "payout",
+      "created_at": "2016-12-05T23:15:00Z",
+      "matures_at": "2016-12-06T23:15:00Z",
+      "cleared_at": "2016-12-09T23:15:00Z",
+      "bank_ref": "CT.1",
+      "status": "Pending",
+      "party_name": "Price and Sons",
+      "party_nickname": "price-and-sons-2",
+      "description": "Money for jam",
+      "amount": 1
+    }
+  ]
+}
+```
+
+
+<h3 id="List all transactions-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllTransactionsResponse](#schemalistalltransactionsresponse)|
+
+
+<h1 id="Split-API-Users">Users</h1>
+
+
+All about the currently authenticated user.
+
+
+## Get user details
+
+
+<a id="opIdGetUserDetails"></a>
+
+
+> Code samples
+
+
+```shell
+# You can also use wget
+curl -X GET https://api-sandbox.split.cash/user \
+  -H 'Accept: application/json'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/user HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/user',
+  method: 'get',
+
+
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept':'application/json'
+
+
+};
+
+
+fetch('https://api-sandbox.split.cash/user',
+{
+  method: 'GET',
+
+
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept' => 'application/json'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/user',
+  params: {
+  }, headers: headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/user', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/user");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET user`
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "first_name": "Bear",
+    "last_name": "Dog",
+    "mobile_phone": "0456945832",
+    "email": "bear@dog.com",
+    "account": {
+      "name": "Dog Bones Inc",
+      "nickname": "dog-bones-inc",
+      "abn": "129959040",
+      "phone": "0418495033",
+      "street_address": "98 Acme Avenue",
+      "suburb": "Lead",
+      "state": "NSW",
+      "postcode": "2478"
+    }
+  }
+}
+```
+
+
+<h3 id="Get user details-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetUserDetailsResponse](#schemagetuserdetailsresponse)|
+
+
+# Schemas
+
+
+## ProposeAgreementRequest
+
+
+<a id="schemaproposeagreementrequest"></a>
+
+
+```json
+{
+  "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|authoriser_id|string|true|The Contact's account ID (`Contact.account.id`)|
+|terms|[Terms](#schematerms)|true|No description|
+
+
+## Terms
+
+
+<a id="schematerms"></a>
+
+
+```json
+{
+  "per_payout": {
+    "min_amount": 0,
+    "max_amount": 10000
+  },
+  "per_frequency": {
+    "days": 7,
+    "max_amount_": 1000000
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|per_payout|[PerPayout](#schemaperpayout)|true|No description|
+|per_frequency|[PerFrequency](#schemaperfrequency)|true|No description|
+
+
+## PerPayout
+
+
+<a id="schemaperpayout"></a>
+
+
+```json
+{
+  "min_amount": 0,
+  "max_amount": 10000
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|min_amount|number|false|Minimum amount in cents a PR can be in order to be auto-approved|
+|max_amount|number|false|Maximum amount in cents a PR can be in order to be auto-approved|
+
+
+## PerFrequency
+
+
+<a id="schemaperfrequency"></a>
+
+
+```json
+{
+  "days": 7,
+  "max_amount_": 1000000
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|days|number|false|Amount of days to apply against the frequency|
+|max_amount_|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
+
+
+## ProposeAgreementResponse
+
+
+<a id="schemaproposeagreementresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "A.2",
+    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+    "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "status": "proposed",
+    "responded_at": null,
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": null
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## ApproveAgreementResponse
+
+
+<a id="schemaapproveagreementresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "A.2",
+    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+    "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "status": "accepted",
+    "responded_at": "2017-03-20T02:13:11Z",
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": 1
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## DeclineAgreementResponse
+
+
+<a id="schemadeclineagreementresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "A.2",
+    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+    "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "status": "declined",
+    "responded_at": "2017-03-20T02:13:11Z",
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": 1
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## GetAgreementResponse
+
+
+<a id="schemagetagreementresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "A.2",
+    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+    "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "status": "approved",
+    "responded_at": "2017-03-20T02:13:11Z",
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": 1
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## ListIncomingAgreementsResponse
+
+
+<a id="schemalistincomingagreementsresponse"></a>
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "A.2",
+      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+      "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+      "status": "proposed",
+      "responded_at": null,
+      "created_at": "2017-03-20T00:53:27Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": 10000,
+          "min_amount": 1
+        },
+        "per_frequency": {
+          "days": 7,
+          "max_amount": 1000000
+        }
+      }
+    },
+    {
+      "ref": "A.1",
+      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+      "authoriser_id": "56df206a-aaff-471a-b075-11882bc8906a",
+      "status": "proposed",
+      "responded_at": null,
+      "created_at": "2017-03-16T22:51:48Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": 5000,
+          "min_amount": 0
+        },
+        "per_frequency": {
+          "days": "1",
+          "max_amount": 10000
+        }
+      }
+    }
+  ]
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
+
+## ListOutgoingAgreementsResponse
+
+
+<a id="schemalistoutgoingagreementsresponse"></a>
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "A.4",
+      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+      "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+      "status": "proposed",
+      "responded_at": null,
+      "created_at": "2017-03-20T00:53:27Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": 10000,
+          "min_amount": 1
+        },
+        "per_frequency": {
+          "days": 7,
+          "max_amount": 1000000
+        }
+      }
+    },
+    {
+      "ref": "A.3",
+      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+      "authoriser_id": "56df206a-aaff-471a-b075-11882bc8906a",
+      "status": "proposed",
+      "responded_at": null,
+      "created_at": "2017-03-16T22:51:48Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": 5000,
+          "min_amount": 0
+        },
+        "per_frequency": {
+          "days": "1",
+          "max_amount": 10000
+        }
+      }
+    }
+  ]
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
+
+## CreateOpenAgreementRequest
+
+
+<a id="schemacreateopenagreementrequest"></a>
+
+
+```json
+{
+  "title": "Subscription Plan A",
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|title|string|true|Title of the Open Agreement (Visible to authorisers)|
+|terms|[Terms](#schematerms)|true|No description|
+
+
+## CreateOpenAgreementResponse
+
+
+<a id="schemacreateopenagreementresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "OA.1",
+    "title": "Subscription Plan A",
+    "status": "active",
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": null
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## ListAllOpenAgreementsResponse
+
+
+<a id="schemalistallopenagreementsresponse"></a>
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "OA.1",
+      "title": "Subscription Plan A",
+      "status": "active",
+      "created_at": "2017-03-20T00:53:27Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": 10000,
+          "min_amount": null
+        },
+        "per_frequency": {
+          "days": 7,
+          "max_amount": 1000000
+        }
+      },
+      "link": "https://go-sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+    },
+    {
+      "ref": "OA.2",
+      "title": "Subscription Plan B",
+      "status": "closed",
+      "created_at": "2017-03-20T00:53:27Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": 10000,
+          "min_amount": null
+        },
+        "per_frequency": {
+          "days": null,
+          "max_amount": null
+        }
+      },
+      "link": "https://go-sandbox.split.cash/open_agreements/948e3662-154d-42d1-bdc9-a05c251d3981/agreements/invitation"
+    }
+  ]
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
+
+## ActivateOpenAgreementResponse
+
+
+<a id="schemaactivateopenagreementresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "OA.1",
+    "title": "Subscription Plan A",
+    "status": "active",
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": null
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    },
+    "link": "https://go-sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## CloseOpenAgreementResponse
+
+
+<a id="schemacloseopenagreementresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "OA.1",
+    "title": "Subscription Plan A",
+    "status": "closed",
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": null
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    },
+    "link": "https://go-sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## AddASplitContactRequest
+
+
+<a id="schemaaddasplitcontactrequest"></a>
+
+
+```json
+{
+  "nickname": "outstanding_tours"
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|nickname|string|true|No description|
+
+
+## AddASplitContactResponse
+
+
+<a id="schemaaddasplitcontactresponse"></a>
+
+
+```json
+{
+  "data": {
+    "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
+    "name": "Oustanding Tours Pty Ltd",
+    "email": null,
+    "type": "Split account",
+    "bank_account": {
+      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+      "account_number": "947434694",
+      "branch_code": "304304",
+      "state": "verified"
+    },
+    "account": {
+      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
+      "nickname": "outstanding_tours",
+      "abn": "123456789",
+      "name": "Outstanding Tours Pty Ltd"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## ListAllContactsResponse
+
+
+<a id="schemalistallcontactsresponse"></a>
+
+
+```json
+{
+  "data": [
+    {
+      "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
+      "name": "Oustanding Tours Pty Ltd",
+      "email": null,
+      "type": "Split account",
+      "bank_account": {
+        "id": "095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc",
+        "account_number": "494307",
+        "branch_code": "435434",
+        "state": "verified"
+      },
+      "account": {
+        "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
+        "nickname": "outstanding_tours",
+        "abn": "123456789",
+        "name": "Oustanding Tours Pty Ltd"
+      }
+    },
+    {
+      "id": "49935c67-c5df-4f00-99f4-1413c18a89a0",
+      "name": "Adventure Dudes Pty Ltd",
+      "email": null,
+      "type": "Split account",
+      "bank_account": {
+        "id": "861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0",
+        "account_number": "4395959",
+        "branch_code": "068231",
+        "state": "verified"
+      },
+      "account": {
+        "id": "362f7fe8-4af2-4902-b3d7-b5ab704ef2e7",
+        "nickname": "adventure_dudes",
+        "abn": "126754389",
+        "name": "Adventure Dudes Pty Ltd"
+      }
+    },
+    {
+      "id": "eb3266f9-e172-4b6c-b802-fe5ac4d3250a",
+      "name": "Surfing World Pty Ltd",
+      "email": null,
+      "type": "Split account",
+      "bank_account": {
+        "id": "N/A",
+        "account_number": "N/A",
+        "branch_code": "N/A",
+        "state": "disabled"
+      },
+      "account": {
+        "id": "a31dc907-9c7a-4736-84c9-1149cf03de42",
+        "nickname": "surfing_world",
+        "abn": "295443789",
+        "name": "Surfing World Pty Ltd"
+      }
+    },
+    {
+      "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
+      "name": "Hunter Thompson",
+      "email": "hunter@batcountry.com",
+      "type": "anyone",
+      "bank_account": {
+        "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+        "account_number": "123456789",
+        "branch_code": "123456",
+        "state": "pending_verification"
+      },
+      "anyone_account": {
+        "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
+      }
+    }
+  ]
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
+
+## AddAnAnyoneContactRequest
+
+
+<a id="schemaaddananyonecontactrequest"></a>
+
+
+```json
+{
+  "name": "Hunter Thompson",
+  "email": "hunter@batcountry.com",
+  "branch_code": "123456",
+  "account_number": "123456789"
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|name|string|true|No description|
+|email|string|true|No description|
+|branch_code|string|true|No description|
+|account_number|string|true|No description|
+
+
+## AddAnAnyoneContactResponse
+
+
+<a id="schemaaddananyonecontactresponse"></a>
+
+
+```json
+{
+  "data": {
+    "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
+    "name": "Hunter Thompson",
+    "email": "hunter@batcountry.com",
+    "type": "anyone",
+    "bank_account": {
+      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+      "account_number": "123456789",
+      "branch_code": "123456",
+      "state": "pending_verification"
+    },
+    "anyone_account": {
+      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## GetAContactResponse
+
+
+<a id="schemagetacontactresponse"></a>
+
+
+```json
+{
+  "data": {
+    "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
+    "name": "Oustanding Tours Pty Ltd",
+    "email": null,
+    "type": "Split account",
+    "bank_account": {
+      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+      "account_number": "947434694",
+      "branch_code": "304304",
+      "state": "pending_verification"
+    },
+    "account": {
+      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
+      "nickname": "outstanding_tours",
+      "abn": "123456789",
+      "name": "Outstanding Tours Pty Ltd"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## UpdateAContactRequest
+
+
+<a id="schemaupdateacontactrequest"></a>
+
+
+```json
+{
+  "name": "My very own alias"
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|name|string|true|No description|
+
+
+## UpdateAContactResponse
+
+
+<a id="schemaupdateacontactresponse"></a>
+
+
+```json
+{
+  "data": {
+    "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
+    "name": "My very own alias",
+    "email": null,
+    "type": "Split account",
+    "bank_account": {
+      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+      "account_number": "947434694",
+      "branch_code": "304304",
+      "state": "pending_verification"
+    },
+    "account": {
+      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
+      "nickname": "outstanding_tours",
+      "abn": "123456789",
+      "name": "Outstanding Tours Pty Ltd"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## MakeAPaymentRequest
+
+
+<a id="schemamakeapaymentrequest"></a>
+
+
+```json
+{
+  "description": "The SuperPackage",
+  "matures_at": "2016-09-13T00:00:00Z",
+  "payouts": [
+    {
+      "amount": 30000,
+      "description": "A tandem skydive jump SB23094",
+      "recipient_id": "48b89364-1577-4c81-ba02-96705895d457",
+      "metadata": {
+        "invoice_ref": "BILL-0001",
+        "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    },
+    {
+      "amount": 30000,
+      "description": "A scuba dive SDS5464",
+      "recipient_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+    }
+  ],
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|description|string|true|User description. Only visible to the payer|
+|matures_at|string|true|Date & time in UTC ISO8601 the payment should be processed|
+|payouts|[[Payouts](#schemapayouts)]|true|One or many contact to pay (2 recipients in this example)|
+|metadata|[Metadata](#schemametadata)|false|No description|
+
+
+## Payouts
+
+
+<a id="schemapayouts"></a>
+
+
+```json
+{
+  "amount": 30000,
+  "description": "A tandem skydive jump SB23094",
+  "recipient_id": "48b89364-1577-4c81-ba02-96705895d457",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|amount|number|true|Amount in cents to pay the recipient|
+|description|string|true|Description that both the payer an recipient can see|
+|recipient_id|string|true|Contact to pay (`Contact.id`)|
+|metadata|[Metadata](#schemametadata)|false|No description|
+
+
+## Metadata
+
+
+<a id="schemametadata"></a>
+
+
+```json
+{
+  "custom_key": "Custom string",
+  "another_custom_key": "Maybe a URL"
+}
+```
+
+
+### Properties
+
+
+*None*
+
+
+## MakeAPaymentResponse
+
+
+<a id="schemamakeapaymentresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "PB.1",
+    "payouts": [
+      {
+        "ref": "D.1",
+        "invoice_ref": "BILL-0001",
+        "batch_description": "The SuperPackage",
+        "matures_at": "2016-09-13T23:50:44Z",
+        "created_at": "2016-09-10T23:50:44Z",
+        "status": "maturing",
+        "amount": 30000,
+        "description": "A tandem skydive jump SB23094",
+        "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
+        "to_id": "48b89364-1577-4c81-ba02-96705895d457",
+        "metadata": {
+          "invoice_ref": "BILL-0001",
+          "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
+          "custom_key": "Custom string",
+          "another_custom_key": "Maybe a URL"
+        }
+      },
+      {
+        "ref": "D.2",
+        "invoice_ref": null,
+        "batch_description": "The SuperPackage",
+        "matures_at": "2016-09-13T23:50:44Z",
+        "created_at": "2016-09-10T23:50:44Z",
+        "status": "maturing",
+        "amount": 30000,
+        "description": "A scuba dive SDS5464",
+        "from_id": "48b89364-1577-4c81-ba02-96705895d457",
+        "to_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+      }
+    ],
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## ApprovePaymentRequestResponse
+
+
+<a id="schemaapprovepaymentrequestresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "PR.3",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "status": "approved",
+    "responded_at": "2016-12-19T02:38:04Z",
+    "created_at": "2016-12-19T02:10:56Z",
+    "debit_ref": "D.b",
+    "payout": {
+      "amount": 99000,
+      "description": "The elite package for 4",
+      "matures_at": "2016-12-25T00:00:00Z"
+    },
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## DeclinePaymentRequestResponse
+
+
+<a id="schemadeclinepaymentrequestresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "PR.3",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "status": "declined",
+    "responded_at": "2016-12-19T02:38:04Z",
+    "created_at": "2016-12-19T02:10:56Z",
+    "debit_ref": null,
+    "payout": {
+      "amount": 99000,
+      "description": "The elite package for 4",
+      "matures_at": "2016-12-25T00:00:00Z"
+    },
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## ListAllPaymentsResponse
+
+
+<a id="schemalistallpaymentsresponse"></a>
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "PB.1",
+      "payouts": [
+        {
+          "ref": "D.1",
+          "invoice_ref": null,
+          "batch_description": "This description is only available to the payer",
+          "matures_at": "2016-09-13T23:50:44Z",
+          "created_at": "2016-09-10T23:50:44Z",
+          "status": "maturing",
+          "amount": 30000,
+          "description": "The recipient will see this description",
+          "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
+          "to_id": "48b89364-1577-4c81-ba02-96705895d457",
+          "metadata": {
+            "invoice_ref": "BILL-0001",
+            "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
+            "custom_key": "Custom string",
+            "another_custom_key": "Maybe a URL"
+          }
+        },
+        {
+          "ref": "D.2",
+          "invoice_ref": null,
+          "batch_description": "This description is only available to the payer",
+          "matures_at": "2016-09-13T23:50:44Z",
+          "created_at": "2016-09-10T23:50:44Z",
+          "status": "maturing",
+          "amount": 30000,
+          "description": "The recipient will see this description",
+          "from_id": "48b89364-1577-4c81-ba02-96705895d457",
+          "to_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+        }
+      ],
+      "metadata": {
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    }
+  ]
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
+
+## GetAPaymentResponse
+
+
+<a id="schemagetapaymentresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "PB.1",
+    "payouts": [
+      {
+        "ref": "D.1",
+        "invoice_ref": null,
+        "batch_description": "The SuperPackage",
+        "matures_at": "2016-09-13T23:50:44Z",
+        "created_at": "2016-09-10T23:50:44",
+        "status": "maturing",
+        "amount": 30000,
+        "description": "A tandem skydive jump SB23094",
+        "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
+        "to_id": "48b89364-1577-4c81-ba02-96705895d457",
+        "metadata": {
+          "invoice_ref": "BILL-0001",
+          "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
+          "custom_key": "Custom string",
+          "another_custom_key": "Maybe a URL"
+        }
+      },
+      {
+        "ref": "D.2",
+        "invoice_ref": null,
+        "batch_description": "The SuperPackage",
+        "matures_at": "2016-09-13T23:50:44Z",
+        "created_at": "2016-09-10T23:50:44Z",
+        "status": "maturing",
+        "amount": 30000,
+        "description": "A scuba dive SDS5464",
+        "from_id": "48b89364-1577-4c81-ba02-96705895d457",
+        "to_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+      }
+    ],
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## MakeAPaymentRequestRequest
+
+
+<a id="schemamakeapaymentrequestrequest"></a>
+
+
+```json
+{
+  "description": "Visible to both initiator and authoriser",
+  "matures_at": "12/19/2016 2:10:56 AM",
+  "amount": 99000,
+  "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|description|string|true|Description visible to the initiator (payee) & authoriser (payer)|
+|matures_at|string|true|Date & time in UTC ISO8601 that the payment will be processed if the request is approved|
+|amount|number|true|Amount in cents to pay the initiator|
+|authoriser_id|string|false|The Split account's bank account that will be used to pay the PR (`Contact.data.bank_account.id`)'|
+|metadata|[Metadata](#schemametadata)|false|No description|
+
+
+## MakeAPaymentRequestResponse
+
+
+<a id="schemamakeapaymentrequestresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "PR.3",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+    "status": "pending_approval",
+    "responded_at": null,
+    "created_at": "2016-12-19T02:10:56Z",
+    "credit_ref": null,
+    "payout": {
+      "amount": 99000,
+      "description": "The elite package for 4",
+      "matures_at": "2016-12-25T00:00:00Z"
+    },
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## GetAPaymentRequestResponse
+
+
+<a id="schemagetapaymentrequestresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "PR.3",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "status": "approved",
+    "responded_at": "2016-12-19T02:38:04Z",
+    "created_at": "2016-12-19T02:10:56Z",
+    "credit_ref": "C.b",
+    "payout": {
+      "amount": 99000,
+      "description": "The elite package for 4",
+      "matures_at": "2016-12-25T00:00:00Z"
+    },
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## ListIncomingPaymentRequestsResponse
+
+
+<a id="schemalistincomingpaymentrequestsresponse"></a>
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "PR.2",
+      "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "authoriser_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "status": "approved",
+      "responded_at": "2016-12-19T02:10:18Z",
+      "created_at": "2016-12-19T02:09:09Z",
+      "debit_ref": "D.a",
+      "payout": {
+        "amount": 30000,
+        "description": "The SuperPackage",
+        "matures_at": "2016-12-20T00:00:00Z"
+      }
+    },
+    {
+      "ref": "PR.3",
+      "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "authoriser_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "status": "pending_approval",
+      "responded_at": null,
+      "created_at": "2016-12-19T02:10:56Z",
+      "debit_ref": null,
+      "payout": {
+        "amount": 99000,
+        "description": "The elite package for 4",
+        "matures_at": "2016-12-25T00:00:00Z"
+      },
+      "metadata": {
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    }
+  ]
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
+
+## ListOutgoingPaymentRequestsResponse
+
+
+<a id="schemalistoutgoingpaymentrequestsresponse"></a>
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "PR.4",
+      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "status": "approved",
+      "responded_at": "2016-12-19T02:10:18Z",
+      "created_at": "2016-12-19T02:09:09Z",
+      "credit_ref": "C.a",
+      "payout": {
+        "amount": 30000,
+        "description": "The SuperPackage",
+        "matures_at": "2016-12-20T00:00:00Z"
+      }
+    },
+    {
+      "ref": "PR.5",
+      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "status": "pending_approval",
+      "responded_at": null,
+      "created_at": "2016-12-19T02:10:56Z",
+      "credit_ref": null,
+      "payout": {
+        "amount": 99000,
+        "description": "The elite package for 4",
+        "matures_at": "2016-12-25T00:00:00Z"
+      }
+    }
+  ]
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
+
+## GetAPaymentRequestsHistoryResponse
+
+
+<a id="schemagetapaymentrequestshistoryresponse"></a>
+
+
+```json
+{
+  "data": [
+    {
+      "type": "payout_request",
+      "event": "requested",
+      "at": "2017-01-05T07:47:45Z",
+      "ref": "PR.3",
+      "by": "Fancy Pants (fancy_pants)"
+    },
+    {
+      "type": "payout_request",
+      "event": "approved",
+      "at": "2017-01-07T06:13:52Z",
+      "ref": "PR.3",
+      "by": "Lycra Co (lycra_co)"
+    },
+    {
+      "type": "debit",
+      "event": "scheduled",
+      "at": "2017-01-07T06:13:52Z",
+      "ref": "D.n",
+      "by": "Split Payments"
+    },
+    {
+      "type": "credit",
+      "event": "scheduled",
+      "at": "2017-01-07T06:13:52Z",
+      "ref": "C.e",
+      "by": "Split Payments"
+    },
+    {
+      "type": "debit",
+      "event": "matured",
+      "at": "2017-01-08T04:30:14Z",
+      "ref": "D.n",
+      "by": "Split Payments"
+    },
+    {
+      "type": "debit",
+      "event": "processing",
+      "at": "2017-01-08T04:30:14Z",
+      "ref": "D.n",
+      "by": "Split Payments"
+    },
+    {
+      "type": "debit",
+      "event": "clearing",
+      "at": "2017-01-08T19:02:20Z",
+      "ref": "D.n",
+      "by": "Split Payments"
+    },
+    {
+      "type": "debit",
+      "event": "cleared",
+      "at": "2017-01-11T19:07:52Z",
+      "ref": "D.n",
+      "by": "Split Payments"
+    },
+    {
+      "type": "credit",
+      "event": "matured",
+      "at": "2017-01-11T19:07:52Z",
+      "ref": "C.e",
+      "by": "Split Payments"
+    },
+    {
+      "type": "credit",
+      "event": "processing",
+      "at": "2017-01-12T04:30:25Z",
+      "ref": "C.e",
+      "by": "Split Payments"
+    },
+    {
+      "type": "credit",
+      "event": "clearing",
+      "at": "2017-01-12T05:17:32Z",
+      "ref": "C.e",
+      "by": "Split Payments"
+    },
+    {
+      "type": "credit",
+      "event": "cleared",
+      "at": "2017-01-15T05:27:12Z",
+      "ref": "C.e",
+      "by": "Split Payments"
+    }
+  ]
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
+
+## IssueARefundRequest
+
+
+<a id="schemaissuearefundrequest"></a>
+
+
+```json
+{
+  "amount": 500,
+  "reason": "Because reason",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|amount|number|true|Amount in cents refund|
+|reason|string|false|Reason for the refund. Visible to both parties.|
+|metadata|[Metadata](#schemametadata)|false|No description|
+
+
+## IssueARefundResponse
+
+
+<a id="schemaissuearefundresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "PRF.1",
+    "for_ref": "C.59",
+    "debit_ref": "D.hi",
+    "created_at": "2017-05-08T07:20:24Z",
+    "amount": 500,
+    "reason": "Because reason",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## ListIncomingRefundsResponse
+
+
+<a id="schemalistincomingrefundsresponse"></a>
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "PRF.2",
+      "for_ref": "D.5",
+      "credit_ref": "C.q",
+      "created_at": "2017-05-09T04:45:26Z",
+      "amount": 5,
+      "reason": "Because reason",
+      "metadata": {
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    }
+  ]
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
+
+## ListOutgoingRefundsResponse
+
+
+<a id="schemalistoutgoingrefundsresponse"></a>
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "PRF.2",
+      "for_ref": "C.5",
+      "debit_ref": "D.5a",
+      "created_at": "2017-05-09T04:45:26Z",
+      "amount": 5,
+      "reason": "Because reason",
+      "metadata": {
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    }
+  ]
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
+
+## RetrieveARefundResponse
+
+
+<a id="schemaretrievearefundresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "PRF.1",
+    "for_ref": "C.59",
+    "debit_ref": "D.hi",
+    "created_at": "2017-05-08T07:20:24Z",
+    "amount": 500,
+    "reason": "Because reason",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## RequestARefundRequest
+
+
+<a id="schemarequestarefundrequest"></a>
+
+
+```json
+{
+  "for_ref": "D.1",
+  "amount": 500,
+  "reason": "Because reason",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|for_ref|string|true|The Payout debit reference to refund against|
+|amount|number|true|Amount in cents to request from the original payout recipient|
+|reason|string|false|Reason for the refund request. Visible to both parties.|
+|metadata|[Metadata](#schemametadata)|false|No description|
+
+
+## RequestARefundResponse
+
+
+<a id="schemarequestarefundresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "RR.2",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "status": "pending_approval",
+    "responded_at": null,
+    "created_at": "2016-12-19T04:34:38Z",
+    "for_ref": "D.1",
+    "credit_ref": null,
+    "amount": 500,
+    "reason": "Because reasons",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## RetrieveARefundRequestResponse
+
+
+<a id="schemaretrievearefundrequestresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "RR.2",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "status": "pending_approval",
+    "responded_at": null,
+    "created_at": "2016-12-19T04:34:38Z",
+    "for_ref": "D.1",
+    "credit_ref": null,
+    "amount": 10000,
+    "reason": "Because reasons",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## ApprovePayoutRefundRequestResponse
+
+
+<a id="schemaapprovepayoutrefundrequestresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "RR.2",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "status": "approved",
+    "responded_at": "2016-12-19T04:42:59Z",
+    "created_at": "2016-12-19T04:34:38Z",
+    "for_ref": "C.1",
+    "debit_ref": "D.2c3",
+    "amount": 100,
+    "reason": "Because reasons",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## DeclinePayoutRefundRequestResponse
+
+
+<a id="schemadeclinepayoutrefundrequestresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "RR.2",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "status": "declined",
+    "responded_at": "2016-12-19T04:42:59Z",
+    "created_at": "2016-12-19T04:34:38Z",
+    "for_ref": "D.1",
+    "debit_ref": null,
+    "amount": 100,
+    "reason": "Because reasons",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## ListIncomingRefundRequestsResponse
+
+
+<a id="schemalistincomingrefundrequestsresponse"></a>
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "RR.2",
+      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "status": "approved",
+      "responded_at": "2016-12-19T04:42:59Z",
+      "created_at": "2016-12-19T04:34:38Z",
+      "for_ref": "C.1",
+      "debit_ref": "D.2c3",
+      "amount": 100,
+      "reason": "Because reasons",
+      "metadata": {
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    }
+  ]
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
+
+## ListOutgoingRefundRequestsResponse
+
+
+<a id="schemalistoutgoingrefundrequestsresponse"></a>
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "RR.2",
+      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "status": "pending_approval",
+      "responded_at": null,
+      "created_at": "2016-12-19T04:34:38Z",
+      "for_ref": "D.1",
+      "credit_ref": null,
+      "amount": 10000,
+      "reason": "Because reasons",
+      "metadata": {
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    }
+  ]
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
+
+## ListAllTransactionsResponse
+
+
+<a id="schemalistalltransactionsresponse"></a>
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "D.3",
+      "parent_ref": null,
+      "type": "debit",
+      "category": "payout_refund",
+      "created_at": "2016-12-07T23:15:00Z",
+      "matures_at": "2016-12-10T23:15:00Z",
+      "cleared_at": null,
+      "bank_ref": null,
+      "status": "Pending",
+      "party_name": "Sanford-Rees",
+      "party_nickname": "sanford-rees-8",
+      "description": null,
+      "amount": 1
+    },
+    {
+      "ref": "D.2",
+      "parent_ref": "PB.2",
+      "type": "debit",
+      "category": "payout",
+      "created_at": "2016-12-06T23:15:00Z",
+      "matures_at": "2016-12-09T23:15:00Z",
+      "cleared_at": null,
+      "bank_ref": null,
+      "status": " Pending",
+      "party_name": "Gutmann-Schmidt",
+      "party_nickname": "gutmann-schmidt-6",
+      "description": null,
+      "amount": 1
+    },
+    {
+      "ref": "C.2",
+      "parent_ref": null,
+      "type": "credit",
+      "category": "payout",
+      "created_at": "2016-12-05T23:15:00Z",
+      "matures_at": "2016-12-06T23:15:00Z",
+      "cleared_at": "2016-12-09T23:15:00Z",
+      "bank_ref": "CT.1",
+      "status": "Pending",
+      "party_name": "Price and Sons",
+      "party_nickname": "price-and-sons-2",
+      "description": "Money for jam",
+      "amount": 1
+    }
+  ]
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
+
+## GetUserDetailsResponse
+
+
+<a id="schemagetuserdetailsresponse"></a>
+
+
+```json
+{
+  "data": {
+    "first_name": "Bear",
+    "last_name": "Dog",
+    "mobile_phone": "0456945832",
+    "email": "bear@dog.com",
+    "account": {
+      "name": "Dog Bones Inc",
+      "nickname": "dog-bones-inc",
+      "abn": "129959040",
+      "phone": "0418495033",
+      "street_address": "98 Acme Avenue",
+      "suburb": "Lead",
+      "state": "NSW",
+      "postcode": "2478"
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
 
