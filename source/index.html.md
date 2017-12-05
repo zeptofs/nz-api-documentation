@@ -484,7 +484,7 @@ Agreements are therefore broken up by direction:
 
 ```shell
 # You can also use wget
-curl -X POST https://api-sandbox.split.cash//agreements \
+curl -X POST https://api-sandbox.split.cash/agreements \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'
 
@@ -493,7 +493,7 @@ curl -X POST https://api-sandbox.split.cash//agreements \
 
 
 ```http
-POST https://api-sandbox.split.cash//agreements HTTP/1.1
+POST https://api-sandbox.split.cash/agreements HTTP/1.1
 Host: api-sandbox.split.cash
 Content-Type: application/json
 Accept: application/json
@@ -512,7 +512,7 @@ var headers = {
 
 
 $.ajax({
-  url: 'https://api-sandbox.split.cash//agreements',
+  url: 'https://api-sandbox.split.cash/agreements',
   method: 'post',
 
 
@@ -549,7 +549,7 @@ const headers = {
 };
 
 
-fetch('https://api-sandbox.split.cash//agreements',
+fetch('https://api-sandbox.split.cash/agreements',
 {
   method: 'POST',
   body: inputBody,
@@ -576,7 +576,7 @@ headers = {
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash//agreements',
+result = RestClient.post 'https://api-sandbox.split.cash/agreements',
   params: {
   }, headers: headers
 
@@ -595,7 +595,7 @@ headers = {
 }
 
 
-r = requests.post('https://api-sandbox.split.cash//agreements', params={
+r = requests.post('https://api-sandbox.split.cash/agreements', params={
 
 
 }, headers = headers)
@@ -608,7 +608,7 @@ print r.json()
 
 
 ```java
-URL obj = new URL("https://api-sandbox.split.cash//agreements");
+URL obj = new URL("https://api-sandbox.split.cash/agreements");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("POST");
 int responseCode = con.getResponseCode();
@@ -714,7 +714,7 @@ Propose an Agreement to another Split Contact
 
 ```shell
 # You can also use wget
-curl -X POST https://api-sandbox.split.cash//agreements/{agreement_ref}/accept \
+curl -X POST https://api-sandbox.split.cash/agreements/{agreement_ref}/accept \
   -H 'Accept: application/json'
 
 
@@ -722,7 +722,7 @@ curl -X POST https://api-sandbox.split.cash//agreements/{agreement_ref}/accept \
 
 
 ```http
-POST https://api-sandbox.split.cash//agreements/{agreement_ref}/accept HTTP/1.1
+POST https://api-sandbox.split.cash/agreements/{agreement_ref}/accept HTTP/1.1
 Host: api-sandbox.split.cash
 
 
@@ -741,7 +741,7 @@ var headers = {
 
 
 $.ajax({
-  url: 'https://api-sandbox.split.cash//agreements/{agreement_ref}/accept',
+  url: 'https://api-sandbox.split.cash/agreements/{agreement_ref}/accept',
   method: 'post',
 
 
@@ -766,7 +766,7 @@ const headers = {
 };
 
 
-fetch('https://api-sandbox.split.cash//agreements/{agreement_ref}/accept',
+fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}/accept',
 {
   method: 'POST',
 
@@ -793,7 +793,7 @@ headers = {
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash//agreements/{agreement_ref}/accept',
+result = RestClient.post 'https://api-sandbox.split.cash/agreements/{agreement_ref}/accept',
   params: {
   }, headers: headers
 
@@ -811,7 +811,7 @@ headers = {
 }
 
 
-r = requests.post('https://api-sandbox.split.cash//agreements/{agreement_ref}/accept', params={
+r = requests.post('https://api-sandbox.split.cash/agreements/{agreement_ref}/accept', params={
 
 
 }, headers = headers)
@@ -824,7 +824,7 @@ print r.json()
 
 
 ```java
-URL obj = new URL("https://api-sandbox.split.cash//agreements/{agreement_ref}/accept");
+URL obj = new URL("https://api-sandbox.split.cash/agreements/{agreement_ref}/accept");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("POST");
 int responseCode = con.getResponseCode();
@@ -902,7 +902,7 @@ Approve an incoming Agreement
 
 ```shell
 # You can also use wget
-curl -X POST https://api-sandbox.split.cash//agreements/{agreement_ref}/decline \
+curl -X POST https://api-sandbox.split.cash/agreements/{agreement_ref}/decline \
   -H 'Accept: application/json'
 
 
@@ -910,7 +910,7 @@ curl -X POST https://api-sandbox.split.cash//agreements/{agreement_ref}/decline 
 
 
 ```http
-POST https://api-sandbox.split.cash//agreements/{agreement_ref}/decline HTTP/1.1
+POST https://api-sandbox.split.cash/agreements/{agreement_ref}/decline HTTP/1.1
 Host: api-sandbox.split.cash
 
 
@@ -929,7 +929,7 @@ var headers = {
 
 
 $.ajax({
-  url: 'https://api-sandbox.split.cash//agreements/{agreement_ref}/decline',
+  url: 'https://api-sandbox.split.cash/agreements/{agreement_ref}/decline',
   method: 'post',
 
 
@@ -954,7 +954,7 @@ const headers = {
 };
 
 
-fetch('https://api-sandbox.split.cash//agreements/{agreement_ref}/decline',
+fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}/decline',
 {
   method: 'POST',
 
@@ -981,7 +981,7 @@ headers = {
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash//agreements/{agreement_ref}/decline',
+result = RestClient.post 'https://api-sandbox.split.cash/agreements/{agreement_ref}/decline',
   params: {
   }, headers: headers
 
@@ -999,7 +999,7 @@ headers = {
 }
 
 
-r = requests.post('https://api-sandbox.split.cash//agreements/{agreement_ref}/decline', params={
+r = requests.post('https://api-sandbox.split.cash/agreements/{agreement_ref}/decline', params={
 
 
 }, headers = headers)
@@ -1012,7 +1012,7 @@ print r.json()
 
 
 ```java
-URL obj = new URL("https://api-sandbox.split.cash//agreements/{agreement_ref}/decline");
+URL obj = new URL("https://api-sandbox.split.cash/agreements/{agreement_ref}/decline");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("POST");
 int responseCode = con.getResponseCode();
@@ -1090,7 +1090,7 @@ Decline an incoming Agreement
 
 ```shell
 # You can also use wget
-curl -X GET https://api-sandbox.split.cash//agreements/{agreement_ref} \
+curl -X GET https://api-sandbox.split.cash/agreements/{agreement_ref} \
   -H 'Accept: application/json'
 
 
@@ -1098,7 +1098,7 @@ curl -X GET https://api-sandbox.split.cash//agreements/{agreement_ref} \
 
 
 ```http
-GET https://api-sandbox.split.cash//agreements/{agreement_ref} HTTP/1.1
+GET https://api-sandbox.split.cash/agreements/{agreement_ref} HTTP/1.1
 Host: api-sandbox.split.cash
 
 
@@ -1117,7 +1117,7 @@ var headers = {
 
 
 $.ajax({
-  url: 'https://api-sandbox.split.cash//agreements/{agreement_ref}',
+  url: 'https://api-sandbox.split.cash/agreements/{agreement_ref}',
   method: 'get',
 
 
@@ -1142,7 +1142,7 @@ const headers = {
 };
 
 
-fetch('https://api-sandbox.split.cash//agreements/{agreement_ref}',
+fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}',
 {
   method: 'GET',
 
@@ -1169,7 +1169,7 @@ headers = {
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash//agreements/{agreement_ref}',
+result = RestClient.get 'https://api-sandbox.split.cash/agreements/{agreement_ref}',
   params: {
   }, headers: headers
 
@@ -1187,7 +1187,7 @@ headers = {
 }
 
 
-r = requests.get('https://api-sandbox.split.cash//agreements/{agreement_ref}', params={
+r = requests.get('https://api-sandbox.split.cash/agreements/{agreement_ref}', params={
 
 
 }, headers = headers)
@@ -1200,7 +1200,7 @@ print r.json()
 
 
 ```java
-URL obj = new URL("https://api-sandbox.split.cash//agreements/{agreement_ref}");
+URL obj = new URL("https://api-sandbox.split.cash/agreements/{agreement_ref}");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("GET");
 int responseCode = con.getResponseCode();
@@ -1278,14 +1278,14 @@ Get a single Agreement by its reference
 
 ```shell
 # You can also use wget
-curl -X DELETE https://api-sandbox.split.cash//agreements/{agreement_ref}
+curl -X DELETE https://api-sandbox.split.cash/agreements/{agreement_ref}
 
 
 ```
 
 
 ```http
-DELETE https://api-sandbox.split.cash//agreements/{agreement_ref} HTTP/1.1
+DELETE https://api-sandbox.split.cash/agreements/{agreement_ref} HTTP/1.1
 Host: api-sandbox.split.cash
 
 
@@ -1296,7 +1296,7 @@ Host: api-sandbox.split.cash
 
 
 $.ajax({
-  url: 'https://api-sandbox.split.cash//agreements/{agreement_ref}',
+  url: 'https://api-sandbox.split.cash/agreements/{agreement_ref}',
   method: 'delete',
 
 
@@ -1313,7 +1313,7 @@ $.ajax({
 const request = require('node-fetch');
 
 
-fetch('https://api-sandbox.split.cash//agreements/{agreement_ref}',
+fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}',
 {
   method: 'DELETE'
 
@@ -1334,7 +1334,7 @@ require 'rest-client'
 require 'json'
 
 
-result = RestClient.delete 'https://api-sandbox.split.cash//agreements/{agreement_ref}',
+result = RestClient.delete 'https://api-sandbox.split.cash/agreements/{agreement_ref}',
   params: {
   }
 
@@ -1349,7 +1349,7 @@ p JSON.parse(result)
 import requests
 
 
-r = requests.delete('https://api-sandbox.split.cash//agreements/{agreement_ref}', params={
+r = requests.delete('https://api-sandbox.split.cash/agreements/{agreement_ref}', params={
 
 
 )
@@ -1362,7 +1362,7 @@ print r.json()
 
 
 ```java
-URL obj = new URL("https://api-sandbox.split.cash//agreements/{agreement_ref}");
+URL obj = new URL("https://api-sandbox.split.cash/agreements/{agreement_ref}");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("DELETE");
 int responseCode = con.getResponseCode();
@@ -1413,7 +1413,7 @@ An agreement can be cancelled by the initiator at any time whilst the authoriser
 
 ```shell
 # You can also use wget
-curl -X GET https://api-sandbox.split.cash//agreements/incoming \
+curl -X GET https://api-sandbox.split.cash/agreements/incoming \
   -H 'Accept: application/json'
 
 
@@ -1421,7 +1421,7 @@ curl -X GET https://api-sandbox.split.cash//agreements/incoming \
 
 
 ```http
-GET https://api-sandbox.split.cash//agreements/incoming HTTP/1.1
+GET https://api-sandbox.split.cash/agreements/incoming HTTP/1.1
 Host: api-sandbox.split.cash
 
 
@@ -1440,7 +1440,7 @@ var headers = {
 
 
 $.ajax({
-  url: 'https://api-sandbox.split.cash//agreements/incoming',
+  url: 'https://api-sandbox.split.cash/agreements/incoming',
   method: 'get',
 
 
@@ -1465,7 +1465,7 @@ const headers = {
 };
 
 
-fetch('https://api-sandbox.split.cash//agreements/incoming',
+fetch('https://api-sandbox.split.cash/agreements/incoming',
 {
   method: 'GET',
 
@@ -1492,7 +1492,7 @@ headers = {
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash//agreements/incoming',
+result = RestClient.get 'https://api-sandbox.split.cash/agreements/incoming',
   params: {
   }, headers: headers
 
@@ -1510,7 +1510,7 @@ headers = {
 }
 
 
-r = requests.get('https://api-sandbox.split.cash//agreements/incoming', params={
+r = requests.get('https://api-sandbox.split.cash/agreements/incoming', params={
 
 
 }, headers = headers)
@@ -1523,7 +1523,7 @@ print r.json()
 
 
 ```java
-URL obj = new URL("https://api-sandbox.split.cash//agreements/incoming");
+URL obj = new URL("https://api-sandbox.split.cash/agreements/incoming");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("GET");
 int responseCode = con.getResponseCode();
@@ -1634,7 +1634,7 @@ By default, all incoming agreements will be returned. You can apply filters to y
 
 ```shell
 # You can also use wget
-curl -X GET https://api-sandbox.split.cash//agreements/outgoing \
+curl -X GET https://api-sandbox.split.cash/agreements/outgoing \
   -H 'Accept: application/json'
 
 
@@ -1642,7 +1642,7 @@ curl -X GET https://api-sandbox.split.cash//agreements/outgoing \
 
 
 ```http
-GET https://api-sandbox.split.cash//agreements/outgoing HTTP/1.1
+GET https://api-sandbox.split.cash/agreements/outgoing HTTP/1.1
 Host: api-sandbox.split.cash
 
 
@@ -1661,7 +1661,7 @@ var headers = {
 
 
 $.ajax({
-  url: 'https://api-sandbox.split.cash//agreements/outgoing',
+  url: 'https://api-sandbox.split.cash/agreements/outgoing',
   method: 'get',
 
 
@@ -1686,7 +1686,7 @@ const headers = {
 };
 
 
-fetch('https://api-sandbox.split.cash//agreements/outgoing',
+fetch('https://api-sandbox.split.cash/agreements/outgoing',
 {
   method: 'GET',
 
@@ -1713,7 +1713,7 @@ headers = {
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash//agreements/outgoing',
+result = RestClient.get 'https://api-sandbox.split.cash/agreements/outgoing',
   params: {
   }, headers: headers
 
@@ -1731,7 +1731,7 @@ headers = {
 }
 
 
-r = requests.get('https://api-sandbox.split.cash//agreements/outgoing', params={
+r = requests.get('https://api-sandbox.split.cash/agreements/outgoing', params={
 
 
 }, headers = headers)
@@ -1744,7 +1744,7 @@ print r.json()
 
 
 ```java
-URL obj = new URL("https://api-sandbox.split.cash//agreements/outgoing");
+URL obj = new URL("https://api-sandbox.split.cash/agreements/outgoing");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("GET");
 int responseCode = con.getResponseCode();
@@ -1869,7 +1869,7 @@ There are a few IDs supplied within a Contact's response:
 
 ```shell
 # You can also use wget
-curl -X POST https://api-sandbox.split.cash//contacts \
+curl -X POST https://api-sandbox.split.cash/contacts \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'
 
@@ -1878,7 +1878,7 @@ curl -X POST https://api-sandbox.split.cash//contacts \
 
 
 ```http
-POST https://api-sandbox.split.cash//contacts HTTP/1.1
+POST https://api-sandbox.split.cash/contacts HTTP/1.1
 Host: api-sandbox.split.cash
 Content-Type: application/json
 Accept: application/json
@@ -1897,7 +1897,7 @@ var headers = {
 
 
 $.ajax({
-  url: 'https://api-sandbox.split.cash//contacts',
+  url: 'https://api-sandbox.split.cash/contacts',
   method: 'post',
 
 
@@ -1924,7 +1924,7 @@ const headers = {
 };
 
 
-fetch('https://api-sandbox.split.cash//contacts',
+fetch('https://api-sandbox.split.cash/contacts',
 {
   method: 'POST',
   body: inputBody,
@@ -1951,7 +1951,7 @@ headers = {
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash//contacts',
+result = RestClient.post 'https://api-sandbox.split.cash/contacts',
   params: {
   }, headers: headers
 
@@ -1970,7 +1970,7 @@ headers = {
 }
 
 
-r = requests.post('https://api-sandbox.split.cash//contacts', params={
+r = requests.post('https://api-sandbox.split.cash/contacts', params={
 
 
 }, headers = headers)
@@ -1983,7 +1983,7 @@ print r.json()
 
 
 ```java
-URL obj = new URL("https://api-sandbox.split.cash//contacts");
+URL obj = new URL("https://api-sandbox.split.cash/contacts");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("POST");
 int responseCode = con.getResponseCode();
@@ -2073,7 +2073,7 @@ Add a Split Contact
 
 ```shell
 # You can also use wget
-curl -X GET https://api-sandbox.split.cash//contacts \
+curl -X GET https://api-sandbox.split.cash/contacts \
   -H 'Accept: application/json'
 
 
@@ -2081,7 +2081,7 @@ curl -X GET https://api-sandbox.split.cash//contacts \
 
 
 ```http
-GET https://api-sandbox.split.cash//contacts HTTP/1.1
+GET https://api-sandbox.split.cash/contacts HTTP/1.1
 Host: api-sandbox.split.cash
 
 
@@ -2100,7 +2100,7 @@ var headers = {
 
 
 $.ajax({
-  url: 'https://api-sandbox.split.cash//contacts',
+  url: 'https://api-sandbox.split.cash/contacts',
   method: 'get',
 
 
@@ -2125,7 +2125,7 @@ const headers = {
 };
 
 
-fetch('https://api-sandbox.split.cash//contacts',
+fetch('https://api-sandbox.split.cash/contacts',
 {
   method: 'GET',
 
@@ -2152,7 +2152,7 @@ headers = {
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash//contacts',
+result = RestClient.get 'https://api-sandbox.split.cash/contacts',
   params: {
   }, headers: headers
 
@@ -2170,7 +2170,7 @@ headers = {
 }
 
 
-r = requests.get('https://api-sandbox.split.cash//contacts', params={
+r = requests.get('https://api-sandbox.split.cash/contacts', params={
 
 
 }, headers = headers)
@@ -2183,7 +2183,7 @@ print r.json()
 
 
 ```java
-URL obj = new URL("https://api-sandbox.split.cash//contacts");
+URL obj = new URL("https://api-sandbox.split.cash/contacts");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("GET");
 int responseCode = con.getResponseCode();
@@ -2319,7 +2319,7 @@ By default, all contacts will be returned. You can apply filters to your query t
 
 ```shell
 # You can also use wget
-curl -X POST https://api-sandbox.split.cash//contacts/new/anyone \
+curl -X POST https://api-sandbox.split.cash/contacts/new/anyone \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'
 
@@ -2328,7 +2328,7 @@ curl -X POST https://api-sandbox.split.cash//contacts/new/anyone \
 
 
 ```http
-POST https://api-sandbox.split.cash//contacts/new/anyone HTTP/1.1
+POST https://api-sandbox.split.cash/contacts/new/anyone HTTP/1.1
 Host: api-sandbox.split.cash
 Content-Type: application/json
 Accept: application/json
@@ -2347,7 +2347,7 @@ var headers = {
 
 
 $.ajax({
-  url: 'https://api-sandbox.split.cash//contacts/new/anyone',
+  url: 'https://api-sandbox.split.cash/contacts/new/anyone',
   method: 'post',
 
 
@@ -2377,7 +2377,7 @@ const headers = {
 };
 
 
-fetch('https://api-sandbox.split.cash//contacts/new/anyone',
+fetch('https://api-sandbox.split.cash/contacts/new/anyone',
 {
   method: 'POST',
   body: inputBody,
@@ -2404,7 +2404,7 @@ headers = {
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash//contacts/new/anyone',
+result = RestClient.post 'https://api-sandbox.split.cash/contacts/new/anyone',
   params: {
   }, headers: headers
 
@@ -2423,7 +2423,7 @@ headers = {
 }
 
 
-r = requests.post('https://api-sandbox.split.cash//contacts/new/anyone', params={
+r = requests.post('https://api-sandbox.split.cash/contacts/new/anyone', params={
 
 
 }, headers = headers)
@@ -2436,7 +2436,7 @@ print r.json()
 
 
 ```java
-URL obj = new URL("https://api-sandbox.split.cash//contacts/new/anyone");
+URL obj = new URL("https://api-sandbox.split.cash/contacts/new/anyone");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("POST");
 int responseCode = con.getResponseCode();
@@ -2533,7 +2533,7 @@ When you want to pay somebody that doesn't have a Split account, you can add the
 
 ```shell
 # You can also use wget
-curl -X GET https://api-sandbox.split.cash//contacts/{id} \
+curl -X GET https://api-sandbox.split.cash/contacts/{id} \
   -H 'Accept: application/json'
 
 
@@ -2541,7 +2541,7 @@ curl -X GET https://api-sandbox.split.cash//contacts/{id} \
 
 
 ```http
-GET https://api-sandbox.split.cash//contacts/{id} HTTP/1.1
+GET https://api-sandbox.split.cash/contacts/{id} HTTP/1.1
 Host: api-sandbox.split.cash
 
 
@@ -2560,7 +2560,7 @@ var headers = {
 
 
 $.ajax({
-  url: 'https://api-sandbox.split.cash//contacts/{id}',
+  url: 'https://api-sandbox.split.cash/contacts/{id}',
   method: 'get',
 
 
@@ -2585,7 +2585,7 @@ const headers = {
 };
 
 
-fetch('https://api-sandbox.split.cash//contacts/{id}',
+fetch('https://api-sandbox.split.cash/contacts/{id}',
 {
   method: 'GET',
 
@@ -2612,7 +2612,7 @@ headers = {
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash//contacts/{id}',
+result = RestClient.get 'https://api-sandbox.split.cash/contacts/{id}',
   params: {
   }, headers: headers
 
@@ -2630,7 +2630,7 @@ headers = {
 }
 
 
-r = requests.get('https://api-sandbox.split.cash//contacts/{id}', params={
+r = requests.get('https://api-sandbox.split.cash/contacts/{id}', params={
 
 
 }, headers = headers)
@@ -2643,7 +2643,7 @@ print r.json()
 
 
 ```java
-URL obj = new URL("https://api-sandbox.split.cash//contacts/{id}");
+URL obj = new URL("https://api-sandbox.split.cash/contacts/{id}");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("GET");
 int responseCode = con.getResponseCode();
@@ -2722,14 +2722,14 @@ Get a single Contact by its ID
 
 ```shell
 # You can also use wget
-curl -X DELETE https://api-sandbox.split.cash//contacts/{id}
+curl -X DELETE https://api-sandbox.split.cash/contacts/{id}
 
 
 ```
 
 
 ```http
-DELETE https://api-sandbox.split.cash//contacts/{id} HTTP/1.1
+DELETE https://api-sandbox.split.cash/contacts/{id} HTTP/1.1
 Host: api-sandbox.split.cash
 
 
@@ -2740,7 +2740,7 @@ Host: api-sandbox.split.cash
 
 
 $.ajax({
-  url: 'https://api-sandbox.split.cash//contacts/{id}',
+  url: 'https://api-sandbox.split.cash/contacts/{id}',
   method: 'delete',
 
 
@@ -2757,7 +2757,7 @@ $.ajax({
 const request = require('node-fetch');
 
 
-fetch('https://api-sandbox.split.cash//contacts/{id}',
+fetch('https://api-sandbox.split.cash/contacts/{id}',
 {
   method: 'DELETE'
 
@@ -2778,7 +2778,7 @@ require 'rest-client'
 require 'json'
 
 
-result = RestClient.delete 'https://api-sandbox.split.cash//contacts/{id}',
+result = RestClient.delete 'https://api-sandbox.split.cash/contacts/{id}',
   params: {
   }
 
@@ -2793,7 +2793,7 @@ p JSON.parse(result)
 import requests
 
 
-r = requests.delete('https://api-sandbox.split.cash//contacts/{id}', params={
+r = requests.delete('https://api-sandbox.split.cash/contacts/{id}', params={
 
 
 )
@@ -2806,7 +2806,7 @@ print r.json()
 
 
 ```java
-URL obj = new URL("https://api-sandbox.split.cash//contacts/{id}");
+URL obj = new URL("https://api-sandbox.split.cash/contacts/{id}");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("DELETE");
 int responseCode = con.getResponseCode();
@@ -2827,7 +2827,7 @@ System.out.println(response.toString());
 `DELETE /contacts/{id}`
 
 
-<aside class="noticed">Removing a contact will not affect your transaction history.</aside>
+<aside class="notice">Removing a contact will not affect your transaction history.</aside>
 
 
 <h3 id="Remove-a-Contact-parameters" class="parameters">Parameters</h3>
@@ -2857,7 +2857,7 @@ System.out.println(response.toString());
 
 ```shell
 # You can also use wget
-curl -X PATCH https://api-sandbox.split.cash//contacts/{id} \
+curl -X PATCH https://api-sandbox.split.cash/contacts/{id} \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'
 
@@ -2866,7 +2866,7 @@ curl -X PATCH https://api-sandbox.split.cash//contacts/{id} \
 
 
 ```http
-PATCH https://api-sandbox.split.cash//contacts/{id} HTTP/1.1
+PATCH https://api-sandbox.split.cash/contacts/{id} HTTP/1.1
 Host: api-sandbox.split.cash
 Content-Type: application/json
 Accept: application/json
@@ -2885,7 +2885,7 @@ var headers = {
 
 
 $.ajax({
-  url: 'https://api-sandbox.split.cash//contacts/{id}',
+  url: 'https://api-sandbox.split.cash/contacts/{id}',
   method: 'patch',
 
 
@@ -2912,7 +2912,7 @@ const headers = {
 };
 
 
-fetch('https://api-sandbox.split.cash//contacts/{id}',
+fetch('https://api-sandbox.split.cash/contacts/{id}',
 {
   method: 'PATCH',
   body: inputBody,
@@ -2939,7 +2939,7 @@ headers = {
 }
 
 
-result = RestClient.patch 'https://api-sandbox.split.cash//contacts/{id}',
+result = RestClient.patch 'https://api-sandbox.split.cash/contacts/{id}',
   params: {
   }, headers: headers
 
@@ -2958,7 +2958,7 @@ headers = {
 }
 
 
-r = requests.patch('https://api-sandbox.split.cash//contacts/{id}', params={
+r = requests.patch('https://api-sandbox.split.cash/contacts/{id}', params={
 
 
 }, headers = headers)
@@ -2971,7 +2971,7 @@ print r.json()
 
 
 ```java
-URL obj = new URL("https://api-sandbox.split.cash//contacts/{id}");
+URL obj = new URL("https://api-sandbox.split.cash/contacts/{id}");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("PATCH");
 int responseCode = con.getResponseCode();
@@ -3057,6 +3057,15 @@ You can update the name of any Contact. This is essentially an alias you can use
 
 
 <h1 id="Split-API-Open-Agreements">Open Agreements</h1>
+
+
+An Open Agreement is essentially an Agreement template with no specific authoriser. Each time an Open Agreement is accepted by either a Split account or anyone, an Agreement is automatically created based between the Open Agreement initiator and the authoriser.
+
+
+An Open Agreement can be accepted multiple times by different parties and the result is the same: A new Agreement.
+
+
+<aside class="notice">When you close an Open Agreement, no new Agreements can be created from it.</aside>
 
 
 ## Create an Open Agreement
@@ -3212,7 +3221,7 @@ System.out.println(response.toString());
 ```
 
 
-`POST open_agreements`
+`POST /open_agreements`
 
 
 Create an Open Agreement that can be accepted by anyone
@@ -3244,7 +3253,7 @@ Create an Open Agreement that can be accepted by anyone
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |body|body|[CreateOpenAgreementRequest](#schemacreateopenagreementrequest)|true|No description|
-|» title|body|string|true|Title of the Open Agreement (Visible to authorisers)|
+|» title|body|string|false|Title of the Open Agreement (Visible to authorisers)|
 |» terms|body|[Terms](#schematerms)|true|Terms|
 |»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
 |»»» min_amount|body|number|false|Minimum amount in cents a PR can be in order to be auto-approved|
@@ -3266,8 +3275,8 @@ Create an Open Agreement that can be accepted by anyone
     "created_at": "2017-03-20T00:53:27Z",
     "terms": {
       "per_payout": {
-        "max_amount": 10000,
-        "min_amount": null
+        "min_amount": null,
+        "max_amount": 10000
       },
       "per_frequency": {
         "days": 7,
@@ -3426,7 +3435,7 @@ System.out.println(response.toString());
 ```
 
 
-`GET open_agreements`
+`GET /open_agreements`
 
 
 <h3 id="List-all-Open-Agreements-parameters" class="parameters">Parameters</h3>
@@ -3629,7 +3638,7 @@ System.out.println(response.toString());
 ```
 
 
-`POST open_agreements/{open_agreement_ref}/activate`
+`POST /open_agreements/{open_agreement_ref}/activate`
 
 
 <h3 id="Activate-a-closed-Open-Agreement-parameters" class="parameters">Parameters</h3>
@@ -3813,7 +3822,7 @@ System.out.println(response.toString());
 ```
 
 
-`POST open_agreements/{open_agreement_ref}/close`
+`POST /open_agreements/{open_agreement_ref}/close`
 
 
 <h3 id="Close-an-active-Open-Agreement-parameters" class="parameters">Parameters</h3>
@@ -4034,7 +4043,7 @@ System.out.println(response.toString());
 ```
 
 
-`POST payments`
+`POST /payments`
 
 
 > Body parameter
@@ -4282,7 +4291,7 @@ System.out.println(response.toString());
 ```
 
 
-`GET payments`
+`GET /payments`
 
 
 <h3 id="List-all-Payments-parameters" class="parameters">Parameters</h3>
@@ -4490,7 +4499,7 @@ System.out.println(response.toString());
 ```
 
 
-`GET payments/{payment_ref}`
+`GET /payments/{payment_ref}`
 
 
 Get a single payment by its reference
@@ -4679,7 +4688,7 @@ System.out.println(response.toString());
 ```
 
 
-`DELETE payouts/{debit_ref}`
+`DELETE /payouts/{debit_ref}`
 
 
 You can void any Payout debit from your account that has not yet matured. In the case where it has matured, you can send a Payment Request to the Payout recipient once the Payout has successfully cleared.
@@ -4903,7 +4912,7 @@ System.out.println(response.toString());
 ```
 
 
-`POST payment_requests`
+`POST /payment_requests`
 
 
 > Body parameter
@@ -5110,7 +5119,7 @@ System.out.println(response.toString());
 ```
 
 
-`POST payment_requests/{payment_request_ref}/approve`
+`POST /payment_requests/{payment_request_ref}/approve`
 
 
 <h3 id="Approve-a-Payment-Request-parameters" class="parameters">Parameters</h3>
@@ -5295,7 +5304,7 @@ System.out.println(response.toString());
 ```
 
 
-`POST payment_requests/{payment_request_ref}/decline`
+`POST /payment_requests/{payment_request_ref}/decline`
 
 
 <h3 id="Decline-a-Payment-Request-parameters" class="parameters">Parameters</h3>
@@ -5480,7 +5489,7 @@ System.out.println(response.toString());
 ```
 
 
-`GET payment_requests/{payment_request_ref}`
+`GET /payment_requests/{payment_request_ref}`
 
 
 <h3 id="Get-a-Payment-Request-parameters" class="parameters">Parameters</h3>
@@ -5639,7 +5648,7 @@ System.out.println(response.toString());
 ```
 
 
-`DELETE payment_requests/{payment_request_ref}`
+`DELETE /payment_requests/{payment_request_ref}`
 
 
 A PR can only be cancelled if it has not yet matured.
@@ -5800,7 +5809,7 @@ System.out.println(response.toString());
 ```
 
 
-`GET payment_requests/incoming`
+`GET /payment_requests/incoming`
 
 
 <h3 id="List-incoming-Payment-Requests-parameters" class="parameters">Parameters</h3>
@@ -6001,7 +6010,7 @@ System.out.println(response.toString());
 ```
 
 
-`GET payment_requests/outgoing`
+`GET /payment_requests/outgoing`
 
 
 <h3 id="List-outgoing-Payment-Requests-parameters" class="parameters">Parameters</h3>
@@ -6198,7 +6207,7 @@ System.out.println(response.toString());
 ```
 
 
-`GET payment_requests/{payment_request_ref}/history`
+`GET /payment_requests/{payment_request_ref}/history`
 
 
 Gives you visibility of the entire Payment Request lifecycle including the generated debit and credit transactions.
@@ -6488,7 +6497,7 @@ System.out.println(response.toString());
 ```
 
 
-`POST credits/{credit_ref}/refunds`
+`POST /credits/{credit_ref}/refunds`
 
 
 Certain rules apply to the issuance of a refund:
@@ -6693,7 +6702,7 @@ System.out.println(response.toString());
 ```
 
 
-`GET refunds/incoming`
+`GET /refunds/incoming`
 
 
 <h3 id="List-incoming-Refunds-parameters" class="parameters">Parameters</h3>
@@ -6874,7 +6883,7 @@ System.out.println(response.toString());
 ```
 
 
-`GET refunds/outgoing`
+`GET /refunds/outgoing`
 
 
 <h3 id="List-outgoing-Refunds-parameters" class="parameters">Parameters</h3>
@@ -7055,7 +7064,7 @@ System.out.println(response.toString());
 ```
 
 
-`GET refunds/{refund_ref}`
+`GET /refunds/{refund_ref}`
 
 
 Get a single Refund by its reference
@@ -7287,7 +7296,7 @@ System.out.println(response.toString());
 ```
 
 
-`POST payout_refund_requests`
+`POST /payout_refund_requests`
 
 
 Certain rules apply to the creation of a Refund Request:
@@ -7497,7 +7506,7 @@ System.out.println(response.toString());
 ```
 
 
-`POST payout_refund_requests/{payout_refund_request_ref}/approve`
+`POST /payout_refund_requests/{payout_refund_request_ref}/approve`
 
 
 <h3 id="Approve-Refund-Request-parameters" class="parameters">Parameters</h3>
@@ -7680,7 +7689,7 @@ System.out.println(response.toString());
 ```
 
 
-`POST payout_refund_requests/{payout_refund_request_ref}/decline`
+`POST /payout_refund_requests/{payout_refund_request_ref}/decline`
 
 
 <h3 id="Decline-Refund-Request-parameters" class="parameters">Parameters</h3>
@@ -7735,7 +7744,7 @@ System.out.println(response.toString());
 
 ```shell
 # You can also use wget
-curl -X GET https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref} \
+curl -X GET https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref} \
   -H 'Accept: application/json'
 
 
@@ -7743,7 +7752,7 @@ curl -X GET https://api-sandbox.split.cash//payout_refund_requests/{payout_refun
 
 
 ```http
-GET https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref} HTTP/1.1
+GET https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref} HTTP/1.1
 Host: api-sandbox.split.cash
 
 
@@ -7762,7 +7771,7 @@ var headers = {
 
 
 $.ajax({
-  url: 'https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}',
+  url: 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
   method: 'get',
 
 
@@ -7787,7 +7796,7 @@ const headers = {
 };
 
 
-fetch('https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}',
+fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
 {
   method: 'GET',
 
@@ -7814,7 +7823,7 @@ headers = {
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}',
+result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
   params: {
   }, headers: headers
 
@@ -7832,7 +7841,7 @@ headers = {
 }
 
 
-r = requests.get('https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}', params={
+r = requests.get('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', params={
 
 
 }, headers = headers)
@@ -7845,7 +7854,7 @@ print r.json()
 
 
 ```java
-URL obj = new URL("https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}");
+URL obj = new URL("https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("GET");
 int responseCode = con.getResponseCode();
@@ -7921,14 +7930,14 @@ Get a specific Refund Request by its reference
 
 ```shell
 # You can also use wget
-curl -X DELETE https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}
+curl -X DELETE https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}
 
 
 ```
 
 
 ```http
-DELETE https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref} HTTP/1.1
+DELETE https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref} HTTP/1.1
 Host: api-sandbox.split.cash
 
 
@@ -7939,7 +7948,7 @@ Host: api-sandbox.split.cash
 
 
 $.ajax({
-  url: 'https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}',
+  url: 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
   method: 'delete',
 
 
@@ -7956,7 +7965,7 @@ $.ajax({
 const request = require('node-fetch');
 
 
-fetch('https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}',
+fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
 {
   method: 'DELETE'
 
@@ -7977,7 +7986,7 @@ require 'rest-client'
 require 'json'
 
 
-result = RestClient.delete 'https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}',
+result = RestClient.delete 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
   params: {
   }
 
@@ -7992,7 +8001,7 @@ p JSON.parse(result)
 import requests
 
 
-r = requests.delete('https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}', params={
+r = requests.delete('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', params={
 
 
 )
@@ -8005,7 +8014,7 @@ print r.json()
 
 
 ```java
-URL obj = new URL("https://api-sandbox.split.cash//payout_refund_requests/{payout_refund_request_ref}");
+URL obj = new URL("https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("DELETE");
 int responseCode = con.getResponseCode();
@@ -8184,7 +8193,7 @@ System.out.println(response.toString());
 ```
 
 
-`GET payout_refund_requests/incoming`
+`GET /payout_refund_requests/incoming`
 
 
 <h3 id="List-incoming-Refund-Requests-parameters" class="parameters">Parameters</h3>
@@ -8369,7 +8378,7 @@ System.out.println(response.toString());
 ```
 
 
-`GET payout_refund_requests/outgoing`
+`GET /payout_refund_requests/outgoing`
 
 
 **Endpoint:** `/payout_refund_requests/outgoing{?page}`
@@ -8563,7 +8572,7 @@ System.out.println(response.toString());
 ```
 
 
-`GET transactions`
+`GET /transactions`
 
 
 <h3 id="List-all-transactions-parameters" class="parameters">Parameters</h3>
@@ -8821,7 +8830,7 @@ System.out.println(response.toString());
 ```
 
 
-`GET user`
+`GET /user`
 
 
 > Example responses
@@ -9263,7 +9272,7 @@ System.out.println(response.toString());
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|title|string|true|Title of the Open Agreement (Visible to authorisers)|
+|title|string|false|Title of the Open Agreement (Visible to authorisers)|
 |terms|[Terms](#schematerms)|true|No description|
 
 
@@ -9282,8 +9291,8 @@ System.out.println(response.toString());
     "created_at": "2017-03-20T00:53:27Z",
     "terms": {
       "per_payout": {
-        "max_amount": 10000,
-        "min_amount": null
+        "min_amount": null,
+        "max_amount": 10000
       },
       "per_frequency": {
         "days": 7,
