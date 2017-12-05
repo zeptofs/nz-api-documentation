@@ -658,7 +658,7 @@ Propose an Agreement to another Split Contact
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |body|body|[ProposeAgreementRequest](#schemaproposeagreementrequest)|true|No description|
-|» authoriser_id|body|string|true|The Contact's account ID (`Contact.account.id`)|
+|» authoriser_id|body|string|true|The Contact's account ID (`Contact.data.account.id`)|
 |» terms|body|[Terms](#schematerms)|true|Terms|
 |»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
 |»»» min_amount|body|number|false|Minimum amount in cents a PR can be in order to be auto-approved|
@@ -4091,7 +4091,7 @@ System.out.println(response.toString());
 |»» Payouts|body|[Payouts](#schemapayouts)|false|No description|
 |»»» amount|body|number|true|Amount in cents to pay the recipient|
 |»»» description|body|string|true|Description that both the payer an recipient can see|
-|»»» recipient_id|body|string|true|Contact to pay (`Contact.id`)|
+|»»» recipient_id|body|string|true|Contact bank account to pay (`Contact.data.bank_account.id`)|
 |»»» metadata|body|[Metadata](#schemametadata)|false|No description|
 |»» metadata|body|[Metadata](#schemametadata)|false|No description|
 
@@ -4941,7 +4941,7 @@ System.out.println(response.toString());
 |» description|body|string|true|Description visible to the initiator (payee) & authoriser (payer)|
 |» matures_at|body|string|true|Date & time in UTC ISO8601 that the payment will be processed if the request is approved|
 |» amount|body|number|true|Amount in cents to pay the initiator|
-|» authoriser_id|body|string|false|The Split account's bank account that will be used to pay the PR (`Contact.data.bank_account.id`)'|
+|» authoriser_id|body|string|false|The Contact bank account that will be used to pay the PR (`Contact.data.bank_account.id`)'|
 |» metadata|body|[Metadata](#schemametadata)|false|No description|
 
 
@@ -8897,7 +8897,7 @@ System.out.println(response.toString());
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|authoriser_id|string|true|The Contact's account ID (`Contact.account.id`)|
+|authoriser_id|string|true|The Contact's account ID (`Contact.data.account.id`)|
 |terms|[Terms](#schematerms)|true|No description|
 
 
@@ -9824,7 +9824,7 @@ System.out.println(response.toString());
 |---|---|---|---|
 |amount|number|true|Amount in cents to pay the recipient|
 |description|string|true|Description that both the payer an recipient can see|
-|recipient_id|string|true|Contact to pay (`Contact.id`)|
+|recipient_id|string|true|Contact bank account to pay (`Contact.data.bank_account.id`)|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
 
@@ -10131,7 +10131,7 @@ System.out.println(response.toString());
 |description|string|true|Description visible to the initiator (payee) & authoriser (payer)|
 |matures_at|string|true|Date & time in UTC ISO8601 that the payment will be processed if the request is approved|
 |amount|number|true|Amount in cents to pay the initiator|
-|authoriser_id|string|false|The Split account's bank account that will be used to pay the PR (`Contact.data.bank_account.id`)'|
+|authoriser_id|string|false|The Contact bank account that will be used to pay the PR (`Contact.data.bank_account.id`)'|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
 
