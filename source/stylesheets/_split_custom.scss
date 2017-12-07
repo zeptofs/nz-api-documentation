@@ -46,3 +46,7 @@ li img { border: 1px solid $nav-subitem-bg }
 a[data-title="Payment Requests"] + ul li:nth-child(-n+3) {
   display: none;
 }
+
+@media (max-width: $phone-width) {
+  .content h2, .middle-header { margin-right: 0; }
+}
