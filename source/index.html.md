@@ -24,6 +24,22 @@ headingLevel: 2
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
 
+Split allows you to make, get and manage payments using nothing but bank accounts.
+
+
+It is important to understand that there are 2 main ways Split can be used for maximum flexibility:
+
+
+1. Between Split accounts.
+2. Between a Split account and anyone.
+
+
+Due to the above, certain endpoints and techniques will differ slightly depending on who you are interacting with. You can find more on this in the [Making payments](/#making-payments) and [Getting paid](/#getting-paid) guides.
+
+
+<div class="middle-header">Conventions</div>
+
+
 * Authentication is performed using OAuth2. See the [Get started](/#get-started) and [Authentication & Authorisation](/#authentication-and-authorisation) guides for more.
 * All communication is via `https`.
 * Production API: `https://api.split.cash/`.
@@ -289,7 +305,11 @@ want to store the newly generated <code>refresh_token</code> everytime you use i
 
 
 ## Making payments
-In order to payout funds, you'll be looking to use the [Payments](/#Split-API-Payments) endpoint.
+In order to payout funds, you'll be looking to use the [Payments](/#Split-API-Payments) endpoint. Whether you're paying out another Split account holder or anyone, the process is the same:
+
+
+1. Add the recipient to your Contacts: [Split Contact](/#add-a-split-contact) or [Anyone Contact](/#add-an-anyone-contact)
+2. [Make the Payment](/#make-a-payment) to your Contact.
 
 
 Common use cases:
@@ -302,14 +322,22 @@ Common use cases:
 There are 2 ways to get paid:
 
 
-**A [Payment Request](/#Split-API-Payment-Requests)**
+**`POST`ing a [Payment Request](/#Split-API-Payment-Requests)**
 
 
-Provides the ability to send a Payment Request to any contact with a verified bank account in your Split contacts list.
+Provides the ability to send a Payment Request to any Contact that is either:
 
 
-* By default, the payer will receive a request that they must approve in order for the funds to flow from their bank account to yours.
-* The approval process can be automated by first entering into an agreement with the payer. Once the agreement is approved, any future Payment Request will be automatically approved and processed per the agreement terms.
+* A Split Contact; **or**
+* An Anyone Contact with an accepted Agreement in place.
+
+
+Usage notes:
+
+
+* If the payer is a Split Contact, they will receive a request that they must approve in order for the funds to flow from their bank account to yours.
+* To automate the Payment Request approval process you can first [enter into an Agreement](/#Split-API-Agreements) with the payer. Once the Agreement is accepted, any future Payment Request will be automatically approved and processed per the Agreement terms.
+* If you would like to send a Payment Request using the API to an Anyone Contact, you must first have accepted an Agreement with them.
 
 
 Common use cases:
@@ -321,13 +349,15 @@ Common use cases:
 * Repayment plans
 
 
-**An [Open Payment Request](http://help.split.cash/payment-requests/open-payment-requests)**
+**Sharing an [Open Payment Request](http://help.split.cash/payment-requests/open-payment-requests)**
 
 
-Utilise a [customisable hosted payment request form](http://help.split.cash/payment-requests/open-payment-requests) which takes care of everything from confirming payer bank account access to the transfer of funds.
+Provides the ability to get paid by a anyone whether they are a Split account holder or not.
 
 
-* The secure form can either sit outside your app or embeded within via iframe with ability to whitelabel.
+Usage notes:
+* Utilise a [customisable hosted Payment Request form](http://help.split.cash/payment-requests/open-payment-requests) that takes care of everything from confirming the payer's bank account access to the transfer of funds.
+* The Open Payment Request link can be shared and sit as a secure form either outside your app or embeded within via iframe with the ability to whitelabel.
 * The URL for the form contains all the customisation parameters enabling you to generate the form on the fly.
 
 
@@ -3065,13 +3095,13 @@ You can update the name of any Contact. This is essentially an alias you can use
 <h1 id="Split-API-Open-Agreements">Open Agreements</h1>
 
 
-An Open Agreement is essentially an Agreement template with no specific authoriser. Each time an Open Agreement is accepted by either a Split account or anyone, an Agreement is automatically created based between the Open Agreement initiator and the authoriser.
+An Open Agreement is essentially an Agreement template with no specific authoriser. Each time an Open Agreement is accepted by either a Split account or anyone, a new Agreement is automatically created between the Open Agreement initiator and the authoriser.
 
 
 An Open Agreement can be accepted multiple times by different parties and the result is the same: A new Agreement.
 
 
-<aside class="notice">When you close an Open Agreement, no new Agreements can be created from it.</aside>
+<aside class="notice">When you close an Open Agreement, no new Agreements can be created from it and all past Agreement resulting from the acceptance of the Open Agreement are unaffected.</aside>
 
 
 ## Create an Open Agreement
