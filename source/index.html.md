@@ -40,7 +40,13 @@ headingLevel: 2
 
 
 ## Try it out
-The best way to familiarise yourself with our API is by interacting with it. We've preloaded a collection of all our endpoints for you to use in Postman.
+The best way to familiarise yourself with our API is by interacting with it.
+
+
+**Prefer a screencast? We've got you covered: [https://vimeo.com/246203244](https://vimeo.com/246203244).**
+
+
+We've preloaded a collection of all our endpoints for you to use in Postman.
 
 
 Before you start, load up our API collection:
