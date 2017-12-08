@@ -538,6 +538,7 @@ An Agreement can have the following statuses:
 ```shell
 # You can also use wget
 curl -X POST https://api-sandbox.split.cash/agreements \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'
 
@@ -557,18 +558,15 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Content-Type':'application/json',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/agreements',
   method: 'post',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -771,6 +769,7 @@ Propose an Agreement to another Split Contact
 ```shell
 # You can also use wget
 curl -X POST https://api-sandbox.split.cash/agreements/{agreement_ref}/accept \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -790,17 +789,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/agreements/{agreement_ref}/accept',
   method: 'post',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -959,6 +955,7 @@ Approve an incoming Agreement
 ```shell
 # You can also use wget
 curl -X POST https://api-sandbox.split.cash/agreements/{agreement_ref}/decline \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -978,17 +975,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/agreements/{agreement_ref}/decline',
   method: 'post',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -1147,6 +1141,7 @@ Decline an incoming Agreement
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/agreements/{agreement_ref} \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -1166,17 +1161,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/agreements/{agreement_ref}',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -1334,7 +1326,8 @@ Get a single Agreement by its reference
 
 ```shell
 # You can also use wget
-curl -X DELETE https://api-sandbox.split.cash/agreements/{agreement_ref}
+curl -X DELETE https://api-sandbox.split.cash/agreements/{agreement_ref} \
+  -H 'Authorization: Bearer ACCESS_TOKEN'
 
 
 ```
@@ -1470,6 +1463,7 @@ An Agreement can be cancelled by the initiator at any time whilst the authoriser
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/agreements/incoming \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -1489,17 +1483,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/agreements/incoming',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -1692,6 +1683,7 @@ By default, all incoming Agreements will be returned. You can apply filters to y
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/agreements/outgoing \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -1711,17 +1703,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/agreements/outgoing',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -1931,6 +1920,7 @@ There are a few IDs supplied within a Contact's response:
 ```shell
 # You can also use wget
 curl -X POST https://api-sandbox.split.cash/contacts \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'
 
@@ -1950,18 +1940,15 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Content-Type':'application/json',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/contacts',
   method: 'post',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -2135,6 +2122,7 @@ Add a Split Contact
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/contacts \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -2154,17 +2142,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/contacts',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -2382,6 +2367,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
 ```shell
 # You can also use wget
 curl -X POST https://api-sandbox.split.cash/contacts/new/anyone \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'
 
@@ -2401,18 +2387,15 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Content-Type':'application/json',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/contacts/new/anyone',
   method: 'post',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -2596,6 +2579,7 @@ When you want to pay somebody that doesn't have a Split account, you can add the
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/contacts/{id} \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -2615,17 +2599,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/contacts/{id}',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -2784,7 +2765,8 @@ Get a single Contact by its ID
 
 ```shell
 # You can also use wget
-curl -X DELETE https://api-sandbox.split.cash/contacts/{id}
+curl -X DELETE https://api-sandbox.split.cash/contacts/{id} \
+  -H 'Authorization: Bearer ACCESS_TOKEN'
 
 
 ```
@@ -2920,6 +2902,7 @@ System.out.println(response.toString());
 ```shell
 # You can also use wget
 curl -X PATCH https://api-sandbox.split.cash/contacts/{id} \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'
 
@@ -2939,18 +2922,15 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Content-Type':'application/json',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/contacts/{id}',
   method: 'patch',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -3154,6 +3134,7 @@ An Open Agreement can have the following statuses:
 ```shell
 # You can also use wget
 curl -X POST https://api-sandbox.split.cash/open_agreements \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'
 
@@ -3173,18 +3154,15 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Content-Type':'application/json',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/open_agreements',
   method: 'post',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -3385,6 +3363,7 @@ Create an Open Agreement that can be accepted by anyone.
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/open_agreements \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -3404,17 +3383,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/open_agreements',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -3589,6 +3565,7 @@ System.out.println(response.toString());
 ```shell
 # You can also use wget
 curl -X POST https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -3608,17 +3585,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate',
   method: 'post',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -3776,6 +3750,7 @@ Allow the Open Agreement to viewed and accepted
 ```shell
 # You can also use wget
 curl -X POST https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -3795,17 +3770,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close',
   method: 'post',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -3979,6 +3951,7 @@ The Payment is simply a group of Payouts therefore it does not have a particular
 ```shell
 # You can also use wget
 curl -X POST https://api-sandbox.split.cash/payments \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'
 
@@ -3998,18 +3971,15 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Content-Type':'application/json',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payments',
   method: 'post',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -4254,6 +4224,7 @@ System.out.println(response.toString());
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/payments \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -4273,17 +4244,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payments',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -4463,6 +4431,7 @@ System.out.println(response.toString());
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/payments/{payment_ref} \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -4482,17 +4451,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payments/{payment_ref}',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -4677,7 +4643,8 @@ Payouts are what a compose a Payment. One or all Payouts can be voided individua
 
 ```shell
 # You can also use wget
-curl -X DELETE https://api-sandbox.split.cash/payouts/{debit_ref}
+curl -X DELETE https://api-sandbox.split.cash/payouts/{debit_ref} \
+  -H 'Authorization: Bearer ACCESS_TOKEN'
 
 
 ```
@@ -4865,6 +4832,7 @@ A Payment Request can have the following statuses:
 ```shell
 # You can also use wget
 curl -X POST https://api-sandbox.split.cash/payment_requests \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'
 
@@ -4884,18 +4852,15 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Content-Type':'application/json',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payment_requests',
   method: 'post',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -5083,6 +5048,7 @@ System.out.println(response.toString());
 ```shell
 # You can also use wget
 curl -X POST https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -5102,17 +5068,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve',
   method: 'post',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -5268,6 +5231,7 @@ System.out.println(response.toString());
 ```shell
 # You can also use wget
 curl -X POST https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -5287,17 +5251,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline',
   method: 'post',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -5453,6 +5414,7 @@ System.out.println(response.toString());
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/payment_requests/{payment_request_ref} \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -5472,17 +5434,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -5637,7 +5596,8 @@ System.out.println(response.toString());
 
 ```shell
 # You can also use wget
-curl -X DELETE https://api-sandbox.split.cash/payment_requests/{payment_request_ref}
+curl -X DELETE https://api-sandbox.split.cash/payment_requests/{payment_request_ref} \
+  -H 'Authorization: Bearer ACCESS_TOKEN'
 
 
 ```
@@ -5773,6 +5733,7 @@ A PR can only be cancelled if it has not yet matured.
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/payment_requests/incoming \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -5792,17 +5753,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payment_requests/incoming',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -5975,6 +5933,7 @@ System.out.println(response.toString());
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/payment_requests/outgoing \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -5994,17 +5953,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payment_requests/outgoing',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -6173,6 +6129,7 @@ System.out.println(response.toString());
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -6192,17 +6149,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -6454,6 +6408,7 @@ There are two response fields that differ depending on the direction:
 ```shell
 # You can also use wget
 curl -X POST https://api-sandbox.split.cash/credits/{credit_ref}/refunds \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'
 
@@ -6473,18 +6428,15 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Content-Type':'application/json',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/credits/{credit_ref}/refunds',
   method: 'post',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -6668,6 +6620,7 @@ Certain rules apply to the issuance of a refund:
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/refunds/incoming \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -6687,17 +6640,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/refunds/incoming',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -6850,6 +6800,7 @@ System.out.println(response.toString());
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/refunds/outgoing \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -6869,17 +6820,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/refunds/outgoing',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -7032,6 +6980,7 @@ System.out.println(response.toString());
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/refunds/{refund_ref} \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -7051,17 +7000,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/refunds/{refund_ref}',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -7254,6 +7200,7 @@ A Refund Request can have the following statuses:
 ```shell
 # You can also use wget
 curl -X POST https://api-sandbox.split.cash/payout_refund_requests \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json'
 
@@ -7273,18 +7220,15 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Content-Type':'application/json',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payout_refund_requests',
   method: 'post',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -7474,6 +7418,7 @@ Certain rules apply to the creation of a Refund Request:
 ```shell
 # You can also use wget
 curl -X POST https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -7493,17 +7438,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve',
   method: 'post',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -7657,6 +7599,7 @@ System.out.println(response.toString());
 ```shell
 # You can also use wget
 curl -X POST https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -7676,17 +7619,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline',
   method: 'post',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -7840,6 +7780,7 @@ System.out.println(response.toString());
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref} \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -7859,17 +7800,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -8025,7 +7963,8 @@ Get a specific Refund Request by its reference
 
 ```shell
 # You can also use wget
-curl -X DELETE https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}
+curl -X DELETE https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref} \
+  -H 'Authorization: Bearer ACCESS_TOKEN'
 
 
 ```
@@ -8161,6 +8100,7 @@ A Refund Request can only be canceled if it is pending approval.
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/payout_refund_requests/incoming \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -8180,17 +8120,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payout_refund_requests/incoming',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -8347,6 +8284,7 @@ System.out.println(response.toString());
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/payout_refund_requests/outgoing \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: text/json'
 
 
@@ -8366,17 +8304,14 @@ Accept: text/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'text/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payout_refund_requests/outgoing',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -8559,6 +8494,7 @@ A transaction (debit or credit) can have the following statuses:
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/transactions \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -8578,17 +8514,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/transactions',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -8818,6 +8751,7 @@ All about the currently authenticated user.
 ```shell
 # You can also use wget
 curl -X GET https://api-sandbox.split.cash/user \
+  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Accept: application/json'
 
 
@@ -8837,17 +8771,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
+  'Authorization: Bearer ACCESS_TOKEN',
   'Accept':'application/json'
-
-
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/user',
   method: 'get',
-
-
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
