@@ -356,6 +356,8 @@ Provides the ability to get paid by a anyone whether they are a Split account ho
 
 
 Usage notes:
+
+
 * Utilise a [customisable hosted Payment Request form](http://help.split.cash/payment-requests/open-payment-requests) that takes care of everything from confirming the payer's bank account access to the transfer of funds.
 * The Open Payment Request link can be shared and sit as a secure form either outside your app or embeded within via iframe with the ability to whitelabel.
 * The URL for the form contains all the customisation parameters enabling you to generate the form on the fly.
@@ -437,15 +439,13 @@ Scopes define the level of access granted via the OAuth2 authorisation process. 
 
 
 ```
-Link: <https://api-sandbox.split.cash/payments?page=2>; rel="next",
-  <https://api-sandbox.split.cash/payments?page=15>; rel="last"
+Link: <http://api-sandbox.split.cash/contacts?page=5>; rel="last", <http://api-sandbox.split.cash/contacts?page=2>; rel="next"
+Per-Page: 25
+Total: 5
 ```
 
 
-All collections are paginated to 100 items by default. You can request the following page by appending `?page=x` where `x` is the page you'd like to retrieve.
-
-
-You can extract the pagination information from the response header.
+All collections are paginated to 25 items by default and the pagination information may be found in the response header. You can customise the pagination by appending `?per_page=x` and/or `?page=x` to the endpoint URL.
 
 
 ## Webhooks
@@ -502,11 +502,28 @@ Split Agreements are managed on a per Contact basis and allow two parties to agr
 Agreement are unidirectional. In other words, if both parties wish for auto-approved Payment Requests, they must each propose an Agreement to the other.
 
 
+<div class="middle-header">Direction</div>
+
+
 Agreements are therefore broken up by direction:
 
 
 1. **Incoming:** Agreement received from another Split account
 2. **Outgoing:** Agreement sent to another Split account
+
+
+<div class="middle-header">Lifecycle</div>
+
+
+An Agreement can have the following statuses:
+
+
+| Status | Description |
+|-------|-------------|
+| `proposed` | Waiting for the Agreement to be accepted or declined. |
+| `accepted` | The Agreement have been accepted and is active. |
+| `cancelled` | The Agreement has been cancelled (The initiator or authoriser can cancel an Agreement). |
+| `declined` | The Agreement has been declined. |
 
 
 ## Propose an Agreement
@@ -666,6 +683,9 @@ System.out.println(response.toString());
 
 
 Propose an Agreement to another Split Contact
+
+
+<aside class="notice">You can set any of the term metrics to <code>null</code> if you wish them to not have a limit.</aside>
 
 
 > Body parameter
@@ -1419,7 +1439,7 @@ System.out.println(response.toString());
 `DELETE /agreements/{agreement_ref}`
 
 
-An agreement can be cancelled by the initiator at any time whilst the authoriser (agreement recipient) can only cancel a previously accepted agreement.
+An Agreement can be cancelled by the initiator at any time whilst the authoriser (Agreement recipient) can only cancel a previously accepted Agreement.
 
 
 <h3 id="Cancel-an-Agreement-parameters" class="parameters">Parameters</h3>
@@ -1580,7 +1600,7 @@ System.out.println(response.toString());
 `GET /agreements/incoming`
 
 
-By default, all incoming agreements will be returned. You can apply filters to your query to customise the returned agreements.
+By default, all incoming Agreements will be returned. You can apply filters to your query to customise the returned Agreements.
 
 
 <h3 id="List-incoming-Agreements-parameters" class="parameters">Parameters</h3>
@@ -1588,8 +1608,9 @@ By default, all incoming agreements will be returned. You can apply filters to y
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|page|query|string|false|Page of results to return|
-|initiator_id|query|string|false|Initiator ID (`contact.id`), single value, exact match|
+|page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
+|initiator_id|query|string|false|Initiator ID (`Contact.data.account.id`), single value, exact match|
 |status|query|array[string]|false|Multiple values, exact match|
 
 
@@ -1801,7 +1822,7 @@ System.out.println(response.toString());
 `GET /agreements/outgoing`
 
 
-By default, all outgoing agreements will be returned. You can apply filters to your query to customise the returned agreements.
+By default, all outgoing Agreements will be returned. You can apply filters to your query to customise the returned Agreements.
 
 
 <h3 id="List-outgoing-Agreements-parameters" class="parameters">Parameters</h3>
@@ -1809,8 +1830,9 @@ By default, all outgoing agreements will be returned. You can apply filters to y
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|page|query|string|false|Page of results to return|
-|authoriser_id|query|string|false|Authoriser ID (`contact.id`), single value, exact match|
+|page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
+|authoriser_id|query|string|false|Authoriser ID (`Contact.data.account.id`), single value, exact match|
 |status|query|array[string]|false|Exact match|
 
 
@@ -1883,7 +1905,7 @@ By default, all outgoing agreements will be returned. You can apply filters to y
 <h1 id="Split-API-Contacts">Contacts</h1>
 
 
-Your contacts form an address book of Split accounts and non-Split accounts (Anyone accounts) with whom you can interact. In order to create Payments, Payment Requests or Agreements you must first have the party in your contacts.
+Your Contacts form an address book of Split accounts and non-Split accounts (Anyone accounts) with whom you can interact. In order to initiate any type of transaction you must first have the party in your Contact list.
 
 
 There are a few IDs supplied within a Contact's response:
@@ -1891,7 +1913,10 @@ There are a few IDs supplied within a Contact's response:
 
 1. `data.id` represents the Contact resource.
 2. `data.bank_account.id` represents the Contact's bank account and is used when creating Payments or Payment Requests.
-3. `data.account.id` represents the Vontact's Split account and is used when proposing Agreements.
+3. `data.account.id` represents the Contact's Split account and is used when proposing Agreements.
+
+
+<aside class="notice">In the case of Open Payment Requests & Open Agreements, the authorising party will be automatically added to your Contacts list.</aside>
 
 
 ## Add a Split Contact
@@ -2059,7 +2084,7 @@ Add a Split Contact
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |body|body|[AddASplitContactRequest](#schemaaddasplitcontactrequest)|true|No description|
-|» nickname|body|string|true|No description|
+|» nickname|body|string|true|Split account nickname|
 
 
 > Example responses
@@ -2069,8 +2094,8 @@ Add a Split Contact
 {
   "data": {
     "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
-    "name": "Oustanding Tours Pty Ltd",
-    "email": null,
+    "name": "Outstanding Tours Pty Ltd",
+    "email": "accounts@outstandingtours.com.au",
     "type": "Split account",
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
@@ -2240,7 +2265,7 @@ System.out.println(response.toString());
 `GET /contacts`
 
 
-By default, all contacts will be returned. You can apply filters to your query to customise the returned contact list.
+By default, all Contacts will be returned. You can apply filters to your query to customise the returned Contact list.
 
 
 <h3 id="List-all-Contacts-parameters" class="parameters">Parameters</h3>
@@ -2248,7 +2273,8 @@ By default, all contacts will be returned. You can apply filters to your query t
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|page|query|string|false|Page of results to return|
+|page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
 |name|query|string|false|Single value, string search|
 |nickname|query|string|false|Single value, string search|
 |bank_account_id|query|string|false|Single value, exact match|
@@ -2264,8 +2290,8 @@ By default, all contacts will be returned. You can apply filters to your query t
   "data": [
     {
       "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
-      "name": "Oustanding Tours Pty Ltd",
-      "email": null,
+      "name": "Outstanding Tours Pty Ltd",
+      "email": "accounts@outstandingtours.com.au",
       "type": "Split account",
       "bank_account": {
         "id": "095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc",
@@ -2277,13 +2303,13 @@ By default, all contacts will be returned. You can apply filters to your query t
         "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
         "nickname": "outstanding_tours",
         "abn": "123456789",
-        "name": "Oustanding Tours Pty Ltd"
+        "name": "Outstanding Tours Pty Ltd"
       }
     },
     {
       "id": "49935c67-c5df-4f00-99f4-1413c18a89a0",
       "name": "Adventure Dudes Pty Ltd",
-      "email": null,
+      "email": "accounts@adventuredudes.com.au",
       "type": "Split account",
       "bank_account": {
         "id": "861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0",
@@ -2301,7 +2327,7 @@ By default, all contacts will be returned. You can apply filters to your query t
     {
       "id": "eb3266f9-e172-4b6c-b802-fe5ac4d3250a",
       "name": "Surfing World Pty Ltd",
-      "email": null,
+      "email": "accounts@surfingworld.com.au",
       "type": "Split account",
       "bank_account": {
         "id": "N/A",
@@ -2520,10 +2546,10 @@ When you want to pay somebody that doesn't have a Split account, you can add the
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |body|body|[AddAnAnyoneContactRequest](#schemaaddananyonecontactrequest)|true|No description|
-|» name|body|string|true|No description|
-|» email|body|string|true|No description|
-|» branch_code|body|string|true|No description|
-|» account_number|body|string|true|No description|
+|» name|body|string|true|The name of the Contact|
+|» email|body|string|true|The email of the Contact|
+|» branch_code|body|string|true|The bank account BSB of the Contact|
+|» account_number|body|string|true|The bank account number of the Contact|
 
 
 > Example responses
@@ -2708,7 +2734,7 @@ Get a single Contact by its ID
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|id|path|string(UUID)|true|Contact ID|
+|id|path|string(UUID)|true|Contact ID (`Contact.data.id`)|
 
 
 > Example responses
@@ -2718,8 +2744,8 @@ Get a single Contact by its ID
 {
   "data": {
     "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
-    "name": "Oustanding Tours Pty Ltd",
-    "email": null,
+    "name": "Outstanding Tours Pty Ltd",
+    "email": "accounts@outstandingtours.com.au",
     "type": "Split account",
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
@@ -2863,7 +2889,7 @@ System.out.println(response.toString());
 `DELETE /contacts/{id}`
 
 
-<aside class="notice">Removing a contact will not affect your transaction history.</aside>
+<aside class="notice">Removing a Contact will not affect your transaction history.</aside>
 
 
 <h3 id="Remove-a-Contact-parameters" class="parameters">Parameters</h3>
@@ -2871,7 +2897,7 @@ System.out.println(response.toString());
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|id|path|string(UUID)|true|Contact ID|
+|id|path|string(UUID)|true|Contact ID (`Contact.data.id`)|
 
 
 <h3 id="Remove a Contact-responses">Responses</h3>
@@ -3051,9 +3077,9 @@ You can update the name of any Contact. This is essentially an alias you can use
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|id|path|string|true|Contact ID|
+|id|path|string|true|Contact ID (`Contact.data.id`)|
 |body|body|[UpdateAContactRequest](#schemaupdateacontactrequest)|true|No description|
-|» name|body|string|true|No description|
+|» name|body|string|true|The name of the Contact|
 
 
 > Example responses
@@ -3064,7 +3090,7 @@ You can update the name of any Contact. This is essentially an alias you can use
   "data": {
     "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
     "name": "My very own alias",
-    "email": null,
+    "email": "accounts@outstandingtours.com.au",
     "type": "Split account",
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
@@ -3095,10 +3121,22 @@ You can update the name of any Contact. This is essentially an alias you can use
 <h1 id="Split-API-Open-Agreements">Open Agreements</h1>
 
 
-An Open Agreement is essentially an Agreement template with no specific authoriser. Each time an Open Agreement is accepted by either a Split account or anyone, a new Agreement is automatically created between the Open Agreement initiator and the authoriser.
+An Open Agreement is essentially an Agreement template with no specific authoriser. Each time an Open Agreement is accepted by either a Split account holder or anyone, they authoriser is added to your Contacts list and a new Agreement is automatically created between the Open Agreement initiator and the authoriser.
 
 
-An Open Agreement can be accepted multiple times by different parties and the result is the same: A new Agreement.
+An Open Agreement can be accepted multiple times by different parties and the result is the same: A new Agreement.|
+
+
+<div class="middle-header">Lifecycle</div>
+
+
+An Open Agreement can have the following statuses:
+
+
+| Status | Description |
+|-------|-------------|
+| `active` | The Open Agreement can be viewed and accepted. |
+| `closed` | The Open Agreement can not be viewed or accepted. |
 
 
 <aside class="notice">When you close an Open Agreement, no new Agreements can be created from it and all past Agreement resulting from the acceptance of the Open Agreement are unaffected.</aside>
@@ -3260,7 +3298,10 @@ System.out.println(response.toString());
 `POST /open_agreements`
 
 
-Create an Open Agreement that can be accepted by anyone
+Create an Open Agreement that can be accepted by anyone.
+
+
+<aside class="notice">You can set any of the term metrics to <code>null</code> if you wish them to not have a limit.</aside>
 
 
 > Body parameter
@@ -3289,7 +3330,7 @@ Create an Open Agreement that can be accepted by anyone
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |body|body|[CreateOpenAgreementRequest](#schemacreateopenagreementrequest)|true|No description|
-|» title|body|string|false|Title of the Open Agreement (Visible to authorisers)|
+|» title|body|string|true|Title of the Open Agreement (Visible to authorisers)|
 |» terms|body|[Terms](#schematerms)|true|Terms|
 |»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
 |»»» min_amount|body|number|false|Minimum amount in cents a PR can be in order to be auto-approved|
@@ -3479,7 +3520,8 @@ System.out.println(response.toString());
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|page|query|string|false|Page of results to return|
+|page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
 
 
 > Example responses
@@ -3677,6 +3719,9 @@ System.out.println(response.toString());
 `POST /open_agreements/{open_agreement_ref}/activate`
 
 
+Allow the Open Agreement to viewed and accepted
+
+
 <h3 id="Activate-a-closed-Open-Agreement-parameters" class="parameters">Parameters</h3>
 
 
@@ -3861,6 +3906,9 @@ System.out.println(response.toString());
 `POST /open_agreements/{open_agreement_ref}/close`
 
 
+Disable the Open Agreement from being viewed or accepted
+
+
 <h3 id="Close-an-active-Open-Agreement-parameters" class="parameters">Parameters</h3>
 
 
@@ -3910,7 +3958,13 @@ System.out.println(response.toString());
 
 
 1. General details about the Payment.
-2. One or many Payout recipients with individual amounts and descriptions.
+2. One or many Payouts with individual recipients, amounts and descriptions.
+
+
+<div class="middle-header">Lifecycle</div>
+
+
+The Payment is simply a group of Payouts therefore it does not have a particular status. Its Payouts however have their status regularly updated, for a list of possible Payout statuses check out the [Transactions](/#Split-API-Transactions).
 
 
 ## Make a Payment
@@ -4122,14 +4176,14 @@ System.out.println(response.toString());
 |---|---|---|---|---|
 |body|body|[MakeAPaymentRequest](#schemamakeapaymentrequest)|true|No description|
 |» description|body|string|true|User description. Only visible to the payer|
-|» matures_at|body|string|true|Date & time in UTC ISO8601 the payment should be processed|
-|» payouts|body|[[Payouts](#schemapayouts)]|true|One or many contact to pay (2 recipients in this example)|
-|»» Payouts|body|[Payouts](#schemapayouts)|false|No description|
+|» matures_at|body|string|true|Date & time in UTC ISO8601 the Payment should be processed|
+|» payouts|body|[[Payout](#schemapayout)]|true|One or many Payouts|
+|»» Payout|body|[Payout](#schemapayout)|false|The actual Payout|
 |»»» amount|body|number|true|Amount in cents to pay the recipient|
 |»»» description|body|string|true|Description that both the payer an recipient can see|
 |»»» recipient_id|body|string|true|Contact bank account to pay (`Contact.data.bank_account.id`)|
-|»»» metadata|body|[Metadata](#schemametadata)|false|No description|
-|»» metadata|body|[Metadata](#schemametadata)|false|No description|
+|»»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data an certain Split customisations|
+|»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data an certain Split customisations|
 
 
 > Example responses
@@ -4335,7 +4389,8 @@ System.out.println(response.toString());
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|page|query|string|false|page of results to return|
+|page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
 
 
 > Example responses
@@ -4727,7 +4782,7 @@ System.out.println(response.toString());
 `DELETE /payouts/{debit_ref}`
 
 
-You can void any Payout debit from your account that has not yet matured. In the case where it has matured, you can send a Payment Request to the Payout recipient once the Payout has successfully cleared.
+You can void any Payout debit from your account that has not yet matured. In the case where it has matured, you can send a Refund Request to the Payout recipient once the Payout has successfully cleared in order to reverse the transaction.
 
 
 <h3 id="Void-a-Payout-parameters" class="parameters">Parameters</h3>
@@ -4787,10 +4842,10 @@ There are two response fields that differ depending on the direction:
 <div class="middle-header">Lifecycle</div>
 
 
-A Payment Request can have the following states:
+A Payment Request can have the following statuses:
 
 
-| State | Description |
+| Status | Description |
 |-------|-------------|
 | `pending_approval` | Waiting for the authoriser to approve the PR. |
 | `approved` | The authoriser has approved the PR. |
@@ -4975,10 +5030,10 @@ System.out.println(response.toString());
 |---|---|---|---|---|
 |body|body|[MakeAPaymentRequestRequest](#schemamakeapaymentrequestrequest)|true|No description|
 |» description|body|string|true|Description visible to the initiator (payee) & authoriser (payer)|
-|» matures_at|body|string|true|Date & time in UTC ISO8601 that the payment will be processed if the request is approved|
+|» matures_at|body|string|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved|
 |» amount|body|number|true|Amount in cents to pay the initiator|
-|» authoriser_id|body|string|false|The Contact bank account that will be used to pay the PR (`Contact.data.bank_account.id`)'|
-|» metadata|body|[Metadata](#schemametadata)|false|No description|
+|» authoriser_id|body|string|true|The Contact bank account that will be used to pay the PR (`Contact.data.bank_account.id`)'|
+|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data an certain Split customisations|
 
 
 > Example responses
@@ -5854,6 +5909,7 @@ System.out.println(response.toString());
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
 
 
 > Example responses
@@ -6055,6 +6111,7 @@ System.out.println(response.toString());
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
 
 
 > Example responses
@@ -6567,7 +6624,7 @@ Certain rules apply to the issuance of a refund:
 |body|body|[IssueARefundRequest](#schemaissuearefundrequest)|true|No description|
 |» amount|body|number|true|Amount in cents refund|
 |» reason|body|string|false|Reason for the refund. Visible to both parties.|
-|» metadata|body|[Metadata](#schemametadata)|false|No description|
+|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data an certain Split customisations|
 
 
 > Example responses
@@ -6747,6 +6804,7 @@ System.out.println(response.toString());
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
 
 
 > Example responses
@@ -6928,6 +6986,7 @@ System.out.println(response.toString());
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
 
 
 > Example responses
@@ -7172,10 +7231,10 @@ There are two response fields that differ depending on the direction:
 <div class="middle-header">Lifecycle</div>
 
 
-A Payment Request can have the following states:
+A Refund Request can have the following statuses:
 
 
-| State | Description |
+| Status | Description |
 |-------|-------------|
 | `pending_approval` | Waiting for the authoriser to approve the RR. |
 | `approved` | The authoriser has approved the RR. |
@@ -7367,7 +7426,7 @@ Certain rules apply to the creation of a Refund Request:
 |» for_ref|body|string|true|The Payout debit reference to refund against|
 |» amount|body|number|true|Amount in cents to request from the original payout recipient|
 |» reason|body|string|false|Reason for the refund request. Visible to both parties.|
-|» metadata|body|[Metadata](#schemametadata)|false|No description|
+|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data an certain Split customisations|
 
 
 > Example responses
@@ -8238,6 +8297,7 @@ System.out.println(response.toString());
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
 
 
 > Example responses
@@ -8417,15 +8477,13 @@ System.out.println(response.toString());
 `GET /payout_refund_requests/outgoing`
 
 
-**Endpoint:** `/payout_refund_requests/outgoing{?page}`
-
-
 <h3 id="List-outgoing-Refund-Requests-parameters" class="parameters">Parameters</h3>
 
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
 
 
 > Example responses
@@ -8467,6 +8525,26 @@ System.out.println(response.toString());
 
 
 The transactions endpoint provides a detailed look at all past, current and future scheduled debits & credits relating to the Split account. In other words, we not only show the transactions initiated by the Split account but also show transactions where the Split account is on the receiving end - even for payments that have not yet matured.
+
+
+<div class="middle-header">Lifecycle</div>
+
+
+A transaction (debit or credit) can have the following statuses:
+
+
+| Status | Description |
+|-------|-------------|
+| `maturing` | The maturation date has not yet been reached |
+| `matured` | The maturation date has been reached and the transaction is eligible for processing. |
+| `processing` | The transaction has been submitted to the bank. |
+| `clearing` | Waiting for confirmation from the bank that the transaction has succeeded. |
+| `cleared` | The transaction is complete. |
+| `rejected` | The bank has rejected the transaction due to incorrect bank account details. |
+| `returned` | The transaction did not successfully clear. Usually due to insufficient funds. |
+| `voided` | The transaction has been cancelled and is no longer eligible for processing. |
+| `pending_verification` | The bank account must be verified before the transaction can proceed. |
+| `paused` | The transaction has temporary been paused by Split pending internal review. |
 
 
 ## List all transactions
@@ -8617,6 +8695,7 @@ System.out.println(response.toString());
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
 |ref|query|string|false|Single value, exact match|
 |parent_ref|query|string|false|Single value, exact match|
 |bank_ref|query|string|false|Single value, exact match|
@@ -9308,7 +9387,7 @@ System.out.println(response.toString());
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|title|string|false|Title of the Open Agreement (Visible to authorisers)|
+|title|string|true|Title of the Open Agreement (Visible to authorisers)|
 |terms|[Terms](#schematerms)|true|No description|
 
 
@@ -9496,7 +9575,7 @@ System.out.println(response.toString());
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|nickname|string|true|No description|
+|nickname|string|true|Split account nickname|
 
 
 ## AddASplitContactResponse
@@ -9509,8 +9588,8 @@ System.out.println(response.toString());
 {
   "data": {
     "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
-    "name": "Oustanding Tours Pty Ltd",
-    "email": null,
+    "name": "Outstanding Tours Pty Ltd",
+    "email": "accounts@outstandingtours.com.au",
     "type": "Split account",
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
@@ -9548,8 +9627,8 @@ System.out.println(response.toString());
   "data": [
     {
       "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
-      "name": "Oustanding Tours Pty Ltd",
-      "email": null,
+      "name": "Outstanding Tours Pty Ltd",
+      "email": "accounts@outstandingtours.com.au",
       "type": "Split account",
       "bank_account": {
         "id": "095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc",
@@ -9561,13 +9640,13 @@ System.out.println(response.toString());
         "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
         "nickname": "outstanding_tours",
         "abn": "123456789",
-        "name": "Oustanding Tours Pty Ltd"
+        "name": "Outstanding Tours Pty Ltd"
       }
     },
     {
       "id": "49935c67-c5df-4f00-99f4-1413c18a89a0",
       "name": "Adventure Dudes Pty Ltd",
-      "email": null,
+      "email": "accounts@adventuredudes.com.au",
       "type": "Split account",
       "bank_account": {
         "id": "861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0",
@@ -9585,7 +9664,7 @@ System.out.println(response.toString());
     {
       "id": "eb3266f9-e172-4b6c-b802-fe5ac4d3250a",
       "name": "Surfing World Pty Ltd",
-      "email": null,
+      "email": "accounts@surfingworld.com.au",
       "type": "Split account",
       "bank_account": {
         "id": "N/A",
@@ -9649,10 +9728,10 @@ System.out.println(response.toString());
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|name|string|true|No description|
-|email|string|true|No description|
-|branch_code|string|true|No description|
-|account_number|string|true|No description|
+|name|string|true|The name of the Contact|
+|email|string|true|The email of the Contact|
+|branch_code|string|true|The bank account BSB of the Contact|
+|account_number|string|true|The bank account number of the Contact|
 
 
 ## AddAnAnyoneContactResponse
@@ -9700,8 +9779,8 @@ System.out.println(response.toString());
 {
   "data": {
     "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
-    "name": "Oustanding Tours Pty Ltd",
-    "email": null,
+    "name": "Outstanding Tours Pty Ltd",
+    "email": "accounts@outstandingtours.com.au",
     "type": "Split account",
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
@@ -9746,7 +9825,7 @@ System.out.println(response.toString());
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|name|string|true|No description|
+|name|string|true|The name of the Contact|
 
 
 ## UpdateAContactResponse
@@ -9760,7 +9839,7 @@ System.out.println(response.toString());
   "data": {
     "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
     "name": "My very own alias",
-    "email": null,
+    "email": "accounts@outstandingtours.com.au",
     "type": "Split account",
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
@@ -9829,15 +9908,15 @@ System.out.println(response.toString());
 |Name|Type|Required|Description|
 |---|---|---|---|
 |description|string|true|User description. Only visible to the payer|
-|matures_at|string|true|Date & time in UTC ISO8601 the payment should be processed|
-|payouts|[[Payouts](#schemapayouts)]|true|One or many contact to pay (2 recipients in this example)|
+|matures_at|string|true|Date & time in UTC ISO8601 the Payment should be processed|
+|payouts|[[Payout](#schemapayout)]|true|One or many Payouts|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
 
-## Payouts
+## Payout
 
 
-<a id="schemapayouts"></a>
+<a id="schemapayout"></a>
 
 
 ```json
@@ -10165,9 +10244,9 @@ System.out.println(response.toString());
 |Name|Type|Required|Description|
 |---|---|---|---|
 |description|string|true|Description visible to the initiator (payee) & authoriser (payer)|
-|matures_at|string|true|Date & time in UTC ISO8601 that the payment will be processed if the request is approved|
+|matures_at|string|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved|
 |amount|number|true|Amount in cents to pay the initiator|
-|authoriser_id|string|false|The Contact bank account that will be used to pay the PR (`Contact.data.bank_account.id`)'|
+|authoriser_id|string|true|The Contact bank account that will be used to pay the PR (`Contact.data.bank_account.id`)'|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
 
