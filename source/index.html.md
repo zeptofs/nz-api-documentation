@@ -337,7 +337,7 @@ Usage notes:
 
 * If the payer is a Split Contact, they will receive a request that they must approve in order for the funds to flow from their bank account to yours.
 * To automate the Payment Request approval process you can first [enter into an Agreement](/#Split-API-Agreements) with the payer. Once the Agreement is accepted, any future Payment Request will be automatically approved and processed per the Agreement terms.
-* If you would like to send a Payment Request using the API to an Anyone Contact, you must first have accepted an Agreement with them.
+* If you would like to send a Payment Request using the API to an Anyone Contact, you must first have an accepted Agreement with them.
 
 
 Common use cases:
@@ -347,6 +347,12 @@ Common use cases:
 * On-account balance payments
 * Bill smoothing
 * Repayment plans
+
+
+Example flow embedding an Open Agreement link using an iFrame in order to automate future Payment Request approvals:
+
+
+[![Hosted Open Agreement](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/host_oa.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/host_oa.png)
 
 
 **Sharing an [Open Payment Request](http://help.split.cash/payment-requests/open-payment-requests)**
@@ -369,6 +375,12 @@ Common use cases:
 * Online or offline purchases (eCommerce, fundraiser, etc...)
 * Invoice payment
 * Group funding (paying for a restaurant bill)
+
+
+Example flow embedding the Open Payment Request link using an iFrame:
+
+
+[![Hosted Open Payment Request](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/hosted_opr.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/hosted_opr.png)
 
 
 ## Idempotent requests
