@@ -551,7 +551,20 @@ An Agreement can have the following statuses:
 curl -X POST https://api-sandbox.split.cash/agreements \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
+  -H 'Authorization: Bearer {access_token}' \
+  -d '{
+  "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}'
 
 
 ```
@@ -1953,7 +1966,10 @@ There are a few IDs supplied within a Contact's response:
 curl -X POST https://api-sandbox.split.cash/contacts \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
+  -H 'Authorization: Bearer {access_token}' \
+  -d '{
+  "nickname": "outstanding_tours"
+}'
 
 
 ```
@@ -2371,7 +2387,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
       "type": "anyone",
       "bank_account": {
         "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-        "account_number": "123456789",
+        "account_number": "13048322",
         "branch_code": "123456",
         "state": "pending_verification"
       },
@@ -2402,17 +2418,23 @@ By default, all Contacts will be returned. You can apply filters to your query t
 
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/contacts/new/anyone \
+curl -X POST https://api-sandbox.split.cash/contacts/anyone \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
+  -H 'Authorization: Bearer {access_token}' \
+  -d '{
+  "name": "Hunter Thompson",
+  "email": "hunter@batcountry.com",
+  "branch_code": "123456",
+  "account_number": "13048322"
+}'
 
 
 ```
 
 
 ```http
-POST https://api-sandbox.split.cash/contacts/new/anyone HTTP/1.1
+POST https://api-sandbox.split.cash/contacts/anyone HTTP/1.1
 Host: api-sandbox.split.cash
 Content-Type: application/json
 Accept: application/json
@@ -2433,12 +2455,12 @@ var body = '{
   "name": "Hunter Thompson",
   "email": "hunter@batcountry.com",
   "branch_code": "123456",
-  "account_number": "123456789"
+  "account_number": "13048322"
 }';
 
 
 $.ajax({
-  url: 'https://api-sandbox.split.cash/contacts/new/anyone',
+  url: 'https://api-sandbox.split.cash/contacts/anyone',
   method: 'post',
   data: body,
   headers: headers,
@@ -2457,7 +2479,7 @@ const inputBody = '{
   "name": "Hunter Thompson",
   "email": "hunter@batcountry.com",
   "branch_code": "123456",
-  "account_number": "123456789"
+  "account_number": "13048322"
 }';
 const headers = {
   'Content-Type': 'application/json',
@@ -2466,7 +2488,7 @@ const headers = {
 };
 
 
-fetch('https://api-sandbox.split.cash/contacts/new/anyone',
+fetch('https://api-sandbox.split.cash/contacts/anyone',
 {
   method: 'POST',
   body: inputBody,
@@ -2498,11 +2520,11 @@ params = '{
   "name": "Hunter Thompson",
   "email": "hunter@batcountry.com",
   "branch_code": "123456",
-  "account_number": "123456789"
+  "account_number": "13048322"
 }'
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/contacts/new/anyone', params, headers
+result = RestClient.post 'https://api-sandbox.split.cash/contacts/anyone', params, headers
 
 
 p JSON.parse(result)
@@ -2520,7 +2542,7 @@ headers = {
 }
 
 
-r = requests.post('https://api-sandbox.split.cash/contacts/new/anyone', params={
+r = requests.post('https://api-sandbox.split.cash/contacts/anyone', params={
 
 
 }, headers = headers)
@@ -2533,7 +2555,7 @@ print r.json()
 
 
 ```java
-URL obj = new URL("https://api-sandbox.split.cash/contacts/new/anyone");
+URL obj = new URL("https://api-sandbox.split.cash/contacts/anyone");
 HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 con.setRequestMethod("POST");
 int responseCode = con.getResponseCode();
@@ -2551,7 +2573,7 @@ System.out.println(response.toString());
 ```
 
 
-`POST /contacts/new/anyone`
+`POST /contacts/anyone`
 
 
 When you want to pay somebody that doesn't have a Split account, you can add them as an Anyone Contact.
@@ -2570,7 +2592,7 @@ When you want to pay somebody that doesn't have a Split account, you can add the
   "name": "Hunter Thompson",
   "email": "hunter@batcountry.com",
   "branch_code": "123456",
-  "account_number": "123456789"
+  "account_number": "13048322"
 }
 ```
 
@@ -2599,7 +2621,7 @@ When you want to pay somebody that doesn't have a Split account, you can add the
     "type": "anyone",
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-      "account_number": "123456789",
+      "account_number": "13048322",
       "branch_code": "123456",
       "state": "pending_verification"
     },
@@ -2962,7 +2984,10 @@ System.out.println(response.toString());
 curl -X PATCH https://api-sandbox.split.cash/contacts/{id} \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
+  -H 'Authorization: Bearer {access_token}' \
+  -d '{
+  "name": "My very own alias"
+}'
 
 
 ```
@@ -3203,7 +3228,20 @@ An Open Agreement can have the following statuses:
 curl -X POST https://api-sandbox.split.cash/open_agreements \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
+  -H 'Authorization: Bearer {access_token}' \
+  -d '{
+  "title": "Subscription Plan A",
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}'
 
 
 ```
@@ -4037,7 +4075,33 @@ The Payment is simply a group of Payouts therefore it does not have a particular
 curl -X POST https://api-sandbox.split.cash/payments \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
+  -H 'Authorization: Bearer {access_token}' \
+  -d '{
+  "description": "The SuperPackage",
+  "matures_at": "2016-09-13T00:00:00Z",
+  "payouts": [
+    {
+      "amount": 30000,
+      "description": "A tandem skydive jump SB23094",
+      "recipient_id": "48b89364-1577-4c81-ba02-96705895d457",
+      "metadata": {
+        "invoice_ref": "BILL-0001",
+        "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    },
+    {
+      "amount": 30000,
+      "description": "A scuba dive SDS5464",
+      "recipient_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+    }
+  ],
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}'
 
 
 ```
@@ -4976,7 +5040,17 @@ A Payment Request can have the following statuses:
 curl -X POST https://api-sandbox.split.cash/payment_requests \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
+  -H 'Authorization: Bearer {access_token}' \
+  -d '{
+  "description": "Visible to both initiator and authoriser",
+  "matures_at": "12/19/2016 2:10:56 AM",
+  "amount": 99000,
+  "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}'
 
 
 ```
@@ -6562,7 +6636,15 @@ There are two response fields that differ depending on the direction:
 curl -X POST https://api-sandbox.split.cash/credits/{credit_ref}/refunds \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
+  -H 'Authorization: Bearer {access_token}' \
+  -d '{
+  "amount": 500,
+  "reason": "Because reason",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}'
 
 
 ```
@@ -7361,7 +7443,16 @@ A Refund Request can have the following statuses:
 curl -X POST https://api-sandbox.split.cash/payout_refund_requests \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
+  -H 'Authorization: Bearer {access_token}' \
+  -d '{
+  "for_ref": "D.1",
+  "amount": 500,
+  "reason": "Because reason",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}'
 
 
 ```
@@ -9781,7 +9872,7 @@ System.out.println(response.toString());
       "type": "anyone",
       "bank_account": {
         "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-        "account_number": "123456789",
+        "account_number": "13048322",
         "branch_code": "123456",
         "state": "pending_verification"
       },
@@ -9813,7 +9904,7 @@ System.out.println(response.toString());
   "name": "Hunter Thompson",
   "email": "hunter@batcountry.com",
   "branch_code": "123456",
-  "account_number": "123456789"
+  "account_number": "13048322"
 }
 ```
 
@@ -9844,7 +9935,7 @@ System.out.println(response.toString());
     "type": "anyone",
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-      "account_number": "123456789",
+      "account_number": "13048322",
       "branch_code": "123456",
       "state": "pending_verification"
     },
