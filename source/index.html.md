@@ -281,13 +281,13 @@ curl -F "grant_type=refresh_token" \
 > Example response
 
 
-```
+```json
 {
-    "access_token":"ad0b5847cb7d254f1e2ff1910275fe9dcb95345c9d54502d156fe35a37b93e80",
-    "token_type":"bearer",
-    "expires_in":7200,
-    "refresh_token":"cc38f78a5b8abe8ee81cdf25b1ca74c3fa10c3da2309de5ac37fde00cbcf2815",
-    "scope":"public"
+    "access_token": "ad0b5847cb7d254f1e2ff1910275fe9dcb95345c9d54502d156fe35a37b93e80",
+    "token_type": "bearer",
+    "expires_in": 7200,
+    "refresh_token": "cc38f78a5b8abe8ee81cdf25b1ca74c3fa10c3da2309de5ac37fde00cbcf2815",
+    "scope": "public"
 }
 ```
 
@@ -389,14 +389,14 @@ Example flow embedding the Open Payment Request link using an iFrame:
 > Example response
 
 
-```
+```json
 {
   "errors": [
     {
-      "title": "Duplicate idempotency key"),
+      "title": "Duplicate idempotency key",
       "detail": "A resource has already been created with this idempotency key",
-      links: {
-        "about": "A resource has already been created with this idempotency key"
+      "links": {
+        "about": "https://docs.split.cash/"
       },
       "meta": {
         "resource_ref": "PB.1a4"
@@ -466,7 +466,7 @@ All collections are paginated to 25 items by default and the pagination informat
 > Example response
 
 
-```
+```json
 {
   "event": {
     "type": "object.action",
@@ -548,11 +548,10 @@ An Agreement can have the following statuses:
 
 
 ```shell
-# You can also use wget
 curl -X POST https://api-sandbox.split.cash/agreements \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -570,15 +569,31 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
+
+
+var body = '{
+  "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}';
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/agreements',
   method: 'post',
+  data: body,
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -605,10 +620,9 @@ const inputBody = '{
   }
 }';
 const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-
-
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
@@ -634,14 +648,28 @@ require 'json'
 
 
 headers = {
-  'Content-Type' => 'application/json',
-  'Accept' => 'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/agreements',
-  params: {
-  }, headers: headers
+params = '{
+  "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}'
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/agreements', params, headers
 
 
 p JSON.parse(result)
@@ -654,7 +682,8 @@ p JSON.parse(result)
 import requests
 headers = {
   'Content-Type': 'application/json',
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -779,10 +808,9 @@ Propose an Agreement to another Split Contact
 
 
 ```shell
-# You can also use wget
 curl -X POST https://api-sandbox.split.cash/agreements/{agreement_ref}/accept \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -801,14 +829,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/agreements/{agreement_ref}/accept',
-  method: 'post',
+  method: 'post'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -824,17 +852,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}/accept',
 {
   method: 'POST',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -853,13 +878,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/agreements/{agreement_ref}/accept',
-  params: {
-  }, headers: headers
+result = RestClient.post 'https://api-sandbox.split.cash/agreements/{agreement_ref}/accept', {}, headers
 
 
 p JSON.parse(result)
@@ -871,7 +895,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -965,10 +990,9 @@ Approve an incoming Agreement
 
 
 ```shell
-# You can also use wget
 curl -X POST https://api-sandbox.split.cash/agreements/{agreement_ref}/decline \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -987,14 +1011,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/agreements/{agreement_ref}/decline',
-  method: 'post',
+  method: 'post'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -1010,17 +1034,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}/decline',
 {
   method: 'POST',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -1039,13 +1060,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/agreements/{agreement_ref}/decline',
-  params: {
-  }, headers: headers
+result = RestClient.post 'https://api-sandbox.split.cash/agreements/{agreement_ref}/decline', {}, headers
 
 
 p JSON.parse(result)
@@ -1057,7 +1077,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -1151,10 +1172,9 @@ Decline an incoming Agreement
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/agreements/{agreement_ref} \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -1173,14 +1193,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/agreements/{agreement_ref}',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -1196,17 +1216,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -1225,13 +1242,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/agreements/{agreement_ref}',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/agreements/{agreement_ref}', {}, headers
 
 
 p JSON.parse(result)
@@ -1243,7 +1259,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -1337,9 +1354,8 @@ Get a single Agreement by its reference
 
 
 ```shell
-# You can also use wget
 curl -X DELETE https://api-sandbox.split.cash/agreements/{agreement_ref} \
-  -H 'Authorization: Bearer ACCESS_TOKEN'
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -1354,13 +1370,15 @@ Host: api-sandbox.split.cash
 
 
 ```javascript
+var headers = {
+  'Authorization': 'Bearer {access_token}'
+};
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/agreements/{agreement_ref}',
-  method: 'delete',
-
-
+  method: 'delete'
+  headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
   }
@@ -1374,11 +1392,15 @@ $.ajax({
 const request = require('node-fetch');
 
 
+const headers = {
+  'Authorization': 'Bearer {access_token}'
+};
+
+
 fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}',
 {
-  method: 'DELETE'
-
-
+  method: 'DELETE',
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -1395,9 +1417,12 @@ require 'rest-client'
 require 'json'
 
 
-result = RestClient.delete 'https://api-sandbox.split.cash/agreements/{agreement_ref}',
-  params: {
-  }
+headers = {
+  'Authorization': 'Bearer {access_token}'
+}
+
+
+result = RestClient.delete 'https://api-sandbox.split.cash/agreements/{agreement_ref}', headers
 
 
 p JSON.parse(result)
@@ -1408,12 +1433,15 @@ p JSON.parse(result)
 
 ```python
 import requests
+headers = {
+  'Authorization': 'Bearer {access_token}'
+}
 
 
 r = requests.delete('https://api-sandbox.split.cash/agreements/{agreement_ref}', params={
 
 
-)
+}, headers = headers)
 
 
 print r.json()
@@ -1473,10 +1501,9 @@ An Agreement can be cancelled by the initiator at any time whilst the authoriser
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/agreements/incoming \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -1495,14 +1522,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/agreements/incoming',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -1518,17 +1545,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/agreements/incoming',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -1547,13 +1571,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/agreements/incoming',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/agreements/incoming', {}, headers
 
 
 p JSON.parse(result)
@@ -1565,7 +1588,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -1693,10 +1717,9 @@ By default, all incoming Agreements will be returned. You can apply filters to y
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/agreements/outgoing \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -1715,14 +1738,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/agreements/outgoing',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -1738,17 +1761,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/agreements/outgoing',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -1767,13 +1787,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/agreements/outgoing',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/agreements/outgoing', {}, headers
 
 
 p JSON.parse(result)
@@ -1785,7 +1804,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -1930,11 +1950,10 @@ There are a few IDs supplied within a Contact's response:
 
 
 ```shell
-# You can also use wget
 curl -X POST https://api-sandbox.split.cash/contacts \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -1952,15 +1971,21 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
+
+
+var body = '{
+  "nickname": "outstanding_tours"
+}';
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/contacts',
   method: 'post',
+  data: body,
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -1977,10 +2002,9 @@ const inputBody = '{
   "nickname": "outstanding_tours"
 }';
 const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-
-
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
@@ -2006,14 +2030,18 @@ require 'json'
 
 
 headers = {
-  'Content-Type' => 'application/json',
-  'Accept' => 'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/contacts',
-  params: {
-  }, headers: headers
+params = '{
+  "nickname": "outstanding_tours"
+}'
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/contacts', params, headers
 
 
 p JSON.parse(result)
@@ -2026,7 +2054,8 @@ p JSON.parse(result)
 import requests
 headers = {
   'Content-Type': 'application/json',
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -2132,10 +2161,9 @@ Add a Split Contact
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/contacts \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -2154,14 +2182,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/contacts',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -2177,17 +2205,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/contacts',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -2206,13 +2231,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/contacts',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/contacts', {}, headers
 
 
 p JSON.parse(result)
@@ -2224,7 +2248,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -2377,11 +2402,10 @@ By default, all Contacts will be returned. You can apply filters to your query t
 
 
 ```shell
-# You can also use wget
 curl -X POST https://api-sandbox.split.cash/contacts/new/anyone \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -2399,15 +2423,24 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
+
+
+var body = '{
+  "name": "Hunter Thompson",
+  "email": "hunter@batcountry.com",
+  "branch_code": "123456",
+  "account_number": "123456789"
+}';
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/contacts/new/anyone',
   method: 'post',
+  data: body,
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -2427,10 +2460,9 @@ const inputBody = '{
   "account_number": "123456789"
 }';
 const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-
-
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
@@ -2456,14 +2488,21 @@ require 'json'
 
 
 headers = {
-  'Content-Type' => 'application/json',
-  'Accept' => 'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/contacts/new/anyone',
-  params: {
-  }, headers: headers
+params = '{
+  "name": "Hunter Thompson",
+  "email": "hunter@batcountry.com",
+  "branch_code": "123456",
+  "account_number": "123456789"
+}'
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/contacts/new/anyone', params, headers
 
 
 p JSON.parse(result)
@@ -2476,7 +2515,8 @@ p JSON.parse(result)
 import requests
 headers = {
   'Content-Type': 'application/json',
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -2589,10 +2629,9 @@ When you want to pay somebody that doesn't have a Split account, you can add the
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/contacts/{id} \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -2611,14 +2650,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/contacts/{id}',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -2634,17 +2673,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/contacts/{id}',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -2663,13 +2699,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/contacts/{id}',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/contacts/{id}', {}, headers
 
 
 p JSON.parse(result)
@@ -2681,7 +2716,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -2776,9 +2812,8 @@ Get a single Contact by its ID
 
 
 ```shell
-# You can also use wget
 curl -X DELETE https://api-sandbox.split.cash/contacts/{id} \
-  -H 'Authorization: Bearer ACCESS_TOKEN'
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -2793,13 +2828,15 @@ Host: api-sandbox.split.cash
 
 
 ```javascript
+var headers = {
+  'Authorization': 'Bearer {access_token}'
+};
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/contacts/{id}',
-  method: 'delete',
-
-
+  method: 'delete'
+  headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
   }
@@ -2813,11 +2850,15 @@ $.ajax({
 const request = require('node-fetch');
 
 
+const headers = {
+  'Authorization': 'Bearer {access_token}'
+};
+
+
 fetch('https://api-sandbox.split.cash/contacts/{id}',
 {
-  method: 'DELETE'
-
-
+  method: 'DELETE',
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -2834,9 +2875,12 @@ require 'rest-client'
 require 'json'
 
 
-result = RestClient.delete 'https://api-sandbox.split.cash/contacts/{id}',
-  params: {
-  }
+headers = {
+  'Authorization': 'Bearer {access_token}'
+}
+
+
+result = RestClient.delete 'https://api-sandbox.split.cash/contacts/{id}', headers
 
 
 p JSON.parse(result)
@@ -2847,12 +2891,15 @@ p JSON.parse(result)
 
 ```python
 import requests
+headers = {
+  'Authorization': 'Bearer {access_token}'
+}
 
 
 r = requests.delete('https://api-sandbox.split.cash/contacts/{id}', params={
 
 
-)
+}, headers = headers)
 
 
 print r.json()
@@ -2912,11 +2959,10 @@ System.out.println(response.toString());
 
 
 ```shell
-# You can also use wget
 curl -X PATCH https://api-sandbox.split.cash/contacts/{id} \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -2934,15 +2980,21 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
+
+
+var body = '{
+  "name": "My very own alias"
+}';
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/contacts/{id}',
   method: 'patch',
+  data: body,
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -2959,10 +3011,9 @@ const inputBody = '{
   "name": "My very own alias"
 }';
 const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-
-
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
@@ -2988,14 +3039,18 @@ require 'json'
 
 
 headers = {
-  'Content-Type' => 'application/json',
-  'Accept' => 'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.patch 'https://api-sandbox.split.cash/contacts/{id}',
-  params: {
-  }, headers: headers
+params = '{
+  "name": "My very own alias"
+}'
+
+
+result = RestClient.patch 'https://api-sandbox.split.cash/contacts/{id}', params, headers
 
 
 p JSON.parse(result)
@@ -3008,7 +3063,8 @@ p JSON.parse(result)
 import requests
 headers = {
   'Content-Type': 'application/json',
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -3144,11 +3200,10 @@ An Open Agreement can have the following statuses:
 
 
 ```shell
-# You can also use wget
 curl -X POST https://api-sandbox.split.cash/open_agreements \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -3166,15 +3221,31 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
+
+
+var body = '{
+  "title": "Subscription Plan A",
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}';
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/open_agreements',
   method: 'post',
+  data: body,
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -3201,10 +3272,9 @@ const inputBody = '{
   }
 }';
 const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-
-
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
@@ -3230,14 +3300,28 @@ require 'json'
 
 
 headers = {
-  'Content-Type' => 'application/json',
-  'Accept' => 'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/open_agreements',
-  params: {
-  }, headers: headers
+params = '{
+  "title": "Subscription Plan A",
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}'
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/open_agreements', params, headers
 
 
 p JSON.parse(result)
@@ -3250,7 +3334,8 @@ p JSON.parse(result)
 import requests
 headers = {
   'Content-Type': 'application/json',
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -3373,10 +3458,9 @@ Create an Open Agreement that can be accepted by anyone.
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/open_agreements \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -3395,14 +3479,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/open_agreements',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -3418,17 +3502,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/open_agreements',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -3447,13 +3528,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/open_agreements',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/open_agreements', {}, headers
 
 
 p JSON.parse(result)
@@ -3465,7 +3545,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -3575,10 +3656,9 @@ System.out.println(response.toString());
 
 
 ```shell
-# You can also use wget
 curl -X POST https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -3597,14 +3677,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate',
-  method: 'post',
+  method: 'post'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -3620,17 +3700,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate',
 {
   method: 'POST',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -3649,13 +3726,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate',
-  params: {
-  }, headers: headers
+result = RestClient.post 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate', {}, headers
 
 
 p JSON.parse(result)
@@ -3667,7 +3743,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -3760,10 +3837,9 @@ Allow the Open Agreement to viewed and accepted
 
 
 ```shell
-# You can also use wget
 curl -X POST https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -3782,14 +3858,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close',
-  method: 'post',
+  method: 'post'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -3805,17 +3881,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close',
 {
   method: 'POST',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -3834,13 +3907,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close',
-  params: {
-  }, headers: headers
+result = RestClient.post 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close', {}, headers
 
 
 p JSON.parse(result)
@@ -3852,7 +3924,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -3961,11 +4034,10 @@ The Payment is simply a group of Payouts therefore it does not have a particular
 
 
 ```shell
-# You can also use wget
 curl -X POST https://api-sandbox.split.cash/payments \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -3983,15 +4055,44 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
+
+
+var body = '{
+  "description": "The SuperPackage",
+  "matures_at": "2016-09-13T00:00:00Z",
+  "payouts": [
+    {
+      "amount": 30000,
+      "description": "A tandem skydive jump SB23094",
+      "recipient_id": "48b89364-1577-4c81-ba02-96705895d457",
+      "metadata": {
+        "invoice_ref": "BILL-0001",
+        "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    },
+    {
+      "amount": 30000,
+      "description": "A scuba dive SDS5464",
+      "recipient_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+    }
+  ],
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}';
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payments',
   method: 'post',
+  data: body,
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -4031,10 +4132,9 @@ const inputBody = '{
   }
 }';
 const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-
-
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
@@ -4060,14 +4160,41 @@ require 'json'
 
 
 headers = {
-  'Content-Type' => 'application/json',
-  'Accept' => 'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/payments',
-  params: {
-  }, headers: headers
+params = '{
+  "description": "The SuperPackage",
+  "matures_at": "2016-09-13T00:00:00Z",
+  "payouts": [
+    {
+      "amount": 30000,
+      "description": "A tandem skydive jump SB23094",
+      "recipient_id": "48b89364-1577-4c81-ba02-96705895d457",
+      "metadata": {
+        "invoice_ref": "BILL-0001",
+        "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    },
+    {
+      "amount": 30000,
+      "description": "A scuba dive SDS5464",
+      "recipient_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+    }
+  ],
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}'
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/payments', params, headers
 
 
 p JSON.parse(result)
@@ -4080,7 +4207,8 @@ p JSON.parse(result)
 import requests
 headers = {
   'Content-Type': 'application/json',
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -4234,10 +4362,9 @@ System.out.println(response.toString());
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/payments \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -4256,14 +4383,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payments',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -4279,17 +4406,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/payments',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -4308,13 +4432,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/payments',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/payments', {}, headers
 
 
 p JSON.parse(result)
@@ -4326,7 +4449,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -4441,10 +4565,9 @@ System.out.println(response.toString());
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/payments/{payment_ref} \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -4463,14 +4586,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payments/{payment_ref}',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -4486,17 +4609,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/payments/{payment_ref}',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -4515,13 +4635,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/payments/{payment_ref}',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/payments/{payment_ref}', {}, headers
 
 
 p JSON.parse(result)
@@ -4533,7 +4652,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -4654,9 +4774,8 @@ Payouts are what a compose a Payment. One or all Payouts can be voided individua
 
 
 ```shell
-# You can also use wget
 curl -X DELETE https://api-sandbox.split.cash/payouts/{debit_ref} \
-  -H 'Authorization: Bearer ACCESS_TOKEN'
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -4671,13 +4790,15 @@ Host: api-sandbox.split.cash
 
 
 ```javascript
+var headers = {
+  'Authorization': 'Bearer {access_token}'
+};
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payouts/{debit_ref}',
-  method: 'delete',
-
-
+  method: 'delete'
+  headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
   }
@@ -4691,11 +4812,15 @@ $.ajax({
 const request = require('node-fetch');
 
 
+const headers = {
+  'Authorization': 'Bearer {access_token}'
+};
+
+
 fetch('https://api-sandbox.split.cash/payouts/{debit_ref}',
 {
-  method: 'DELETE'
-
-
+  method: 'DELETE',
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -4712,9 +4837,12 @@ require 'rest-client'
 require 'json'
 
 
-result = RestClient.delete 'https://api-sandbox.split.cash/payouts/{debit_ref}',
-  params: {
-  }
+headers = {
+  'Authorization': 'Bearer {access_token}'
+}
+
+
+result = RestClient.delete 'https://api-sandbox.split.cash/payouts/{debit_ref}', headers
 
 
 p JSON.parse(result)
@@ -4725,12 +4853,15 @@ p JSON.parse(result)
 
 ```python
 import requests
+headers = {
+  'Authorization': 'Bearer {access_token}'
+}
 
 
 r = requests.delete('https://api-sandbox.split.cash/payouts/{debit_ref}', params={
 
 
-)
+}, headers = headers)
 
 
 print r.json()
@@ -4842,11 +4973,10 @@ A Payment Request can have the following statuses:
 
 
 ```shell
-# You can also use wget
 curl -X POST https://api-sandbox.split.cash/payment_requests \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -4864,15 +4994,28 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
+
+
+var body = '{
+  "description": "Visible to both initiator and authoriser",
+  "matures_at": "12/19/2016 2:10:56 AM",
+  "amount": 99000,
+  "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}';
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payment_requests',
   method: 'post',
+  data: body,
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -4896,10 +5039,9 @@ const inputBody = '{
   }
 }';
 const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-
-
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
@@ -4925,14 +5067,25 @@ require 'json'
 
 
 headers = {
-  'Content-Type' => 'application/json',
-  'Accept' => 'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/payment_requests',
-  params: {
-  }, headers: headers
+params = '{
+  "description": "Visible to both initiator and authoriser",
+  "matures_at": "12/19/2016 2:10:56 AM",
+  "amount": 99000,
+  "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}'
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/payment_requests', params, headers
 
 
 p JSON.parse(result)
@@ -4945,7 +5098,8 @@ p JSON.parse(result)
 import requests
 headers = {
   'Content-Type': 'application/json',
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -5058,10 +5212,9 @@ System.out.println(response.toString());
 
 
 ```shell
-# You can also use wget
 curl -X POST https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -5080,14 +5233,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve',
-  method: 'post',
+  method: 'post'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -5103,17 +5256,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve',
 {
   method: 'POST',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -5132,13 +5282,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve',
-  params: {
-  }, headers: headers
+result = RestClient.post 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve', {}, headers
 
 
 p JSON.parse(result)
@@ -5150,7 +5299,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -5241,10 +5391,9 @@ System.out.println(response.toString());
 
 
 ```shell
-# You can also use wget
 curl -X POST https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -5263,14 +5412,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline',
-  method: 'post',
+  method: 'post'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -5286,17 +5435,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline',
 {
   method: 'POST',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -5315,13 +5461,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline',
-  params: {
-  }, headers: headers
+result = RestClient.post 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline', {}, headers
 
 
 p JSON.parse(result)
@@ -5333,7 +5478,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -5424,10 +5570,9 @@ System.out.println(response.toString());
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/payment_requests/{payment_request_ref} \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -5446,14 +5591,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -5469,17 +5614,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -5498,13 +5640,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', {}, headers
 
 
 p JSON.parse(result)
@@ -5516,7 +5657,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -5607,9 +5749,8 @@ System.out.println(response.toString());
 
 
 ```shell
-# You can also use wget
 curl -X DELETE https://api-sandbox.split.cash/payment_requests/{payment_request_ref} \
-  -H 'Authorization: Bearer ACCESS_TOKEN'
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -5624,13 +5765,15 @@ Host: api-sandbox.split.cash
 
 
 ```javascript
+var headers = {
+  'Authorization': 'Bearer {access_token}'
+};
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
-  method: 'delete',
-
-
+  method: 'delete'
+  headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
   }
@@ -5644,11 +5787,15 @@ $.ajax({
 const request = require('node-fetch');
 
 
+const headers = {
+  'Authorization': 'Bearer {access_token}'
+};
+
+
 fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
 {
-  method: 'DELETE'
-
-
+  method: 'DELETE',
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -5665,9 +5812,12 @@ require 'rest-client'
 require 'json'
 
 
-result = RestClient.delete 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
-  params: {
-  }
+headers = {
+  'Authorization': 'Bearer {access_token}'
+}
+
+
+result = RestClient.delete 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', headers
 
 
 p JSON.parse(result)
@@ -5678,12 +5828,15 @@ p JSON.parse(result)
 
 ```python
 import requests
+headers = {
+  'Authorization': 'Bearer {access_token}'
+}
 
 
 r = requests.delete('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', params={
 
 
-)
+}, headers = headers)
 
 
 print r.json()
@@ -5743,10 +5896,9 @@ A PR can only be cancelled if it has not yet matured.
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/payment_requests/incoming \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -5765,14 +5917,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payment_requests/incoming',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -5788,17 +5940,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/payment_requests/incoming',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -5817,13 +5966,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/incoming',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/incoming', {}, headers
 
 
 p JSON.parse(result)
@@ -5835,7 +5983,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -5943,10 +6092,9 @@ System.out.println(response.toString());
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/payment_requests/outgoing \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -5965,14 +6113,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payment_requests/outgoing',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -5988,17 +6136,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/payment_requests/outgoing',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -6017,13 +6162,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/outgoing',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/outgoing', {}, headers
 
 
 p JSON.parse(result)
@@ -6035,7 +6179,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -6139,10 +6284,9 @@ System.out.println(response.toString());
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -6161,14 +6305,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -6184,17 +6328,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -6213,13 +6354,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history', {}, headers
 
 
 p JSON.parse(result)
@@ -6231,7 +6371,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -6418,11 +6559,10 @@ There are two response fields that differ depending on the direction:
 
 
 ```shell
-# You can also use wget
 curl -X POST https://api-sandbox.split.cash/credits/{credit_ref}/refunds \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -6440,15 +6580,26 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
+
+
+var body = '{
+  "amount": 500,
+  "reason": "Because reason",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}';
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/credits/{credit_ref}/refunds',
   method: 'post',
+  data: body,
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -6470,10 +6621,9 @@ const inputBody = '{
   }
 }';
 const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-
-
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
@@ -6499,14 +6649,23 @@ require 'json'
 
 
 headers = {
-  'Content-Type' => 'application/json',
-  'Accept' => 'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/credits/{credit_ref}/refunds',
-  params: {
-  }, headers: headers
+params = '{
+  "amount": 500,
+  "reason": "Because reason",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}'
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/credits/{credit_ref}/refunds', params, headers
 
 
 p JSON.parse(result)
@@ -6519,7 +6678,8 @@ p JSON.parse(result)
 import requests
 headers = {
   'Content-Type': 'application/json',
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -6630,10 +6790,9 @@ Certain rules apply to the issuance of a refund:
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/refunds/incoming \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -6652,14 +6811,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/refunds/incoming',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -6675,17 +6834,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/refunds/incoming',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -6704,13 +6860,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/refunds/incoming',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/refunds/incoming', {}, headers
 
 
 p JSON.parse(result)
@@ -6722,7 +6877,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -6810,10 +6966,9 @@ System.out.println(response.toString());
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/refunds/outgoing \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -6832,14 +6987,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/refunds/outgoing',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -6855,17 +7010,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/refunds/outgoing',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -6884,13 +7036,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/refunds/outgoing',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/refunds/outgoing', {}, headers
 
 
 p JSON.parse(result)
@@ -6902,7 +7053,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -6990,10 +7142,9 @@ System.out.println(response.toString());
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/refunds/{refund_ref} \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -7012,14 +7163,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/refunds/{refund_ref}',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -7035,17 +7186,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/refunds/{refund_ref}',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -7064,13 +7212,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/refunds/{refund_ref}',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/refunds/{refund_ref}', {}, headers
 
 
 p JSON.parse(result)
@@ -7082,7 +7229,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -7210,11 +7358,10 @@ A Refund Request can have the following statuses:
 
 
 ```shell
-# You can also use wget
 curl -X POST https://api-sandbox.split.cash/payout_refund_requests \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
   -H 'Content-Type: application/json' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -7232,15 +7379,27 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Content-Type':'application/json',
-  'Accept':'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
+
+
+var body = '{
+  "for_ref": "D.1",
+  "amount": 500,
+  "reason": "Because reason",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}';
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payout_refund_requests',
   method: 'post',
+  data: body,
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -7263,10 +7422,9 @@ const inputBody = '{
   }
 }';
 const headers = {
-  'Content-Type':'application/json',
-  'Accept':'application/json'
-
-
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
@@ -7292,14 +7450,24 @@ require 'json'
 
 
 headers = {
-  'Content-Type' => 'application/json',
-  'Accept' => 'application/json'
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests',
-  params: {
-  }, headers: headers
+params = '{
+  "for_ref": "D.1",
+  "amount": 500,
+  "reason": "Because reason",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}'
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests', params, headers
 
 
 p JSON.parse(result)
@@ -7312,7 +7480,8 @@ p JSON.parse(result)
 import requests
 headers = {
   'Content-Type': 'application/json',
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -7428,10 +7597,9 @@ Certain rules apply to the creation of a Refund Request:
 
 
 ```shell
-# You can also use wget
 curl -X POST https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -7450,14 +7618,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve',
-  method: 'post',
+  method: 'post'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -7473,17 +7641,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve',
 {
   method: 'POST',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -7502,13 +7667,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve',
-  params: {
-  }, headers: headers
+result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve', {}, headers
 
 
 p JSON.parse(result)
@@ -7520,7 +7684,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -7609,10 +7774,9 @@ System.out.println(response.toString());
 
 
 ```shell
-# You can also use wget
 curl -X POST https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -7631,14 +7795,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline',
-  method: 'post',
+  method: 'post'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -7654,17 +7818,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline',
 {
   method: 'POST',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -7683,13 +7844,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline',
-  params: {
-  }, headers: headers
+result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline', {}, headers
 
 
 p JSON.parse(result)
@@ -7701,7 +7861,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -7790,10 +7951,9 @@ System.out.println(response.toString());
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref} \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -7812,14 +7972,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -7835,17 +7995,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -7864,13 +8021,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', {}, headers
 
 
 p JSON.parse(result)
@@ -7882,7 +8038,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -7974,9 +8131,8 @@ Get a specific Refund Request by its reference
 
 
 ```shell
-# You can also use wget
 curl -X DELETE https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref} \
-  -H 'Authorization: Bearer ACCESS_TOKEN'
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -7991,13 +8147,15 @@ Host: api-sandbox.split.cash
 
 
 ```javascript
+var headers = {
+  'Authorization': 'Bearer {access_token}'
+};
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
-  method: 'delete',
-
-
+  method: 'delete'
+  headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
   }
@@ -8011,11 +8169,15 @@ $.ajax({
 const request = require('node-fetch');
 
 
+const headers = {
+  'Authorization': 'Bearer {access_token}'
+};
+
+
 fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
 {
-  method: 'DELETE'
-
-
+  method: 'DELETE',
+  headers: headers
 })
 .then(function(res) {
     return res.json();
@@ -8032,9 +8194,12 @@ require 'rest-client'
 require 'json'
 
 
-result = RestClient.delete 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
-  params: {
-  }
+headers = {
+  'Authorization': 'Bearer {access_token}'
+}
+
+
+result = RestClient.delete 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', headers
 
 
 p JSON.parse(result)
@@ -8045,12 +8210,15 @@ p JSON.parse(result)
 
 ```python
 import requests
+headers = {
+  'Authorization': 'Bearer {access_token}'
+}
 
 
 r = requests.delete('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', params={
 
 
-)
+}, headers = headers)
 
 
 print r.json()
@@ -8110,10 +8278,9 @@ A Refund Request can only be canceled if it is pending approval.
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/payout_refund_requests/incoming \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -8132,14 +8299,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payout_refund_requests/incoming',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -8155,17 +8322,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/payout_refund_requests/incoming',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -8184,13 +8348,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/incoming',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/incoming', {}, headers
 
 
 p JSON.parse(result)
@@ -8202,7 +8365,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -8294,10 +8458,9 @@ System.out.println(response.toString());
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/payout_refund_requests/outgoing \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: text/json'
+  -H 'Accept: text/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -8316,14 +8479,14 @@ Accept: text/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'text/json'
+  'Accept': 'text/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/payout_refund_requests/outgoing',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -8339,17 +8502,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'text/json'
-
-
+  'Accept': 'text/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/payout_refund_requests/outgoing',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -8368,13 +8528,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'text/json'
+  'Accept': 'text/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/outgoing',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/outgoing', {}, headers
 
 
 p JSON.parse(result)
@@ -8386,7 +8545,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'text/json'
+  'Accept': 'text/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -8504,10 +8664,9 @@ A transaction (debit or credit) can have the following statuses:
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/transactions \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -8526,14 +8685,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/transactions',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -8549,17 +8708,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/transactions',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -8578,13 +8734,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/transactions',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/transactions', {}, headers
 
 
 p JSON.parse(result)
@@ -8596,7 +8751,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
@@ -8761,10 +8917,9 @@ All about the currently authenticated user.
 
 
 ```shell
-# You can also use wget
 curl -X GET https://api-sandbox.split.cash/user \
-  -H 'Authorization: Bearer ACCESS_TOKEN' \
-  -H 'Accept: application/json'
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
 
 
 ```
@@ -8783,14 +8938,14 @@ Accept: application/json
 
 ```javascript
 var headers = {
-  'Authorization: Bearer ACCESS_TOKEN',
-  'Accept':'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 $.ajax({
   url: 'https://api-sandbox.split.cash/user',
-  method: 'get',
+  method: 'get'
   headers: headers,
   success: function(data) {
     console.log(JSON.stringify(data));
@@ -8806,17 +8961,14 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept':'application/json'
-
-
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 };
 
 
 fetch('https://api-sandbox.split.cash/user',
 {
   method: 'GET',
-
-
   headers: headers
 })
 .then(function(res) {
@@ -8835,13 +8987,12 @@ require 'json'
 
 
 headers = {
-  'Accept' => 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
-result = RestClient.get 'https://api-sandbox.split.cash/user',
-  params: {
-  }, headers: headers
+result = RestClient.get 'https://api-sandbox.split.cash/user', {}, headers
 
 
 p JSON.parse(result)
@@ -8853,7 +9004,8 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'application/json'
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
 }
 
 
