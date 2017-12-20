@@ -44,6 +44,17 @@ li img { border: 1px solid $nav-subitem-bg }
 
 .lang-selector a[data-language-name="http"] { display: none; }
 
+blockquote.main-quote {
+  float: none;
+  width: auto;
+  margin-right: 40%;
+  padding: 10px 28px;
+  margin-bottom: 14px;
+  background-color: transparent;
+  color: #252e33;
+  border-left: 4px solid #252e33;
+}
+
 @media (max-width: $phone-width) {
-  .content h2, .middle-header { margin-right: 0; }
+  .content h2, .middle-header, blockquote.main-quote { margin-right: 0; }
 }

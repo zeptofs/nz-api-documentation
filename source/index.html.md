@@ -424,6 +424,59 @@ Keys expire after 24 hours. If there is a subsequent request with the same idemp
 * Endpoints that use the `GET` or `DELETE` actions are idempotent by nature.
 
 
+## Speeding up onboarding
+Consider the following scenario:
+
+
+<blockquote class="main-quote">Split is integrated in your application to handle payments.<br>A customer would like to use Split but does not yet have Split account.<br>You already have some information about this customer.</blockquote>
+
+
+Given the above, in a standard implementation where a customer enables/uses Split within your application, these are the steps they would follow:
+
+
+1. Click on some sort of button within your app to use Split.
+2. They get redirected to the Split sign in page (possibly via a popup or modal).
+3. Since they don't yet have a Split account, they would click on sign up.
+4. They would fill in all their signup details and submit.
+5. They would be presented with the [authorisation page](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/oauth2_app_authorise.png).
+6. They would click the "Authorise" button and be redirected to your app.
+
+
+Whilst not too bad, we can do better!
+
+
+In order to speed up the process, we allow query string params to be appended to the [authorisation URL](/#get-started). For instance, if we already have some information about the customer and know they probably don't have a Split account, we can embed this information in the authorisation URL.
+
+
+**Supported query string parameters**
+
+
+| Parameter | Description |
+|-----------|--------|
+| `landing`   | Accepted values: `business_sign_up` or `personal_sign_up`. What page the user should see first if not already signed in. Default is the sign in page. |
+| `nickname` | Only letters, numbers, dashes and underscores are permitted. This will be used to identify the account in Split. |
+| `name` | Business account only. Business name. |
+| `phone` | Business account only. Business phone number. |
+| `street_address` | |
+| `suburb` | |
+| `state` | See the sign up page for accepted values |
+| `post_code` | |
+| `first_name` | |
+| `last_name` | |
+| `mobile_phone` | |
+| `email` | |
+
+
+All values should be [URL encoded](https://en.wikipedia.org/wiki/Query_string#URL_encoding).
+
+
+As an example, the following authorisation URL would display the **personal sign up** & prefill the first name field with **George**:
+`https://go-sandbox.split.cash/oauth/authorize?response_type=code&client_id=xxx&redirect_uri=xxx&scope=xxx&landing=personal_sign_up&first_name=George`
+
+
+You can also pass the values directly to the sign up page outside of the OAuth2 authorisation process. Click on the following link to see the values preloaded: [https://go-sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgeco&first_name=George](https://go-sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgceco&first_name=George).
+
+
 # Configuration
 
 
