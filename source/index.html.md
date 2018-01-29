@@ -48,7 +48,7 @@ Due to the above, certain endpoints and techniques will differ slightly dependin
 * Sandbox UI: `https://go-sandbox.split.cash/`.
 * Data is sent and received as JSON.
 * Currencies are represented by 3 characters as defined in [ISO 4217](http://www.xe.com/iso4217.php).
-* Dates & times are returned in UTC using [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format with second accuracy.
+* Dates & times are returned in UTC using [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format with second accuracy. With requests, when no TZ is supplied, the configured TZ of the authenticated user is used.
 * Amounts are always in cents with no decimals unless otherwise stated.
 
 
@@ -513,6 +513,32 @@ Total: 5
 All collections are paginated to 25 items by default and the pagination information may be found in the response header. You can customise the pagination by appending `?per_page=x` and/or `?page=x` to the endpoint URL.
 
 
+## Remitter
+
+
+> Example request
+
+
+```json
+{
+  "...": "...",
+  "metadata": {
+   "remitter": "CustomRem"
+   }
+}
+```
+
+
+You can elect to assign a remitter name on a per-request basis when submitting Payments & Payment Requests. Simply append the `remitter` key and a value within the `metadata` key.
+
+
+* **For Payments**, the party being credited will see the designated remitter name along the entry on their bank statement.
+* **For Payment Requests**, the party being debited will see the designated remitter name along the entry on their bank statement.
+
+
+<aside class="notice">The remitter name MUST be between 3 and 16 characters.</aside>
+
+
 ## Webhooks
 
 
@@ -553,8 +579,7 @@ We support two main categories of webhooks:
 All events posted to the designated URL fit the same structure.
 
 
-<aside class="notice">
-  The sandbox environment allow both HTTP and HTTPS webhook URLs. The live environment however will only POST to HTTPS URLs.
+<aside class="notice">The sandbox environment allow both HTTP and HTTPS webhook URLs. The live environment however will only POST to HTTPS URLs.
 </aside>
 
 
