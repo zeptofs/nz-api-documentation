@@ -2391,6 +2391,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
+|account_id|query|string|false|Single value, string search|
 |name|query|string|false|Single value, string search|
 |nickname|query|string|false|Single value, string search|
 |bank_account_id|query|string|false|Single value, exact match|
