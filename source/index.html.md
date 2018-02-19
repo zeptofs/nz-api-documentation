@@ -2014,6 +2014,182 @@ By default, all outgoing Agreements will be returned. You can apply filters to y
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingAgreementsResponse](#schemalistoutgoingagreementsresponse)|
 
 
+<h1 id="Split-API-Bank-Accounts">Bank Accounts</h1>
+
+
+Your currently linked up bank accounts.
+
+
+## List all Bank Accounts
+
+
+<a id="opIdListAllBankAccounts"></a>
+
+
+> Code samples
+
+
+```shell
+curl -X GET https://api-sandbox.split.cash/bank_accounts \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/bank_accounts HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/bank_accounts',
+  method: 'get'
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
+};
+
+
+fetch('https://api-sandbox.split.cash/bank_accounts',
+{
+  method: 'GET',
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/bank_accounts', {}, headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/bank_accounts', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/bank_accounts");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET /bank_accounts`
+
+
+By default, all Bank Accounts will be returned. There can currently be only 1 active bank account.
+
+
+> Example responses
+
+
+```json
+{
+  "data": [
+    {
+      "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
+      "branch_code": "493192",
+      "account_number": "3993013",
+      "status": "active"
+    },
+    {
+      "id": "56df206a-aaff-471a-b075-11882bc8906a",
+      "branch_code": "302193",
+      "account_number": "119302",
+      "status": "removed"
+    }
+  ]
+}
+```
+
+
+<h3 id="List all Bank Accounts-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllBankAccountsResponse](#schemalistallbankaccountsresponse)|
+
+
 <h1 id="Split-API-Contacts">Contacts</h1>
 
 
@@ -9610,6 +9786,40 @@ System.out.println(response.toString());
           "max_amount": 10000
         }
       }
+    }
+  ]
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
+
+## ListAllBankAccountsResponse
+
+
+<a id="schemalistallbankaccountsresponse"></a>
+
+
+```json
+{
+  "data": [
+    {
+      "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
+      "branch_code": "493192",
+      "account_number": "3993013",
+      "status": "active"
+    },
+    {
+      "id": "56df206a-aaff-471a-b075-11882bc8906a",
+      "branch_code": "302193",
+      "account_number": "119302",
+      "status": "removed"
     }
   ]
 }
