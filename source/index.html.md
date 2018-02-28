@@ -456,11 +456,12 @@ In order to speed up the process, we allow query string params to be appended to
 | `landing`   | Accepted values: `business_sign_up` or `personal_sign_up`. What page the user should see first if not already signed in. Default is the sign in page. |
 | `nickname` | Only letters, numbers, dashes and underscores are permitted. This will be used to identify the account in Split. |
 | `name` | Business account only. Business name. |
+| `abn` | Business account only. Business ABN. |
 | `phone` | Business account only. Business phone number. |
 | `street_address` | |
 | `suburb` | |
 | `state` | See the sign up page for accepted values |
-| `post_code` | |
+| `postcode` | |
 | `first_name` | |
 | `last_name` | |
 | `mobile_phone` | |
