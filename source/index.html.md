@@ -489,6 +489,7 @@ Scopes define the level of access granted via the OAuth2 authorisation process. 
 |--------|------------|
 | `public` | View user's public information |
 | `agreements` | Manage user's Agreements |
+| `bank_accounts` | Manage user's Bank Accounts |
 | `contacts` | Manage user's Contacts |
 | `open_agreements` | Manage user's Open Agreements |
 | `payments` | Manage user's Payments |
@@ -9248,6 +9249,677 @@ System.out.println(response.toString());
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllTransactionsResponse](#schemalistalltransactionsresponse)|
 
 
+<h1 id="Split-API-Unassigned-Agreements">Unassigned Agreements</h1>
+
+
+An agreement with no preset authoriser that can only be accepted once and must be accepted within a predefined time period.
+
+
+Unassigned Agreements are shared using the generated link available in the response body. You can then include it in an email, text message, embed it in an iFrame, etc...
+
+
+## Propose an Unassigned Agreement
+
+
+<a id="opIdProposeUnassignedAgreement"></a>
+
+
+> Code samples
+
+
+```shell
+curl -X POST https://api-sandbox.split.cash/unassigned_agreements \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}' \
+  -d '{
+  "expiry_in_seconds": 60,
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}'
+
+
+```
+
+
+```http
+POST https://api-sandbox.split.cash/unassigned_agreements HTTP/1.1
+Host: api-sandbox.split.cash
+Content-Type: application/json
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
+};
+
+
+var body = '{
+  "expiry_in_seconds": 60,
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}';
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/unassigned_agreements',
+  method: 'post',
+  data: body,
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+const inputBody = '{
+  "expiry_in_seconds": 60,
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}';
+const headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
+};
+
+
+fetch('https://api-sandbox.split.cash/unassigned_agreements',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
+}
+
+
+params = '{
+  "expiry_in_seconds": 60,
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}'
+
+
+result = RestClient.post 'https://api-sandbox.split.cash/unassigned_agreements', params, headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
+}
+
+
+r = requests.post('https://api-sandbox.split.cash/unassigned_agreements', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/unassigned_agreements");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("POST");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`POST /unassigned_agreements`
+
+
+Create an Unassigned Agreement
+
+
+<aside class="notice">You can set any of the term metrics to <code>null</code> if you wish them to not have a limit.</aside>
+
+
+> Body parameter
+
+
+```json
+{
+  "expiry_in_seconds": 60,
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}
+```
+
+
+<h3 id="Propose-an-Unassigned-Agreement-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[ProposeUnassignedAgreementRequest](#schemaproposeunassignedagreementrequest)|true|No description|
+|» expiry_in_seconds|body|number|true|The amount of time in seconds before the Unassigned Agreement can no longer be accepted.|
+|» terms|body|[Terms](#schematerms)|true|Terms|
+|»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
+|»»» min_amount|body|number|false|Minimum amount in cents a PR can be in order to be auto-approved|
+|»»» max_amount|body|number|false|Maximum amount in cents a PR can be in order to be auto-approved|
+|»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
+|»»» days|body|number|false|Amount of days to apply against the frequency|
+|»»» max_amount|body|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "A.4k",
+    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+    "status": "proposed",
+    "responded_at": null,
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": null
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    },
+    "assignment_expires_at": "2017-03-20T00:54:27Z",
+    "link": "https://go-sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+  }
+}
+```
+
+
+<h3 id="Propose an Unassigned Agreement-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[ProposeUnassignedAgreementResponse](#schemaproposeunassignedagreementresponse)|
+
+
+## List all Unassigned Agreements
+
+
+<a id="opIdGetUnassignedAgreements"></a>
+
+
+> Code samples
+
+
+```shell
+curl -X GET https://api-sandbox.split.cash/unassigned_agreements \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/unassigned_agreements HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/unassigned_agreements',
+  method: 'get'
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
+};
+
+
+fetch('https://api-sandbox.split.cash/unassigned_agreements',
+{
+  method: 'GET',
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/unassigned_agreements', {}, headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/unassigned_agreements', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/unassigned_agreements");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET /unassigned_agreements`
+
+
+Will return all Unassigned Agreements that have not yet be accepted.
+
+
+<h3 id="List-all-Unassigned-Agreements-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "A.4k",
+      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+      "status": "proposed",
+      "responded_at": null,
+      "created_at": "2017-03-20T00:53:27Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": 10000,
+          "min_amount": null
+        },
+        "per_frequency": {
+          "days": 7,
+          "max_amount": 1000000
+        }
+      },
+      "assignment_expires_at": "2017-03-20T00:54:27Z",
+      "link": "https://go-sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+    },
+    {
+      "ref": "A.7ea",
+      "initiator_id": "b61fc159-8779-4a17-a826-e398e3e7e211",
+      "status": "proposed",
+      "responded_at": null,
+      "created_at": "2017-03-21T00:53:27Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": null,
+          "min_amount": null
+        },
+        "per_frequency": {
+          "days": null,
+          "max_amount": null
+        }
+      },
+      "assignment_expires_at": "2017-03-21T00:54:27Z",
+      "link": "https://go-sandbox.split.cash/unassigned_agreements/4e2728cc-b4ba-42c2-a6c3-26a7758de58d/invitation"
+    }
+  ]
+}
+```
+
+
+<h3 id="List all Unassigned Agreements-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListUnassignedAgreementsResponse](#schemalistunassignedagreementsresponse)|
+
+
+## Get an Unassigned Agreement
+
+
+<a id="opIdGetAgreement"></a>
+
+
+> Code samples
+
+
+```shell
+curl -X GET https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref} \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Bearer {access_token}'
+
+
+```
+
+
+```http
+GET https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref} HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+Accept: application/json
+
+
+```
+
+
+```javascript
+var headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}',
+  method: 'get'
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
+};
+
+
+fetch('https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}',
+{
+  method: 'GET',
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
+}
+
+
+result = RestClient.get 'https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}', {}, headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'Bearer {access_token}'
+}
+
+
+r = requests.get('https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("GET");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`GET /unassigned_agreements/{unassigned_agreement_ref}`
+
+
+Get a single Unassigned Agreement by its reference
+
+
+<h3 id="Get-an-Unassigned-Agreement-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|unassigned_agreement_ref|path|string|true|Single value, exact match|
+
+
+> Example responses
+
+
+```json
+{
+  "data": {
+    "ref": "A.4k",
+    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+    "status": "proposed",
+    "responded_at": null,
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": null
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    },
+    "assignment_expires_at": "2017-03-20T00:54:27Z",
+    "link": "https://go-sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+  }
+}
+```
+
+
+<h3 id="Get an Unassigned Agreement-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetUnassignedAgreementResponse](#schemagetunassignedagreementresponse)|
+
+
 <h1 id="Split-API-Users">Users</h1>
 
 
@@ -11487,6 +12159,176 @@ System.out.println(response.toString());
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
+
+
+## ProposeUnassignedAgreementRequest
+
+
+<a id="schemaproposeunassignedagreementrequest"></a>
+
+
+```json
+{
+  "expiry_in_seconds": 60,
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": 10000
+    },
+    "per_frequency": {
+      "days": 7,
+      "max_amount": 1000000
+    }
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|expiry_in_seconds|number|true|The amount of time in seconds before the Unassigned Agreement can no longer be accepted.|
+|terms|[Terms](#schematerms)|true|No description|
+
+
+## ProposeUnassignedAgreementResponse
+
+
+<a id="schemaproposeunassignedagreementresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "A.4k",
+    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+    "status": "proposed",
+    "responded_at": null,
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": null
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    },
+    "assignment_expires_at": "2017-03-20T00:54:27Z",
+    "link": "https://go-sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+
+## ListUnassignedAgreementsResponse
+
+
+<a id="schemalistunassignedagreementsresponse"></a>
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "A.4k",
+      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+      "status": "proposed",
+      "responded_at": null,
+      "created_at": "2017-03-20T00:53:27Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": 10000,
+          "min_amount": null
+        },
+        "per_frequency": {
+          "days": 7,
+          "max_amount": 1000000
+        }
+      },
+      "assignment_expires_at": "2017-03-20T00:54:27Z",
+      "link": "https://go-sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+    },
+    {
+      "ref": "A.7ea",
+      "initiator_id": "b61fc159-8779-4a17-a826-e398e3e7e211",
+      "status": "proposed",
+      "responded_at": null,
+      "created_at": "2017-03-21T00:53:27Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": null,
+          "min_amount": null
+        },
+        "per_frequency": {
+          "days": null,
+          "max_amount": null
+        }
+      },
+      "assignment_expires_at": "2017-03-21T00:54:27Z",
+      "link": "https://go-sandbox.split.cash/unassigned_agreements/4e2728cc-b4ba-42c2-a6c3-26a7758de58d/invitation"
+    }
+  ]
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
+
+## GetUnassignedAgreementResponse
+
+
+<a id="schemagetunassignedagreementresponse"></a>
+
+
+```json
+{
+  "data": {
+    "ref": "A.4k",
+    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+    "status": "proposed",
+    "responded_at": null,
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": null
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    },
+    "assignment_expires_at": "2017-03-20T00:54:27Z",
+    "link": "https://go-sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+  }
+}
+```
+
+
+### Properties
+
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
 
 
 ## GetUserDetailsResponse
