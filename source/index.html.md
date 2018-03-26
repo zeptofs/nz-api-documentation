@@ -604,7 +604,7 @@ Agreements are therefore broken up by direction:
 2. **Outgoing:** Agreement sent to another Split account
 
 
-<div class="middle-header">Lifecycle</div>
+##Lifecycle
 
 
 An Agreement can have the following statuses:
@@ -3457,7 +3457,7 @@ An Open Agreement is essentially an Agreement template with no specific authoris
 An Open Agreement can be accepted multiple times by different parties and the result is the same: A new Agreement.|
 
 
-<div class="middle-header">Lifecycle</div>
+##Lifecycle
 
 
 An Open Agreement can have the following statuses:
@@ -4313,7 +4313,7 @@ Disable the Open Agreement from being viewed or accepted
 2. One or many Payouts with individual recipients, amounts and descriptions.
 
 
-<div class="middle-header">Lifecycle</div>
+##Lifecycle
 
 
 The Payment is simply a group of Payouts therefore it does not have a particular status. Its Payouts however have their status regularly updated, for a list of possible Payout statuses check out the [Transactions](/#Split-API-Transactions).
@@ -5270,7 +5270,7 @@ There are two response fields that differ depending on the direction:
 | `credit_ref` | Only visible to the PR initiator (outgoing PRs). This reference corresponds to the newly created credit from the approved PR. |
 
 
-<div class="middle-header">Lifecycle</div>
+##Lifecycle
 
 
 A Payment Request can have the following statuses:
@@ -7673,7 +7673,7 @@ There are two response fields that differ depending on the direction:
 | `credit_ref` | Only visible to the RR initiator (outgoing RRs). This reference corresponds to the newly created credit from the approved RR. |
 
 
-<div class="middle-header">Lifecycle</div>
+##Lifecycle
 
 
 A Refund Request can have the following statuses:
@@ -8982,24 +8982,70 @@ System.out.println(response.toString());
 The transactions endpoint provides a detailed look at all past, current and future scheduled debits & credits relating to the Split account. In other words, we not only show the transactions initiated by the Split account but also show transactions where the Split account is on the receiving end - even for payments that have not yet matured.
 
 
-<div class="middle-header">Lifecycle</div>
+##Lifecycle
 
 
 A transaction (debit or credit) can have the following statuses:
 
 
 | Status | Description |
-|-------|-------------|
+|--------|-------------|
 | `maturing` | The maturation date has not yet been reached |
 | `matured` | The maturation date has been reached and the transaction is eligible for processing. |
 | `processing` | The transaction has been submitted to the bank. |
 | `clearing` | Waiting for confirmation from the bank that the transaction has succeeded. |
 | `cleared` | The transaction is complete. |
 | `rejected` | The bank has rejected the transaction due to incorrect bank account details. |
-| `returned` | The transaction did not successfully clear. Usually due to insufficient funds. |
+| `returned` | The transaction did not successfully clear. |
 | `voided` | The transaction has been cancelled and is no longer eligible for processing. |
 | `pending_verification` | The bank account must be verified before the transaction can proceed. |
 | `paused` | The transaction has temporary been paused by Split pending internal review. |
+| `prefailed` | The transaction was never submitted to the bank because we detected that there were insufficient funds. The transaction can be retried. |
+
+
+##Failure reasons
+
+
+> Example response
+
+
+```json
+{
+  "data": [
+    {
+      "ref": "D.3",
+      "parent_ref": null,
+      "type": "debit",
+      "category": "payout_refund",
+      "created_at": "2016-12-07T23:15:00Z",
+      "matures_at": "2016-12-10T23:15:00Z",
+      "cleared_at": null,
+      "bank_ref": null,
+      "status": "returned",
+      "failure_reason": "refer_to_customer"
+      "party_name": "Sanford-Rees",
+      "party_nickname": "sanford-rees-8",
+      "description": null,
+      "amount": 1
+    }
+  ]
+}
+```
+
+
+The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompanied by a `failure_reason`:
+
+
+| Reason | Description |
+|--------|-------------|
+| `invalid_bsb_number` | BSB number is invalid |
+| `payment_stopped` | The payment was stopped at the bank. Can be due to a customer requesting a stop payment with their financial institution. |
+| `account_closed` | The bank account is closed |
+| `customer_deceased` | Customer is deceased |
+| `incorrect_account_number` | Account number is incorrect |
+| `refer_to_customer` | Usually due to insufficient funds |
+| `refer_to_split` | Failed due to reasons not listed here. Please contact us. |
+| `insufficient_funds` | Insufficient funds |
 
 
 ## List all transactions
