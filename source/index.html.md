@@ -8807,7 +8807,7 @@ System.out.println(response.toString());
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/payout_refund_requests/outgoing \
-  -H 'Accept: text/json' \
+  -H 'Accept: application/json' \
   -H 'Authorization: Bearer {access_token}'
 
 
@@ -8819,7 +8819,7 @@ GET https://api-sandbox.split.cash/payout_refund_requests/outgoing HTTP/1.1
 Host: api-sandbox.split.cash
 
 
-Accept: text/json
+Accept: application/json
 
 
 ```
@@ -8827,7 +8827,7 @@ Accept: text/json
 
 ```javascript
 var headers = {
-  'Accept': 'text/json',
+  'Accept': 'application/json',
   'Authorization': 'Bearer {access_token}'
 };
 
@@ -8850,7 +8850,7 @@ const request = require('node-fetch');
 
 
 const headers = {
-  'Accept': 'text/json',
+  'Accept': 'application/json',
   'Authorization': 'Bearer {access_token}'
 };
 
@@ -8876,7 +8876,7 @@ require 'json'
 
 
 headers = {
-  'Accept': 'text/json',
+  'Accept': 'application/json',
   'Authorization': 'Bearer {access_token}'
 }
 
@@ -8893,7 +8893,7 @@ p JSON.parse(result)
 ```python
 import requests
 headers = {
-  'Accept': 'text/json',
+  'Accept': 'application/json',
   'Authorization': 'Bearer {access_token}'
 }
 
@@ -8951,12 +8951,12 @@ System.out.println(response.toString());
       "ref": "RR.2",
       "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
       "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-      "status": "approved",
-      "responded_at": "2016-12-19T04:42:59Z",
+      "status": "pending_approval",
+      "responded_at": null,
       "created_at": "2016-12-19T04:34:38Z",
-      "for_ref": "C.1",
-      "debit_ref": "D.2c3",
-      "amount": 100,
+      "for_ref": "D.1",
+      "credit_ref": null,
+      "amount": 10000,
       "reason": "Because reasons",
       "metadata": {
         "custom_key": "Custom string",
@@ -8973,7 +8973,7 @@ System.out.println(response.toString());
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListIncomingRefundRequestsResponse](#schemalistincomingrefundrequestsresponse)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingRefundRequestsResponse](#schemalistoutgoingrefundrequestsresponse)|
 
 
 <h1 id="Split-API-Transactions">Transactions</h1>
@@ -9964,6 +9964,153 @@ Get a single Unassigned Agreement by its reference
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetUnassignedAgreementResponse](#schemagetunassignedagreementresponse)|
+
+
+## Delete an Unassigned Agreement
+
+
+<a id="opIdDeleteUnassignedAgreement"></a>
+
+
+> Code samples
+
+
+```shell
+curl -X DELETE https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref} \
+  -H 'Authorization: Bearer {access_token}'
+
+
+```
+
+
+```http
+DELETE https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref} HTTP/1.1
+Host: api-sandbox.split.cash
+
+
+```
+
+
+```javascript
+var headers = {
+  'Authorization': 'Bearer {access_token}'
+};
+
+
+$.ajax({
+  url: 'https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}',
+  method: 'delete'
+  headers: headers,
+  success: function(data) {
+    console.log(JSON.stringify(data));
+  }
+})
+
+
+```
+
+
+```javascript--nodejs
+const request = require('node-fetch');
+
+
+const headers = {
+  'Authorization': 'Bearer {access_token}'
+};
+
+
+fetch('https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}',
+{
+  method: 'DELETE',
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+
+```
+
+
+```ruby
+require 'rest-client'
+require 'json'
+
+
+headers = {
+  'Authorization': 'Bearer {access_token}'
+}
+
+
+result = RestClient.delete 'https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}', headers
+
+
+p JSON.parse(result)
+
+
+```
+
+
+```python
+import requests
+headers = {
+  'Authorization': 'Bearer {access_token}'
+}
+
+
+r = requests.delete('https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}', params={
+
+
+}, headers = headers)
+
+
+print r.json()
+
+
+```
+
+
+```java
+URL obj = new URL("https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}");
+HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+con.setRequestMethod("DELETE");
+int responseCode = con.getResponseCode();
+BufferedReader in = new BufferedReader(
+    new InputStreamReader(con.getInputStream()));
+String inputLine;
+StringBuffer response = new StringBuffer();
+while ((inputLine = in.readLine()) != null) {
+    response.append(inputLine);
+}
+in.close();
+System.out.println(response.toString());
+
+
+```
+
+
+`DELETE /unassigned_agreements/{unassigned_agreement_ref}`
+
+
+An Unassigned Agreement can be deleted at anytime as long as it has not yet been assigned an authoriser.
+
+
+<h3 id="Delete-an-Unassigned-Agreement-parameters" class="parameters">Parameters</h3>
+
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|unassigned_agreement_ref|path|string|true|Single value, exact match|
+
+
+<h3 id="Delete an Unassigned Agreement-responses">Responses</h3>
+
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
 
 
 <h1 id="Split-API-Users">Users</h1>
