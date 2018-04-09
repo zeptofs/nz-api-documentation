@@ -322,22 +322,29 @@ Common use cases:
 There are 2 ways to get paid:
 
 
-**`POST`ing a [Payment Request](/#Split-API-Payment-Requests)**
+### POSTing a [Payment Request](/#Split-API-Payment-Requests)
 
 
-Provides the ability to send a Payment Request to any Contact that is either:
+Provides the ability to send a Payment Request (get paid) to any Contact that is either:
 
 
-* A Split Contact; **or**
-* An Anyone Contact with an accepted Agreement in place.
+* A Split Contact (A bank account owner that has a Split account); **or**
+* An Anyone Contact (A bank account owner that is not registered with Split) with an accepted Agreement in place.
 
 
-Usage notes:
+**For a Split Contact**:
 
 
-* If the payer is a Split Contact, they will receive a request that they must approve in order for the funds to flow from their bank account to yours.
-* To automate the Payment Request approval process you can first [enter into an Agreement](/#Split-API-Agreements) with the payer. Once the Agreement is accepted, any future Payment Request will be automatically approved and processed per the Agreement terms.
-* If you would like to send a Payment Request using the API to an Anyone Contact, you must first have an accepted Agreement with them.
+* They will receive a request that they must approve via the Split UI or API in order for the funds to flow from their bank account to yours.
+
+
+* To automate the Payment Request approval, process you must first [enter into an Agreement](/#Split-API-Agreements) with the Split Contact. Once the Agreement is accepted, any future Payment Request will be automatically approved and processed per the Agreement terms.
+
+
+**For an Anyone Contact**:
+
+
+* To send a Payment Request using the API to an Anyone Contact, you must first have an accepted Agreement with them . To do so, you can send them an [Open Agreement link](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreement link](http://help.split.cash/agreements/unassigned-agreement) for them to [elect & verify their bank account](https://help.split.cash/bank-accounts/instant-account-verification-iav) and accept the Agreement.
 
 
 Common use cases:
@@ -349,16 +356,16 @@ Common use cases:
 * Repayment plans
 
 
-Example flow embedding an Open Agreement link using an iFrame in order to automate future Payment Request approvals:
+Example flow embedding an [Open Agreement link](https://help.split.cash/agreements/open-agreement) using an iFrame in order to automate future Payment Request approvals:
 
 
 [![Hosted Open Agreement](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/host_oa.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/host_oa.png)
 
 
-**Sharing an [Open Payment Request](http://help.split.cash/payment-requests/open-payment-requests)**
+### Sharing an [Open Payment Request](http://help.split.cash/payment-requests/open-payment-requests)
 
 
-Provides the ability to get paid by a anyone whether they are a Split account holder or not.
+Provides the ability to get paid once-off by a anyone whether they are a Split account holder or not.
 
 
 Usage notes:
@@ -377,7 +384,7 @@ Common use cases:
 * Group funding (paying for a restaurant bill)
 
 
-Example flow embedding the Open Payment Request link using an iFrame:
+Example flow embedding the [Open Payment Request](https://help.split.cash/payment-requests/open-payment-requests) link using an iFrame:
 
 
 [![Hosted Open Payment Request](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/hosted_opr.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/hosted_opr.png)
@@ -476,6 +483,20 @@ As an example, the following authorisation URL would display the **personal sign
 
 
 You can also pass the values directly to the sign up page outside of the OAuth2 authorisation process. Click on the following link to see the values preloaded: [https://go-sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgeco&first_name=George](https://go-sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgceco&first_name=George).
+
+
+## Testing details
+When using any of our hosted solutions ([Payment Requests](https://help.split.cash/payment-requests/open-payment-requests), [Open Agreements](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreements](http://help.split.cash/agreements/unassigned-agreement)) you may want to test the [Instant Account Verification (IAV)](http://help.split.cash/bank-accounts/instant-account-verification-iav) process where we accept online banking credentials to validate bank account access. To do so, you can use the following credentials:
+
+
+| Login | Password |
+|-------|----------|
+| `gavinBelson` | `hooli2016` |
+| `jared` | `django` |
+| `richard` | `tabsnotspaces` |
+
+
+<aside class="notice">The credentials will work with any of the available financial institutions.</aside>
 
 
 # Configuration
@@ -3451,10 +3472,10 @@ You can update the name of any Contact. This is essentially an alias you can use
 <h1 id="Split-API-Open-Agreements">Open Agreements</h1>
 
 
-An Open Agreement is essentially an Agreement template with no specific authoriser. Each time an Open Agreement is accepted by either a Split account holder or anyone, they authoriser is added to your Contacts list and a new Agreement is automatically created between the Open Agreement initiator and the authoriser.
+An Open Agreement is essentially an Agreement template with no specific authoriser. Each time an Open Agreement is accepted by either a Split account holder or anyone, the authoriser is added to your Contacts list and a new Agreement is automatically created between the Open Agreement initiator and the authoriser.
 
 
-An Open Agreement can be accepted multiple times by different parties and the result is the same: A new Agreement.|
+An Open Agreement can be accepted multiple times by different parties and the result is the same: A new Agreement. Additionally, an Open Agreement can be accepted by anybody, not just other Split users. This is achieved by using our [Instant Account Verification process](http://help.split.cash/bank-accounts/instant-account-verification-iav) as part of accepting an [Open Agreement](https://help.split.cash/agreements/open-agreement).
 
 
 ##Lifecycle
@@ -5235,7 +5256,7 @@ You can void any Payout debit from your account that has not yet matured. In the
 <h1 id="Split-API-Payment-Requests">Payment Requests</h1>
 
 
-A Payment Request (PR) is used to request payment from another party.
+A Payment Request (PR) is used to request payment from another party. Additionally, a Payment Request can be approved by anybody, not just other Split users. This is achieved by using our [Instant Account Verification process](http://help.split.cash/bank-accounts/instant-account-verification-iav) as part of approving a [Payment Request](https://help.split.cash/payment-requests/open-payment-requests).
 
 
 <div class="middle-header">Applicable scenarios</div>
