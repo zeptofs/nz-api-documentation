@@ -2,43 +2,32 @@
 title: Split API v1.0
 language_tabs:
   - shell: Shell
-  - http: HTTP
-  - javascript: JavaScript
-  - javascript--nodejs: Node.JS
   - ruby: Ruby
   - python: Python
-  - java: Java
+  - go: Go
+  - javascript--nodejs: Node.JS
 toc_footers: []
 includes: []
 search: true
 highlight_theme: darkula
 headingLevel: 2
 
-
 ---
-
 
 <h1 id="Split-API">Split API v1.0</h1>
 
-
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
-
 
 Split allows you to make, get and manage payments using nothing but bank accounts.
 
-
 It is important to understand that there are 2 main ways Split can be used for maximum flexibility:
-
 
 1. Between Split accounts.
 2. Between a Split account and anyone.
 
-
 Due to the above, certain endpoints and techniques will differ slightly depending on who you are interacting with. You can find more on this in the [Making payments](/#making-payments) and [Getting paid](/#getting-paid) guides.
 
-
 <div class="middle-header">Conventions</div>
-
 
 * Authentication is performed using OAuth2. See the [Get started](/#get-started) and [Authentication & Authorisation](/#authentication-and-authorisation) guides for more.
 * All communication is via `https`.
@@ -51,155 +40,107 @@ Due to the above, certain endpoints and techniques will differ slightly dependin
 * Dates & times are returned in UTC using [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format with second accuracy. With requests, when no TZ is supplied, the configured TZ of the authenticated user is used.
 * Amounts are always in cents with no decimals unless otherwise stated.
 
-
 # Guides
-
 
 ## Try it out
 The best way to familiarise yourself with our API is by interacting with it.
 
-
 **Prefer a screencast? We've got you covered: [https://vimeo.com/246203244](https://vimeo.com/246203244).**
-
 
 We've preloaded a collection of all our endpoints for you to use in Postman.
 
-
 Before you start, load up our API collection:
-
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/988421dc8fb7d55526d5#?env%5BSplit%20Payments%20Public%20Sandbox%5D=W3siZW5hYmxlZCI6dHJ1ZSwia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL2dvLXNhbmRib3guc3BsaXQuY2FzaCIsInR5cGUiOiJ0ZXh0In0seyJlbmFibGVkIjp0cnVlLCJrZXkiOiJhcGlfaG9zdCIsInZhbHVlIjoiaHR0cHM6Ly9hcGktc2FuZGJveC5zcGxpdC5jYXNoIiwidHlwZSI6InRleHQifSx7ImVuYWJsZWQiOnRydWUsImtleSI6Im9hdXRoMl9hcHBsaWNhdGlvbl9pZCIsInZhbHVlIjoiIiwidHlwZSI6InRleHQifSx7ImVuYWJsZWQiOnRydWUsImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsInR5cGUiOiJ0ZXh0In0seyJlbmFibGVkIjp0cnVlLCJrZXkiOiJhdXRob3Jpc2F0aW9uX2NvZGUiLCJ2YWx1ZSI6IiIsInR5cGUiOiJ0ZXh0In0seyJlbmFibGVkIjp0cnVlLCJrZXkiOiJhY2Nlc3NfdG9rZW4iLCJ2YWx1ZSI6IiIsInR5cGUiOiJ0ZXh0In0seyJlbmFibGVkIjp0cnVlLCJrZXkiOiJyZWZyZXNoX3Rva2VuIiwidmFsdWUiOiIiLCJ0eXBlIjoidGV4dCJ9XQ==)
 
-
 Okay, lets get things setup!
 
-
 1. **Create a Split account**
-
-
+    
     If you haven't already, you'll want to create a sandbox Split account at [https://go-sandbox.split.cash](https://go-sandbox.split.cash)
-
 
 2. **Register your application with Split**
 
-
     Sign in and create an OAuth2 application: [https://go-sandbox.split.cash/oauth/applications](https://go-sandbox.split.cash/oauth/applications).
-
-
+    
     [![Split OAuth2 app setup](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_oauth2_app_setup.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_oauth2_app_setup.png)
-
 
 3. **In Postman, setup your environment variables**
 
-
     Click on **Manage Environments**
 
-
     [![Postman environment variables](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_environment_gear.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_environment_gear.png)
-
-
+    
     We've included the **Split Payments Public Sandbox** environment to get you started. Go ahead an click on it.
-
-
+    
     [![Select Postman environment](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_select_environment.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_select_environment.png)
-
-
+    
     Using the details from the OAuth2 app you created earlier, fill in the **oauth2_application_id** & **oauth2_secret** fields.
-
-
+    
     [![Fill in environment values](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_environment_values.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_environment_values.png)
-
-
+    
 4. **Setup the authorization**
-
-
+    
     Click on the **Authorization** tab and select **OAuth 2.0**
-
-
+    
     [![Postman Authorization tab](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_authorization_tab.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_authorization_tab.png)
-
-
+    
     Click the **Get New Access Token** button
-
-
+    
     [![Postman get new access token](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_get_new_access_token.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_get_new_access_token.png)
 
-
     Fill in the OAuth2 form as below:
-
-
+    
     [![Postman OAuth2](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_oauth2_form.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_oauth2_form.png)
-
-
+      
 5. **Get authorised**
-
 
     Click **Request Token** and wait a few seconds and a browser window will popup
 
-
     Sign in with your Split account (or any other Split account you want to authorise).
-
 
     [![Signin Split to authorise via OAuth2](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_oauth2_signin.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_oauth2_signin.png)
 
-
     Click **Authorise** to allow the app to access the signed in account. Once complete, Postman will automatically exchange the authorisation code it received from Split for the `access_token/refresh_token` pair. It will then store the `access_token/refresh_token` for you to use in subsequent API requests. The `access_token` effectively allows you to send requests via the API as the user who provided you authorisation.
-
 
     [![Authorise OAuth2 app](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/oauth2_app_authorise.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/oauth2_app_authorise.png)
 
-
 6. **You're now ready to use the API**
 
-
     Select an endpoint from the Split collection from the left hand side menu. Before you send an API request ensure you select your access token and Postman will automatically add it to the request header.
-
-
+    
     [![Postman use token](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_use_token.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_use_token.png)
-
-
+        
 <aside class="notice">Remember to select the access token everytime you try a new endpoint. Have fun!</aside>
-
 
 ## Get started
 This guide will help you setup your OAuth2 app in order to get authenticated & authorised to communicate with the Split API.
 
-
 **Before you start:**
-
 
 * Often times you'll want to grant your own app access to itself so that you can access the API on your own account. We use the term **user** below but the user can be a third party or the same user that owns the OAuth2 application.
 * As noted below, the access token expires every 2 hours. To get a new access token without going through steps 1 to 4 again, use the [refresh grant strategy](/#authentication-and-authorisation) to swap a refresh token for a new access token.
 
-
 1. **Create a Split account**
-
 
     If you haven't already, you'll want to create a sandbox Split account at [https://go-sandbox.split.cash](https://go-sandbox.split.cash).
 
-
 2. **Register your application with Split**
 
-
     Once you've got your account up and running, sign in and create an OAuth2 profile for your application: [https://go-sandbox.split.cash/oauth/applications](https://go-sandbox.split.cash/oauth/applications)
-
-
+    
     | Parameter | Description |
     |-----------|-------------|
     | **Name**  | The name of your application. When using the the *Authorisation Grant Flow*, users will see this name as the application requesting access to their account. |
     | **Redirect URI** | Set this to your application's endpoint charged with receiving the authorisation code. |
 
-
 3. **Obtain an authorisation code**
 
-
     Construct the initial URL the user will need to visit in order to grant your application permission to act on his/her behalf. The constructed URL describes the level of permission ([`scope`](/#scopes)), the application requesting permission (`client_id`) and where the user gets redirected once they've granted permission (`redirect_uri`).
-
-
+    
     The URL should be formatted to look like this:
     `https://go-sandbox.split.cash/oauth/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&scope={scope}`
-
-
+    
     | Parameter | Description |
     |-----------|-------------|
     | `response_type` | Always set to `code` |
@@ -207,22 +148,16 @@ This guide will help you setup your OAuth2 app in order to get authenticated & a
     | `redirect_uri` | URL where the user will get redirected along with the newly generated authorisation code |
     | `scope` | The [scope](/#scopes) of permission you're requesting |
 
-
 4. **Exchange the authorisation code for an access token**
-
-
+    
     When the user visits the above-mentioned URL, they will be presented with a Split login screen and then an authorisation screen:
-
-
+    
     [![Authorise OAuth2 app](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/oauth2_app_authorise.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/oauth2_app_authorise.png)
-
-
+    
     After the user has authorised your application, they will be returned to your application at the URL specified in `redirect_uri` along with the `code` query parameter as the authorisation code.
-
-
+    
     Finally, the authorisation code can than be exchanged for an access token and refresh token pair by POSTing to: `https://go-sandbox.split.cash/oauth/token`
-
-
+    
     | Parameter | Description |
     |-----------|-------------|
     | `grant_type` | Set to `authorization_code` |
@@ -231,43 +166,31 @@ This guide will help you setup your OAuth2 app in order to get authenticated & a
     | `code` | The authorisation code returned with the user |
     | `redirect_uri` | Same URL used in step 3 |
 
-
 5. **Wrap-up**
-
 
     Now that you have an access token and refresh token, you can interact with the Split API as the user related to the access token.
     To do so, you must simply append the access token to the header of any API request: `Authorization: Bearer {access_token}`
-
-
+  
 ## Authentication and Authorisation
 
-
 Split uses OAuth2 over https to manage authentication and authorisation.
-
 
 OAuth2 is a protocol that lets external applications request permission from another Split user to send requests on their behalf without getting their password.
 This is preferred over Basic Authentication because access tokens can be limited by scope and can be revoked by the user at any time.
 
-
 New to OAuth2? DigitalOcean has a fantastic 5 minute [introduction to OAuth2](https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2#grant-type-authorization-code).
 
-
 We currently support the **authorisation code** and **refresh token** grants.
-
 
 ### Authorisation Code Grant
 This type of grant allows your application to act on behalf of a user. If you've ever used a website or application with your
 Google, Twitter or Facebook account, this is the grant being used.
 
-
 See the [Get Started guide](/#get-started) for step by step details on how to use this grant.
-
 
 ### Refresh Token Grant
 
-
 > Code sample
-
 
 ```
 curl -F "grant_type=refresh_token" \
@@ -277,9 +200,7 @@ curl -F "grant_type=refresh_token" \
      -X POST https://go-sandbox.split.cash/oauth/token
 ```
 
-
 > Example response
-
 
 ```json
 {
@@ -291,110 +212,79 @@ curl -F "grant_type=refresh_token" \
 }
 ```
 
-
 When using the authorisation code grant above, Split will return a `refresh token` along with the access token. Access tokens are short lived and last 2 hours but refresh tokens do not expire.
 
-
 When the access token expires, instead of sending the user back through the authorisation flow you can use the refresh token to retrieve a new access token with the same permissions as the old one.
-
 
 <aside class="notice">
   The <code>refresh_token</code> gets regenerated and sent alongside the new <code>access_token</code>. In other words, <code>refresh_token</code>s are single use so you'll
 want to store the newly generated <code>refresh_token</code> everytime you use it to get a new <code>acccess_token</code>
 </aside>
 
-
 ## Making payments
 In order to payout funds, you'll be looking to use the [Payments](/#Split-API-Payments) endpoint. Whether you're paying out another Split account holder or anyone, the process is the same:
-
 
 1. Add the recipient to your Contacts: [Split Contact](/#add-a-split-contact) or [Anyone Contact](/#add-an-anyone-contact)
 2. [Make the Payment](/#make-a-payment) to your Contact.
 
-
 Common use cases:
 
-
 * Automated payout disbursement (Referal programs, net/commission payouts, etc...)
-
 
 ## Getting paid
 There are 2 ways to get paid:
 
-
 ### POSTing a [Payment Request](/#Split-API-Payment-Requests)
 
-
 Provides the ability to send a Payment Request (get paid) to any Contact that is either:
-
 
 * A Split Contact (A bank account owner that has a Split account); **or**
 * An Anyone Contact (A bank account owner that is not registered with Split) with an accepted Agreement in place.
 
-
 **For a Split Contact**:
-
 
 * They will receive a request that they must approve via the Split UI or API in order for the funds to flow from their bank account to yours.
 
-
 * To automate the Payment Request approval, process you must first [enter into an Agreement](/#Split-API-Agreements) with the Split Contact. Once the Agreement is accepted, any future Payment Request will be automatically approved and processed per the Agreement terms.
-
 
 **For an Anyone Contact**:
 
-
 * To send a Payment Request using the API to an Anyone Contact, you must first have an accepted Agreement with them . To do so, you can send them an [Open Agreement link](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreement link](http://help.split.cash/agreements/unassigned-agreement) for them to [elect & verify their bank account](https://help.split.cash/bank-accounts/instant-account-verification-iav) and accept the Agreement.
 
-
 Common use cases:
-
 
 * Subscriptions
 * On-account balance payments
 * Bill smoothing
 * Repayment plans
 
-
 Example flow embedding an [Open Agreement link](https://help.split.cash/agreements/open-agreement) using an iFrame in order to automate future Payment Request approvals:
-
 
 [![Hosted Open Agreement](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/host_oa.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/host_oa.png)
 
-
 ### Sharing an [Open Payment Request](http://help.split.cash/payment-requests/open-payment-requests)
-
 
 Provides the ability to get paid once-off by a anyone whether they are a Split account holder or not.
 
-
 Usage notes:
-
 
 * Utilise a [customisable hosted Payment Request form](http://help.split.cash/payment-requests/open-payment-requests) that takes care of everything from confirming the payer's bank account access to the transfer of funds.
 * The Open Payment Request link can be shared and sit as a secure form either outside your app or embeded within via iframe with the ability to whitelabel.
 * The URL for the form contains all the customisation parameters enabling you to generate the form on the fly.
 
-
 Common use cases:
-
 
 * Online or offline purchases (eCommerce, fundraiser, etc...)
 * Invoice payment
 * Group funding (paying for a restaurant bill)
 
-
 Example flow embedding the [Open Payment Request](https://help.split.cash/payment-requests/open-payment-requests) link using an iFrame:
-
 
 [![Hosted Open Payment Request](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/hosted_opr.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/hosted_opr.png)
 
-
 ## Idempotent requests
 
-
 > Example response
-
 
 ```json
 {
@@ -413,33 +303,25 @@ Example flow embedding the [Open Payment Request](https://help.split.cash/paymen
 }
 ```
 
-
 The Split API supports idempotency for safely retrying requests without accidentally performing the same operation twice.
 For example, if a [Payment](#Split-API-Payments) is `POST`ed and a there is a network connection error, you can retry the Payment with the same idempotency key to guarantee that only a single Payment is created.
-
 
 To perform an idempotent request, provide an additional `Idempotency-Key: <key>` header to the request.
 You can pass any value as the key but we suggest that you use [V4 UUIDs](https://www.uuidgenerator.net/) or another appropriately random string.
 
-
 Keys expire after 24 hours. If there is a subsequent request with the same idempotency key within the 24 hour period, we will return a `409 Conflict`.
-
 
 * The `meta.resource_ref` value is the reference of the resource that was previously created with the conflicting idempotency key.
 * The `Idempotency-Key` header is optional but recommended.
 * Only the `POST` action for the Payments, Payment Requests, Refunds, Refund Requests support the use of the `Idempotency-Key`.
 * Endpoints that use the `GET` or `DELETE` actions are idempotent by nature.
 
-
 ## Speeding up onboarding
 Consider the following scenario:
 
-
 <blockquote class="main-quote">Split is integrated in your application to handle payments.<br>A customer would like to use Split but does not yet have Split account.<br>You already have some information about this customer.</blockquote>
 
-
 Given the above, in a standard implementation where a customer enables/uses Split within your application, these are the steps they would follow:
-
 
 1. Click on some sort of button within your app to use Split.
 2. They get redirected to the Split sign in page (possibly via a popup or modal).
@@ -448,15 +330,11 @@ Given the above, in a standard implementation where a customer enables/uses Spli
 5. They would be presented with the [authorisation page](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/oauth2_app_authorise.png).
 6. They would click the "Authorise" button and be redirected to your app.
 
-
 Whilst not too bad, we can do better!
-
 
 In order to speed up the process, we allow query string params to be appended to the [authorisation URL](/#get-started). For instance, if we already have some information about the customer and know they probably don't have a Split account, we can embed this information in the authorisation URL.
 
-
 **Supported query string parameters**
-
 
 | Parameter | Description |
 |-----------|--------|
@@ -474,20 +352,15 @@ In order to speed up the process, we allow query string params to be appended to
 | `mobile_phone` | |
 | `email` | |
 
-
 All values should be [URL encoded](https://en.wikipedia.org/wiki/Query_string#URL_encoding).
-
 
 As an example, the following authorisation URL would display the **personal sign up** & prefill the first name field with **George**:
 `https://go-sandbox.split.cash/oauth/authorize?response_type=code&client_id=xxx&redirect_uri=xxx&scope=xxx&landing=personal_sign_up&first_name=George`
 
-
 You can also pass the values directly to the sign up page outside of the OAuth2 authorisation process. Click on the following link to see the values preloaded: [https://go-sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgeco&first_name=George](https://go-sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgceco&first_name=George).
-
 
 ## Testing details
 When using any of our hosted solutions ([Payment Requests](https://help.split.cash/payment-requests/open-payment-requests), [Open Agreements](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreements](http://help.split.cash/agreements/unassigned-agreement)) you may want to test the [Instant Account Verification (IAV)](http://help.split.cash/bank-accounts/instant-account-verification-iav) process where we accept online banking credentials to validate bank account access. To do so, you can use the following credentials:
-
 
 | Login | Password |
 |-------|----------|
@@ -495,16 +368,12 @@ When using any of our hosted solutions ([Payment Requests](https://help.split.ca
 | `jared` | `django` |
 | `richard` | `tabsnotspaces` |
 
-
 <aside class="notice">The credentials will work with any of the available financial institutions.</aside>
-
 
 # Configuration
 
-
 ## Scopes
 Scopes define the level of access granted via the OAuth2 authorisation process. As a best practice, only use the scopes your application will require.
-
 
 | Scope | Description |
 |--------|------------|
@@ -519,12 +388,9 @@ Scopes define the level of access granted via the OAuth2 authorisation process. 
 | `refunds` | Manage user's Refunds |
 | `transactions` | Access user's Transactions |
 
-
 ## Pagination
 
-
 > Example response header
-
 
 ```
 Link: <http://api-sandbox.split.cash/contacts?page=5>; rel="last", <http://api-sandbox.split.cash/contacts?page=2>; rel="next"
@@ -532,15 +398,11 @@ Per-Page: 25
 Total: 5
 ```
 
-
 All collections are paginated to 25 items by default and the pagination information may be found in the response header. You can customise the pagination by appending `?per_page=x` and/or `?page=x` to the endpoint URL.
-
 
 ## Remitter
 
-
 > Example request
-
 
 ```json
 {
@@ -551,22 +413,16 @@ All collections are paginated to 25 items by default and the pagination informat
 }
 ```
 
-
 You can elect to assign a remitter name on a per-request basis when submitting Payments & Payment Requests. Simply append the `remitter` key and a value within the `metadata` key.
-
 
 * **For Payments**, the party being credited will see the designated remitter name along the entry on their bank statement.
 * **For Payment Requests**, the party being debited will see the designated remitter name along the entry on their bank statement.
 
-
 <aside class="notice">The remitter name MUST be between 3 and 16 characters.</aside>
-
 
 ## Webhooks
 
-
 > Example response
-
 
 ```json
 {
@@ -591,45 +447,32 @@ You can elect to assign a remitter name on a per-request basis when submitting P
 }
 ```
 
-
 We support two main categories of webhooks:
-
 
 1. **Owner**: These webhooks are managed by the owner of the Split account and only report on events owned by the Split account.
 2. **App**: These webhooks are managed by the Split OAuth2 application owner and will report on events relating to any authorised Split account (limited by scope).
 
-
 All events posted to the designated URL fit the same structure.
-
-
+    
 <aside class="notice">The sandbox environment allow both HTTP and HTTPS webhook URLs. The live environment however will only POST to HTTPS URLs.
 </aside>
 
-
 <h1 id="Split-API-Agreements">Agreements</h1>
-
 
 Split Agreements are managed on a per Contact basis and allow two parties to agree on terms for which future Payment Requests will be auto-approved.
 
-
 Agreement are unidirectional. In other words, if both parties wish for auto-approved Payment Requests, they must each propose an Agreement to the other.
-
 
 <div class="middle-header">Direction</div>
 
-
 Agreements are therefore broken up by direction:
-
 
 1. **Incoming:** Agreement received from another Split account
 2. **Outgoing:** Agreement sent to another Split account
 
-
 ##Lifecycle
 
-
 An Agreement can have the following statuses:
-
 
 | Status | Description |
 |-------|-------------|
@@ -638,21 +481,17 @@ An Agreement can have the following statuses:
 | `cancelled` | The Agreement has been cancelled (The initiator or authoriser can cancel an Agreement). |
 | `declined` | The Agreement has been declined. |
 
-
 ## Propose an Agreement
-
 
 <a id="opIdProposeAgreement"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/agreements \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}' \
+  -H 'Authorization: bearer {access-token}' \
   -d '{
   "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
   "terms": {
@@ -667,29 +506,19 @@ curl -X POST https://api-sandbox.split.cash/agreements \
   }
 }'
 
-
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```http
-POST https://api-sandbox.split.cash/agreements HTTP/1.1
-Host: api-sandbox.split.cash
-Content-Type: application/json
-Accept: application/json
-
-
-```
-
-
-```javascript
-var headers = {
+headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
-
-var body = '{
+params = '{
   "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
   "terms": {
     "per_payout": {
@@ -701,22 +530,57 @@ var body = '{
       "max_amount": 1000000
     }
   }
-}';
+}'
 
+result = RestClient.post 'https://api-sandbox.split.cash/agreements', params, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/agreements',
-  method: 'post',
-  data: body,
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/agreements', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/agreements", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
@@ -736,9 +600,8 @@ const inputBody = '{
 const headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/agreements',
 {
@@ -752,97 +615,15 @@ fetch('https://api-sandbox.split.cash/agreements',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-params = '{
-  "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-  "terms": {
-    "per_payout": {
-      "min_amount": null,
-      "max_amount": 10000
-    },
-    "per_frequency": {
-      "days": 7,
-      "max_amount": 1000000
-    }
-  }
-}'
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/agreements', params, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/agreements', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/agreements");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /agreements`
 
-
 Propose an Agreement to another Split Contact
-
 
 <aside class="notice">You can set any of the term metrics to <code>null</code> if you wish them to not have a limit.</aside>
 
-
 > Body parameter
-
 
 ```json
 {
@@ -860,9 +641,7 @@ Propose an Agreement to another Split Contact
 }
 ```
 
-
 <h3 id="Propose-an-Agreement-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -876,9 +655,7 @@ Propose an Agreement to another Split Contact
 |»»» days|body|number|false|Amount of days to apply against the frequency|
 |»»» max_amount|body|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
 
-
 > Example responses
-
 
 ```json
 {
@@ -886,6 +663,8 @@ Propose an Agreement to another Split Contact
     "ref": "A.2",
     "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
     "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
+    "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "proposed",
     "responded_at": null,
     "created_at": "2017-03-20T00:53:27Z",
@@ -903,73 +682,89 @@ Propose an Agreement to another Split Contact
 }
 ```
 
-
 <h3 id="Propose an Agreement-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[ProposeAgreementResponse](#schemaproposeagreementresponse)|
 
-
 ## Approve an Agreement
-
 
 <a id="opIdApproveAgreement"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/agreements/{agreement_ref}/accept \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-POST https://api-sandbox.split.cash/agreements/{agreement_ref}/accept HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.post 'https://api-sandbox.split.cash/agreements/{agreement_ref}/accept', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/agreements/{agreement_ref}/accept',
-  method: 'post'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/agreements/{agreement_ref}/accept', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/agreements/{agreement_ref}/accept", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}/accept',
 {
@@ -982,85 +777,19 @@ fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}/accept',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/agreements/{agreement_ref}/accept', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/agreements/{agreement_ref}/accept', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/agreements/{agreement_ref}/accept");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /agreements/{agreement_ref}/accept`
 
-
 Approve an incoming Agreement
 
-
 <h3 id="Approve-an-Agreement-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |agreement_ref|path|string|true|Single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -1068,6 +797,8 @@ Approve an incoming Agreement
     "ref": "A.2",
     "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
     "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
+    "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "accepted",
     "responded_at": "2017-03-20T02:13:11Z",
     "created_at": "2017-03-20T00:53:27Z",
@@ -1085,73 +816,89 @@ Approve an incoming Agreement
 }
 ```
 
-
 <h3 id="Approve an Agreement-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ApproveAgreementResponse](#schemaapproveagreementresponse)|
 
-
 ## Decline and Agreement
-
 
 <a id="opIdDeclineAgreement"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/agreements/{agreement_ref}/decline \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-POST https://api-sandbox.split.cash/agreements/{agreement_ref}/decline HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.post 'https://api-sandbox.split.cash/agreements/{agreement_ref}/decline', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/agreements/{agreement_ref}/decline',
-  method: 'post'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/agreements/{agreement_ref}/decline', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/agreements/{agreement_ref}/decline", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}/decline',
 {
@@ -1164,85 +911,19 @@ fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}/decline',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/agreements/{agreement_ref}/decline', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/agreements/{agreement_ref}/decline', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/agreements/{agreement_ref}/decline");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /agreements/{agreement_ref}/decline`
 
-
 Decline an incoming Agreement
 
-
 <h3 id="Decline-and-Agreement-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |agreement_ref|path|string|true|Single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -1250,6 +931,8 @@ Decline an incoming Agreement
     "ref": "A.2",
     "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
     "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
+    "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "declined",
     "responded_at": "2017-03-20T02:13:11Z",
     "created_at": "2017-03-20T00:53:27Z",
@@ -1267,73 +950,89 @@ Decline an incoming Agreement
 }
 ```
 
-
 <h3 id="Decline and Agreement-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[DeclineAgreementResponse](#schemadeclineagreementresponse)|
 
-
 ## Get an Agreement
-
 
 <a id="opIdGetAgreement"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/agreements/{agreement_ref} \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/agreements/{agreement_ref} HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/agreements/{agreement_ref}', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/agreements/{agreement_ref}',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/agreements/{agreement_ref}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/agreements/{agreement_ref}", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}',
 {
@@ -1346,85 +1045,19 @@ fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/agreements/{agreement_ref}', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/agreements/{agreement_ref}', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/agreements/{agreement_ref}");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /agreements/{agreement_ref}`
 
-
 Get a single Agreement by its reference
 
-
 <h3 id="Get-an-Agreement-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |agreement_ref|path|string|true|Single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -1432,6 +1065,8 @@ Get a single Agreement by its reference
     "ref": "A.2",
     "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
     "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
+    "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "approved",
     "responded_at": "2017-03-20T02:13:11Z",
     "created_at": "2017-03-20T00:53:27Z",
@@ -1449,67 +1084,84 @@ Get a single Agreement by its reference
 }
 ```
 
-
 <h3 id="Get an Agreement-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAgreementResponse](#schemagetagreementresponse)|
 
-
 ## Cancel an Agreement
-
 
 <a id="opIdCancelAgreement"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X DELETE https://api-sandbox.split.cash/agreements/{agreement_ref} \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-DELETE https://api-sandbox.split.cash/agreements/{agreement_ref} HTTP/1.1
-Host: api-sandbox.split.cash
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
-  'Authorization': 'Bearer {access_token}'
-};
+headers = {
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.delete 'https://api-sandbox.split.cash/agreements/{agreement_ref}', headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/agreements/{agreement_ref}',
-  method: 'delete'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.delete('https://api-sandbox.split.cash/agreements/{agreement_ref}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("DELETE", "https://api-sandbox.split.cash/agreements/{agreement_ref}", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}',
 {
@@ -1522,147 +1174,101 @@ fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.delete 'https://api-sandbox.split.cash/agreements/{agreement_ref}', headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.delete('https://api-sandbox.split.cash/agreements/{agreement_ref}', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/agreements/{agreement_ref}");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("DELETE");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `DELETE /agreements/{agreement_ref}`
 
-
 An Agreement can be cancelled by the initiator at any time whilst the authoriser (Agreement recipient) can only cancel a previously accepted Agreement.
 
-
 <h3 id="Cancel-an-Agreement-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |agreement_ref|path|string|true|Single value, exact match|
 
-
 <h3 id="Cancel an Agreement-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
 
-
 ## List incoming Agreements
-
 
 <a id="opIdListIncomingAgreements"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/agreements/incoming \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/agreements/incoming HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/agreements/incoming', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/agreements/incoming',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/agreements/incoming', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/agreements/incoming", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/agreements/incoming',
 {
@@ -1675,77 +1281,13 @@ fetch('https://api-sandbox.split.cash/agreements/incoming',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/agreements/incoming', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/agreements/incoming', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/agreements/incoming");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /agreements/incoming`
 
-
 By default, all incoming Agreements will be returned. You can apply filters to your query to customise the returned Agreements.
 
-
 <h3 id="List-incoming-Agreements-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -1754,9 +1296,7 @@ By default, all incoming Agreements will be returned. You can apply filters to y
 |initiator_id|query|string|false|Initiator ID (`Contact.data.account.id`), single value, exact match|
 |status|query|array[string]|false|Multiple values, exact match|
 
-
 #### Enumerated Values
-
 
 |Parameter|Value|
 |---|---|
@@ -1765,9 +1305,7 @@ By default, all incoming Agreements will be returned. You can apply filters to y
 |status|declined|
 |status|cancelled|
 
-
 > Example responses
-
 
 ```json
 {
@@ -1776,6 +1314,8 @@ By default, all incoming Agreements will be returned. You can apply filters to y
       "ref": "A.2",
       "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
       "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+      "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
+      "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
       "status": "proposed",
       "responded_at": null,
       "created_at": "2017-03-20T00:53:27Z",
@@ -1794,6 +1334,8 @@ By default, all incoming Agreements will be returned. You can apply filters to y
       "ref": "A.1",
       "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
       "authoriser_id": "56df206a-aaff-471a-b075-11882bc8906a",
+      "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
+      "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
       "status": "proposed",
       "responded_at": null,
       "created_at": "2017-03-16T22:51:48Z",
@@ -1812,73 +1354,89 @@ By default, all incoming Agreements will be returned. You can apply filters to y
 }
 ```
 
-
 <h3 id="List incoming Agreements-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListIncomingAgreementsResponse](#schemalistincomingagreementsresponse)|
 
-
 ## List outgoing Agreements
-
 
 <a id="opIdListOutgoingAgreements"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/agreements/outgoing \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/agreements/outgoing HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/agreements/outgoing', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/agreements/outgoing',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/agreements/outgoing', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/agreements/outgoing", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/agreements/outgoing',
 {
@@ -1891,77 +1449,13 @@ fetch('https://api-sandbox.split.cash/agreements/outgoing',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/agreements/outgoing', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/agreements/outgoing', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/agreements/outgoing");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /agreements/outgoing`
 
-
 By default, all outgoing Agreements will be returned. You can apply filters to your query to customise the returned Agreements.
 
-
 <h3 id="List-outgoing-Agreements-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -1970,9 +1464,7 @@ By default, all outgoing Agreements will be returned. You can apply filters to y
 |authoriser_id|query|string|false|Authoriser ID (`Contact.data.account.id`), single value, exact match|
 |status|query|array[string]|false|Exact match|
 
-
 #### Enumerated Values
-
 
 |Parameter|Value|
 |---|---|
@@ -1981,9 +1473,7 @@ By default, all outgoing Agreements will be returned. You can apply filters to y
 |status|declined|
 |status|cancelled|
 
-
 > Example responses
-
 
 ```json
 {
@@ -1992,6 +1482,8 @@ By default, all outgoing Agreements will be returned. You can apply filters to y
       "ref": "A.4",
       "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
       "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+      "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
+      "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
       "status": "proposed",
       "responded_at": null,
       "created_at": "2017-03-20T00:53:27Z",
@@ -2010,6 +1502,8 @@ By default, all outgoing Agreements will be returned. You can apply filters to y
       "ref": "A.3",
       "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
       "authoriser_id": "56df206a-aaff-471a-b075-11882bc8906a",
+      "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
+      "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
       "status": "proposed",
       "responded_at": null,
       "created_at": "2017-03-16T22:51:48Z",
@@ -2028,79 +1522,93 @@ By default, all outgoing Agreements will be returned. You can apply filters to y
 }
 ```
 
-
 <h3 id="List outgoing Agreements-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingAgreementsResponse](#schemalistoutgoingagreementsresponse)|
 
-
 <h1 id="Split-API-Bank-Accounts">Bank Accounts</h1>
-
 
 Your currently linked up bank accounts.
 
-
 ## List all Bank Accounts
-
 
 <a id="opIdListAllBankAccounts"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/bank_accounts \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/bank_accounts HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/bank_accounts', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/bank_accounts',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/bank_accounts', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/bank_accounts", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/bank_accounts',
 {
@@ -2113,77 +1621,13 @@ fetch('https://api-sandbox.split.cash/bank_accounts',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/bank_accounts', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/bank_accounts', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/bank_accounts");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /bank_accounts`
 
-
 By default, all Bank Accounts will be returned. There can currently be only 1 active bank account.
 
-
 > Example responses
-
 
 ```json
 {
@@ -2204,90 +1648,104 @@ By default, all Bank Accounts will be returned. There can currently be only 1 ac
 }
 ```
 
-
 <h3 id="List all Bank Accounts-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllBankAccountsResponse](#schemalistallbankaccountsresponse)|
 
-
 <h1 id="Split-API-Contacts">Contacts</h1>
-
 
 Your Contacts form an address book of Split accounts and non-Split accounts (Anyone accounts) with whom you can interact. In order to initiate any type of transaction you must first have the party in your Contact list.
 
-
 There are a few IDs supplied within a Contact's response:
-
 
 1. `data.id` represents the Contact resource.
 2. `data.bank_account.id` represents the Contact's bank account and is used when creating Payments or Payment Requests.
 3. `data.account.id` represents the Contact's Split account and is used when proposing Agreements.
 
-
 <aside class="notice">In the case of Open Payment Requests & Open Agreements, the authorising party will be automatically added to your Contacts list.</aside>
-
 
 ## Add a Split Contact
 
-
 <a id="opIdAddASplitContact"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/contacts \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}' \
+  -H 'Authorization: bearer {access-token}' \
   -d '{
   "nickname": "outstanding_tours"
 }'
 
-
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```http
-POST https://api-sandbox.split.cash/contacts HTTP/1.1
-Host: api-sandbox.split.cash
-Content-Type: application/json
-Accept: application/json
-
-
-```
-
-
-```javascript
-var headers = {
+headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
-
-var body = '{
+params = '{
   "nickname": "outstanding_tours"
-}';
+}'
 
+result = RestClient.post 'https://api-sandbox.split.cash/contacts', params, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/contacts',
-  method: 'post',
-  data: body,
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/contacts', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/contacts", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
@@ -2297,9 +1755,8 @@ const inputBody = '{
 const headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/contacts',
 {
@@ -2313,84 +1770,13 @@ fetch('https://api-sandbox.split.cash/contacts',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-params = '{
-  "nickname": "outstanding_tours"
-}'
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/contacts', params, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/contacts', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/contacts");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /contacts`
 
-
 Add a Split Contact
 
-
 > Body parameter
-
 
 ```json
 {
@@ -2398,18 +1784,14 @@ Add a Split Contact
 }
 ```
 
-
 <h3 id="Add-a-Split-Contact-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |body|body|[AddASplitContactRequest](#schemaaddasplitcontactrequest)|true|No description|
 |» nickname|body|string|true|Split account nickname|
 
-
 > Example responses
-
 
 ```json
 {
@@ -2434,74 +1816,90 @@ Add a Split Contact
 }
 ```
 
-
 <h3 id="Add a Split Contact-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddASplitContactResponse](#schemaaddasplitcontactresponse)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
 
-
 ## List all Contacts
-
 
 <a id="opIdListAllContacts"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/contacts \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/contacts HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/contacts', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/contacts',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/contacts', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/contacts", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/contacts',
 {
@@ -2514,77 +1912,13 @@ fetch('https://api-sandbox.split.cash/contacts',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/contacts', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/contacts', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/contacts");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /contacts`
 
-
 By default, all Contacts will be returned. You can apply filters to your query to customise the returned Contact list.
 
-
 <h3 id="List-all-Contacts-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -2597,9 +1931,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
 |bank_account_branch_code|query|string|false|Single value, exact match|
 |bank_account_account_number|query|string|false|Single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -2677,29 +2009,23 @@ By default, all Contacts will be returned. You can apply filters to your query t
 }
 ```
 
-
 <h3 id="List all Contacts-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllContactsResponse](#schemalistallcontactsresponse)|
 
-
 ## Add an Anyone Contact
-
 
 <a id="opIdAddAnAnyoneContact"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/contacts/anyone \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}' \
+  -H 'Authorization: bearer {access-token}' \
   -d '{
   "name": "Hunter Thompson",
   "email": "hunter@batcountry.com",
@@ -2707,49 +2033,74 @@ curl -X POST https://api-sandbox.split.cash/contacts/anyone \
   "account_number": "13048322"
 }'
 
-
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```http
-POST https://api-sandbox.split.cash/contacts/anyone HTTP/1.1
-Host: api-sandbox.split.cash
-Content-Type: application/json
-Accept: application/json
-
-
-```
-
-
-```javascript
-var headers = {
+headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
-
-var body = '{
+params = '{
   "name": "Hunter Thompson",
   "email": "hunter@batcountry.com",
   "branch_code": "123456",
   "account_number": "13048322"
-}';
+}'
 
+result = RestClient.post 'https://api-sandbox.split.cash/contacts/anyone', params, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/contacts/anyone',
-  method: 'post',
-  data: body,
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/contacts/anyone', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/contacts/anyone", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
@@ -2762,9 +2113,8 @@ const inputBody = '{
 const headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/contacts/anyone',
 {
@@ -2778,92 +2128,17 @@ fetch('https://api-sandbox.split.cash/contacts/anyone',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-params = '{
-  "name": "Hunter Thompson",
-  "email": "hunter@batcountry.com",
-  "branch_code": "123456",
-  "account_number": "13048322"
-}'
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/contacts/anyone', params, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/contacts/anyone', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/contacts/anyone");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /contacts/anyone`
 
-
 When you want to pay somebody that doesn't have a Split account, you can add them as an Anyone Contact.
-
 
 <aside class="notice">
   Anyone Contacts added this way can be used solely as payout recipients in a Payment.
 </aside>
 
-
 > Body parameter
-
 
 ```json
 {
@@ -2874,9 +2149,7 @@ When you want to pay somebody that doesn't have a Split account, you can add the
 }
 ```
 
-
 <h3 id="Add-an-Anyone-Contact-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -2886,9 +2159,7 @@ When you want to pay somebody that doesn't have a Split account, you can add the
 |» branch_code|body|string|true|The bank account BSB of the Contact|
 |» account_number|body|string|true|The bank account number of the Contact|
 
-
 > Example responses
-
 
 ```json
 {
@@ -2910,73 +2181,89 @@ When you want to pay somebody that doesn't have a Split account, you can add the
 }
 ```
 
-
 <h3 id="Add an Anyone Contact-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddAnAnyoneContactResponse](#schemaaddananyonecontactresponse)|
 
-
 ## Get a Contact
-
 
 <a id="opIdGetAContact"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/contacts/{id} \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/contacts/{id} HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/contacts/{id}', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/contacts/{id}',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/contacts/{id}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/contacts/{id}", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/contacts/{id}',
 {
@@ -2989,85 +2276,19 @@ fetch('https://api-sandbox.split.cash/contacts/{id}',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/contacts/{id}', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/contacts/{id}', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/contacts/{id}");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /contacts/{id}`
 
-
 Get a single Contact by its ID
 
-
 <h3 id="Get-a-Contact-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |id|path|string(UUID)|true|Contact ID (`Contact.data.id`)|
 
-
 > Example responses
-
 
 ```json
 {
@@ -3092,68 +2313,85 @@ Get a single Contact by its ID
 }
 ```
 
-
 <h3 id="Get a Contact-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAContactResponse](#schemagetacontactresponse)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
 
-
 ## Remove a Contact
-
 
 <a id="opIdRemoveAContact"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X DELETE https://api-sandbox.split.cash/contacts/{id} \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-DELETE https://api-sandbox.split.cash/contacts/{id} HTTP/1.1
-Host: api-sandbox.split.cash
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
-  'Authorization': 'Bearer {access_token}'
-};
+headers = {
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.delete 'https://api-sandbox.split.cash/contacts/{id}', headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/contacts/{id}',
-  method: 'delete'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.delete('https://api-sandbox.split.cash/contacts/{id}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("DELETE", "https://api-sandbox.split.cash/contacts/{id}", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/contacts/{id}',
 {
@@ -3166,147 +2404,104 @@ fetch('https://api-sandbox.split.cash/contacts/{id}',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.delete 'https://api-sandbox.split.cash/contacts/{id}', headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.delete('https://api-sandbox.split.cash/contacts/{id}', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/contacts/{id}");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("DELETE");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `DELETE /contacts/{id}`
 
-
 <aside class="notice">Removing a Contact will not affect your transaction history.</aside>
 
-
 <h3 id="Remove-a-Contact-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |id|path|string(UUID)|true|Contact ID (`Contact.data.id`)|
 
-
 <h3 id="Remove a Contact-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No description|None|
 
-
 ## Update a Contact
-
 
 <a id="opIdUpdateAContact"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X PATCH https://api-sandbox.split.cash/contacts/{id} \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}' \
+  -H 'Authorization: bearer {access-token}' \
   -d '{
   "name": "My very own alias"
 }'
 
-
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```http
-PATCH https://api-sandbox.split.cash/contacts/{id} HTTP/1.1
-Host: api-sandbox.split.cash
-Content-Type: application/json
-Accept: application/json
-
-
-```
-
-
-```javascript
-var headers = {
+headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
-
-var body = '{
+params = '{
   "name": "My very own alias"
-}';
+}'
 
+result = RestClient.patch 'https://api-sandbox.split.cash/contacts/{id}', params, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/contacts/{id}',
-  method: 'patch',
-  data: body,
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.patch('https://api-sandbox.split.cash/contacts/{id}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("PATCH", "https://api-sandbox.split.cash/contacts/{id}", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
@@ -3316,9 +2511,8 @@ const inputBody = '{
 const headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/contacts/{id}',
 {
@@ -3332,89 +2526,17 @@ fetch('https://api-sandbox.split.cash/contacts/{id}',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-params = '{
-  "name": "My very own alias"
-}'
-
-
-result = RestClient.patch 'https://api-sandbox.split.cash/contacts/{id}', params, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.patch('https://api-sandbox.split.cash/contacts/{id}', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/contacts/{id}");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("PATCH");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `PATCH /contacts/{id}`
 
-
 You can update the name of any Contact. This is essentially an alias you can use to provide something contextually meaninful.
-
 
 <aside class="notice">
   Any previous transactions to that Contact will retain the Contact name that was current at the time.
 </aside>
 
-
 > Body parameter
-
 
 ```json
 {
@@ -3422,9 +2544,7 @@ You can update the name of any Contact. This is essentially an alias you can use
 }
 ```
 
-
 <h3 id="Update-a-Contact-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -3432,9 +2552,7 @@ You can update the name of any Contact. This is essentially an alias you can use
 |body|body|[UpdateAContactRequest](#schemaupdateacontactrequest)|true|No description|
 |» name|body|string|true|The name of the Contact|
 
-
 > Example responses
-
 
 ```json
 {
@@ -3459,54 +2577,41 @@ You can update the name of any Contact. This is essentially an alias you can use
 }
 ```
 
-
 <h3 id="Update a Contact-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[UpdateAContactResponse](#schemaupdateacontactresponse)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
 
-
 <h1 id="Split-API-Open-Agreements">Open Agreements</h1>
-
 
 An Open Agreement is essentially an Agreement template with no specific authoriser. Each time an Open Agreement is accepted by either a Split account holder or anyone, the authoriser is added to your Contacts list and a new Agreement is automatically created between the Open Agreement initiator and the authoriser.
 
-
 An Open Agreement can be accepted multiple times by different parties and the result is the same: A new Agreement. Additionally, an Open Agreement can be accepted by anybody, not just other Split users. This is achieved by using our [Instant Account Verification process](http://help.split.cash/bank-accounts/instant-account-verification-iav) as part of accepting an [Open Agreement](https://help.split.cash/agreements/open-agreement).
-
 
 ##Lifecycle
 
-
 An Open Agreement can have the following statuses:
-
 
 | Status | Description |
 |-------|-------------|
 | `active` | The Open Agreement can be viewed and accepted. |
 | `closed` | The Open Agreement can not be viewed or accepted. |
 
-
 <aside class="notice">When you close an Open Agreement, no new Agreements can be created from it and all past Agreement resulting from the acceptance of the Open Agreement are unaffected.</aside>
-
 
 ## Create an Open Agreement
 
-
 <a id="opIdCreateOpenAgreement"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/open_agreements \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}' \
+  -H 'Authorization: bearer {access-token}' \
   -d '{
   "title": "Subscription Plan A",
   "terms": {
@@ -3521,29 +2626,19 @@ curl -X POST https://api-sandbox.split.cash/open_agreements \
   }
 }'
 
-
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```http
-POST https://api-sandbox.split.cash/open_agreements HTTP/1.1
-Host: api-sandbox.split.cash
-Content-Type: application/json
-Accept: application/json
-
-
-```
-
-
-```javascript
-var headers = {
+headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
-
-var body = '{
+params = '{
   "title": "Subscription Plan A",
   "terms": {
     "per_payout": {
@@ -3555,22 +2650,57 @@ var body = '{
       "max_amount": 1000000
     }
   }
-}';
+}'
 
+result = RestClient.post 'https://api-sandbox.split.cash/open_agreements', params, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/open_agreements',
-  method: 'post',
-  data: body,
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/open_agreements', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/open_agreements", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
@@ -3590,9 +2720,8 @@ const inputBody = '{
 const headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/open_agreements',
 {
@@ -3606,97 +2735,15 @@ fetch('https://api-sandbox.split.cash/open_agreements',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-params = '{
-  "title": "Subscription Plan A",
-  "terms": {
-    "per_payout": {
-      "min_amount": null,
-      "max_amount": 10000
-    },
-    "per_frequency": {
-      "days": 7,
-      "max_amount": 1000000
-    }
-  }
-}'
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/open_agreements', params, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/open_agreements', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/open_agreements");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /open_agreements`
 
-
 Create an Open Agreement that can be accepted by anyone.
-
 
 <aside class="notice">You can set any of the term metrics to <code>null</code> if you wish them to not have a limit.</aside>
 
-
 > Body parameter
-
 
 ```json
 {
@@ -3714,9 +2761,7 @@ Create an Open Agreement that can be accepted by anyone.
 }
 ```
 
-
 <h3 id="Create-an-Open-Agreement-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -3730,9 +2775,7 @@ Create an Open Agreement that can be accepted by anyone.
 |»»» days|body|number|false|Amount of days to apply against the frequency|
 |»»» max_amount|body|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
 
-
 > Example responses
-
 
 ```json
 {
@@ -3755,73 +2798,89 @@ Create an Open Agreement that can be accepted by anyone.
 }
 ```
 
-
 <h3 id="Create an Open Agreement-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[CreateOpenAgreementResponse](#schemacreateopenagreementresponse)|
 
-
 ## List all Open Agreements
-
 
 <a id="opIdListAllOpenAgreements"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/open_agreements \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/open_agreements HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/open_agreements', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/open_agreements',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/open_agreements', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/open_agreements", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/open_agreements',
 {
@@ -3834,83 +2893,18 @@ fetch('https://api-sandbox.split.cash/open_agreements',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/open_agreements', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/open_agreements', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/open_agreements");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /open_agreements`
 
-
 <h3 id="List-all-Open-Agreements-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -3953,73 +2947,89 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="List all Open Agreements-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllOpenAgreementsResponse](#schemalistallopenagreementsresponse)|
 
-
 ## Activate a closed Open Agreement
-
 
 <a id="opIdActivateOpenAgreement"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-POST https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.post 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate',
-  method: 'post'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate',
 {
@@ -4032,85 +3042,19 @@ fetch('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activ
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /open_agreements/{open_agreement_ref}/activate`
 
-
 Allow the Open Agreement to viewed and accepted
 
-
 <h3 id="Activate-a-closed-Open-Agreement-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |open_agreement_ref|path|string|true|Single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -4134,73 +3078,89 @@ Allow the Open Agreement to viewed and accepted
 }
 ```
 
-
 <h3 id="Activate a closed Open Agreement-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ActivateOpenAgreementResponse](#schemaactivateopenagreementresponse)|
 
-
 ## Close an active Open Agreement
-
 
 <a id="opIdCloseOpenAgreement"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-POST https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.post 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close',
-  method: 'post'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close',
 {
@@ -4213,85 +3173,19 @@ fetch('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /open_agreements/{open_agreement_ref}/close`
 
-
 Disable the Open Agreement from being viewed or accepted
 
-
 <h3 id="Close-an-active-Open-Agreement-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |open_agreement_ref|path|string|true|Single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -4315,45 +3209,34 @@ Disable the Open Agreement from being viewed or accepted
 }
 ```
 
-
 <h3 id="Close an active Open Agreement-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[CloseOpenAgreementResponse](#schemacloseopenagreementresponse)|
 
-
 <h1 id="Split-API-Payments">Payments</h1>
 
-
 **A Payment is made up of two parts:**
-
 
 1. General details about the Payment.
 2. One or many Payouts with individual recipients, amounts and descriptions.
 
-
 ##Lifecycle
-
 
 The Payment is simply a group of Payouts therefore it does not have a particular status. Its Payouts however have their status regularly updated, for a list of possible Payout statuses check out the [Transactions](/#Split-API-Transactions).
 
-
 ## Make a Payment
-
 
 <a id="opIdMakeAPayment"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/payments \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}' \
+  -H 'Authorization: bearer {access-token}' \
   -d '{
   "description": "The SuperPackage",
   "matures_at": "2016-09-13T00:00:00Z",
@@ -4381,29 +3264,19 @@ curl -X POST https://api-sandbox.split.cash/payments \
   }
 }'
 
-
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```http
-POST https://api-sandbox.split.cash/payments HTTP/1.1
-Host: api-sandbox.split.cash
-Content-Type: application/json
-Accept: application/json
-
-
-```
-
-
-```javascript
-var headers = {
+headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
-
-var body = '{
+params = '{
   "description": "The SuperPackage",
   "matures_at": "2016-09-13T00:00:00Z",
   "payouts": [
@@ -4428,22 +3301,57 @@ var body = '{
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
   }
-}';
+}'
 
+result = RestClient.post 'https://api-sandbox.split.cash/payments', params, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payments',
-  method: 'post',
-  data: body,
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/payments', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/payments", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
@@ -4476,9 +3384,8 @@ const inputBody = '{
 const headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payments',
 {
@@ -4492,104 +3399,11 @@ fetch('https://api-sandbox.split.cash/payments',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-params = '{
-  "description": "The SuperPackage",
-  "matures_at": "2016-09-13T00:00:00Z",
-  "payouts": [
-    {
-      "amount": 30000,
-      "description": "A tandem skydive jump SB23094",
-      "recipient_id": "48b89364-1577-4c81-ba02-96705895d457",
-      "metadata": {
-        "invoice_ref": "BILL-0001",
-        "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
-        "custom_key": "Custom string",
-        "another_custom_key": "Maybe a URL"
-      }
-    },
-    {
-      "amount": 30000,
-      "description": "A scuba dive SDS5464",
-      "recipient_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
-    }
-  ],
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}'
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/payments', params, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/payments', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payments");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /payments`
 
-
 > Body parameter
-
 
 ```json
 {
@@ -4620,9 +3434,7 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="Make-a-Payment-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -4637,9 +3449,7 @@ System.out.println(response.toString());
 |»»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data an certain Split customisations|
 |»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data an certain Split customisations|
 
-
 > Example responses
-
 
 ```json
 {
@@ -4685,73 +3495,89 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="Make a Payment-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[MakeAPaymentResponse](#schemamakeapaymentresponse)|
 
-
 ## List all Payments
-
 
 <a id="opIdListAllPayments"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/payments \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/payments HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/payments', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payments',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/payments', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payments", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payments',
 {
@@ -4764,83 +3590,18 @@ fetch('https://api-sandbox.split.cash/payments',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/payments', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/payments', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payments");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /payments`
 
-
 <h3 id="List-all-Payments-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -4888,73 +3649,89 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="List all Payments-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllPaymentsResponse](#schemalistallpaymentsresponse)|
 
-
 ## Get a Payment
-
 
 <a id="opIdGetAPayment"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/payments/{payment_ref} \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/payments/{payment_ref} HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/payments/{payment_ref}', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payments/{payment_ref}',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/payments/{payment_ref}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payments/{payment_ref}", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payments/{payment_ref}',
 {
@@ -4967,85 +3744,19 @@ fetch('https://api-sandbox.split.cash/payments/{payment_ref}',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/payments/{payment_ref}', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/payments/{payment_ref}', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payments/{payment_ref}");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /payments/{payment_ref}`
 
-
 Get a single payment by its reference
 
-
 <h3 id="Get-a-Payment-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |payment_ref|path|string|true|Payment reference|
 
-
 > Example responses
-
 
 ```json
 {
@@ -5091,73 +3802,88 @@ Get a single payment by its reference
 }
 ```
 
-
 <h3 id="Get a Payment-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAPaymentResponse](#schemagetapaymentresponse)|
 
-
 <h1 id="Split-API-Payouts">Payouts</h1>
-
 
 Payouts are what a compose a Payment. One or all Payouts can be voided individually as part of the larger Payment.
 
-
 ## Void a Payout
-
 
 <a id="opIdVoidAPayout"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X DELETE https://api-sandbox.split.cash/payouts/{debit_ref} \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-DELETE https://api-sandbox.split.cash/payouts/{debit_ref} HTTP/1.1
-Host: api-sandbox.split.cash
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
-  'Authorization': 'Bearer {access_token}'
-};
+headers = {
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.delete 'https://api-sandbox.split.cash/payouts/{debit_ref}', headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payouts/{debit_ref}',
-  method: 'delete'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.delete('https://api-sandbox.split.cash/payouts/{debit_ref}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("DELETE", "https://api-sandbox.split.cash/payouts/{debit_ref}", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payouts/{debit_ref}',
 {
@@ -5170,97 +3896,29 @@ fetch('https://api-sandbox.split.cash/payouts/{debit_ref}',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.delete 'https://api-sandbox.split.cash/payouts/{debit_ref}', headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.delete('https://api-sandbox.split.cash/payouts/{debit_ref}', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payouts/{debit_ref}");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("DELETE");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `DELETE /payouts/{debit_ref}`
 
-
 You can void any Payout debit from your account that has not yet matured. In the case where it has matured, you can send a Refund Request to the Payout recipient once the Payout has successfully cleared in order to reverse the transaction.
 
-
 <h3 id="Void-a-Payout-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |debit_ref|path|string|true|Payout debit reference|
 
-
 <h3 id="Void a Payout-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
 
-
 <h1 id="Split-API-Payment-Requests">Payment Requests</h1>
-
 
 A Payment Request (PR) is used to request payment from another party. Additionally, a Payment Request can be approved by anybody, not just other Split users. This is achieved by using our [Instant Account Verification process](http://help.split.cash/bank-accounts/instant-account-verification-iav) as part of approving a [Payment Request](https://help.split.cash/payment-requests/open-payment-requests).
 
-
 <div class="middle-header">Applicable scenarios</div>
-
 
 1. **A Split account sends a PR to a Contact that is a Split account:**
     1. The authoriser must either approve or decline the request; **or**
@@ -5271,31 +3929,24 @@ A Payment Request (PR) is used to request payment from another party. Additional
     2. Given the PR is **not** within the terms of the Agreement, then the PR will not be created; **or**
     3. There is no Agreement in place, then the PR will not be created.
 
-
 <div class="middle-header">Direction</div>
 
-
 Payment Requests are broken up by direction:
-
 
 1. **Incoming:** An incoming Payment Request (you are the authoriser/payer)
 2. **Outgoing:** An outgoing Payment Request (you are the initiator/payee)
 
-
+      
 There are two response fields that differ depending on the direction:
-
 
 | Field | Description |
 |-------|-------------|
 | `debit_ref` | Only visible to the PR authoriser (incoming PRs). This reference corresponds to the newly created debit to process the approved PR. |
 | `credit_ref` | Only visible to the PR initiator (outgoing PRs). This reference corresponds to the newly created credit from the approved PR. |
 
-
 ##Lifecycle
 
-
 A Payment Request can have the following statuses:
-
 
 | Status | Description |
 |-------|-------------|
@@ -5304,21 +3955,17 @@ A Payment Request can have the following statuses:
 | `declined` | The payer has declined the PR. |
 | `cancelled` | The initiator has cancelled the PR. |
 
-
 ## Request Payment
-
 
 <a id="opIdMakeAPaymentRequest"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/payment_requests \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}' \
+  -H 'Authorization: bearer {access-token}' \
   -d '{
   "description": "Visible to both initiator and authoriser",
   "matures_at": "12/19/2016 2:10:56 AM",
@@ -5330,29 +3977,19 @@ curl -X POST https://api-sandbox.split.cash/payment_requests \
   }
 }'
 
-
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```http
-POST https://api-sandbox.split.cash/payment_requests HTTP/1.1
-Host: api-sandbox.split.cash
-Content-Type: application/json
-Accept: application/json
-
-
-```
-
-
-```javascript
-var headers = {
+headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
-
-var body = '{
+params = '{
   "description": "Visible to both initiator and authoriser",
   "matures_at": "12/19/2016 2:10:56 AM",
   "amount": 99000,
@@ -5361,22 +3998,57 @@ var body = '{
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
   }
-}';
+}'
 
+result = RestClient.post 'https://api-sandbox.split.cash/payment_requests', params, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payment_requests',
-  method: 'post',
-  data: body,
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/payment_requests', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/payment_requests", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
@@ -5393,9 +4065,8 @@ const inputBody = '{
 const headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payment_requests',
 {
@@ -5409,88 +4080,11 @@ fetch('https://api-sandbox.split.cash/payment_requests',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-params = '{
-  "description": "Visible to both initiator and authoriser",
-  "matures_at": "12/19/2016 2:10:56 AM",
-  "amount": 99000,
-  "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}'
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/payment_requests', params, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/payment_requests', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payment_requests");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /payment_requests`
 
-
 > Body parameter
-
 
 ```json
 {
@@ -5505,9 +4099,7 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="Request-Payment-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -5518,9 +4110,7 @@ System.out.println(response.toString());
 |» authoriser_id|body|string|true|The Contact bank account that will be used to pay the PR (`Contact.data.bank_account.id`)'|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data an certain Split customisations|
 
-
 > Example responses
-
 
 ```json
 {
@@ -5545,73 +4135,89 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="Request Payment-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[MakeAPaymentRequestResponse](#schemamakeapaymentrequestresponse)|
 
-
 ## Approve a Payment Request
-
 
 <a id="opIdApprovePaymentRequest"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-POST https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.post 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve',
-  method: 'post'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve',
 {
@@ -5624,82 +4230,17 @@ fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/app
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /payment_requests/{payment_request_ref}/approve`
 
-
 <h3 id="Approve-a-Payment-Request-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |payment_request_ref|path|string|true|Single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -5724,73 +4265,89 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="Approve a Payment Request-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ApprovePaymentRequestResponse](#schemaapprovepaymentrequestresponse)|
 
-
 ## Decline a Payment Request
-
 
 <a id="opIdDeclinePaymentRequest"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-POST https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.post 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline',
-  method: 'post'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline',
 {
@@ -5803,82 +4360,17 @@ fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/dec
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /payment_requests/{payment_request_ref}/decline`
 
-
 <h3 id="Decline-a-Payment-Request-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |payment_request_ref|path|string|true|Single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -5903,73 +4395,89 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="Decline a Payment Request-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|No description|[DeclinePaymentRequestResponse](#schemadeclinepaymentrequestresponse)|
 
-
 ## Get a Payment Request
-
 
 <a id="opIdGetAPaymentRequest"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/payment_requests/{payment_request_ref} \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/payment_requests/{payment_request_ref} HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payment_requests/{payment_request_ref}", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
 {
@@ -5982,82 +4490,17 @@ fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payment_requests/{payment_request_ref}");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /payment_requests/{payment_request_ref}`
 
-
 <h3 id="Get-a-Payment-Request-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |payment_request_ref|path|string|true|Single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -6082,67 +4525,84 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="Get a Payment Request-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAPaymentRequestResponse](#schemagetapaymentrequestresponse)|
 
-
 ## Cancel a Payment Request
-
 
 <a id="opIdCancelAPaymentRequest"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X DELETE https://api-sandbox.split.cash/payment_requests/{payment_request_ref} \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-DELETE https://api-sandbox.split.cash/payment_requests/{payment_request_ref} HTTP/1.1
-Host: api-sandbox.split.cash
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
-  'Authorization': 'Bearer {access_token}'
-};
+headers = {
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.delete 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
-  method: 'delete'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.delete('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("DELETE", "https://api-sandbox.split.cash/payment_requests/{payment_request_ref}", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
 {
@@ -6155,147 +4615,101 @@ fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.delete 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.delete('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payment_requests/{payment_request_ref}");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("DELETE");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `DELETE /payment_requests/{payment_request_ref}`
 
-
 A PR can only be cancelled if it has not yet matured.
 
-
 <h3 id="Cancel-a-Payment-Request-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |payment_request_ref|path|string|true|Single value, exact match|
 
-
 <h3 id="Cancel a Payment Request-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
 
-
 ## List incoming Payment Requests
-
 
 <a id="opIdListIncomingPaymentRequests"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/payment_requests/incoming \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/payment_requests/incoming HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/incoming', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payment_requests/incoming',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/payment_requests/incoming', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payment_requests/incoming", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payment_requests/incoming',
 {
@@ -6308,83 +4722,18 @@ fetch('https://api-sandbox.split.cash/payment_requests/incoming',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/incoming', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/payment_requests/incoming', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payment_requests/incoming");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /payment_requests/incoming`
 
-
 <h3 id="List-incoming-Payment-Requests-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -6425,73 +4774,89 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="List incoming Payment Requests-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListIncomingPaymentRequestsResponse](#schemalistincomingpaymentrequestsresponse)|
 
-
 ## List outgoing Payment Requests
-
 
 <a id="opIdListOutgoingPaymentRequests"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/payment_requests/outgoing \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/payment_requests/outgoing HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/outgoing', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payment_requests/outgoing',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/payment_requests/outgoing', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payment_requests/outgoing", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payment_requests/outgoing',
 {
@@ -6504,83 +4869,18 @@ fetch('https://api-sandbox.split.cash/payment_requests/outgoing',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/outgoing', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/payment_requests/outgoing', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payment_requests/outgoing");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /payment_requests/outgoing`
 
-
 <h3 id="List-outgoing-Payment-Requests-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -6617,73 +4917,89 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="List outgoing Payment Requests-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingPaymentRequestsResponse](#schemalistoutgoingpaymentrequestsresponse)|
 
-
 ## Get a Payment Request's history
-
 
 <a id="opIdGetAPaymentRequest'sHistory"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history',
 {
@@ -6696,85 +5012,19 @@ fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/his
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /payment_requests/{payment_request_ref}/history`
 
-
 Gives you visibility of the entire Payment Request lifecycle including the generated debit and credit transactions.
 
-
 <h3 id="Get-a-Payment-Request's-history-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |payment_request_ref|path|string|true|Single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -6867,54 +5117,42 @@ Gives you visibility of the entire Payment Request lifecycle including the gener
 }
 ```
 
-
 <h3 id="Get a Payment Request's history-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAPaymentRequestsHistoryResponse](#schemagetapaymentrequestshistoryresponse)|
 
-
 <h1 id="Split-API-Refunds">Refunds</h1>
-
 
 Refunds can be issued for any successfully cleared Payout (credit) transactions.
 
-
 <div class="middle-header">Direction</div>
 
-
 Refunds are broken up by direction:
-
 
 1. **Incoming:** An incoming Refund (you are the recipient of the refund)
 2. **Outgoing:** An outgoing Refund (you are the issuer of the refund)
 
-
+      
 There are two response fields that differ depending on the direction:
-
 
 | Field | Description |
 |-------|-------------|
 | `debit_ref` | Only visible to the Refund issuer (outgoing Refunds). This reference corresponds to the newly created debit to process the Refund. |
 | `credit_ref` | Only visible to the Refund recipient (incoming Refunds). This reference corresponds to the newly created credit to process the Refund. |
 
-
 ## Issue a Refund
-
 
 <a id="opIdIssueARefund"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/credits/{credit_ref}/refunds \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}' \
+  -H 'Authorization: bearer {access-token}' \
   -d '{
   "amount": 500,
   "reason": "Because reason",
@@ -6924,51 +5162,76 @@ curl -X POST https://api-sandbox.split.cash/credits/{credit_ref}/refunds \
   }
 }'
 
-
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```http
-POST https://api-sandbox.split.cash/credits/{credit_ref}/refunds HTTP/1.1
-Host: api-sandbox.split.cash
-Content-Type: application/json
-Accept: application/json
-
-
-```
-
-
-```javascript
-var headers = {
+headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
-
-var body = '{
+params = '{
   "amount": 500,
   "reason": "Because reason",
   "metadata": {
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
   }
-}';
+}'
 
+result = RestClient.post 'https://api-sandbox.split.cash/credits/{credit_ref}/refunds', params, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/credits/{credit_ref}/refunds',
-  method: 'post',
-  data: body,
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/credits/{credit_ref}/refunds', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/credits/{credit_ref}/refunds", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
@@ -6983,9 +5246,8 @@ const inputBody = '{
 const headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/credits/{credit_ref}/refunds',
 {
@@ -6999,93 +5261,16 @@ fetch('https://api-sandbox.split.cash/credits/{credit_ref}/refunds',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-params = '{
-  "amount": 500,
-  "reason": "Because reason",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}'
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/credits/{credit_ref}/refunds', params, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/credits/{credit_ref}/refunds', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/credits/{credit_ref}/refunds");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /credits/{credit_ref}/refunds`
 
-
 Certain rules apply to the issuance of a refund:
-
 
 * Must be applied against a successfully cleared payout (credit)
 * The refund amount may not exceed the original amount of the credit
 
-
 > Body parameter
-
 
 ```json
 {
@@ -7098,9 +5283,7 @@ Certain rules apply to the issuance of a refund:
 }
 ```
 
-
 <h3 id="Issue-a-Refund-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -7110,9 +5293,7 @@ Certain rules apply to the issuance of a refund:
 |» reason|body|string|false|Reason for the refund. Visible to both parties.|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data an certain Split customisations|
 
-
 > Example responses
-
 
 ```json
 {
@@ -7131,73 +5312,89 @@ Certain rules apply to the issuance of a refund:
 }
 ```
 
-
 <h3 id="Issue a Refund-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[IssueARefundResponse](#schemaissuearefundresponse)|
 
-
 ## List incoming Refunds
-
 
 <a id="opIdListIncomingRefunds|Get"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/refunds/incoming \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/refunds/incoming HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/refunds/incoming', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/refunds/incoming',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/refunds/incoming', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/refunds/incoming", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/refunds/incoming',
 {
@@ -7210,83 +5407,18 @@ fetch('https://api-sandbox.split.cash/refunds/incoming',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/refunds/incoming', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/refunds/incoming', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/refunds/incoming");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /refunds/incoming`
 
-
 <h3 id="List-incoming-Refunds-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -7307,73 +5439,89 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="List incoming Refunds-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListIncomingRefundsResponse](#schemalistincomingrefundsresponse)|
 
-
 ## List outgoing Refunds
-
 
 <a id="opIdListOutgoingRefunds"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/refunds/outgoing \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/refunds/outgoing HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/refunds/outgoing', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/refunds/outgoing',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/refunds/outgoing', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/refunds/outgoing", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/refunds/outgoing',
 {
@@ -7386,83 +5534,18 @@ fetch('https://api-sandbox.split.cash/refunds/outgoing',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/refunds/outgoing', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/refunds/outgoing', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/refunds/outgoing");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /refunds/outgoing`
 
-
 <h3 id="List-outgoing-Refunds-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -7483,73 +5566,89 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="List outgoing Refunds-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingRefundsResponse](#schemalistoutgoingrefundsresponse)|
 
-
 ## Retrieve a Refund
-
 
 <a id="opIdRetrieveARefund"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/refunds/{refund_ref} \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/refunds/{refund_ref} HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/refunds/{refund_ref}', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/refunds/{refund_ref}',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/refunds/{refund_ref}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/refunds/{refund_ref}", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/refunds/{refund_ref}',
 {
@@ -7562,85 +5661,19 @@ fetch('https://api-sandbox.split.cash/refunds/{refund_ref}',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/refunds/{refund_ref}', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/refunds/{refund_ref}', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/refunds/{refund_ref}");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /refunds/{refund_ref}`
 
-
 Get a single Refund by its reference
 
-
 <h3 id="Retrieve-a-Refund-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |refund_ref|path|string|true|Single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -7659,46 +5692,35 @@ Get a single Refund by its reference
 }
 ```
 
-
 <h3 id="Retrieve a Refund-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[RetrieveARefundResponse](#schemaretrievearefundresponse)|
 
-
 <h1 id="Split-API-Refund-Requests">Refund Requests</h1>
-
 
 Manage Refund Requests (RR) applied against successfully cleared Payouts.
 A refunder corresponds to a recipient of a successfully cleared Payout (credit).
-
-
+  
 <div class="middle-header">Direction</div>
 
-
 Refund Requests are broken up by direction:
-
 
 1. **Incoming:** An incoming Refund Request (you are the authoriser/refunder)
 2. **Outgoing:** An outgoing Refund Request (you are the initiator/refundee)
 
-
+      
 There are two response fields that differ depending on the direction:
-
 
 | Field | Description |
 |-------|-------------|
 | `debit_ref` | Only visible to the RR authoriser (incoming RRs). This reference corresponds to the newly created debit to process the approved RR. |
 | `credit_ref` | Only visible to the RR initiator (outgoing RRs). This reference corresponds to the newly created credit from the approved RR. |
 
-
 ##Lifecycle
 
-
 A Refund Request can have the following statuses:
-
 
 | Status | Description |
 |-------|-------------|
@@ -7707,21 +5729,17 @@ A Refund Request can have the following statuses:
 | `declined` | The payer has declined the RR. |
 | `cancelled` | The initiator has cancelled the RR. |
 
-
 ## Request a Refund
-
 
 <a id="opIdRequestARefund"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/payout_refund_requests \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}' \
+  -H 'Authorization: bearer {access-token}' \
   -d '{
   "for_ref": "D.1",
   "amount": 500,
@@ -7732,29 +5750,19 @@ curl -X POST https://api-sandbox.split.cash/payout_refund_requests \
   }
 }'
 
-
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```http
-POST https://api-sandbox.split.cash/payout_refund_requests HTTP/1.1
-Host: api-sandbox.split.cash
-Content-Type: application/json
-Accept: application/json
-
-
-```
-
-
-```javascript
-var headers = {
+headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
-
-var body = '{
+params = '{
   "for_ref": "D.1",
   "amount": 500,
   "reason": "Because reason",
@@ -7762,22 +5770,57 @@ var body = '{
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
   }
-}';
+}'
 
+result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests', params, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payout_refund_requests',
-  method: 'post',
-  data: body,
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/payout_refund_requests', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/payout_refund_requests", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
@@ -7793,9 +5836,8 @@ const inputBody = '{
 const headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payout_refund_requests',
 {
@@ -7809,94 +5851,16 @@ fetch('https://api-sandbox.split.cash/payout_refund_requests',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-params = '{
-  "for_ref": "D.1",
-  "amount": 500,
-  "reason": "Because reason",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}'
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests', params, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/payout_refund_requests', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payout_refund_requests");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /payout_refund_requests`
 
-
 Certain rules apply to the creation of a Refund Request:
-
 
 * Must be applied against a successfully cleared payout (debit)
 * The refund amount requested from a Payout recipient may not exceed the original amount of the Payout
 
-
 > Body parameter
-
 
 ```json
 {
@@ -7910,9 +5874,7 @@ Certain rules apply to the creation of a Refund Request:
 }
 ```
 
-
 <h3 id="Request-a-Refund-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -7922,9 +5884,7 @@ Certain rules apply to the creation of a Refund Request:
 |» reason|body|string|false|Reason for the refund request. Visible to both parties.|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data an certain Split customisations|
 
-
 > Example responses
-
 
 ```json
 {
@@ -7947,73 +5907,89 @@ Certain rules apply to the creation of a Refund Request:
 }
 ```
 
-
 <h3 id="Request a Refund-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[RequestARefundResponse](#schemarequestarefundresponse)|
 
-
 ## Approve Refund Request
-
 
 <a id="opIdApproveRefundRequest"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-POST https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve',
-  method: 'post'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve',
 {
@@ -8026,82 +6002,17 @@ fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_requ
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /payout_refund_requests/{payout_refund_request_ref}/approve`
 
-
 <h3 id="Approve-Refund-Request-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |payout_refund_request_ref|path|string|true|Single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -8124,73 +6035,89 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="Approve Refund Request-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ApprovePayoutRefundRequestResponse](#schemaapprovepayoutrefundrequestresponse)|
 
-
 ## Decline Refund Request
-
 
 <a id="opIdDeclineRefundRequest"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-POST https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline',
-  method: 'post'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline',
 {
@@ -8203,82 +6130,17 @@ fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_requ
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /payout_refund_requests/{payout_refund_request_ref}/decline`
 
-
 <h3 id="Decline-Refund-Request-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |payout_refund_request_ref|path|string|true|Single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -8301,73 +6163,89 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="Decline Refund Request-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[DeclinePayoutRefundRequestResponse](#schemadeclinepayoutrefundrequestresponse)|
 
-
 ## Retrieve a Refund Request
-
 
 <a id="opIdRetrieveARefundRequest"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref} \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref} HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
 {
@@ -8380,85 +6258,19 @@ fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_requ
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /payout_refund_requests/{payout_refund_request_ref}`
 
-
 Get a specific Refund Request by its reference
 
-
 <h3 id="Retrieve-a-Refund-Request-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |payout_refund_request_ref|path|string|true|Single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -8481,67 +6293,84 @@ Get a specific Refund Request by its reference
 }
 ```
 
-
 <h3 id="Retrieve a Refund Request-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[RetrieveARefundRequestResponse](#schemaretrievearefundrequestresponse)|
 
-
 ## Cancel a Refund Request
-
 
 <a id="opIdCancelARefundRequest"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X DELETE https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref} \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-DELETE https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref} HTTP/1.1
-Host: api-sandbox.split.cash
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
-  'Authorization': 'Bearer {access_token}'
-};
+headers = {
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.delete 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
-  method: 'delete'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.delete('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("DELETE", "https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
 {
@@ -8554,147 +6383,101 @@ fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_requ
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.delete 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.delete('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("DELETE");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `DELETE /payout_refund_requests/{payout_refund_request_ref}`
 
-
 A Refund Request can only be canceled if it is pending approval.
 
-
 <h3 id="Cancel-a-Refund-Request-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |payout_refund_request_ref|path|string|true|Single value, exact match|
 
-
 <h3 id="Cancel a Refund Request-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
 
-
 ## List incoming Refund Requests
-
 
 <a id="opIdListIncomingRefundRequests"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/payout_refund_requests/incoming \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/payout_refund_requests/incoming HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/incoming', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payout_refund_requests/incoming',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/payout_refund_requests/incoming', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payout_refund_requests/incoming", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payout_refund_requests/incoming',
 {
@@ -8707,83 +6490,18 @@ fetch('https://api-sandbox.split.cash/payout_refund_requests/incoming',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/incoming', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/payout_refund_requests/incoming', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payout_refund_requests/incoming");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /payout_refund_requests/incoming`
 
-
 <h3 id="List-incoming-Refund-Requests-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -8808,73 +6526,89 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="List incoming Refund Requests-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListIncomingRefundRequestsResponse](#schemalistincomingrefundrequestsresponse)|
 
-
 ## List outgoing Refund Requests
-
 
 <a id="opIdListOutgoingRefundRequests"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/payout_refund_requests/outgoing \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/payout_refund_requests/outgoing HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/outgoing', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/payout_refund_requests/outgoing',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/payout_refund_requests/outgoing', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payout_refund_requests/outgoing", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/payout_refund_requests/outgoing',
 {
@@ -8887,83 +6621,18 @@ fetch('https://api-sandbox.split.cash/payout_refund_requests/outgoing',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/outgoing', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/payout_refund_requests/outgoing', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/payout_refund_requests/outgoing");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /payout_refund_requests/outgoing`
 
-
 <h3 id="List-outgoing-Refund-Requests-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -8988,26 +6657,19 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="List outgoing Refund Requests-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingRefundRequestsResponse](#schemalistoutgoingrefundrequestsresponse)|
 
-
 <h1 id="Split-API-Transactions">Transactions</h1>
-
 
 The transactions endpoint provides a detailed look at all past, current and future scheduled debits & credits relating to the Split account. In other words, we not only show the transactions initiated by the Split account but also show transactions where the Split account is on the receiving end - even for payments that have not yet matured.
 
-
 ##Lifecycle
 
-
 A transaction (debit or credit) can have the following statuses:
-
 
 | Status | Description |
 |--------|-------------|
@@ -9023,12 +6685,9 @@ A transaction (debit or credit) can have the following statuses:
 | `paused` | The transaction has temporary been paused by Split pending internal review. |
 | `prefailed` | The transaction was never submitted to the bank because we detected that there were insufficient funds. The transaction can be retried. |
 
-
 ##Failure reasons
 
-
 > Example response
-
 
 ```json
 {
@@ -9053,9 +6712,7 @@ A transaction (debit or credit) can have the following statuses:
 }
 ```
 
-
 The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompanied by a `failure_reason`:
-
 
 | Reason | Description |
 |--------|-------------|
@@ -9068,65 +6725,83 @@ The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompani
 | `refer_to_split` | Failed due to reasons not listed here. Please contact us. |
 | `insufficient_funds` | Insufficient funds |
 
-
 ## List all transactions
-
 
 <a id="opIdListAllTransactions"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/transactions \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/transactions HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/transactions', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/transactions',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/transactions', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/transactions", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/transactions',
 {
@@ -9139,74 +6814,11 @@ fetch('https://api-sandbox.split.cash/transactions',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/transactions', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/transactions', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/transactions");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /transactions`
 
-
 <h3 id="List-all-transactions-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -9229,9 +6841,7 @@ System.out.println(response.toString());
 |min_cleared_date|query|string(date-time)|false|Date/time UTC ISO 8601 format, Single value, exact match|
 |max_cleared_date|query|string(date-time)|false|Date/time UTC ISO 8601 format, single value, exact match|
 
-
 #### Enumerated Values
-
 
 |Parameter|Value|
 |---|---|
@@ -9251,9 +6861,7 @@ System.out.println(response.toString());
 |type|debit|
 |type|credit|
 
-
 > Example responses
-
 
 ```json
 {
@@ -9307,38 +6915,29 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="List all transactions-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllTransactionsResponse](#schemalistalltransactionsresponse)|
 
-
 <h1 id="Split-API-Unassigned-Agreements">Unassigned Agreements</h1>
-
 
 An agreement with no preset authoriser that can only be accepted once and must be accepted within a predefined time period.
 
-
 Unassigned Agreements are shared using the generated link available in the response body. You can then include it in an email, text message, embed it in an iFrame, etc...
-
 
 ## Propose an Unassigned Agreement
 
-
 <a id="opIdProposeUnassignedAgreement"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X POST https://api-sandbox.split.cash/unassigned_agreements \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}' \
+  -H 'Authorization: bearer {access-token}' \
   -d '{
   "expiry_in_seconds": 60,
   "terms": {
@@ -9353,29 +6952,19 @@ curl -X POST https://api-sandbox.split.cash/unassigned_agreements \
   }
 }'
 
-
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```http
-POST https://api-sandbox.split.cash/unassigned_agreements HTTP/1.1
-Host: api-sandbox.split.cash
-Content-Type: application/json
-Accept: application/json
-
-
-```
-
-
-```javascript
-var headers = {
+headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
-
-var body = '{
+params = '{
   "expiry_in_seconds": 60,
   "terms": {
     "per_payout": {
@@ -9387,22 +6976,57 @@ var body = '{
       "max_amount": 1000000
     }
   }
-}';
+}'
 
+result = RestClient.post 'https://api-sandbox.split.cash/unassigned_agreements', params, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/unassigned_agreements',
-  method: 'post',
-  data: body,
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.post('https://api-sandbox.split.cash/unassigned_agreements', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Content-Type": []string{"application/json"},
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/unassigned_agreements", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
@@ -9422,9 +7046,8 @@ const inputBody = '{
 const headers = {
   'Content-Type': 'application/json',
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/unassigned_agreements',
 {
@@ -9438,97 +7061,15 @@ fetch('https://api-sandbox.split.cash/unassigned_agreements',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-params = '{
-  "expiry_in_seconds": 60,
-  "terms": {
-    "per_payout": {
-      "min_amount": null,
-      "max_amount": 10000
-    },
-    "per_frequency": {
-      "days": 7,
-      "max_amount": 1000000
-    }
-  }
-}'
-
-
-result = RestClient.post 'https://api-sandbox.split.cash/unassigned_agreements', params, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.post('https://api-sandbox.split.cash/unassigned_agreements', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/unassigned_agreements");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("POST");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `POST /unassigned_agreements`
 
-
 Create an Unassigned Agreement
-
 
 <aside class="notice">You can set any of the term metrics to <code>null</code> if you wish them to not have a limit.</aside>
 
-
 > Body parameter
-
 
 ```json
 {
@@ -9546,9 +7087,7 @@ Create an Unassigned Agreement
 }
 ```
 
-
 <h3 id="Propose-an-Unassigned-Agreement-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -9562,9 +7101,7 @@ Create an Unassigned Agreement
 |»»» days|body|number|false|Amount of days to apply against the frequency|
 |»»» max_amount|body|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
 
-
 > Example responses
-
 
 ```json
 {
@@ -9590,73 +7127,89 @@ Create an Unassigned Agreement
 }
 ```
 
-
 <h3 id="Propose an Unassigned Agreement-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[ProposeUnassignedAgreementResponse](#schemaproposeunassignedagreementresponse)|
 
-
 ## List all Unassigned Agreements
-
 
 <a id="opIdGetUnassignedAgreements"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/unassigned_agreements \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/unassigned_agreements HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/unassigned_agreements', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/unassigned_agreements',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/unassigned_agreements', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/unassigned_agreements", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/unassigned_agreements',
 {
@@ -9669,86 +7222,20 @@ fetch('https://api-sandbox.split.cash/unassigned_agreements',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/unassigned_agreements', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/unassigned_agreements', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/unassigned_agreements");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /unassigned_agreements`
 
-
 Will return all Unassigned Agreements that have not yet be accepted.
 
-
 <h3 id="List-all-Unassigned-Agreements-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -9795,73 +7282,89 @@ Will return all Unassigned Agreements that have not yet be accepted.
 }
 ```
 
-
 <h3 id="List all Unassigned Agreements-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListUnassignedAgreementsResponse](#schemalistunassignedagreementsresponse)|
 
-
 ## Get an Unassigned Agreement
-
 
 <a id="opIdGetAgreement"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref} \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref} HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}',
 {
@@ -9874,85 +7377,19 @@ fetch('https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreemen
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /unassigned_agreements/{unassigned_agreement_ref}`
 
-
 Get a single Unassigned Agreement by its reference
 
-
 <h3 id="Get-an-Unassigned-Agreement-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |unassigned_agreement_ref|path|string|true|Single value, exact match|
 
-
 > Example responses
-
 
 ```json
 {
@@ -9978,67 +7415,84 @@ Get a single Unassigned Agreement by its reference
 }
 ```
 
-
 <h3 id="Get an Unassigned Agreement-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetUnassignedAgreementResponse](#schemagetunassignedagreementresponse)|
 
-
 ## Delete an Unassigned Agreement
-
 
 <a id="opIdDeleteUnassignedAgreement"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X DELETE https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref} \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-DELETE https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref} HTTP/1.1
-Host: api-sandbox.split.cash
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
-  'Authorization': 'Bearer {access_token}'
-};
+headers = {
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.delete 'https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}', headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}',
-  method: 'delete'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.delete('https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("DELETE", "https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}',
 {
@@ -10051,153 +7505,105 @@ fetch('https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreemen
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.delete 'https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}', headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.delete('https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("DELETE");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `DELETE /unassigned_agreements/{unassigned_agreement_ref}`
 
-
 An Unassigned Agreement can be deleted at anytime as long as it has not yet been assigned an authoriser.
 
-
 <h3 id="Delete-an-Unassigned-Agreement-parameters" class="parameters">Parameters</h3>
-
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |unassigned_agreement_ref|path|string|true|Single value, exact match|
 
-
 <h3 id="Delete an Unassigned Agreement-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
 
-
 <h1 id="Split-API-Users">Users</h1>
-
 
 All about the currently authenticated user.
 
-
 ## Get user details
-
 
 <a id="opIdGetUserDetails"></a>
 
-
 > Code samples
-
 
 ```shell
 curl -X GET https://api-sandbox.split.cash/user \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access_token}'
-
-
-```
-
-
-```http
-GET https://api-sandbox.split.cash/user HTTP/1.1
-Host: api-sandbox.split.cash
-
-
-Accept: application/json
-
+  -H 'Authorization: bearer {access-token}'
 
 ```
 
+```ruby
+require 'rest-client'
+require 'json'
 
-```javascript
-var headers = {
+headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-};
+  'Authorization': 'bearer {access-token}'
+}
 
+result = RestClient.get 'https://api-sandbox.split.cash/user', {}, headers
 
-$.ajax({
-  url: 'https://api-sandbox.split.cash/user',
-  method: 'get'
-  headers: headers,
-  success: function(data) {
-    console.log(JSON.stringify(data));
-  }
-})
-
+p JSON.parse(result)
 
 ```
 
+```python
+import requests
+headers = {
+  'Accept': 'application/json',
+  'Authorization': 'bearer {access-token}'
+}
+
+r = requests.get('https://api-sandbox.split.cash/user', params={
+
+}, headers = headers)
+
+print r.json()
+
+```
+
+```go
+package main
+
+import (
+       "bytes"
+       "net/http"
+)
+
+func main() {
+
+    headers := map[string][]string{
+        "Accept": []string{"application/json"},
+        "Authorization": []string{"bearer {access-token}"},
+        
+    }
+
+    data := bytes.NewBuffer([]byte{jsonReq})
+    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/user", data)
+    req.Header = headers
+
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    // ...
+}
+
+```
 
 ```javascript--nodejs
 const request = require('node-fetch');
 
-
 const headers = {
   'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
+  'Authorization': 'bearer {access-token}'
 };
-
 
 fetch('https://api-sandbox.split.cash/user',
 {
@@ -10210,74 +7616,11 @@ fetch('https://api-sandbox.split.cash/user',
     console.log(body);
 });
 
-
 ```
-
-
-```ruby
-require 'rest-client'
-require 'json'
-
-
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-result = RestClient.get 'https://api-sandbox.split.cash/user', {}, headers
-
-
-p JSON.parse(result)
-
-
-```
-
-
-```python
-import requests
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access_token}'
-}
-
-
-r = requests.get('https://api-sandbox.split.cash/user', params={
-
-
-}, headers = headers)
-
-
-print r.json()
-
-
-```
-
-
-```java
-URL obj = new URL("https://api-sandbox.split.cash/user");
-HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-con.setRequestMethod("GET");
-int responseCode = con.getResponseCode();
-BufferedReader in = new BufferedReader(
-    new InputStreamReader(con.getInputStream()));
-String inputLine;
-StringBuffer response = new StringBuffer();
-while ((inputLine = in.readLine()) != null) {
-    response.append(inputLine);
-}
-in.close();
-System.out.println(response.toString());
-
-
-```
-
 
 `GET /user`
 
-
 > Example responses
-
 
 ```json
 {
@@ -10300,23 +7643,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 <h3 id="Get user details-responses">Responses</h3>
-
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetUserDetailsResponse](#schemagetuserdetailsresponse)|
 
-
 # Schemas
-
 
 ## ProposeAgreementRequest
 
-
 <a id="schemaproposeagreementrequest"></a>
-
 
 ```json
 {
@@ -10334,21 +7671,18 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Propose an Agreement (request)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |authoriser_id|string|true|The Contact's account ID (`Contact.data.account.id`)|
 |terms|[Terms](#schematerms)|true|No description|
 
-
 ## Terms
 
-
 <a id="schematerms"></a>
-
 
 ```json
 {
@@ -10363,21 +7697,18 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Terms*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |per_payout|[PerPayout](#schemaperpayout)|true|No description|
 |per_frequency|[PerFrequency](#schemaperfrequency)|true|No description|
 
-
 ## PerPayout
 
-
 <a id="schemaperpayout"></a>
-
 
 ```json
 {
@@ -10386,21 +7717,18 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Per payout terms*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |min_amount|number|false|Minimum amount in cents a PR can be in order to be auto-approved|
 |max_amount|number|false|Maximum amount in cents a PR can be in order to be auto-approved|
 
-
 ## PerFrequency
 
-
 <a id="schemaperfrequency"></a>
-
 
 ```json
 {
@@ -10409,21 +7737,18 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Per frequency terms*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |days|number|false|Amount of days to apply against the frequency|
 |max_amount|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
 
-
 ## ProposeAgreementResponse
 
-
 <a id="schemaproposeagreementresponse"></a>
-
 
 ```json
 {
@@ -10431,6 +7756,8 @@ System.out.println(response.toString());
     "ref": "A.2",
     "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
     "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
+    "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "proposed",
     "responded_at": null,
     "created_at": "2017-03-20T00:53:27Z",
@@ -10448,20 +7775,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Propose an Agreement (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## ApproveAgreementResponse
 
-
 <a id="schemaapproveagreementresponse"></a>
-
 
 ```json
 {
@@ -10469,6 +7793,8 @@ System.out.println(response.toString());
     "ref": "A.2",
     "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
     "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
+    "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "accepted",
     "responded_at": "2017-03-20T02:13:11Z",
     "created_at": "2017-03-20T00:53:27Z",
@@ -10486,20 +7812,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Approve an Agreement (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## DeclineAgreementResponse
 
-
 <a id="schemadeclineagreementresponse"></a>
-
 
 ```json
 {
@@ -10507,6 +7830,8 @@ System.out.println(response.toString());
     "ref": "A.2",
     "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
     "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
+    "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "declined",
     "responded_at": "2017-03-20T02:13:11Z",
     "created_at": "2017-03-20T00:53:27Z",
@@ -10524,20 +7849,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Decline an Agreement (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## GetAgreementResponse
 
-
 <a id="schemagetagreementresponse"></a>
-
 
 ```json
 {
@@ -10545,6 +7867,8 @@ System.out.println(response.toString());
     "ref": "A.2",
     "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
     "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
+    "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "approved",
     "responded_at": "2017-03-20T02:13:11Z",
     "created_at": "2017-03-20T00:53:27Z",
@@ -10562,20 +7886,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Get an Agreement (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## ListIncomingAgreementsResponse
 
-
 <a id="schemalistincomingagreementsresponse"></a>
-
 
 ```json
 {
@@ -10584,6 +7905,8 @@ System.out.println(response.toString());
       "ref": "A.2",
       "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
       "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+      "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
+      "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
       "status": "proposed",
       "responded_at": null,
       "created_at": "2017-03-20T00:53:27Z",
@@ -10602,6 +7925,8 @@ System.out.println(response.toString());
       "ref": "A.1",
       "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
       "authoriser_id": "56df206a-aaff-471a-b075-11882bc8906a",
+      "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
+      "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
       "status": "proposed",
       "responded_at": null,
       "created_at": "2017-03-16T22:51:48Z",
@@ -10620,20 +7945,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*List incoming Agreements (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
 
-
 ## ListOutgoingAgreementsResponse
 
-
 <a id="schemalistoutgoingagreementsresponse"></a>
-
 
 ```json
 {
@@ -10642,6 +7964,8 @@ System.out.println(response.toString());
       "ref": "A.4",
       "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
       "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+      "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
+      "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
       "status": "proposed",
       "responded_at": null,
       "created_at": "2017-03-20T00:53:27Z",
@@ -10660,6 +7984,8 @@ System.out.println(response.toString());
       "ref": "A.3",
       "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
       "authoriser_id": "56df206a-aaff-471a-b075-11882bc8906a",
+      "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
+      "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
       "status": "proposed",
       "responded_at": null,
       "created_at": "2017-03-16T22:51:48Z",
@@ -10678,20 +8004,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*List outgoing Agreements (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
 
-
 ## ListAllBankAccountsResponse
 
-
 <a id="schemalistallbankaccountsresponse"></a>
-
 
 ```json
 {
@@ -10712,20 +8035,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*List all Bank Accounts (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
 
-
 ## CreateOpenAgreementRequest
 
-
 <a id="schemacreateopenagreementrequest"></a>
-
 
 ```json
 {
@@ -10743,21 +8063,18 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Create an Open Agreement (request)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |title|string|true|Title of the Open Agreement (Visible to authorisers)|
 |terms|[Terms](#schematerms)|true|No description|
 
-
 ## CreateOpenAgreementResponse
 
-
 <a id="schemacreateopenagreementresponse"></a>
-
 
 ```json
 {
@@ -10780,20 +8097,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Create an Open Agreement (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## ListAllOpenAgreementsResponse
 
-
 <a id="schemalistallopenagreementsresponse"></a>
-
 
 ```json
 {
@@ -10836,20 +8150,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*List all Open Agreements (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
 
-
 ## ActivateOpenAgreementResponse
 
-
 <a id="schemaactivateopenagreementresponse"></a>
-
 
 ```json
 {
@@ -10873,20 +8184,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Activate Open Agreement Request (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## CloseOpenAgreementResponse
 
-
 <a id="schemacloseopenagreementresponse"></a>
-
 
 ```json
 {
@@ -10910,20 +8218,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Close Open Agreement Request (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## AddASplitContactRequest
 
-
 <a id="schemaaddasplitcontactrequest"></a>
-
 
 ```json
 {
@@ -10931,20 +8236,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Add a Split Contact (request)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |nickname|string|true|Split account nickname|
 
-
 ## AddASplitContactResponse
 
-
 <a id="schemaaddasplitcontactresponse"></a>
-
 
 ```json
 {
@@ -10969,20 +8271,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Add a Split Contact (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## ListAllContactsResponse
 
-
 <a id="schemalistallcontactsresponse"></a>
-
 
 ```json
 {
@@ -11060,20 +8359,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*List all Contacts (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
 
-
 ## AddAnAnyoneContactRequest
 
-
 <a id="schemaaddananyonecontactrequest"></a>
-
 
 ```json
 {
@@ -11084,9 +8380,9 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Add an Anyone Contact (request)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
@@ -11095,12 +8391,9 @@ System.out.println(response.toString());
 |branch_code|string|true|The bank account BSB of the Contact|
 |account_number|string|true|The bank account number of the Contact|
 
-
 ## AddAnAnyoneContactResponse
 
-
 <a id="schemaaddananyonecontactresponse"></a>
-
 
 ```json
 {
@@ -11122,20 +8415,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Add an Anyone Contact (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## GetAContactResponse
 
-
 <a id="schemagetacontactresponse"></a>
-
 
 ```json
 {
@@ -11160,20 +8450,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Get a Contact (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## UpdateAContactRequest
 
-
 <a id="schemaupdateacontactrequest"></a>
-
 
 ```json
 {
@@ -11181,20 +8468,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Update a Contact (request)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |name|string|true|The name of the Contact|
 
-
 ## UpdateAContactResponse
 
-
 <a id="schemaupdateacontactresponse"></a>
-
 
 ```json
 {
@@ -11219,20 +8503,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Update a Contact (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## MakeAPaymentRequest
 
-
 <a id="schemamakeapaymentrequest"></a>
-
 
 ```json
 {
@@ -11263,9 +8544,9 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Make a Payment (request)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
@@ -11274,12 +8555,9 @@ System.out.println(response.toString());
 |payouts|[[Payout](#schemapayout)]|true|One or many Payouts|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
-
 ## Payout
 
-
 <a id="schemapayout"></a>
-
 
 ```json
 {
@@ -11293,9 +8571,9 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*The actual Payout*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
@@ -11304,12 +8582,9 @@ System.out.println(response.toString());
 |recipient_id|string|true|Contact bank account to pay (`Contact.data.bank_account.id`)|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
-
 ## Metadata
 
-
 <a id="schemametadata"></a>
-
 
 ```json
 {
@@ -11318,18 +8593,15 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Use for your custom data an certain Split customisations*
 
 *None*
 
-
 ## MakeAPaymentResponse
 
-
 <a id="schemamakeapaymentresponse"></a>
-
 
 ```json
 {
@@ -11375,20 +8647,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Make a Payment (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## ApprovePaymentRequestResponse
 
-
 <a id="schemaapprovepaymentrequestresponse"></a>
-
 
 ```json
 {
@@ -11413,20 +8682,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Approve Payment Request (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## DeclinePaymentRequestResponse
 
-
 <a id="schemadeclinepaymentrequestresponse"></a>
-
 
 ```json
 {
@@ -11451,20 +8717,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Decline a Payment Request (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## ListAllPaymentsResponse
 
-
 <a id="schemalistallpaymentsresponse"></a>
-
 
 ```json
 {
@@ -11512,20 +8775,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*List all Payments (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
 
-
 ## GetAPaymentResponse
 
-
 <a id="schemagetapaymentresponse"></a>
-
 
 ```json
 {
@@ -11571,20 +8831,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Get a Payment (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## MakeAPaymentRequestRequest
 
-
 <a id="schemamakeapaymentrequestrequest"></a>
-
 
 ```json
 {
@@ -11599,9 +8856,9 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Make a Payment Request (request)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
@@ -11611,12 +8868,9 @@ System.out.println(response.toString());
 |authoriser_id|string|true|The Contact bank account that will be used to pay the PR (`Contact.data.bank_account.id`)'|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
-
 ## MakeAPaymentRequestResponse
 
-
 <a id="schemamakeapaymentrequestresponse"></a>
-
 
 ```json
 {
@@ -11641,20 +8895,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Make a Payment Request (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## GetAPaymentRequestResponse
 
-
 <a id="schemagetapaymentrequestresponse"></a>
-
 
 ```json
 {
@@ -11679,20 +8930,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Get a Payment Request (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## ListIncomingPaymentRequestsResponse
 
-
 <a id="schemalistincomingpaymentrequestsresponse"></a>
-
 
 ```json
 {
@@ -11733,20 +8981,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*List incoming Payment Requests (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
 
-
 ## ListOutgoingPaymentRequestsResponse
 
-
 <a id="schemalistoutgoingpaymentrequestsresponse"></a>
-
 
 ```json
 {
@@ -11783,20 +9028,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*List outgoing Payment Requests (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
 
-
 ## GetAPaymentRequestsHistoryResponse
 
-
 <a id="schemagetapaymentrequestshistoryresponse"></a>
-
 
 ```json
 {
@@ -11889,20 +9131,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Get a Payment Request's history (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
 
-
 ## IssueARefundRequest
 
-
 <a id="schemaissuearefundrequest"></a>
-
 
 ```json
 {
@@ -11915,9 +9154,9 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Issue a Refund (request)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
@@ -11925,12 +9164,9 @@ System.out.println(response.toString());
 |reason|string|false|Reason for the refund. Visible to both parties.|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
-
 ## IssueARefundResponse
 
-
 <a id="schemaissuearefundresponse"></a>
-
 
 ```json
 {
@@ -11949,20 +9185,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Issue a Refund (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## ListIncomingRefundsResponse
 
-
 <a id="schemalistincomingrefundsresponse"></a>
-
 
 ```json
 {
@@ -11983,20 +9216,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*List incoming Refunds (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
 
-
 ## ListOutgoingRefundsResponse
 
-
 <a id="schemalistoutgoingrefundsresponse"></a>
-
 
 ```json
 {
@@ -12017,20 +9247,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*List outgoing Refunds (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
 
-
 ## RetrieveARefundResponse
 
-
 <a id="schemaretrievearefundresponse"></a>
-
 
 ```json
 {
@@ -12049,20 +9276,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Retrieve a Refund (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## RequestARefundRequest
 
-
 <a id="schemarequestarefundrequest"></a>
-
 
 ```json
 {
@@ -12076,9 +9300,9 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Request a Refund (request)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
@@ -12087,12 +9311,9 @@ System.out.println(response.toString());
 |reason|string|false|Reason for the refund request. Visible to both parties.|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
-
 ## RequestARefundResponse
 
-
 <a id="schemarequestarefundresponse"></a>
-
 
 ```json
 {
@@ -12115,20 +9336,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Request a Refund (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## RetrieveARefundRequestResponse
 
-
 <a id="schemaretrievearefundrequestresponse"></a>
-
 
 ```json
 {
@@ -12151,20 +9369,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Retrieve a Refund Request (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## ApprovePayoutRefundRequestResponse
 
-
 <a id="schemaapprovepayoutrefundrequestresponse"></a>
-
 
 ```json
 {
@@ -12187,20 +9402,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Approve a Refund Request (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## DeclinePayoutRefundRequestResponse
 
-
 <a id="schemadeclinepayoutrefundrequestresponse"></a>
-
 
 ```json
 {
@@ -12223,20 +9435,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Decline a Refund Request (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## ListIncomingRefundRequestsResponse
 
-
 <a id="schemalistincomingrefundrequestsresponse"></a>
-
 
 ```json
 {
@@ -12261,20 +9470,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*List incoming Refund Requests (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
 
-
 ## ListOutgoingRefundRequestsResponse
 
-
 <a id="schemalistoutgoingrefundrequestsresponse"></a>
-
 
 ```json
 {
@@ -12299,20 +9505,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*List outgoing Refund Requests (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
 
-
 ## ListAllTransactionsResponse
 
-
 <a id="schemalistalltransactionsresponse"></a>
-
 
 ```json
 {
@@ -12366,20 +9569,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*List all transactions (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
 
-
 ## ProposeUnassignedAgreementRequest
 
-
 <a id="schemaproposeunassignedagreementrequest"></a>
-
 
 ```json
 {
@@ -12397,21 +9597,18 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Propose an Unassigned Agreement (request)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |expiry_in_seconds|number|true|The amount of time in seconds before the Unassigned Agreement can no longer be accepted.|
 |terms|[Terms](#schematerms)|true|No description|
 
-
 ## ProposeUnassignedAgreementResponse
 
-
 <a id="schemaproposeunassignedagreementresponse"></a>
-
 
 ```json
 {
@@ -12437,20 +9634,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Propose an Unassigned Agreement (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## ListUnassignedAgreementsResponse
 
-
 <a id="schemalistunassignedagreementsresponse"></a>
-
 
 ```json
 {
@@ -12497,20 +9691,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*List Unassigned Agreements (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
 
-
 ## GetUnassignedAgreementResponse
 
-
 <a id="schemagetunassignedagreementresponse"></a>
-
 
 ```json
 {
@@ -12536,20 +9727,17 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Get an Unassigned Agreement (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
 
-
 ## GetUserDetailsResponse
 
-
 <a id="schemagetuserdetailsresponse"></a>
-
 
 ```json
 {
@@ -12572,12 +9760,11 @@ System.out.println(response.toString());
 }
 ```
 
-
 ### Properties
 
+*Get User details (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
-
 
