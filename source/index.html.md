@@ -3458,7 +3458,6 @@ fetch('https://api-sandbox.split.cash/payments',
     "payouts": [
       {
         "ref": "D.1",
-        "invoice_ref": "BILL-0001",
         "batch_description": "The SuperPackage",
         "matures_at": "2016-09-13T23:50:44Z",
         "created_at": "2016-09-10T23:50:44Z",
@@ -3476,7 +3475,6 @@ fetch('https://api-sandbox.split.cash/payments',
       },
       {
         "ref": "D.2",
-        "invoice_ref": null,
         "batch_description": "The SuperPackage",
         "matures_at": "2016-09-13T23:50:44Z",
         "created_at": "2016-09-10T23:50:44Z",
@@ -3611,7 +3609,6 @@ fetch('https://api-sandbox.split.cash/payments',
       "payouts": [
         {
           "ref": "D.1",
-          "invoice_ref": null,
           "batch_description": "This description is only available to the payer",
           "matures_at": "2016-09-13T23:50:44Z",
           "created_at": "2016-09-10T23:50:44Z",
@@ -3629,7 +3626,6 @@ fetch('https://api-sandbox.split.cash/payments',
         },
         {
           "ref": "D.2",
-          "invoice_ref": null,
           "batch_description": "This description is only available to the payer",
           "matures_at": "2016-09-13T23:50:44Z",
           "created_at": "2016-09-10T23:50:44Z",
@@ -3765,7 +3761,6 @@ Get a single payment by its reference
     "payouts": [
       {
         "ref": "D.1",
-        "invoice_ref": null,
         "batch_description": "The SuperPackage",
         "matures_at": "2016-09-13T23:50:44Z",
         "created_at": "2016-09-10T23:50:44",
@@ -3783,7 +3778,6 @@ Get a single payment by its reference
       },
       {
         "ref": "D.2",
-        "invoice_ref": null,
         "batch_description": "The SuperPackage",
         "matures_at": "2016-09-13T23:50:44Z",
         "created_at": "2016-09-10T23:50:44Z",
@@ -8610,7 +8604,6 @@ fetch('https://api-sandbox.split.cash/user',
     "payouts": [
       {
         "ref": "D.1",
-        "invoice_ref": "BILL-0001",
         "batch_description": "The SuperPackage",
         "matures_at": "2016-09-13T23:50:44Z",
         "created_at": "2016-09-10T23:50:44Z",
@@ -8628,7 +8621,6 @@ fetch('https://api-sandbox.split.cash/user',
       },
       {
         "ref": "D.2",
-        "invoice_ref": null,
         "batch_description": "The SuperPackage",
         "matures_at": "2016-09-13T23:50:44Z",
         "created_at": "2016-09-10T23:50:44Z",
@@ -8737,7 +8729,6 @@ fetch('https://api-sandbox.split.cash/user',
       "payouts": [
         {
           "ref": "D.1",
-          "invoice_ref": null,
           "batch_description": "This description is only available to the payer",
           "matures_at": "2016-09-13T23:50:44Z",
           "created_at": "2016-09-10T23:50:44Z",
@@ -8755,7 +8746,6 @@ fetch('https://api-sandbox.split.cash/user',
         },
         {
           "ref": "D.2",
-          "invoice_ref": null,
           "batch_description": "This description is only available to the payer",
           "matures_at": "2016-09-13T23:50:44Z",
           "created_at": "2016-09-10T23:50:44Z",
@@ -8794,7 +8784,6 @@ fetch('https://api-sandbox.split.cash/user',
     "payouts": [
       {
         "ref": "D.1",
-        "invoice_ref": null,
         "batch_description": "The SuperPackage",
         "matures_at": "2016-09-13T23:50:44Z",
         "created_at": "2016-09-10T23:50:44",
@@ -8812,7 +8801,6 @@ fetch('https://api-sandbox.split.cash/user',
       },
       {
         "ref": "D.2",
-        "invoice_ref": null,
         "batch_description": "The SuperPackage",
         "matures_at": "2016-09-13T23:50:44Z",
         "created_at": "2016-09-10T23:50:44Z",
