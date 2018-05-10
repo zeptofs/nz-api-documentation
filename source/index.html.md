@@ -6825,6 +6825,7 @@ fetch('https://api-sandbox.split.cash/transactions',
 |category|query|array[string]|false|Multiple values, exact match|
 |type|query|array[string]|false|Multiple values, exact match|
 |other_party|query|string|false|Single value, string search|
+|other_party_bank_ref|query|string|false|Single value, exact match|
 |description|query|string|false|Single value, string search|
 |min_amount|query|integer|false|Cents, Single value, exact match|
 |max_amount|query|integer|false|Cents, single value, exact match|
@@ -6867,11 +6868,12 @@ fetch('https://api-sandbox.split.cash/transactions',
       "category": "payout_refund",
       "created_at": "2016-12-07T23:15:00Z",
       "matures_at": "2016-12-10T23:15:00Z",
-      "cleared_at": null,
-      "bank_ref": null,
-      "status": "Pending",
+      "cleared_at": "2016-12-10T23:15:00Z",
+      "bank_ref": "DT.9a",
+      "status": "Cleared",
       "party_name": "Sanford-Rees",
-      "party_nickname": "sanford-rees-8",
+      "party_nickname": null,
+      "party_bank_ref": "CT.11",
       "description": null,
       "amount": 1
     },
@@ -6886,8 +6888,9 @@ fetch('https://api-sandbox.split.cash/transactions',
       "bank_ref": null,
       "status": " Pending",
       "party_name": "Gutmann-Schmidt",
-      "party_nickname": "gutmann-schmidt-6",
-      "description": null,
+      "party_nickname": null,
+      "party_bank_ref": null,
+      "description": "Batteries for hire",
       "amount": 1
     },
     {
@@ -6902,6 +6905,7 @@ fetch('https://api-sandbox.split.cash/transactions',
       "status": "Pending",
       "party_name": "Price and Sons",
       "party_nickname": "price-and-sons-2",
+      "party_bank_ref": null,
       "description": "Money for jam",
       "amount": 1
     }
@@ -9515,11 +9519,12 @@ fetch('https://api-sandbox.split.cash/user',
       "category": "payout_refund",
       "created_at": "2016-12-07T23:15:00Z",
       "matures_at": "2016-12-10T23:15:00Z",
-      "cleared_at": null,
-      "bank_ref": null,
-      "status": "Pending",
+      "cleared_at": "2016-12-10T23:15:00Z",
+      "bank_ref": "DT.9a",
+      "status": "Cleared",
       "party_name": "Sanford-Rees",
-      "party_nickname": "sanford-rees-8",
+      "party_nickname": null,
+      "party_bank_ref": "CT.11",
       "description": null,
       "amount": 1
     },
@@ -9534,8 +9539,9 @@ fetch('https://api-sandbox.split.cash/user',
       "bank_ref": null,
       "status": " Pending",
       "party_name": "Gutmann-Schmidt",
-      "party_nickname": "gutmann-schmidt-6",
-      "description": null,
+      "party_nickname": null,
+      "party_bank_ref": null,
+      "description": "Batteries for hire",
       "amount": 1
     },
     {
@@ -9550,6 +9556,7 @@ fetch('https://api-sandbox.split.cash/user',
       "status": "Pending",
       "party_name": "Price and Sons",
       "party_nickname": "price-and-sons-2",
+      "party_bank_ref": null,
       "description": "Money for jam",
       "amount": 1
     }
