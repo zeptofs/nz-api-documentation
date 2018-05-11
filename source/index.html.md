@@ -2793,7 +2793,8 @@ Create an Open Agreement that can be accepted by anyone.
         "days": 7,
         "max_amount": 1000000
       }
-    }
+    },
+    "link": "https://go-sandbox.split.cash/open_agreements/aecff76d-13e0-4e17-b7c5-844ae07fa675/agreements/invitation"
   }
 }
 ```
@@ -8090,7 +8091,8 @@ fetch('https://api-sandbox.split.cash/user',
         "days": 7,
         "max_amount": 1000000
       }
-    }
+    },
+    "link": "https://go-sandbox.split.cash/open_agreements/aecff76d-13e0-4e17-b7c5-844ae07fa675/agreements/invitation"
   }
 }
 ```
