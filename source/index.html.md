@@ -1635,12 +1635,14 @@ By default, all Bank Accounts will be returned. There can currently be only 1 ac
     {
       "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
       "branch_code": "493192",
+      "bank_name": "National Australia Bank",
       "account_number": "3993013",
       "status": "active"
     },
     {
       "id": "56df206a-aaff-471a-b075-11882bc8906a",
       "branch_code": "302193",
+      "bank_name": "National Australia Bank",
       "account_number": "119302",
       "status": "removed"
     }
@@ -1804,6 +1806,7 @@ Add a Split Contact
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
       "account_number": "947434694",
       "branch_code": "304304",
+      "bank_name": "National Australia Bank",
       "state": "verified"
     },
     "account": {
@@ -1945,6 +1948,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "id": "095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc",
         "account_number": "494307",
         "branch_code": "435434",
+        "bank_name": "National Australia Bank",
         "state": "verified"
       },
       "account": {
@@ -1963,6 +1967,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "id": "861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0",
         "account_number": "4395959",
         "branch_code": "068231",
+        "bank_name": "National Australia Bank",
         "state": "verified"
       },
       "account": {
@@ -1978,9 +1983,10 @@ By default, all Contacts will be returned. You can apply filters to your query t
       "email": "accounts@surfingworld.com.au",
       "type": "Split account",
       "bank_account": {
-        "id": "N/A",
-        "account_number": "N/A",
-        "branch_code": "N/A",
+        "id": null,
+        "account_number": null,
+        "branch_code": null,
+        "bank_name": null,
         "state": "disabled"
       },
       "account": {
@@ -1999,6 +2005,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
         "account_number": "13048322",
         "branch_code": "123456",
+        "bank_name": "National Australia Bank",
         "state": "pending_verification"
       },
       "anyone_account": {
@@ -2172,6 +2179,7 @@ When you want to pay somebody that doesn't have a Split account, you can add the
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
       "account_number": "13048322",
       "branch_code": "123456",
+      "bank_name": "National Australia Bank",
       "state": "pending_verification"
     },
     "anyone_account": {
@@ -2301,6 +2309,7 @@ Get a single Contact by its ID
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
       "account_number": "947434694",
       "branch_code": "304304",
+      "bank_name": "National Australia Bank",
       "state": "pending_verification"
     },
     "account": {
@@ -2565,6 +2574,7 @@ You can update the name of any Contact. This is essentially an alias you can use
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
       "account_number": "947434694",
       "branch_code": "304304",
+      "bank_name": "National Australia Bank",
       "state": "pending_verification"
     },
     "account": {
@@ -8021,12 +8031,14 @@ fetch('https://api-sandbox.split.cash/user',
     {
       "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
       "branch_code": "493192",
+      "bank_name": "National Australia Bank",
       "account_number": "3993013",
       "status": "active"
     },
     {
       "id": "56df206a-aaff-471a-b075-11882bc8906a",
       "branch_code": "302193",
+      "bank_name": "National Australia Bank",
       "account_number": "119302",
       "status": "removed"
     }
@@ -8259,6 +8271,7 @@ fetch('https://api-sandbox.split.cash/user',
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
       "account_number": "947434694",
       "branch_code": "304304",
+      "bank_name": "National Australia Bank",
       "state": "verified"
     },
     "account": {
@@ -8295,6 +8308,7 @@ fetch('https://api-sandbox.split.cash/user',
         "id": "095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc",
         "account_number": "494307",
         "branch_code": "435434",
+        "bank_name": "National Australia Bank",
         "state": "verified"
       },
       "account": {
@@ -8313,6 +8327,7 @@ fetch('https://api-sandbox.split.cash/user',
         "id": "861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0",
         "account_number": "4395959",
         "branch_code": "068231",
+        "bank_name": "National Australia Bank",
         "state": "verified"
       },
       "account": {
@@ -8328,9 +8343,10 @@ fetch('https://api-sandbox.split.cash/user',
       "email": "accounts@surfingworld.com.au",
       "type": "Split account",
       "bank_account": {
-        "id": "N/A",
-        "account_number": "N/A",
-        "branch_code": "N/A",
+        "id": null,
+        "account_number": null,
+        "branch_code": null,
+        "bank_name": null,
         "state": "disabled"
       },
       "account": {
@@ -8349,6 +8365,7 @@ fetch('https://api-sandbox.split.cash/user',
         "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
         "account_number": "13048322",
         "branch_code": "123456",
+        "bank_name": "National Australia Bank",
         "state": "pending_verification"
       },
       "anyone_account": {
@@ -8406,6 +8423,7 @@ fetch('https://api-sandbox.split.cash/user',
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
       "account_number": "13048322",
       "branch_code": "123456",
+      "bank_name": "National Australia Bank",
       "state": "pending_verification"
     },
     "anyone_account": {
@@ -8438,6 +8456,7 @@ fetch('https://api-sandbox.split.cash/user',
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
       "account_number": "947434694",
       "branch_code": "304304",
+      "bank_name": "National Australia Bank",
       "state": "pending_verification"
     },
     "account": {
@@ -8491,6 +8510,7 @@ fetch('https://api-sandbox.split.cash/user',
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
       "account_number": "947434694",
       "branch_code": "304304",
+      "bank_name": "National Australia Bank",
       "state": "pending_verification"
     },
     "account": {
