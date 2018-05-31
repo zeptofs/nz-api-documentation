@@ -121,6 +121,8 @@ This guide will help you setup your OAuth2 app in order to get authenticated & a
 * Often times you'll want to grant your own app access to itself so that you can access the API on your own account. We use the term **user** below but the user can be a third party or the same user that owns the OAuth2 application.
 * As noted below, the access token expires every 2 hours. To get a new access token without going through steps 1 to 4 again, use the [refresh grant strategy](/#authentication-and-authorisation) to swap a refresh token for a new access token.
 
+<aside class="notice">Just want to access your own account and don't want to go through the entire authorisation process described below? Checkout how to create a <a href="/#personal-access-token">Personal Access Token</a>.</aside>
+
 1. **Create a Split account**
 
     If you haven't already, you'll want to create a sandbox Split account at [https://go-sandbox.split.cash](https://go-sandbox.split.cash).
@@ -218,8 +220,13 @@ When the access token expires, instead of sending the user back through the auth
 
 <aside class="notice">
   The <code>refresh_token</code> gets regenerated and sent alongside the new <code>access_token</code>. In other words, <code>refresh_token</code>s are single use so you'll
-want to store the newly generated <code>refresh_token</code> everytime you use it to get a new <code>acccess_token</code>
+want to store the newly generated <code>refresh_token</code> everytime you use it to get a new <code>access_token</code>
 </aside>
+
+### Personal Access Token
+If you're looking to only access your own account via the API, you can generate an access/refresh token pair from the UI.
+
+To do this, sign in to your Split account and [create an application](https://go-sandbox.split.cash/oauth/applications) if you haven't already. Click on your application from your [application list](https://go-sandbox.split.cash/oauth/applications) and click on **Personal access**.
 
 ## Making payments
 In order to payout funds, you'll be looking to use the [Payments](/#Split-API-Payments) endpoint. Whether you're paying out another Split account holder or anyone, the process is the same:
