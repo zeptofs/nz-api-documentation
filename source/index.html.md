@@ -464,6 +464,48 @@ All events posted to the designated URL fit the same structure.
 <aside class="notice">The sandbox environment allow both HTTP and HTTPS webhook URLs. The live environment however will only POST to HTTPS URLs.
 </aside>
 
+### Checking Webhook Signatures
+
+Split signs the webhook events it sends to your endpoints. We do so by including a signature in each event’s `Split-Signature` header. This allows you to validate that the events were sent by Split, not by a third party.
+
+Before you can verify signatures, you need to retrieve your endpoint’s secret from your Webhooks settings. Each secret is unique to the endpoint to which it corresponds. If you use multiple endpoints, you must obtain a secret for each one.
+
+The `Split-Signature` header contains a timestamp and one or more signatures. All separated by `.` (dot). 
+
+> Example header
+
+```
+Split-Signature: 1514772000.93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635
+```
+
+**Step 1. Extract the timestamp and signatures from the header**
+
+Split the header, using the `.` (dot) character as the separator, to get a list of elements.
+
+| Element | Description |
+|---------|-------------|
+| `timestamp` | [Unix time](https://en.wikipedia.org/wiki/Unix_time) in seconds when the signature was created |
+| `signature` | Request signature |
+| `other`     | Placeholder for the future parameters (currently not used) |
+
+**Step 2: Prepare the signed_payload string**
+
+You achieve this by concatenating:
+
+- The timestamp from the header (as a string)
+- The character `.` (dot)
+- The actual JSON payload (i.e., the request’s body)
+
+**Step 3: Determine the expected signature**
+
+Compute an HMAC with the SHA256 hash function. Use the endpoint’s signing secret as the key, and use the `signed_payload` string as the message.
+
+**Step 4: Compare signatures**
+
+Compare the signature in the header to the expected signature. If a signature matches, compute the difference between the current timestamp and the received timestamp, then decide if the difference is within your tolerance.
+
+To protect against timing attacks, use a constant-time string comparison to compare the expected signature to each of the received signatures.
+
 <h1 id="Split-API-Agreements">Agreements</h1>
 
 Split Agreements are managed on a per Contact basis and allow two parties to agree on terms for which future Payment Requests will be auto-approved.
