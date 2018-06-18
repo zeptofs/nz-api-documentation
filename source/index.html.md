@@ -466,16 +466,114 @@ All events posted to the designated URL fit the same structure.
 
 ### Checking Webhook Signatures
 
-Split signs the webhook events it sends to your endpoints. We do so by including a signature in each event’s `Split-Signature` header. This allows you to validate that the events were sent by Split, not by a third party.
-
-Before you can verify signatures, you need to retrieve your endpoint’s secret from your Webhooks settings. Each secret is unique to the endpoint to which it corresponds. If you use multiple endpoints, you must obtain a secret for each one.
-
-The `Split-Signature` header contains a timestamp and one or more signatures. All separated by `.` (dot). 
-
 > Example header
 
 ```
 Split-Signature: 1514772000.93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635
+```
+
+Split signs the webhook events it sends to your endpoints. We do so by including a signature in each event’s `Split-Signature` header. This allows you to validate that the events were indeed sent by Split.
+
+Before you can verify signatures, you need to retrieve your endpoint’s secret from your Webhooks settings. Each endpoint has its own unique secret; if you use multiple endpoints, you must obtain a secret for each one. If you use multiple endpoints, you must obtain a secret for each one.
+
+The `Split-Signature` header contains a timestamp and one or more signatures. All separated by `.` (dot).
+
+> Example code
+
+```sh
+# Shell example is not available
+```
+
+```go
+package main
+
+import (
+    "crypto/hmac"
+    "crypto/sha256"
+    "strings"
+    "fmt"
+    "encoding/hex"
+)
+
+func main() {
+    secret := "1234"
+    message := "{\"data\":{\"key\":\"value\"}}"
+    splitSignature := "1514772000.93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635"
+
+    data := strings.Split(splitSignature, ".")
+    timestamp, givenSignature := data[0], data[1]
+
+    signedPayload := timestamp + "." + message
+
+    hash := hmac.New(sha256.New, []byte(secret))
+    hash.Write([]byte(signedPayload))
+    expectedSignature := hex.EncodeToString(hash.Sum(nil))
+
+    fmt.Println(expectedSignature)
+    // 93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635
+    fmt.Println(givenSignature)
+    // 93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635
+}
+```
+
+```python
+import hashlib
+import hmac
+
+split_signature = '1514772000.93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635'
+secret = bytes('1234').encode('utf-8')
+message = bytes('{"data":{"key":"value"}}').encode('utf-8')
+
+data = split_signature.split('.')
+timestamp = data[0]
+given_signature = data[1]
+
+signed_payload = timestamp + '.' + message
+
+expected_signature = hmac.new(secret, signed_payload, digestmod=hashlib.sha256).hexdigest()
+
+print(expected_signature)
+# > 93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635
+
+print(given_signature)
+# > 93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635
+```
+
+```ruby
+require 'openssl'
+
+split_signature = '1514772000.93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635'
+secret = '1234'
+message = '{"data":{"key":"value"}}'
+
+timestamp, given_signature, *other = split_signature.split('.')
+signed_payload = timestamp + '.' + message
+expected_signature = OpenSSL::HMAC.hexdigest('sha256', secret, signed_payload)
+
+puts(expected_signature)
+# => 93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635
+puts(given_signature)
+# => 93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635
+```
+
+```javascript--nodejs
+var crypto = require('crypto')
+var message = '{\"data\":{\"key\":\"value\"}}'
+var secret = '1234'
+var splitSignature = '1514772000.93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635'
+
+var data = splitSignature.split('.')
+var timestamp = data[0]
+var givenSignature = data[1]
+
+var signedPayload = timestamp + '.' + message
+
+var expectedSignature = crypto.createHmac('sha256', secret).update(signedPayload).digest('hex')
+
+console.log(expectedSignature)
+// 93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635
+console.log(givenSignature)
+// 93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635
 ```
 
 **Step 1. Extract the timestamp and signatures from the header**
@@ -486,7 +584,7 @@ Split the header, using the `.` (dot) character as the separator, to get a list 
 |---------|-------------|
 | `timestamp` | [Unix time](https://en.wikipedia.org/wiki/Unix_time) in seconds when the signature was created |
 | `signature` | Request signature |
-| `other`     | Placeholder for the future parameters (currently not used) |
+| `other`     | Placeholder for future parameters (currently not used) |
 
 **Step 2: Prepare the signed_payload string**
 
@@ -494,7 +592,7 @@ You achieve this by concatenating:
 
 - The timestamp from the header (as a string)
 - The character `.` (dot)
-- The actual JSON payload (i.e., the request’s body)
+- The actual JSON payload (request body)
 
 **Step 3: Determine the expected signature**
 
