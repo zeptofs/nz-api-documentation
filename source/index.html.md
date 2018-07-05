@@ -3,9 +3,11 @@ title: Split API
 language_tabs:
   - shell: Shell
   - ruby: Ruby
+  - javascript--node: NodeJS
   - python: Python
+  - java: Java
+  - php: PHP
   - go: Go
-  - javascript--nodejs: Node.JS
 toc_footers: []
 includes: []
 search: true
@@ -635,133 +637,155 @@ An Agreement can have the following statuses:
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/agreements \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}' \
-  -d '{
-  "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-  "terms": {
-    "per_payout": {
-      "min_amount": null,
-      "max_amount": 10000
-    },
-    "per_frequency": {
-      "days": 7,
-      "max_amount": 1000000
-    }
-  }
-}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/agreements \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data '{"authoriser_id":"8df89c16-330f-462b-8891-808d7bdceb7f","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/agreements")
 
-params = '{
-  "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-  "terms": {
-    "per_payout": {
-      "min_amount": null,
-      "max_amount": 10000
-    },
-    "per_frequency": {
-      "days": 7,
-      "max_amount": 1000000
-    }
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["content-type"] = 'application/json'
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+request.body = "{\"authoriser_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/agreements",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
   }
-}'
+};
 
-result = RestClient.post 'https://api-sandbox.split.cash/agreements', params, headers
+var req = http.request(options, function (res) {
+  var chunks = [];
 
-p JSON.parse(result)
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
 
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ authoriser_id: '8df89c16-330f-462b-8891-808d7bdceb7f',
+  terms:
+   { per_payout: { min_amount: null, max_amount: 10000 },
+     per_frequency: { days: 7, max_amount: 1000000 } } }));
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
+payload = "{\"authoriser_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
+
 headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/agreements', params={
+conn.request("POST", "/agreements", payload, headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/agreements")
+  .header("content-type", "application/json")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .body("{\"authoriser_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('{"authoriser_id":"8df89c16-330f-462b-8891-808d7bdceb7f","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}');
+
+$request->setRequestUrl('https://api-sandbox.split.cash/agreements');
+$request->setRequestMethod('POST');
+$request->setBody($body);
+
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json',
+  'content-type' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Content-Type": []string{"application/json"},
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/agreements"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/agreements", data)
-    req.Header = headers
+	payload := strings.NewReader("{\"authoriser_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("content-type", "application/json")
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-const inputBody = '{
-  "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-  "terms": {
-    "per_payout": {
-      "min_amount": null,
-      "max_amount": 10000
-    },
-    "per_frequency": {
-      "days": 7,
-      "max_amount": 1000000
-    }
-  }
-}';
-const headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/agreements',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /agreements`
@@ -804,7 +828,7 @@ Propose an Agreement to another Split Contact
 
 > Example responses
 
-> 201 undefined
+> 201 Response
 
 ```json
 {
@@ -844,88 +868,131 @@ Propose an Agreement to another Split Contact
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/agreements/{agreement_ref}/accept \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/agreements/A.2/accept \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/agreements/A.2/accept")
 
-result = RestClient.post 'https://api-sandbox.split.cash/agreements/{agreement_ref}/accept', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Post.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/agreements/A.2/accept",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/agreements/{agreement_ref}/accept', params={
+conn.request("POST", "/agreements/A.2/accept", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/agreements/A.2/accept")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/agreements/A.2/accept');
+$request->setRequestMethod('POST');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/agreements/A.2/accept"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/agreements/{agreement_ref}/accept", data)
-    req.Header = headers
+	req, _ := http.NewRequest("POST", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}/accept',
-{
-  method: 'POST',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /agreements/{agreement_ref}/accept`
@@ -940,7 +1007,7 @@ Approve an incoming Agreement
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -980,88 +1047,131 @@ Approve an incoming Agreement
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/agreements/{agreement_ref}/decline \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/agreements/A.2/decline \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/agreements/A.2/decline")
 
-result = RestClient.post 'https://api-sandbox.split.cash/agreements/{agreement_ref}/decline', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Post.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/agreements/A.2/decline",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/agreements/{agreement_ref}/decline', params={
+conn.request("POST", "/agreements/A.2/decline", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/agreements/A.2/decline")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/agreements/A.2/decline');
+$request->setRequestMethod('POST');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/agreements/A.2/decline"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/agreements/{agreement_ref}/decline", data)
-    req.Header = headers
+	req, _ := http.NewRequest("POST", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}/decline',
-{
-  method: 'POST',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /agreements/{agreement_ref}/decline`
@@ -1076,7 +1186,7 @@ Decline an incoming Agreement
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -1116,88 +1226,131 @@ Decline an incoming Agreement
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/agreements/{agreement_ref} \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/agreements/A.2 \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/agreements/A.2")
 
-result = RestClient.get 'https://api-sandbox.split.cash/agreements/{agreement_ref}', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/agreements/A.2",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/agreements/{agreement_ref}', params={
+conn.request("GET", "/agreements/A.2", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/agreements/A.2")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/agreements/A.2');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/agreements/A.2"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/agreements/{agreement_ref}", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /agreements/{agreement_ref}`
@@ -1212,7 +1365,7 @@ Get a single Agreement by its reference
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -1252,83 +1405,122 @@ Get a single Agreement by its reference
 > Code samples
 
 ```shell
-curl -X DELETE https://api-sandbox.split.cash/agreements/{agreement_ref} \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request DELETE \
+  --url https://api-sandbox.split.cash/agreements/A.2 \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/agreements/A.2")
 
-result = RestClient.delete 'https://api-sandbox.split.cash/agreements/{agreement_ref}', headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Delete.new(url)
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "DELETE",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/agreements/A.2",
+  "headers": {
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
-headers = {
-  'Authorization': 'Bearer {access-token}'
-}
+import http.client
 
-r = requests.delete('https://api-sandbox.split.cash/agreements/{agreement_ref}', params={
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
 
-}, headers = headers)
+headers = { 'authorization': "Bearer {access-token}" }
 
-print r.json()
+conn.request("DELETE", "/agreements/A.2", headers=headers)
 
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/agreements/A.2")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/agreements/A.2');
+$request->setRequestMethod('DELETE');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/agreements/A.2"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("DELETE", "https://api-sandbox.split.cash/agreements/{agreement_ref}", data)
-    req.Header = headers
+	req, _ := http.NewRequest("DELETE", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/agreements/{agreement_ref}',
-{
-  method: 'DELETE',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `DELETE /agreements/{agreement_ref}`
@@ -1354,88 +1546,131 @@ An Agreement can be cancelled by the initiator at any time whilst the authoriser
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/agreements/incoming \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/agreements/incoming \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/agreements/incoming")
 
-result = RestClient.get 'https://api-sandbox.split.cash/agreements/incoming', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/agreements/incoming",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/agreements/incoming', params={
+conn.request("GET", "/agreements/incoming", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/agreements/incoming")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/agreements/incoming');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/agreements/incoming"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/agreements/incoming", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/agreements/incoming',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /agreements/incoming`
@@ -1462,7 +1697,7 @@ By default, all incoming Agreements will be returned. You can apply filters to y
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -1524,88 +1759,131 @@ By default, all incoming Agreements will be returned. You can apply filters to y
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/agreements/outgoing \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/agreements/outgoing \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/agreements/outgoing")
 
-result = RestClient.get 'https://api-sandbox.split.cash/agreements/outgoing', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/agreements/outgoing",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/agreements/outgoing', params={
+conn.request("GET", "/agreements/outgoing", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/agreements/outgoing")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/agreements/outgoing');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/agreements/outgoing"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/agreements/outgoing", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/agreements/outgoing',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /agreements/outgoing`
@@ -1632,7 +1910,7 @@ By default, all outgoing Agreements will be returned. You can apply filters to y
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -1698,88 +1976,131 @@ Your currently linked up bank accounts.
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/bank_accounts \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/bank_accounts \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/bank_accounts")
 
-result = RestClient.get 'https://api-sandbox.split.cash/bank_accounts', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/bank_accounts",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/bank_accounts', params={
+conn.request("GET", "/bank_accounts", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/bank_accounts")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/bank_accounts');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/bank_accounts"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/bank_accounts", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/bank_accounts',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /bank_accounts`
@@ -1788,7 +2109,7 @@ By default, all Bank Accounts will be returned. There can currently be only 1 ac
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -1836,103 +2157,152 @@ There are a few IDs supplied within a Contact's response:
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/contacts \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}' \
-  -d '{
-  "nickname": "outstanding_tours"
-}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/contacts \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data '{"nickname":"outstanding_tours"}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/contacts")
 
-params = '{
-  "nickname": "outstanding_tours"
-}'
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-result = RestClient.post 'https://api-sandbox.split.cash/contacts', params, headers
+request = Net::HTTP::Post.new(url)
+request["content-type"] = 'application/json'
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+request.body = "{\"nickname\":\"outstanding_tours\"}"
 
-p JSON.parse(result)
+response = http.request(request)
+puts response.read_body
+```
 
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/contacts",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ nickname: 'outstanding_tours' }));
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
+payload = "{\"nickname\":\"outstanding_tours\"}"
+
 headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/contacts', params={
+conn.request("POST", "/contacts", payload, headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/contacts")
+  .header("content-type", "application/json")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .body("{\"nickname\":\"outstanding_tours\"}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('{"nickname":"outstanding_tours"}');
+
+$request->setRequestUrl('https://api-sandbox.split.cash/contacts');
+$request->setRequestMethod('POST');
+$request->setBody($body);
+
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json',
+  'content-type' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Content-Type": []string{"application/json"},
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/contacts"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/contacts", data)
-    req.Header = headers
+	payload := strings.NewReader("{\"nickname\":\"outstanding_tours\"}")
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("content-type", "application/json")
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-const inputBody = '{
-  "nickname": "outstanding_tours"
-}';
-const headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/contacts',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /contacts`
@@ -1956,7 +2326,7 @@ Add a Split Contact
 
 > Example responses
 
-> 201 undefined
+> 201 Response
 
 ```json
 {
@@ -1996,88 +2366,131 @@ Add a Split Contact
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/contacts \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/contacts \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/contacts")
 
-result = RestClient.get 'https://api-sandbox.split.cash/contacts', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/contacts",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/contacts', params={
+conn.request("GET", "/contacts", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/contacts")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/contacts');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/contacts"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/contacts", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/contacts',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /contacts`
@@ -2099,7 +2512,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -2194,112 +2607,155 @@ By default, all Contacts will be returned. You can apply filters to your query t
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/contacts/anyone \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}' \
-  -d '{
-  "name": "Hunter Thompson",
-  "email": "hunter@batcountry.com",
-  "branch_code": "123456",
-  "account_number": "13048322"
-}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/contacts/anyone \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data '{"name":"Hunter Thompson","email":"hunter@batcountry.com","branch_code":"123456","account_number":"13048322"}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/contacts/anyone")
 
-params = '{
-  "name": "Hunter Thompson",
-  "email": "hunter@batcountry.com",
-  "branch_code": "123456",
-  "account_number": "13048322"
-}'
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-result = RestClient.post 'https://api-sandbox.split.cash/contacts/anyone', params, headers
+request = Net::HTTP::Post.new(url)
+request["content-type"] = 'application/json'
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+request.body = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\"}"
 
-p JSON.parse(result)
+response = http.request(request)
+puts response.read_body
+```
 
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/contacts/anyone",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ name: 'Hunter Thompson',
+  email: 'hunter@batcountry.com',
+  branch_code: '123456',
+  account_number: '13048322' }));
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
+payload = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\"}"
+
 headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/contacts/anyone', params={
+conn.request("POST", "/contacts/anyone", payload, headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/contacts/anyone")
+  .header("content-type", "application/json")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .body("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\"}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('{"name":"Hunter Thompson","email":"hunter@batcountry.com","branch_code":"123456","account_number":"13048322"}');
+
+$request->setRequestUrl('https://api-sandbox.split.cash/contacts/anyone');
+$request->setRequestMethod('POST');
+$request->setBody($body);
+
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json',
+  'content-type' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Content-Type": []string{"application/json"},
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/contacts/anyone"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/contacts/anyone", data)
-    req.Header = headers
+	payload := strings.NewReader("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\"}")
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("content-type", "application/json")
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-const inputBody = '{
-  "name": "Hunter Thompson",
-  "email": "hunter@batcountry.com",
-  "branch_code": "123456",
-  "account_number": "13048322"
-}';
-const headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/contacts/anyone',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /contacts/anyone`
@@ -2333,7 +2789,7 @@ When you want to pay somebody that doesn't have a Split account, you can add the
 
 > Example responses
 
-> 201 undefined
+> 201 Response
 
 ```json
 {
@@ -2369,88 +2825,131 @@ When you want to pay somebody that doesn't have a Split account, you can add the
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/contacts/{id} \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
 
-result = RestClient.get 'https://api-sandbox.split.cash/contacts/{id}', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/contacts/{id}', params={
+conn.request("GET", "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/contacts/{id}", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/contacts/{id}',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /contacts/{id}`
@@ -2465,7 +2964,7 @@ Get a single Contact by its ID
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -2505,83 +3004,122 @@ Get a single Contact by its ID
 > Code samples
 
 ```shell
-curl -X DELETE https://api-sandbox.split.cash/contacts/{id} \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request DELETE \
+  --url https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
 
-result = RestClient.delete 'https://api-sandbox.split.cash/contacts/{id}', headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Delete.new(url)
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "DELETE",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608",
+  "headers": {
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
-headers = {
-  'Authorization': 'Bearer {access-token}'
-}
+import http.client
 
-r = requests.delete('https://api-sandbox.split.cash/contacts/{id}', params={
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
 
-}, headers = headers)
+headers = { 'authorization': "Bearer {access-token}" }
 
-print r.json()
+conn.request("DELETE", "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608", headers=headers)
 
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
+$request->setRequestMethod('DELETE');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("DELETE", "https://api-sandbox.split.cash/contacts/{id}", data)
-    req.Header = headers
+	req, _ := http.NewRequest("DELETE", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/contacts/{id}',
-{
-  method: 'DELETE',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `DELETE /contacts/{id}`
@@ -2607,103 +3145,152 @@ fetch('https://api-sandbox.split.cash/contacts/{id}',
 > Code samples
 
 ```shell
-curl -X PATCH https://api-sandbox.split.cash/contacts/{id} \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}' \
-  -d '{
-  "name": "My very own alias"
-}'
-
+curl --request PATCH \
+  --url https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data '{"name":"My very own alias"}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
 
-params = '{
-  "name": "My very own alias"
-}'
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-result = RestClient.patch 'https://api-sandbox.split.cash/contacts/{id}', params, headers
+request = Net::HTTP::Patch.new(url)
+request["content-type"] = 'application/json'
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+request.body = "{\"name\":\"My very own alias\"}"
 
-p JSON.parse(result)
+response = http.request(request)
+puts response.read_body
+```
 
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "PATCH",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ name: 'My very own alias' }));
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
+payload = "{\"name\":\"My very own alias\"}"
+
 headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.patch('https://api-sandbox.split.cash/contacts/{id}', params={
+conn.request("PATCH", "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608", payload, headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.patch("https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
+  .header("content-type", "application/json")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .body("{\"name\":\"My very own alias\"}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('{"name":"My very own alias"}');
+
+$request->setRequestUrl('https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
+$request->setRequestMethod('PATCH');
+$request->setBody($body);
+
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json',
+  'content-type' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Content-Type": []string{"application/json"},
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("PATCH", "https://api-sandbox.split.cash/contacts/{id}", data)
-    req.Header = headers
+	payload := strings.NewReader("{\"name\":\"My very own alias\"}")
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req, _ := http.NewRequest("PATCH", url, payload)
+
+	req.Header.Add("content-type", "application/json")
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-const inputBody = '{
-  "name": "My very own alias"
-}';
-const headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/contacts/{id}',
-{
-  method: 'PATCH',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `PATCH /contacts/{id}`
@@ -2732,7 +3319,7 @@ You can update the name of any Contact. This is essentially an alias you can use
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -2789,133 +3376,155 @@ An Open Agreement can have the following statuses:
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/open_agreements \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}' \
-  -d '{
-  "title": "Subscription Plan A",
-  "terms": {
-    "per_payout": {
-      "min_amount": null,
-      "max_amount": 10000
-    },
-    "per_frequency": {
-      "days": 7,
-      "max_amount": 1000000
-    }
-  }
-}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/open_agreements \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data '{"title":"Subscription Plan A","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/open_agreements")
 
-params = '{
-  "title": "Subscription Plan A",
-  "terms": {
-    "per_payout": {
-      "min_amount": null,
-      "max_amount": 10000
-    },
-    "per_frequency": {
-      "days": 7,
-      "max_amount": 1000000
-    }
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["content-type"] = 'application/json'
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+request.body = "{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/open_agreements",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
   }
-}'
+};
 
-result = RestClient.post 'https://api-sandbox.split.cash/open_agreements', params, headers
+var req = http.request(options, function (res) {
+  var chunks = [];
 
-p JSON.parse(result)
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
 
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ title: 'Subscription Plan A',
+  terms:
+   { per_payout: { min_amount: null, max_amount: 10000 },
+     per_frequency: { days: 7, max_amount: 1000000 } } }));
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
+payload = "{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
+
 headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/open_agreements', params={
+conn.request("POST", "/open_agreements", payload, headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/open_agreements")
+  .header("content-type", "application/json")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .body("{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('{"title":"Subscription Plan A","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}');
+
+$request->setRequestUrl('https://api-sandbox.split.cash/open_agreements');
+$request->setRequestMethod('POST');
+$request->setBody($body);
+
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json',
+  'content-type' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Content-Type": []string{"application/json"},
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/open_agreements"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/open_agreements", data)
-    req.Header = headers
+	payload := strings.NewReader("{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("content-type", "application/json")
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-const inputBody = '{
-  "title": "Subscription Plan A",
-  "terms": {
-    "per_payout": {
-      "min_amount": null,
-      "max_amount": 10000
-    },
-    "per_frequency": {
-      "days": 7,
-      "max_amount": 1000000
-    }
-  }
-}';
-const headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/open_agreements',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /open_agreements`
@@ -2958,7 +3567,7 @@ Create an Open Agreement that can be accepted by anyone.
 
 > Example responses
 
-> 201 undefined
+> 201 Response
 
 ```json
 {
@@ -2995,88 +3604,131 @@ Create an Open Agreement that can be accepted by anyone.
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/open_agreements \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/open_agreements \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/open_agreements")
 
-result = RestClient.get 'https://api-sandbox.split.cash/open_agreements', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/open_agreements",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/open_agreements', params={
+conn.request("GET", "/open_agreements", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/open_agreements")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/open_agreements');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/open_agreements"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/open_agreements", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/open_agreements',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /open_agreements`
@@ -3090,7 +3742,7 @@ fetch('https://api-sandbox.split.cash/open_agreements',
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -3146,88 +3798,131 @@ fetch('https://api-sandbox.split.cash/open_agreements',
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/open_agreements/OA.1/activate \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/open_agreements/OA.1/activate")
 
-result = RestClient.post 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Post.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/open_agreements/OA.1/activate",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate', params={
+conn.request("POST", "/open_agreements/OA.1/activate", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/open_agreements/OA.1/activate")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/open_agreements/OA.1/activate');
+$request->setRequestMethod('POST');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/open_agreements/OA.1/activate"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate", data)
-    req.Header = headers
+	req, _ := http.NewRequest("POST", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/activate',
-{
-  method: 'POST',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /open_agreements/{open_agreement_ref}/activate`
@@ -3242,7 +3937,7 @@ Allow the Open Agreement to viewed and accepted
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -3279,88 +3974,131 @@ Allow the Open Agreement to viewed and accepted
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/open_agreements/OA.1/close \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/open_agreements/OA.1/close")
 
-result = RestClient.post 'https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Post.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/open_agreements/OA.1/close",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close', params={
+conn.request("POST", "/open_agreements/OA.1/close", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/open_agreements/OA.1/close")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/open_agreements/OA.1/close');
+$request->setRequestMethod('POST');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/open_agreements/OA.1/close"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close", data)
-    req.Header = headers
+	req, _ := http.NewRequest("POST", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/open_agreements/{open_agreement_ref}/close',
-{
-  method: 'POST',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /open_agreements/{open_agreement_ref}/close`
@@ -3375,7 +4113,7 @@ Disable the Open Agreement from being viewed or accepted
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -3453,124 +4191,158 @@ A Payment Request can have the following statuses:
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/payment_requests \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}' \
-  -d '{
-  "description": "Visible to both initiator and authoriser",
-  "matures_at": "12/19/2016 2:10:56 AM",
-  "amount": 99000,
-  "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/payment_requests \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data '{"description":"Visible to both initiator and authoriser","matures_at":"12/19/2016 2:10:56 AM","amount":99000,"authoriser_id":"de86472c-c027-4735-a6a7-234366a27fc7","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payment_requests")
 
-params = '{
-  "description": "Visible to both initiator and authoriser",
-  "matures_at": "12/19/2016 2:10:56 AM",
-  "amount": 99000,
-  "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["content-type"] = 'application/json'
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+request.body = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"12/19/2016 2:10:56 AM\",\"amount\":99000,\"authoriser_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payment_requests",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
   }
-}'
+};
 
-result = RestClient.post 'https://api-sandbox.split.cash/payment_requests', params, headers
+var req = http.request(options, function (res) {
+  var chunks = [];
 
-p JSON.parse(result)
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
 
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ description: 'Visible to both initiator and authoriser',
+  matures_at: '12/19/2016 2:10:56 AM',
+  amount: 99000,
+  authoriser_id: 'de86472c-c027-4735-a6a7-234366a27fc7',
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
+payload = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"12/19/2016 2:10:56 AM\",\"amount\":99000,\"authoriser_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+
 headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/payment_requests', params={
+conn.request("POST", "/payment_requests", payload, headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payment_requests")
+  .header("content-type", "application/json")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .body("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"12/19/2016 2:10:56 AM\",\"amount\":99000,\"authoriser_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('{"description":"Visible to both initiator and authoriser","matures_at":"12/19/2016 2:10:56 AM","amount":99000,"authoriser_id":"de86472c-c027-4735-a6a7-234366a27fc7","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payment_requests');
+$request->setRequestMethod('POST');
+$request->setBody($body);
+
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json',
+  'content-type' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Content-Type": []string{"application/json"},
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payment_requests"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/payment_requests", data)
-    req.Header = headers
+	payload := strings.NewReader("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"12/19/2016 2:10:56 AM\",\"amount\":99000,\"authoriser_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("content-type", "application/json")
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-const inputBody = '{
-  "description": "Visible to both initiator and authoriser",
-  "matures_at": "12/19/2016 2:10:56 AM",
-  "amount": 99000,
-  "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}';
-const headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payment_requests',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /payment_requests`
@@ -3603,7 +4375,7 @@ fetch('https://api-sandbox.split.cash/payment_requests',
 
 > Example responses
 
-> 201 undefined
+> 201 Response
 
 ```json
 {
@@ -3641,88 +4413,131 @@ fetch('https://api-sandbox.split.cash/payment_requests',
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/payment_requests/PR.3/approve \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payment_requests/PR.3/approve")
 
-result = RestClient.post 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Post.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payment_requests/PR.3/approve",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve', params={
+conn.request("POST", "/payment_requests/PR.3/approve", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payment_requests/PR.3/approve")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payment_requests/PR.3/approve');
+$request->setRequestMethod('POST');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payment_requests/PR.3/approve"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve", data)
-    req.Header = headers
+	req, _ := http.NewRequest("POST", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/approve',
-{
-  method: 'POST',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /payment_requests/{payment_request_ref}/approve`
@@ -3735,7 +4550,7 @@ fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/app
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -3773,88 +4588,131 @@ fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/app
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/payment_requests/PR.3/decline \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payment_requests/PR.3/decline")
 
-result = RestClient.post 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Post.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payment_requests/PR.3/decline",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline', params={
+conn.request("POST", "/payment_requests/PR.3/decline", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payment_requests/PR.3/decline")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payment_requests/PR.3/decline');
+$request->setRequestMethod('POST');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payment_requests/PR.3/decline"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline", data)
-    req.Header = headers
+	req, _ := http.NewRequest("POST", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/decline',
-{
-  method: 'POST',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /payment_requests/{payment_request_ref}/decline`
@@ -3867,7 +4725,7 @@ fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/dec
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -3905,88 +4763,131 @@ fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/dec
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/payment_requests/{payment_request_ref} \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/payment_requests/PR.3 \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payment_requests/PR.3")
 
-result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payment_requests/PR.3",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', params={
+conn.request("GET", "/payment_requests/PR.3", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payment_requests/PR.3")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payment_requests/PR.3');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payment_requests/PR.3"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payment_requests/{payment_request_ref}", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /payment_requests/{payment_request_ref}`
@@ -3999,7 +4900,7 @@ fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -4037,83 +4938,122 @@ fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
 > Code samples
 
 ```shell
-curl -X DELETE https://api-sandbox.split.cash/payment_requests/{payment_request_ref} \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request DELETE \
+  --url https://api-sandbox.split.cash/payment_requests/PR.3 \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payment_requests/PR.3")
 
-result = RestClient.delete 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Delete.new(url)
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "DELETE",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payment_requests/PR.3",
+  "headers": {
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
-headers = {
-  'Authorization': 'Bearer {access-token}'
-}
+import http.client
 
-r = requests.delete('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}', params={
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
 
-}, headers = headers)
+headers = { 'authorization': "Bearer {access-token}" }
 
-print r.json()
+conn.request("DELETE", "/payment_requests/PR.3", headers=headers)
 
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/payment_requests/PR.3")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payment_requests/PR.3');
+$request->setRequestMethod('DELETE');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payment_requests/PR.3"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("DELETE", "https://api-sandbox.split.cash/payment_requests/{payment_request_ref}", data)
-    req.Header = headers
+	req, _ := http.NewRequest("DELETE", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}',
-{
-  method: 'DELETE',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `DELETE /payment_requests/{payment_request_ref}`
@@ -4139,88 +5079,131 @@ A PR can only be cancelled if it has not yet matured.
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/payment_requests/incoming \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/payment_requests/incoming \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payment_requests/incoming")
 
-result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/incoming', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payment_requests/incoming",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/payment_requests/incoming', params={
+conn.request("GET", "/payment_requests/incoming", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payment_requests/incoming")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payment_requests/incoming');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payment_requests/incoming"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payment_requests/incoming", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payment_requests/incoming',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /payment_requests/incoming`
@@ -4234,7 +5217,7 @@ fetch('https://api-sandbox.split.cash/payment_requests/incoming',
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -4288,88 +5271,131 @@ fetch('https://api-sandbox.split.cash/payment_requests/incoming',
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/payment_requests/outgoing \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/payment_requests/outgoing \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payment_requests/outgoing")
 
-result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/outgoing', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payment_requests/outgoing",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/payment_requests/outgoing', params={
+conn.request("GET", "/payment_requests/outgoing", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payment_requests/outgoing")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payment_requests/outgoing');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payment_requests/outgoing"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payment_requests/outgoing", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payment_requests/outgoing',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /payment_requests/outgoing`
@@ -4383,7 +5409,7 @@ fetch('https://api-sandbox.split.cash/payment_requests/outgoing',
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -4433,88 +5459,131 @@ fetch('https://api-sandbox.split.cash/payment_requests/outgoing',
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/payment_requests/PR.3/history \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payment_requests/PR.3/history")
 
-result = RestClient.get 'https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payment_requests/PR.3/history",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history', params={
+conn.request("GET", "/payment_requests/PR.3/history", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payment_requests/PR.3/history")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payment_requests/PR.3/history');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payment_requests/PR.3/history"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payment_requests/{payment_request_ref}/history',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /payment_requests/{payment_request_ref}/history`
@@ -4529,7 +5598,7 @@ Gives you visibility of the entire Payment Request lifecycle including the gener
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -4646,172 +5715,168 @@ The Payment is simply a group of Payouts therefore it does not have a particular
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/payments \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}' \
-  -d '{
-  "description": "The SuperPackage",
-  "matures_at": "2016-09-13T00:00:00Z",
-  "payouts": [
-    {
-      "amount": 30000,
-      "description": "A tandem skydive jump SB23094",
-      "recipient_id": "48b89364-1577-4c81-ba02-96705895d457",
-      "metadata": {
-        "invoice_ref": "BILL-0001",
-        "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
-        "custom_key": "Custom string",
-        "another_custom_key": "Maybe a URL"
-      }
-    },
-    {
-      "amount": 30000,
-      "description": "A scuba dive SDS5464",
-      "recipient_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
-    }
-  ],
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/payments \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data '{"description":"The SuperPackage","matures_at":"2016-09-13T00:00:00Z","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}},{"amount":30000,"description":"A scuba dive SDS5464","recipient_id":"dc6f1e60-3803-43ca-a200-7d641816f57f"}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payments")
 
-params = '{
-  "description": "The SuperPackage",
-  "matures_at": "2016-09-13T00:00:00Z",
-  "payouts": [
-    {
-      "amount": 30000,
-      "description": "A tandem skydive jump SB23094",
-      "recipient_id": "48b89364-1577-4c81-ba02-96705895d457",
-      "metadata": {
-        "invoice_ref": "BILL-0001",
-        "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
-        "custom_key": "Custom string",
-        "another_custom_key": "Maybe a URL"
-      }
-    },
-    {
-      "amount": 30000,
-      "description": "A scuba dive SDS5464",
-      "recipient_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
-    }
-  ],
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["content-type"] = 'application/json'
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+request.body = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payments",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
   }
-}'
+};
 
-result = RestClient.post 'https://api-sandbox.split.cash/payments', params, headers
+var req = http.request(options, function (res) {
+  var chunks = [];
 
-p JSON.parse(result)
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
 
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ description: 'The SuperPackage',
+  matures_at: '2016-09-13T00:00:00Z',
+  payouts:
+   [ { amount: 30000,
+       description: 'A tandem skydive jump SB23094',
+       recipient_id: '48b89364-1577-4c81-ba02-96705895d457',
+       metadata:
+        { invoice_ref: 'BILL-0001',
+          invoice_id: 'c80a9958-e805-47c0-ac2a-c947d7fd778d',
+          custom_key: 'Custom string',
+          another_custom_key: 'Maybe a URL' } },
+     { amount: 30000,
+       description: 'A scuba dive SDS5464',
+       recipient_id: 'dc6f1e60-3803-43ca-a200-7d641816f57f' } ],
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
+payload = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+
 headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/payments', params={
+conn.request("POST", "/payments", payload, headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payments")
+  .header("content-type", "application/json")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .body("{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('{"description":"The SuperPackage","matures_at":"2016-09-13T00:00:00Z","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}},{"amount":30000,"description":"A scuba dive SDS5464","recipient_id":"dc6f1e60-3803-43ca-a200-7d641816f57f"}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payments');
+$request->setRequestMethod('POST');
+$request->setBody($body);
+
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json',
+  'content-type' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Content-Type": []string{"application/json"},
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payments"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/payments", data)
-    req.Header = headers
+	payload := strings.NewReader("{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("content-type", "application/json")
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-const inputBody = '{
-  "description": "The SuperPackage",
-  "matures_at": "2016-09-13T00:00:00Z",
-  "payouts": [
-    {
-      "amount": 30000,
-      "description": "A tandem skydive jump SB23094",
-      "recipient_id": "48b89364-1577-4c81-ba02-96705895d457",
-      "metadata": {
-        "invoice_ref": "BILL-0001",
-        "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
-        "custom_key": "Custom string",
-        "another_custom_key": "Maybe a URL"
-      }
-    },
-    {
-      "amount": 30000,
-      "description": "A scuba dive SDS5464",
-      "recipient_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
-    }
-  ],
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}';
-const headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payments',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /payments`
@@ -4864,7 +5929,7 @@ fetch('https://api-sandbox.split.cash/payments',
 
 > Example responses
 
-> 201 undefined
+> 201 Response
 
 ```json
 {
@@ -4921,88 +5986,131 @@ fetch('https://api-sandbox.split.cash/payments',
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/payments \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/payments \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payments")
 
-result = RestClient.get 'https://api-sandbox.split.cash/payments', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payments",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/payments', params={
+conn.request("GET", "/payments", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payments")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payments');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payments"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payments", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payments',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /payments`
@@ -5016,7 +6124,7 @@ fetch('https://api-sandbox.split.cash/payments',
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -5075,88 +6183,131 @@ fetch('https://api-sandbox.split.cash/payments',
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/payments/{payment_ref} \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/payments/PB.1 \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payments/PB.1")
 
-result = RestClient.get 'https://api-sandbox.split.cash/payments/{payment_ref}', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payments/PB.1",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/payments/{payment_ref}', params={
+conn.request("GET", "/payments/PB.1", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payments/PB.1")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payments/PB.1');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payments/PB.1"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payments/{payment_ref}", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payments/{payment_ref}',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /payments/{payment_ref}`
@@ -5171,7 +6322,7 @@ Get a single payment by its reference
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -5232,83 +6383,122 @@ Payouts are what a compose a Payment. One or all Payouts can be voided individua
 > Code samples
 
 ```shell
-curl -X DELETE https://api-sandbox.split.cash/payouts/{debit_ref} \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request DELETE \
+  --url https://api-sandbox.split.cash/payouts/D.1 \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payouts/D.1")
 
-result = RestClient.delete 'https://api-sandbox.split.cash/payouts/{debit_ref}', headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Delete.new(url)
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "DELETE",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payouts/D.1",
+  "headers": {
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
-headers = {
-  'Authorization': 'Bearer {access-token}'
-}
+import http.client
 
-r = requests.delete('https://api-sandbox.split.cash/payouts/{debit_ref}', params={
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
 
-}, headers = headers)
+headers = { 'authorization': "Bearer {access-token}" }
 
-print r.json()
+conn.request("DELETE", "/payouts/D.1", headers=headers)
 
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/payouts/D.1")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payouts/D.1');
+$request->setRequestMethod('DELETE');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payouts/D.1"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("DELETE", "https://api-sandbox.split.cash/payouts/{debit_ref}", data)
-    req.Header = headers
+	req, _ := http.NewRequest("DELETE", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payouts/{debit_ref}',
-{
-  method: 'DELETE',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `DELETE /payouts/{debit_ref}`
@@ -5365,121 +6555,157 @@ A Refund Request can have the following statuses:
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/payout_refund_requests \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}' \
-  -d '{
-  "for_ref": "D.1",
-  "amount": 500,
-  "reason": "Because reason",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/payout_refund_requests \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data '{"for_ref":"D.1","amount":500,"reason":"Because reason","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payout_refund_requests")
 
-params = '{
-  "for_ref": "D.1",
-  "amount": 500,
-  "reason": "Because reason",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["content-type"] = 'application/json'
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+request.body = "{\"for_ref\":\"D.1\",\"amount\":500,\"reason\":\"Because reason\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payout_refund_requests",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
   }
-}'
+};
 
-result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests', params, headers
+var req = http.request(options, function (res) {
+  var chunks = [];
 
-p JSON.parse(result)
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
 
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ for_ref: 'D.1',
+  amount: 500,
+  reason: 'Because reason',
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
+payload = "{\"for_ref\":\"D.1\",\"amount\":500,\"reason\":\"Because reason\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+
 headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/payout_refund_requests', params={
+conn.request("POST", "/payout_refund_requests", payload, headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payout_refund_requests")
+  .header("content-type", "application/json")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .body("{\"for_ref\":\"D.1\",\"amount\":500,\"reason\":\"Because reason\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('{"for_ref":"D.1","amount":500,"reason":"Because reason","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payout_refund_requests');
+$request->setRequestMethod('POST');
+$request->setBody($body);
+
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json',
+  'content-type' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Content-Type": []string{"application/json"},
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payout_refund_requests"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/payout_refund_requests", data)
-    req.Header = headers
+	payload := strings.NewReader("{\"for_ref\":\"D.1\",\"amount\":500,\"reason\":\"Because reason\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("content-type", "application/json")
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-const inputBody = '{
-  "for_ref": "D.1",
-  "amount": 500,
-  "reason": "Because reason",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}';
-const headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payout_refund_requests',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /payout_refund_requests`
@@ -5515,7 +6741,7 @@ Certain rules apply to the creation of a Refund Request:
 
 > Example responses
 
-> 201 undefined
+> 201 Response
 
 ```json
 {
@@ -5551,88 +6777,131 @@ Certain rules apply to the creation of a Refund Request:
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/payout_refund_requests/PR.3/approve \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payout_refund_requests/PR.3/approve")
 
-result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Post.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payout_refund_requests/PR.3/approve",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve', params={
+conn.request("POST", "/payout_refund_requests/PR.3/approve", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payout_refund_requests/PR.3/approve")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payout_refund_requests/PR.3/approve');
+$request->setRequestMethod('POST');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payout_refund_requests/PR.3/approve"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve", data)
-    req.Header = headers
+	req, _ := http.NewRequest("POST", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/approve',
-{
-  method: 'POST',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /payout_refund_requests/{payout_refund_request_ref}/approve`
@@ -5645,7 +6914,7 @@ fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_requ
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -5681,88 +6950,131 @@ fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_requ
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/payout_refund_requests/PR.3/decline \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payout_refund_requests/PR.3/decline")
 
-result = RestClient.post 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Post.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payout_refund_requests/PR.3/decline",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline', params={
+conn.request("POST", "/payout_refund_requests/PR.3/decline", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payout_refund_requests/PR.3/decline")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payout_refund_requests/PR.3/decline');
+$request->setRequestMethod('POST');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payout_refund_requests/PR.3/decline"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline", data)
-    req.Header = headers
+	req, _ := http.NewRequest("POST", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}/decline',
-{
-  method: 'POST',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /payout_refund_requests/{payout_refund_request_ref}/decline`
@@ -5775,7 +7087,7 @@ fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_requ
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -5811,88 +7123,131 @@ fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_requ
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref} \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/payout_refund_requests/RR.2 \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payout_refund_requests/RR.2")
 
-result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payout_refund_requests/RR.2",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', params={
+conn.request("GET", "/payout_refund_requests/RR.2", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payout_refund_requests/RR.2")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payout_refund_requests/RR.2');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payout_refund_requests/RR.2"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /payout_refund_requests/{payout_refund_request_ref}`
@@ -5907,7 +7262,7 @@ Get a specific Refund Request by its reference
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -5943,83 +7298,122 @@ Get a specific Refund Request by its reference
 > Code samples
 
 ```shell
-curl -X DELETE https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref} \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request DELETE \
+  --url https://api-sandbox.split.cash/payout_refund_requests/RR.2 \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payout_refund_requests/RR.2")
 
-result = RestClient.delete 'https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Delete.new(url)
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "DELETE",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payout_refund_requests/RR.2",
+  "headers": {
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
-headers = {
-  'Authorization': 'Bearer {access-token}'
-}
+import http.client
 
-r = requests.delete('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}', params={
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
 
-}, headers = headers)
+headers = { 'authorization': "Bearer {access-token}" }
 
-print r.json()
+conn.request("DELETE", "/payout_refund_requests/RR.2", headers=headers)
 
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/payout_refund_requests/RR.2")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payout_refund_requests/RR.2');
+$request->setRequestMethod('DELETE');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payout_refund_requests/RR.2"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("DELETE", "https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}", data)
-    req.Header = headers
+	req, _ := http.NewRequest("DELETE", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payout_refund_requests/{payout_refund_request_ref}',
-{
-  method: 'DELETE',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `DELETE /payout_refund_requests/{payout_refund_request_ref}`
@@ -6045,88 +7439,131 @@ A Refund Request can only be canceled if it is pending approval.
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/payout_refund_requests/incoming \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/payout_refund_requests/incoming \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payout_refund_requests/incoming")
 
-result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/incoming', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payout_refund_requests/incoming",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/payout_refund_requests/incoming', params={
+conn.request("GET", "/payout_refund_requests/incoming", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payout_refund_requests/incoming")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payout_refund_requests/incoming');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payout_refund_requests/incoming"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payout_refund_requests/incoming", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payout_refund_requests/incoming',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /payout_refund_requests/incoming`
@@ -6140,7 +7577,7 @@ fetch('https://api-sandbox.split.cash/payout_refund_requests/incoming',
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -6178,88 +7615,131 @@ fetch('https://api-sandbox.split.cash/payout_refund_requests/incoming',
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/payout_refund_requests/outgoing \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/payout_refund_requests/outgoing \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/payout_refund_requests/outgoing")
 
-result = RestClient.get 'https://api-sandbox.split.cash/payout_refund_requests/outgoing', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payout_refund_requests/outgoing",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/payout_refund_requests/outgoing', params={
+conn.request("GET", "/payout_refund_requests/outgoing", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payout_refund_requests/outgoing")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payout_refund_requests/outgoing');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/payout_refund_requests/outgoing"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/payout_refund_requests/outgoing", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/payout_refund_requests/outgoing',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /payout_refund_requests/outgoing`
@@ -6273,7 +7753,7 @@ fetch('https://api-sandbox.split.cash/payout_refund_requests/outgoing',
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -6330,118 +7810,156 @@ There are two response fields that differ depending on the direction:
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/credits/{credit_ref}/refunds \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}' \
-  -d '{
-  "amount": 500,
-  "reason": "Because reason",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/credits/string/refunds \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data '{"amount":500,"reason":"Because reason","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/credits/string/refunds")
 
-params = '{
-  "amount": 500,
-  "reason": "Because reason",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["content-type"] = 'application/json'
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+request.body = "{\"amount\":500,\"reason\":\"Because reason\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/credits/string/refunds",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
   }
-}'
+};
 
-result = RestClient.post 'https://api-sandbox.split.cash/credits/{credit_ref}/refunds', params, headers
+var req = http.request(options, function (res) {
+  var chunks = [];
 
-p JSON.parse(result)
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
 
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ amount: 500,
+  reason: 'Because reason',
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
+payload = "{\"amount\":500,\"reason\":\"Because reason\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+
 headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/credits/{credit_ref}/refunds', params={
+conn.request("POST", "/credits/string/refunds", payload, headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/credits/string/refunds")
+  .header("content-type", "application/json")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .body("{\"amount\":500,\"reason\":\"Because reason\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('{"amount":500,"reason":"Because reason","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+
+$request->setRequestUrl('https://api-sandbox.split.cash/credits/string/refunds');
+$request->setRequestMethod('POST');
+$request->setBody($body);
+
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json',
+  'content-type' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Content-Type": []string{"application/json"},
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/credits/string/refunds"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/credits/{credit_ref}/refunds", data)
-    req.Header = headers
+	payload := strings.NewReader("{\"amount\":500,\"reason\":\"Because reason\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("content-type", "application/json")
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-const inputBody = '{
-  "amount": 500,
-  "reason": "Because reason",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}';
-const headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/credits/{credit_ref}/refunds',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /credits/{credit_ref}/refunds`
@@ -6476,7 +7994,7 @@ Certain rules apply to the issuance of a refund:
 
 > Example responses
 
-> 201 undefined
+> 201 Response
 
 ```json
 {
@@ -6508,88 +8026,131 @@ Certain rules apply to the issuance of a refund:
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/refunds/incoming \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/refunds/incoming \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/refunds/incoming")
 
-result = RestClient.get 'https://api-sandbox.split.cash/refunds/incoming', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/refunds/incoming",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/refunds/incoming', params={
+conn.request("GET", "/refunds/incoming", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/refunds/incoming")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/refunds/incoming');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/refunds/incoming"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/refunds/incoming", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/refunds/incoming',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /refunds/incoming`
@@ -6603,7 +8164,7 @@ fetch('https://api-sandbox.split.cash/refunds/incoming',
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -6637,88 +8198,131 @@ fetch('https://api-sandbox.split.cash/refunds/incoming',
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/refunds/outgoing \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/refunds/outgoing \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/refunds/outgoing")
 
-result = RestClient.get 'https://api-sandbox.split.cash/refunds/outgoing', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/refunds/outgoing",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/refunds/outgoing', params={
+conn.request("GET", "/refunds/outgoing", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/refunds/outgoing")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/refunds/outgoing');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/refunds/outgoing"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/refunds/outgoing", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/refunds/outgoing',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /refunds/outgoing`
@@ -6732,7 +8336,7 @@ fetch('https://api-sandbox.split.cash/refunds/outgoing',
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -6766,88 +8370,131 @@ fetch('https://api-sandbox.split.cash/refunds/outgoing',
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/refunds/{refund_ref} \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/refunds/PRF.1 \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/refunds/PRF.1")
 
-result = RestClient.get 'https://api-sandbox.split.cash/refunds/{refund_ref}', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/refunds/PRF.1",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/refunds/{refund_ref}', params={
+conn.request("GET", "/refunds/PRF.1", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/refunds/PRF.1")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/refunds/PRF.1');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/refunds/PRF.1"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/refunds/{refund_ref}", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/refunds/{refund_ref}',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /refunds/{refund_ref}`
@@ -6862,7 +8509,7 @@ Get a single Refund by its reference
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -6956,88 +8603,131 @@ The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompani
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/transactions \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/transactions \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/transactions")
 
-result = RestClient.get 'https://api-sandbox.split.cash/transactions', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/transactions",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/transactions', params={
+conn.request("GET", "/transactions", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/transactions")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/transactions');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/transactions"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/transactions", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/transactions',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /transactions`
@@ -7088,7 +8778,7 @@ fetch('https://api-sandbox.split.cash/transactions',
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -7164,133 +8854,155 @@ Unassigned Agreements are shared using the generated link available in the respo
 > Code samples
 
 ```shell
-curl -X POST https://api-sandbox.split.cash/unassigned_agreements \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}' \
-  -d '{
-  "expiry_in_seconds": 60,
-  "terms": {
-    "per_payout": {
-      "min_amount": null,
-      "max_amount": 10000
-    },
-    "per_frequency": {
-      "days": 7,
-      "max_amount": 1000000
-    }
-  }
-}'
-
+curl --request POST \
+  --url https://api-sandbox.split.cash/unassigned_agreements \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data '{"expiry_in_seconds":60,"terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/unassigned_agreements")
 
-params = '{
-  "expiry_in_seconds": 60,
-  "terms": {
-    "per_payout": {
-      "min_amount": null,
-      "max_amount": 10000
-    },
-    "per_frequency": {
-      "days": 7,
-      "max_amount": 1000000
-    }
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["content-type"] = 'application/json'
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+request.body = "{\"expiry_in_seconds\":60,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/unassigned_agreements",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
   }
-}'
+};
 
-result = RestClient.post 'https://api-sandbox.split.cash/unassigned_agreements', params, headers
+var req = http.request(options, function (res) {
+  var chunks = [];
 
-p JSON.parse(result)
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
 
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ expiry_in_seconds: 60,
+  terms:
+   { per_payout: { min_amount: null, max_amount: 10000 },
+     per_frequency: { days: 7, max_amount: 1000000 } } }));
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
+payload = "{\"expiry_in_seconds\":60,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
+
 headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.post('https://api-sandbox.split.cash/unassigned_agreements', params={
+conn.request("POST", "/unassigned_agreements", payload, headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/unassigned_agreements")
+  .header("content-type", "application/json")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .body("{\"expiry_in_seconds\":60,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('{"expiry_in_seconds":60,"terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}');
+
+$request->setRequestUrl('https://api-sandbox.split.cash/unassigned_agreements');
+$request->setRequestMethod('POST');
+$request->setBody($body);
+
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json',
+  'content-type' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Content-Type": []string{"application/json"},
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/unassigned_agreements"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("POST", "https://api-sandbox.split.cash/unassigned_agreements", data)
-    req.Header = headers
+	payload := strings.NewReader("{\"expiry_in_seconds\":60,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("content-type", "application/json")
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-const inputBody = '{
-  "expiry_in_seconds": 60,
-  "terms": {
-    "per_payout": {
-      "min_amount": null,
-      "max_amount": 10000
-    },
-    "per_frequency": {
-      "days": 7,
-      "max_amount": 1000000
-    }
-  }
-}';
-const headers = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/unassigned_agreements',
-{
-  method: 'POST',
-  body: inputBody,
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `POST /unassigned_agreements`
@@ -7333,7 +9045,7 @@ Create an Unassigned Agreement
 
 > Example responses
 
-> 201 undefined
+> 201 Response
 
 ```json
 {
@@ -7372,88 +9084,131 @@ Create an Unassigned Agreement
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/unassigned_agreements \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/unassigned_agreements \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/unassigned_agreements")
 
-result = RestClient.get 'https://api-sandbox.split.cash/unassigned_agreements', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/unassigned_agreements",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/unassigned_agreements', params={
+conn.request("GET", "/unassigned_agreements", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/unassigned_agreements")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/unassigned_agreements');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/unassigned_agreements"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/unassigned_agreements", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/unassigned_agreements',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /unassigned_agreements`
@@ -7469,7 +9224,7 @@ Will return all Unassigned Agreements that have not yet be accepted.
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -7529,88 +9284,131 @@ Will return all Unassigned Agreements that have not yet be accepted.
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref} \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/unassigned_agreements/A.4k \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/unassigned_agreements/A.4k")
 
-result = RestClient.get 'https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/unassigned_agreements/A.4k",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}', params={
+conn.request("GET", "/unassigned_agreements/A.4k", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/unassigned_agreements/A.4k")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/unassigned_agreements/A.4k');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/unassigned_agreements/A.4k"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /unassigned_agreements/{unassigned_agreement_ref}`
@@ -7625,7 +9423,7 @@ Get a single Unassigned Agreement by its reference
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
@@ -7664,83 +9462,122 @@ Get a single Unassigned Agreement by its reference
 > Code samples
 
 ```shell
-curl -X DELETE https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref} \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request DELETE \
+  --url https://api-sandbox.split.cash/unassigned_agreements/A.2 \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/unassigned_agreements/A.2")
 
-result = RestClient.delete 'https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}', headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Delete.new(url)
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "DELETE",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/unassigned_agreements/A.2",
+  "headers": {
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
-headers = {
-  'Authorization': 'Bearer {access-token}'
-}
+import http.client
 
-r = requests.delete('https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}', params={
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
 
-}, headers = headers)
+headers = { 'authorization': "Bearer {access-token}" }
 
-print r.json()
+conn.request("DELETE", "/unassigned_agreements/A.2", headers=headers)
 
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/unassigned_agreements/A.2")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/unassigned_agreements/A.2');
+$request->setRequestMethod('DELETE');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/unassigned_agreements/A.2"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("DELETE", "https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}", data)
-    req.Header = headers
+	req, _ := http.NewRequest("DELETE", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/unassigned_agreements/{unassigned_agreement_ref}',
-{
-  method: 'DELETE',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `DELETE /unassigned_agreements/{unassigned_agreement_ref}`
@@ -7770,95 +9607,138 @@ All about the currently authenticated user.
 > Code samples
 
 ```shell
-curl -X GET https://api-sandbox.split.cash/user \
-  -H 'Accept: application/json' \
-  -H 'Authorization: Bearer {access-token}'
-
+curl --request GET \
+  --url https://api-sandbox.split.cash/user \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
 ```
 
 ```ruby
-require 'rest-client'
-require 'json'
+require 'uri'
+require 'net/http'
 
-headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+url = URI("https://api-sandbox.split.cash/user")
 
-result = RestClient.get 'https://api-sandbox.split.cash/user', {}, headers
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-p JSON.parse(result)
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
 
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/user",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
 ```
 
 ```python
-import requests
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
 headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-}
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
 
-r = requests.get('https://api-sandbox.split.cash/user', params={
+conn.request("GET", "/user", headers=headers)
 
-}, headers = headers)
+res = conn.getresponse()
+data = res.read()
 
-print r.json()
+print(data.decode("utf-8"))
+```
 
+```java
+HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/user")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/user');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
 ```
 
 ```go
 package main
 
 import (
-       "bytes"
-       "net/http"
+	"fmt"
+	"net/http"
+	"io/ioutil"
 )
 
 func main() {
 
-    headers := map[string][]string{
-        "Accept": []string{"application/json"},
-        "Authorization": []string{"Bearer {access-token}"},
-        
-    }
+	url := "https://api-sandbox.split.cash/user"
 
-    data := bytes.NewBuffer([]byte{jsonReq})
-    req, err := http.NewRequest("GET", "https://api-sandbox.split.cash/user", data)
-    req.Header = headers
+	req, _ := http.NewRequest("GET", url, nil)
 
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    // ...
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
 }
-
-```
-
-```javascript--nodejs
-const request = require('node-fetch');
-
-const headers = {
-  'Accept': 'application/json',
-  'Authorization': 'Bearer {access-token}'
-};
-
-fetch('https://api-sandbox.split.cash/user',
-{
-  method: 'GET',
-  headers: headers
-})
-.then(function(res) {
-    return res.json();
-}).then(function(body) {
-    console.log(body);
-});
-
 ```
 
 `GET /user`
 
 > Example responses
 
-> 200 undefined
+> 200 Response
 
 ```json
 {
