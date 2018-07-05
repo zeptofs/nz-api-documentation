@@ -1,0 +1,20 @@
+tocSummary: true
+expandBody: true
+user_templates: ./widdershins_templates
+httpsnippet: true
+language_clients:
+  - shell: curl
+  - ruby: native
+  - node: request
+  - python: python3
+  - java: unirest
+  - php: http2
+  - go: native
+language_tabs:
+  - shell: Shell
+  - ruby: Ruby
+  - javascript--node: NodeJS
+  - python: Python
+  - java: Java
+  - php: PHP
+  - go: Go
