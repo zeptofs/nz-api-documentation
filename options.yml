@@ -1,0 +1,9 @@
+tocSummary: true
+expandBody: true
+user_templates: ./widdershins_templates
+language_tabs:
+  - shell: Shell
+  - ruby: Ruby
+  - python: Python
+  - go: Go
+  - javascript--nodejs: Node.JS
