@@ -6385,7 +6385,9 @@ Payouts are what a compose a Payment. One or all Payouts can be voided individua
 ```shell
 curl --request DELETE \
   --url https://api-sandbox.split.cash/payouts/D.1 \
-  --header 'authorization: Bearer {access-token}'
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data '{"reason":"Incorrect recipient"}'
 ```
 
 ```ruby
@@ -6399,7 +6401,9 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Delete.new(url)
+request["content-type"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
+request.body = "{\"reason\":\"Incorrect recipient\"}"
 
 response = http.request(request)
 puts response.read_body
@@ -6414,6 +6418,7 @@ var options = {
   "port": null,
   "path": "/payouts/D.1",
   "headers": {
+    "content-type": "application/json",
     "authorization": "Bearer {access-token}"
   }
 };
@@ -6431,6 +6436,7 @@ var req = http.request(options, function (res) {
   });
 });
 
+req.write(JSON.stringify({ reason: 'Incorrect recipient' }));
 req.end();
 ```
 
@@ -6439,9 +6445,14 @@ import http.client
 
 conn = http.client.HTTPSConnection("api-sandbox.split.cash")
 
-headers = { 'authorization': "Bearer {access-token}" }
+payload = "{\"reason\":\"Incorrect recipient\"}"
 
-conn.request("DELETE", "/payouts/D.1", headers=headers)
+headers = {
+    'content-type': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("DELETE", "/payouts/D.1", payload, headers)
 
 res = conn.getresponse()
 data = res.read()
@@ -6451,7 +6462,9 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/payouts/D.1")
+  .header("content-type", "application/json")
   .header("authorization", "Bearer {access-token}")
+  .body("{\"reason\":\"Incorrect recipient\"}")
   .asString();
 ```
 
@@ -6461,10 +6474,16 @@ HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/p
 $client = new http\Client;
 $request = new http\Client\Request;
 
+$body = new http\Message\Body;
+$body->append('{"reason":"Incorrect recipient"}');
+
 $request->setRequestUrl('https://api-sandbox.split.cash/payouts/D.1');
 $request->setRequestMethod('DELETE');
+$request->setBody($body);
+
 $request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}'
+  'authorization' => 'Bearer {access-token}',
+  'content-type' => 'application/json'
 ));
 
 $client->enqueue($request)->send();
@@ -6478,6 +6497,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"net/http"
 	"io/ioutil"
 )
@@ -6486,8 +6506,11 @@ func main() {
 
 	url := "https://api-sandbox.split.cash/payouts/D.1"
 
-	req, _ := http.NewRequest("DELETE", url, nil)
+	payload := strings.NewReader("{\"reason\":\"Incorrect recipient\"}")
 
+	req, _ := http.NewRequest("DELETE", url, payload)
+
+	req.Header.Add("content-type", "application/json")
 	req.Header.Add("authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
@@ -6505,11 +6528,21 @@ func main() {
 
 You can void any Payout debit from your account that has not yet matured. In the case where it has matured, you can send a Refund Request to the Payout recipient once the Payout has successfully cleared in order to reverse the transaction.
 
+> Body parameter
+
+```json
+{
+  "reason": "Incorrect recipient"
+}
+```
+
 <h3 id="Void-a-Payout-parameters" class="parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |debit_ref|path|string|true|Payout debit reference|
+|body|body|[VoidAPayoutRequest](#schemavoidapayoutrequest)|false|No description|
+|» reason|body|string|false|Reason why payout has been voided|
 
 <h3 id="Void a Payout-responses">Responses</h3>
 
@@ -8573,7 +8606,8 @@ A transaction (debit or credit) can have the following statuses:
       "cleared_at": null,
       "bank_ref": null,
       "status": "returned",
-      "failure_reason": "refer_to_customer"
+      "failure_reason": "refer_to_customer",
+      "failure_details": "Incorrect recipient"
       "party_name": "Sanford-Rees",
       "party_nickname": "sanford-rees-8",
       "description": null,
@@ -8595,6 +8629,10 @@ The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompani
 | `refer_to_customer` | Usually due to insufficient funds |
 | `refer_to_split` | Failed due to reasons not listed here. Please contact us. |
 | `insufficient_funds` | Insufficient funds |
+| `user_voided` | Voided by payout initiator |
+| `admin_voided` | Voided by Split Payments admin |
+
+Some failures will include additional details which will be returned in `failure_details`
 
 ## List all transactions
 
@@ -10710,6 +10748,24 @@ func main() {
 |description|string|true|Description that both the payer an recipient can see|
 |recipient_id|string|true|Contact bank account to pay (`Contact.data.bank_account.id`)|
 |metadata|[Metadata](#schemametadata)|false|No description|
+
+## VoidAPayoutRequest
+
+<a id="schemavoidapayoutrequest"></a>
+
+```json
+{
+  "reason": "Incorrect recipient"
+}
+```
+
+### Properties
+
+*Void a Payout (request)*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|reason|string|false|Reason why payout has been voided|
 
 ## Metadata
 

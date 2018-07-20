@@ -54,7 +54,7 @@
     },
     {
       "name": "Transactions",
-      "description": "The transactions endpoint provides a detailed look at all past, current and future scheduled debits & credits relating to the Split account. In other words, we not only show the transactions initiated by the Split account but also show transactions where the Split account is on the receiving end - even for payments that have not yet matured.\n\n##Lifecycle\n\nA transaction (debit or credit) can have the following statuses:\n\n| Status | Description |\n|--------|-------------|\n| `maturing` | The maturation date has not yet been reached |\n| `matured` | The maturation date has been reached and the transaction is eligible for processing. |\n| `processing` | The transaction has been submitted to the bank. |\n| `clearing` | Waiting for confirmation from the bank that the transaction has succeeded. |\n| `cleared` | The transaction is complete. |\n| `rejected` | The bank has rejected the transaction due to incorrect bank account details. |\n| `returned` | The transaction did not successfully clear. |\n| `voided` | The transaction has been cancelled and is no longer eligible for processing. |\n| `pending_verification` | The bank account must be verified before the transaction can proceed. |\n| `paused` | The transaction has temporary been paused by Split pending internal review. |\n| `prefailed` | The transaction was never submitted to the bank because we detected that there were insufficient funds. The transaction can be retried. |\n\n\n##Failure reasons\n\n> Example response\n\n```json\n{\n  \"data\": [\n    {\n      \"ref\": \"D.3\",\n      \"parent_ref\": null,\n      \"type\": \"debit\",\n      \"category\": \"payout_refund\",\n      \"created_at\": \"2016-12-07T23:15:00Z\",\n      \"matures_at\": \"2016-12-10T23:15:00Z\",\n      \"cleared_at\": null,\n      \"bank_ref\": null,\n      \"status\": \"returned\",\n      \"failure_reason\": \"refer_to_customer\"\n      \"party_name\": \"Sanford-Rees\",\n      \"party_nickname\": \"sanford-rees-8\",\n      \"description\": null,\n      \"amount\": 1\n    }\n  ]\n}\n```\n\nThe `rejected`, `returned`, `voided` & `prefailed` statuses are always accompanied by a `failure_reason`:\n\n| Reason | Description |\n|--------|-------------|\n| `invalid_bsb_number` | BSB number is invalid |\n| `payment_stopped` | The payment was stopped at the bank. Can be due to a customer requesting a stop payment with their financial institution. |\n| `account_closed` | The bank account is closed |\n| `customer_deceased` | Customer is deceased |\n| `incorrect_account_number` | Account number is incorrect |\n| `refer_to_customer` | Usually due to insufficient funds |\n| `refer_to_split` | Failed due to reasons not listed here. Please contact us. |\n| `insufficient_funds` | Insufficient funds |\n"
+      "description": "The transactions endpoint provides a detailed look at all past, current and future scheduled debits & credits relating to the Split account. In other words, we not only show the transactions initiated by the Split account but also show transactions where the Split account is on the receiving end - even for payments that have not yet matured.\n\n##Lifecycle\n\nA transaction (debit or credit) can have the following statuses:\n\n| Status | Description |\n|--------|-------------|\n| `maturing` | The maturation date has not yet been reached |\n| `matured` | The maturation date has been reached and the transaction is eligible for processing. |\n| `processing` | The transaction has been submitted to the bank. |\n| `clearing` | Waiting for confirmation from the bank that the transaction has succeeded. |\n| `cleared` | The transaction is complete. |\n| `rejected` | The bank has rejected the transaction due to incorrect bank account details. |\n| `returned` | The transaction did not successfully clear. |\n| `voided` | The transaction has been cancelled and is no longer eligible for processing. |\n| `pending_verification` | The bank account must be verified before the transaction can proceed. |\n| `paused` | The transaction has temporary been paused by Split pending internal review. |\n| `prefailed` | The transaction was never submitted to the bank because we detected that there were insufficient funds. The transaction can be retried. |\n\n\n##Failure reasons\n\n> Example response\n\n```json\n{\n  \"data\": [\n    {\n      \"ref\": \"D.3\",\n      \"parent_ref\": null,\n      \"type\": \"debit\",\n      \"category\": \"payout_refund\",\n      \"created_at\": \"2016-12-07T23:15:00Z\",\n      \"matures_at\": \"2016-12-10T23:15:00Z\",\n      \"cleared_at\": null,\n      \"bank_ref\": null,\n      \"status\": \"returned\",\n      \"failure_reason\": \"refer_to_customer\",\n      \"failure_details\": \"Incorrect recipient\"\n      \"party_name\": \"Sanford-Rees\",\n      \"party_nickname\": \"sanford-rees-8\",\n      \"description\": null,\n      \"amount\": 1\n    }\n  ]\n}\n```\n\nThe `rejected`, `returned`, `voided` & `prefailed` statuses are always accompanied by a `failure_reason`:\n\n| Reason | Description |\n|--------|-------------|\n| `invalid_bsb_number` | BSB number is invalid |\n| `payment_stopped` | The payment was stopped at the bank. Can be due to a customer requesting a stop payment with their financial institution. |\n| `account_closed` | The bank account is closed |\n| `customer_deceased` | Customer is deceased |\n| `incorrect_account_number` | Account number is incorrect |\n| `refer_to_customer` | Usually due to insufficient funds |\n| `refer_to_split` | Failed due to reasons not listed here. Please contact us. |\n| `insufficient_funds` | Insufficient funds |\n| `user_voided` | Voided by payout initiator |\n| `admin_voided` | Voided by Split Payments admin |\n\nSome failures will include additional details which will be returned in `failure_details`\n"
     },
     {
       "name": "Unassigned Agreements",
@@ -970,6 +970,16 @@
             "example": "D.1"
           }
         ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VoidAPayoutRequest"
+              }
+            }
+          }
+        },
         "responses": {
           "204": {
             "description": "No Content"
@@ -3058,6 +3068,17 @@
           },
           "metadata": {
             "$ref": "#/components/schemas/Metadata"
+          }
+        }
+      },
+      "VoidAPayoutRequest": {
+        "title": "Void a Payout (request)",
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "description": "Reason why payout has been voided",
+            "example": "Incorrect recipient"
           }
         }
       },
