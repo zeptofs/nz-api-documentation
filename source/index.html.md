@@ -4341,7 +4341,7 @@ func main() {
 
 `POST /payment_requests`
 
-<aside class="notice">[23/07/2018] Please note that we've deprecated <code>authoriser_id</code> in favour of <code>authoriser_contact_id</code>. We will continue to support the use of <code>authoriser_id</code> but encourage you to use <code>authoriser_contact_id</code> to identify the authoriser of the Payment Request.</aside>
+<aside class="notice">[23/07/2018] Please note that we've deprecated <code>authoriser_id</code> in favour of <code>authoriser_contact_id</code>. We will continue to support the use of <code>authoriser_id (Contact.data.bank_account.id)</code> but encourage you to use <code>authoriser_contact_id (Contact.data.id)</code> to identify the authoriser of the Payment Request.</aside>
 
 > Body parameter
 
@@ -5420,7 +5420,7 @@ func main() {
       "ref": "PR.4",
       "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
       "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-      "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
       "status": "approved",
       "responded_at": "2016-12-19T02:10:18Z",
       "created_at": "2016-12-19T02:09:09Z",
@@ -5435,7 +5435,7 @@ func main() {
       "ref": "PR.5",
       "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
       "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-      "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
       "status": "pending_approval",
       "responded_at": null,
       "created_at": "2016-12-19T02:10:56Z",
@@ -5934,7 +5934,7 @@ func main() {
 #### Detailed descriptions
 
 **»» Payout**: The actual Payout
-<aside class="notice">[23/07/2018] Please note that we've deprecated <code>recipient_id</code> in favour of <code>recipient_contact_id</code>. We will continue to support the use of <code>recipient_id</code> but encourage you to use <code>recipient_contact_id</code> to identify the recipient of the payout.</aside>
+<aside class="notice">[23/07/2018] Please note that we've deprecated <code>recipient_id</code> in favour of <code>recipient_contact_id</code>. We will continue to support the use of <code>recipient_id (Contact.data.bank_account.id)</code> but encourage you to use <code>recipient_contact_id (Contact.data.id)</code> to identify the recipient of the payout.</aside>
 
 > Example responses
 
@@ -6402,7 +6402,7 @@ curl --request DELETE \
   --url https://api-sandbox.split.cash/payouts/D.1 \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"reason":"Incorrect recipient"}'
+  --data '{"details":"Incorrect recipient"}'
 ```
 
 ```ruby
@@ -6418,7 +6418,7 @@ http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 request = Net::HTTP::Delete.new(url)
 request["content-type"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"reason\":\"Incorrect recipient\"}"
+request.body = "{\"details\":\"Incorrect recipient\"}"
 
 response = http.request(request)
 puts response.read_body
@@ -6451,7 +6451,7 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({ reason: 'Incorrect recipient' }));
+req.write(JSON.stringify({ details: 'Incorrect recipient' }));
 req.end();
 ```
 
@@ -6460,7 +6460,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api-sandbox.split.cash")
 
-payload = "{\"reason\":\"Incorrect recipient\"}"
+payload = "{\"details\":\"Incorrect recipient\"}"
 
 headers = {
     'content-type': "application/json",
@@ -6479,7 +6479,7 @@ print(data.decode("utf-8"))
 HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/payouts/D.1")
   .header("content-type", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"reason\":\"Incorrect recipient\"}")
+  .body("{\"details\":\"Incorrect recipient\"}")
   .asString();
 ```
 
@@ -6490,7 +6490,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"reason":"Incorrect recipient"}');
+$body->append('{"details":"Incorrect recipient"}');
 
 $request->setRequestUrl('https://api-sandbox.split.cash/payouts/D.1');
 $request->setRequestMethod('DELETE');
@@ -6521,7 +6521,7 @@ func main() {
 
 	url := "https://api-sandbox.split.cash/payouts/D.1"
 
-	payload := strings.NewReader("{\"reason\":\"Incorrect recipient\"}")
+	payload := strings.NewReader("{\"details\":\"Incorrect recipient\"}")
 
 	req, _ := http.NewRequest("DELETE", url, payload)
 
@@ -6547,7 +6547,7 @@ You can void any Payout debit from your account that has not yet matured. In the
 
 ```json
 {
-  "reason": "Incorrect recipient"
+  "details": "Incorrect recipient"
 }
 ```
 
@@ -6557,7 +6557,7 @@ You can void any Payout debit from your account that has not yet matured. In the
 |---|---|---|---|---|
 |debit_ref|path|string|true|Payout debit reference|
 |body|body|[VoidAPayoutRequest](#schemavoidapayoutrequest)|false|No description|
-|» reason|body|string|false|Reason why payout has been voided|
+|» details|body|string|false|Optional details about why the payout has been voided|
 
 <h3 id="Void a Payout-responses">Responses</h3>
 
@@ -10773,7 +10773,7 @@ func main() {
 
 ```json
 {
-  "reason": "Incorrect recipient"
+  "details": "Incorrect recipient"
 }
 ```
 
@@ -10783,7 +10783,7 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|reason|string|false|Reason why payout has been voided|
+|details|string|false|Optional details about why the payout has been voided|
 
 ## Metadata
 
@@ -11209,7 +11209,7 @@ func main() {
       "ref": "PR.4",
       "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
       "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-      "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
       "status": "approved",
       "responded_at": "2016-12-19T02:10:18Z",
       "created_at": "2016-12-19T02:09:09Z",
@@ -11224,7 +11224,7 @@ func main() {
       "ref": "PR.5",
       "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
       "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-      "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
       "status": "pending_approval",
       "responded_at": null,
       "created_at": "2016-12-19T02:10:56Z",
