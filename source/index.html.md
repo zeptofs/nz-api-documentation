@@ -247,8 +247,8 @@ There are 2 ways to get paid:
 
 Provides the ability to send a Payment Request (get paid) to any Contact that is either:
 
-* A Split Contact (A bank account owner that has a Split account); **or**
-* An Anyone Contact (A bank account owner that is not registered with Split) with an accepted Agreement in place.
+* A Split Contact (The contact has a Split account); **or**
+* An Anyone Contact (The contact does not have a Split account) with an accepted Agreement in place.
 
 **For a Split Contact**:
 
@@ -694,7 +694,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ authoriser_id: '8df89c16-330f-462b-8891-808d7bdceb7f',
-  terms:
+  terms: 
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
@@ -2140,13 +2140,7 @@ By default, all Bank Accounts will be returned. There can currently be only 1 ac
 
 <h1 id="Split-API-Contacts">Contacts</h1>
 
-Your Contacts form an address book of Split accounts and non-Split accounts (Anyone accounts) with whom you can interact. In order to initiate any type of transaction you must first have the party in your Contact list.
-
-There are a few IDs supplied within a Contact's response:
-
-1. `data.id` represents the Contact resource.
-2. `data.bank_account.id` represents the Contact's bank account and is used when creating Payments or Payment Requests.
-3. `data.account.id` represents the Contact's Split account and is used when proposing Agreements.
+Your Contacts form an address book of parties with whom you can interact. In order to initiate any type of transaction you must first have the party in your Contact list.
 
 <aside class="notice">In the case of Open Payment Requests & Open Agreements, the authorising party will be automatically added to your Contacts list.</aside>
 
@@ -3433,7 +3427,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ title: 'Subscription Plan A',
-  terms:
+  terms: 
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
@@ -4196,7 +4190,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"description":"Visible to both initiator and authoriser","matures_at":"12/19/2016 2:10:56 AM","amount":99000,"authoriser_id":"de86472c-c027-4735-a6a7-234366a27fc7","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"description":"Visible to both initiator and authoriser","matures_at":"12/19/2016 2:10:56 AM","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -4213,7 +4207,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"12/19/2016 2:10:56 AM\",\"amount\":99000,\"authoriser_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"12/19/2016 2:10:56 AM\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -4250,8 +4244,8 @@ var req = http.request(options, function (res) {
 req.write(JSON.stringify({ description: 'Visible to both initiator and authoriser',
   matures_at: '12/19/2016 2:10:56 AM',
   amount: 99000,
-  authoriser_id: 'de86472c-c027-4735-a6a7-234366a27fc7',
-  metadata:
+  authoriser_contact_id: 'de86472c-c027-4735-a6a7-234366a27fc7',
+  metadata: 
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -4262,7 +4256,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api-sandbox.split.cash")
 
-payload = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"12/19/2016 2:10:56 AM\",\"amount\":99000,\"authoriser_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"12/19/2016 2:10:56 AM\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -4283,7 +4277,7 @@ HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/pay
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"12/19/2016 2:10:56 AM\",\"amount\":99000,\"authoriser_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"12/19/2016 2:10:56 AM\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -4294,7 +4288,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"description":"Visible to both initiator and authoriser","matures_at":"12/19/2016 2:10:56 AM","amount":99000,"authoriser_id":"de86472c-c027-4735-a6a7-234366a27fc7","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"description":"Visible to both initiator and authoriser","matures_at":"12/19/2016 2:10:56 AM","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api-sandbox.split.cash/payment_requests');
 $request->setRequestMethod('POST');
@@ -4326,7 +4320,7 @@ func main() {
 
 	url := "https://api-sandbox.split.cash/payment_requests"
 
-	payload := strings.NewReader("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"12/19/2016 2:10:56 AM\",\"amount\":99000,\"authoriser_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"12/19/2016 2:10:56 AM\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -4347,6 +4341,8 @@ func main() {
 
 `POST /payment_requests`
 
+<aside class="notice">[23/07/2018] Please note that we've deprecated <code>authoriser_id</code> in favour of <code>authoriser_contact_id</code>. We will continue to support the use of <code>authoriser_id (Contact.data.bank_account.id)</code> but encourage you to use <code>authoriser_contact_id (Contact.data.id)</code> to identify the authoriser of the Payment Request.</aside>
+
 > Body parameter
 
 ```json
@@ -4354,7 +4350,7 @@ func main() {
   "description": "Visible to both initiator and authoriser",
   "matures_at": "12/19/2016 2:10:56 AM",
   "amount": 99000,
-  "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+  "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
   "metadata": {
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
@@ -4370,7 +4366,7 @@ func main() {
 |» description|body|string|true|Description visible to the initiator (payee) & authoriser (payer)|
 |» matures_at|body|string|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved|
 |» amount|body|number|true|Amount in cents to pay the initiator|
-|» authoriser_id|body|string|true|The Contact bank account that will be used to pay the PR (`Contact.data.bank_account.id`)'|
+|» authoriser_contact_id|body|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data an certain Split customisations|
 
 > Example responses
@@ -4382,7 +4378,8 @@ func main() {
   "data": {
     "ref": "PR.3",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-    "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+    "authoriser_id": "970e4526-67d9-4ed9-b554-f5cf390ab775",
+    "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
     "status": "pending_approval",
     "responded_at": null,
     "created_at": "2016-12-19T02:10:56Z",
@@ -4557,7 +4554,8 @@ func main() {
   "data": {
     "ref": "PR.3",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "authoriser_id": "d194c54b-9183-410c-966b-50485c5ce3f0",
+    "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
     "status": "approved",
     "responded_at": "2016-12-19T02:38:04Z",
     "created_at": "2016-12-19T02:10:56Z",
@@ -4732,7 +4730,8 @@ func main() {
   "data": {
     "ref": "PR.3",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "authoriser_id": "d194c54b-9183-410c-966b-50485c5ce3f0",
+    "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
     "status": "declined",
     "responded_at": "2016-12-19T02:38:04Z",
     "created_at": "2016-12-19T02:10:56Z",
@@ -4907,7 +4906,8 @@ func main() {
   "data": {
     "ref": "PR.3",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "authoriser_id": "970e4526-67d9-4ed9-b554-f5cf390ab775",
+    "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
     "status": "approved",
     "responded_at": "2016-12-19T02:38:04Z",
     "created_at": "2016-12-19T02:10:56Z",
@@ -5225,7 +5225,8 @@ func main() {
     {
       "ref": "PR.2",
       "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-      "authoriser_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
       "status": "approved",
       "responded_at": "2016-12-19T02:10:18Z",
       "created_at": "2016-12-19T02:09:09Z",
@@ -5239,7 +5240,8 @@ func main() {
     {
       "ref": "PR.3",
       "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-      "authoriser_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
       "status": "pending_approval",
       "responded_at": null,
       "created_at": "2016-12-19T02:10:56Z",
@@ -5417,7 +5419,8 @@ func main() {
     {
       "ref": "PR.4",
       "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-      "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
       "status": "approved",
       "responded_at": "2016-12-19T02:10:18Z",
       "created_at": "2016-12-19T02:09:09Z",
@@ -5431,7 +5434,8 @@ func main() {
     {
       "ref": "PR.5",
       "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-      "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
       "status": "pending_approval",
       "responded_at": null,
       "created_at": "2016-12-19T02:10:56Z",
@@ -5773,11 +5777,11 @@ var req = http.request(options, function (res) {
 
 req.write(JSON.stringify({ description: 'The SuperPackage',
   matures_at: '2016-09-13T00:00:00Z',
-  payouts:
+  payouts: 
    [ { amount: 30000,
        description: 'A tandem skydive jump SB23094',
        recipient_id: '48b89364-1577-4c81-ba02-96705895d457',
-       metadata:
+       metadata: 
         { invoice_ref: 'BILL-0001',
           invoice_id: 'c80a9958-e805-47c0-ac2a-c947d7fd778d',
           custom_key: 'Custom string',
@@ -5785,7 +5789,7 @@ req.write(JSON.stringify({ description: 'The SuperPackage',
      { amount: 30000,
        description: 'A scuba dive SDS5464',
        recipient_id: 'dc6f1e60-3803-43ca-a200-7d641816f57f' } ],
-  metadata:
+  metadata: 
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -5923,9 +5927,14 @@ func main() {
 |»» Payout|body|[Payout](#schemapayout)|false|The actual Payout|
 |»»» amount|body|number|true|Amount in cents to pay the recipient|
 |»»» description|body|string|true|Description that both the payer an recipient can see|
-|»»» recipient_id|body|string|true|Contact bank account to pay (`Contact.data.bank_account.id`)|
+|»»» recipient_contact_id|body|string|true|Contact to pay (`Contact.data.id`)|
 |»»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data an certain Split customisations|
 |»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data an certain Split customisations|
+
+#### Detailed descriptions
+
+**»» Payout**: The actual Payout
+<aside class="notice">[23/07/2018] Please note that we've deprecated <code>recipient_id</code> in favour of <code>recipient_contact_id</code>. We will continue to support the use of <code>recipient_id (Contact.data.bank_account.id)</code> but encourage you to use <code>recipient_contact_id (Contact.data.id)</code> to identify the recipient of the payout.</aside>
 
 > Example responses
 
@@ -5938,6 +5947,7 @@ func main() {
     "payouts": [
       {
         "ref": "D.1",
+        "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
         "batch_description": "The SuperPackage",
         "matures_at": "2016-09-13T23:50:44Z",
         "created_at": "2016-09-10T23:50:44Z",
@@ -5945,7 +5955,7 @@ func main() {
         "amount": 30000,
         "description": "A tandem skydive jump SB23094",
         "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
-        "to_id": "48b89364-1577-4c81-ba02-96705895d457",
+        "to_id": "21066764-c103-4e7f-b436-4cee7db5f400",
         "metadata": {
           "invoice_ref": "BILL-0001",
           "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
@@ -5955,14 +5965,15 @@ func main() {
       },
       {
         "ref": "D.2",
+        "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
         "batch_description": "The SuperPackage",
         "matures_at": "2016-09-13T23:50:44Z",
         "created_at": "2016-09-10T23:50:44Z",
         "status": "maturing",
         "amount": 30000,
         "description": "A scuba dive SDS5464",
-        "from_id": "48b89364-1577-4c81-ba02-96705895d457",
-        "to_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+        "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
+        "to_id": "21066764-c103-4e7f-b436-4cee7db5f400"
       }
     ],
     "metadata": {
@@ -6134,6 +6145,7 @@ func main() {
       "payouts": [
         {
           "ref": "D.1",
+          "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
           "batch_description": "This description is only available to the payer",
           "matures_at": "2016-09-13T23:50:44Z",
           "created_at": "2016-09-10T23:50:44Z",
@@ -6141,7 +6153,7 @@ func main() {
           "amount": 30000,
           "description": "The recipient will see this description",
           "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
-          "to_id": "48b89364-1577-4c81-ba02-96705895d457",
+          "to_id": "21066764-c103-4e7f-b436-4cee7db5f400",
           "metadata": {
             "invoice_ref": "BILL-0001",
             "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
@@ -6151,6 +6163,7 @@ func main() {
         },
         {
           "ref": "D.2",
+          "recipient_contact_id": "dc6f1e60-3803-43ca-a200-7d641816f57f",
           "batch_description": "This description is only available to the payer",
           "matures_at": "2016-09-13T23:50:44Z",
           "created_at": "2016-09-10T23:50:44Z",
@@ -6158,7 +6171,7 @@ func main() {
           "amount": 30000,
           "description": "The recipient will see this description",
           "from_id": "48b89364-1577-4c81-ba02-96705895d457",
-          "to_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+          "to_id": "f989d9cd-87fc-4c73-b0a4-1eb0e8768d3b"
         }
       ],
       "metadata": {
@@ -6331,6 +6344,7 @@ Get a single payment by its reference
     "payouts": [
       {
         "ref": "D.1",
+        "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
         "batch_description": "The SuperPackage",
         "matures_at": "2016-09-13T23:50:44Z",
         "created_at": "2016-09-10T23:50:44",
@@ -6338,7 +6352,7 @@ Get a single payment by its reference
         "amount": 30000,
         "description": "A tandem skydive jump SB23094",
         "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
-        "to_id": "48b89364-1577-4c81-ba02-96705895d457",
+        "to_id": "21066764-c103-4e7f-b436-4cee7db5f400",
         "metadata": {
           "invoice_ref": "BILL-0001",
           "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
@@ -6348,6 +6362,7 @@ Get a single payment by its reference
       },
       {
         "ref": "D.2",
+        "recipient_contact_id": "dc6f1e60-3803-43ca-a200-7d641816f57f",
         "batch_description": "The SuperPackage",
         "matures_at": "2016-09-13T23:50:44Z",
         "created_at": "2016-09-10T23:50:44Z",
@@ -6355,7 +6370,7 @@ Get a single payment by its reference
         "amount": 30000,
         "description": "A scuba dive SDS5464",
         "from_id": "48b89364-1577-4c81-ba02-96705895d457",
-        "to_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+        "to_id": "f989d9cd-87fc-4c73-b0a4-1eb0e8768d3b"
       }
     ],
     "metadata": {
@@ -6387,7 +6402,7 @@ curl --request DELETE \
   --url https://api-sandbox.split.cash/payouts/D.1 \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"reason":"Incorrect recipient"}'
+  --data '{"details":"Incorrect recipient"}'
 ```
 
 ```ruby
@@ -6403,7 +6418,7 @@ http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 request = Net::HTTP::Delete.new(url)
 request["content-type"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"reason\":\"Incorrect recipient\"}"
+request.body = "{\"details\":\"Incorrect recipient\"}"
 
 response = http.request(request)
 puts response.read_body
@@ -6436,7 +6451,7 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({ reason: 'Incorrect recipient' }));
+req.write(JSON.stringify({ details: 'Incorrect recipient' }));
 req.end();
 ```
 
@@ -6445,7 +6460,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api-sandbox.split.cash")
 
-payload = "{\"reason\":\"Incorrect recipient\"}"
+payload = "{\"details\":\"Incorrect recipient\"}"
 
 headers = {
     'content-type': "application/json",
@@ -6464,7 +6479,7 @@ print(data.decode("utf-8"))
 HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/payouts/D.1")
   .header("content-type", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"reason\":\"Incorrect recipient\"}")
+  .body("{\"details\":\"Incorrect recipient\"}")
   .asString();
 ```
 
@@ -6475,7 +6490,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"reason":"Incorrect recipient"}');
+$body->append('{"details":"Incorrect recipient"}');
 
 $request->setRequestUrl('https://api-sandbox.split.cash/payouts/D.1');
 $request->setRequestMethod('DELETE');
@@ -6506,7 +6521,7 @@ func main() {
 
 	url := "https://api-sandbox.split.cash/payouts/D.1"
 
-	payload := strings.NewReader("{\"reason\":\"Incorrect recipient\"}")
+	payload := strings.NewReader("{\"details\":\"Incorrect recipient\"}")
 
 	req, _ := http.NewRequest("DELETE", url, payload)
 
@@ -6532,7 +6547,7 @@ You can void any Payout debit from your account that has not yet matured. In the
 
 ```json
 {
-  "reason": "Incorrect recipient"
+  "details": "Incorrect recipient"
 }
 ```
 
@@ -6542,7 +6557,7 @@ You can void any Payout debit from your account that has not yet matured. In the
 |---|---|---|---|---|
 |debit_ref|path|string|true|Payout debit reference|
 |body|body|[VoidAPayoutRequest](#schemavoidapayoutrequest)|false|No description|
-|» reason|body|string|false|Reason why payout has been voided|
+|» details|body|string|false|Optional details about why the payout has been voided|
 
 <h3 id="Void a Payout-responses">Responses</h3>
 
@@ -6647,7 +6662,7 @@ var req = http.request(options, function (res) {
 req.write(JSON.stringify({ for_ref: 'D.1',
   amount: 500,
   reason: 'Because reason',
-  metadata:
+  metadata: 
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -7901,7 +7916,7 @@ var req = http.request(options, function (res) {
 
 req.write(JSON.stringify({ amount: 500,
   reason: 'Because reason',
-  metadata:
+  metadata: 
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -8831,6 +8846,7 @@ func main() {
       "cleared_at": "2016-12-10T23:15:00Z",
       "bank_ref": "DT.9a",
       "status": "Cleared",
+      "party_contact_id": "31354923-b1e9-4d65-b03c-415ead89cbf3",
       "party_name": "Sanford-Rees",
       "party_nickname": null,
       "party_bank_ref": "CT.11",
@@ -8847,6 +8863,7 @@ func main() {
       "cleared_at": null,
       "bank_ref": null,
       "status": " Pending",
+      "party_contact_id": "3c6e31d3-1dc1-448b-9512-0320bc44fdcf",
       "party_name": "Gutmann-Schmidt",
       "party_nickname": null,
       "party_bank_ref": null,
@@ -8863,6 +8880,7 @@ func main() {
       "cleared_at": "2016-12-09T23:15:00Z",
       "bank_ref": "CT.1",
       "status": "Pending",
+      "party_contact_id": "33c6e31d3-1dc1-448b-9512-0320bc44fdcf",
       "party_name": "Price and Sons",
       "party_nickname": "price-and-sons-2",
       "party_bank_ref": null,
@@ -8949,7 +8967,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ expiry_in_seconds: 60,
-  terms:
+  terms: 
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
@@ -10730,7 +10748,7 @@ func main() {
 {
   "amount": 30000,
   "description": "A tandem skydive jump SB23094",
-  "recipient_id": "48b89364-1577-4c81-ba02-96705895d457",
+  "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
   "metadata": {
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
@@ -10746,7 +10764,7 @@ func main() {
 |---|---|---|---|
 |amount|number|true|Amount in cents to pay the recipient|
 |description|string|true|Description that both the payer an recipient can see|
-|recipient_id|string|true|Contact bank account to pay (`Contact.data.bank_account.id`)|
+|recipient_contact_id|string|true|Contact to pay (`Contact.data.id`)|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
 ## VoidAPayoutRequest
@@ -10755,7 +10773,7 @@ func main() {
 
 ```json
 {
-  "reason": "Incorrect recipient"
+  "details": "Incorrect recipient"
 }
 ```
 
@@ -10765,7 +10783,7 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|reason|string|false|Reason why payout has been voided|
+|details|string|false|Optional details about why the payout has been voided|
 
 ## Metadata
 
@@ -10795,6 +10813,7 @@ func main() {
     "payouts": [
       {
         "ref": "D.1",
+        "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
         "batch_description": "The SuperPackage",
         "matures_at": "2016-09-13T23:50:44Z",
         "created_at": "2016-09-10T23:50:44Z",
@@ -10802,7 +10821,7 @@ func main() {
         "amount": 30000,
         "description": "A tandem skydive jump SB23094",
         "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
-        "to_id": "48b89364-1577-4c81-ba02-96705895d457",
+        "to_id": "21066764-c103-4e7f-b436-4cee7db5f400",
         "metadata": {
           "invoice_ref": "BILL-0001",
           "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
@@ -10812,14 +10831,15 @@ func main() {
       },
       {
         "ref": "D.2",
+        "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
         "batch_description": "The SuperPackage",
         "matures_at": "2016-09-13T23:50:44Z",
         "created_at": "2016-09-10T23:50:44Z",
         "status": "maturing",
         "amount": 30000,
         "description": "A scuba dive SDS5464",
-        "from_id": "48b89364-1577-4c81-ba02-96705895d457",
-        "to_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+        "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
+        "to_id": "21066764-c103-4e7f-b436-4cee7db5f400"
       }
     ],
     "metadata": {
@@ -10847,7 +10867,8 @@ func main() {
   "data": {
     "ref": "PR.3",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "authoriser_id": "d194c54b-9183-410c-966b-50485c5ce3f0",
+    "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
     "status": "approved",
     "responded_at": "2016-12-19T02:38:04Z",
     "created_at": "2016-12-19T02:10:56Z",
@@ -10882,7 +10903,8 @@ func main() {
   "data": {
     "ref": "PR.3",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "authoriser_id": "d194c54b-9183-410c-966b-50485c5ce3f0",
+    "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
     "status": "declined",
     "responded_at": "2016-12-19T02:38:04Z",
     "created_at": "2016-12-19T02:10:56Z",
@@ -10920,6 +10942,7 @@ func main() {
       "payouts": [
         {
           "ref": "D.1",
+          "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
           "batch_description": "This description is only available to the payer",
           "matures_at": "2016-09-13T23:50:44Z",
           "created_at": "2016-09-10T23:50:44Z",
@@ -10927,7 +10950,7 @@ func main() {
           "amount": 30000,
           "description": "The recipient will see this description",
           "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
-          "to_id": "48b89364-1577-4c81-ba02-96705895d457",
+          "to_id": "21066764-c103-4e7f-b436-4cee7db5f400",
           "metadata": {
             "invoice_ref": "BILL-0001",
             "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
@@ -10937,6 +10960,7 @@ func main() {
         },
         {
           "ref": "D.2",
+          "recipient_contact_id": "dc6f1e60-3803-43ca-a200-7d641816f57f",
           "batch_description": "This description is only available to the payer",
           "matures_at": "2016-09-13T23:50:44Z",
           "created_at": "2016-09-10T23:50:44Z",
@@ -10944,7 +10968,7 @@ func main() {
           "amount": 30000,
           "description": "The recipient will see this description",
           "from_id": "48b89364-1577-4c81-ba02-96705895d457",
-          "to_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+          "to_id": "f989d9cd-87fc-4c73-b0a4-1eb0e8768d3b"
         }
       ],
       "metadata": {
@@ -10975,6 +10999,7 @@ func main() {
     "payouts": [
       {
         "ref": "D.1",
+        "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
         "batch_description": "The SuperPackage",
         "matures_at": "2016-09-13T23:50:44Z",
         "created_at": "2016-09-10T23:50:44",
@@ -10982,7 +11007,7 @@ func main() {
         "amount": 30000,
         "description": "A tandem skydive jump SB23094",
         "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
-        "to_id": "48b89364-1577-4c81-ba02-96705895d457",
+        "to_id": "21066764-c103-4e7f-b436-4cee7db5f400",
         "metadata": {
           "invoice_ref": "BILL-0001",
           "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
@@ -10992,6 +11017,7 @@ func main() {
       },
       {
         "ref": "D.2",
+        "recipient_contact_id": "dc6f1e60-3803-43ca-a200-7d641816f57f",
         "batch_description": "The SuperPackage",
         "matures_at": "2016-09-13T23:50:44Z",
         "created_at": "2016-09-10T23:50:44Z",
@@ -10999,7 +11025,7 @@ func main() {
         "amount": 30000,
         "description": "A scuba dive SDS5464",
         "from_id": "48b89364-1577-4c81-ba02-96705895d457",
-        "to_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+        "to_id": "f989d9cd-87fc-4c73-b0a4-1eb0e8768d3b"
       }
     ],
     "metadata": {
@@ -11027,7 +11053,7 @@ func main() {
   "description": "Visible to both initiator and authoriser",
   "matures_at": "12/19/2016 2:10:56 AM",
   "amount": 99000,
-  "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+  "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
   "metadata": {
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
@@ -11044,7 +11070,7 @@ func main() {
 |description|string|true|Description visible to the initiator (payee) & authoriser (payer)|
 |matures_at|string|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved|
 |amount|number|true|Amount in cents to pay the initiator|
-|authoriser_id|string|true|The Contact bank account that will be used to pay the PR (`Contact.data.bank_account.id`)'|
+|authoriser_contact_id|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
 ## MakeAPaymentRequestResponse
@@ -11056,7 +11082,8 @@ func main() {
   "data": {
     "ref": "PR.3",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-    "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+    "authoriser_id": "970e4526-67d9-4ed9-b554-f5cf390ab775",
+    "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
     "status": "pending_approval",
     "responded_at": null,
     "created_at": "2016-12-19T02:10:56Z",
@@ -11091,7 +11118,8 @@ func main() {
   "data": {
     "ref": "PR.3",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-    "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "authoriser_id": "970e4526-67d9-4ed9-b554-f5cf390ab775",
+    "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
     "status": "approved",
     "responded_at": "2016-12-19T02:38:04Z",
     "created_at": "2016-12-19T02:10:56Z",
@@ -11127,7 +11155,8 @@ func main() {
     {
       "ref": "PR.2",
       "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-      "authoriser_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
       "status": "approved",
       "responded_at": "2016-12-19T02:10:18Z",
       "created_at": "2016-12-19T02:09:09Z",
@@ -11141,7 +11170,8 @@ func main() {
     {
       "ref": "PR.3",
       "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-      "authoriser_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
       "status": "pending_approval",
       "responded_at": null,
       "created_at": "2016-12-19T02:10:56Z",
@@ -11178,7 +11208,8 @@ func main() {
     {
       "ref": "PR.4",
       "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-      "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
       "status": "approved",
       "responded_at": "2016-12-19T02:10:18Z",
       "created_at": "2016-12-19T02:09:09Z",
@@ -11192,7 +11223,8 @@ func main() {
     {
       "ref": "PR.5",
       "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-      "authoriser_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
       "status": "pending_approval",
       "responded_at": null,
       "created_at": "2016-12-19T02:10:56Z",
@@ -11709,6 +11741,7 @@ func main() {
       "cleared_at": "2016-12-10T23:15:00Z",
       "bank_ref": "DT.9a",
       "status": "Cleared",
+      "party_contact_id": "31354923-b1e9-4d65-b03c-415ead89cbf3",
       "party_name": "Sanford-Rees",
       "party_nickname": null,
       "party_bank_ref": "CT.11",
@@ -11725,6 +11758,7 @@ func main() {
       "cleared_at": null,
       "bank_ref": null,
       "status": " Pending",
+      "party_contact_id": "3c6e31d3-1dc1-448b-9512-0320bc44fdcf",
       "party_name": "Gutmann-Schmidt",
       "party_nickname": null,
       "party_bank_ref": null,
@@ -11741,6 +11775,7 @@ func main() {
       "cleared_at": "2016-12-09T23:15:00Z",
       "bank_ref": "CT.1",
       "status": "Pending",
+      "party_contact_id": "33c6e31d3-1dc1-448b-9512-0320bc44fdcf",
       "party_name": "Price and Sons",
       "party_nickname": "price-and-sons-2",
       "party_bank_ref": null,
