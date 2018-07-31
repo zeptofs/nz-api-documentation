@@ -642,7 +642,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"authoriser_id":"8df89c16-330f-462b-8891-808d7bdceb7f","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}'
+  --data '{"authoriser_contact_id":"8df89c16-330f-462b-8891-808d7bdceb7f","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}'
 ```
 
 ```ruby
@@ -659,7 +659,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"authoriser_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
+request.body = "{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
 
 response = http.request(request)
 puts response.read_body
@@ -693,7 +693,7 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({ authoriser_id: '8df89c16-330f-462b-8891-808d7bdceb7f',
+req.write(JSON.stringify({ authoriser_contact_id: '8df89c16-330f-462b-8891-808d7bdceb7f',
   terms: 
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
@@ -705,7 +705,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api-sandbox.split.cash")
 
-payload = "{\"authoriser_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
+payload = "{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
 
 headers = {
     'content-type': "application/json",
@@ -726,7 +726,7 @@ HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/agr
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"authoriser_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
+  .body("{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
   .asString();
 ```
 
@@ -737,7 +737,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"authoriser_id":"8df89c16-330f-462b-8891-808d7bdceb7f","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}');
+$body->append('{"authoriser_contact_id":"8df89c16-330f-462b-8891-808d7bdceb7f","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}');
 
 $request->setRequestUrl('https://api-sandbox.split.cash/agreements');
 $request->setRequestMethod('POST');
@@ -769,7 +769,7 @@ func main() {
 
 	url := "https://api-sandbox.split.cash/agreements"
 
-	payload := strings.NewReader("{\"authoriser_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
+	payload := strings.NewReader("{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -794,11 +794,13 @@ Propose an Agreement to another Split Contact
 
 <aside class="notice">You can set any of the term metrics to <code>null</code> if you wish them to not have a limit.</aside>
 
+<aside class="notice">[31/07/2018] Please note that we've deprecated <code>authoriser_id</code> in favour of <code>authoriser_contact_id</code>. We will continue to support the use of <code>authoriser_id (Contact.data.account.id)</code> but encourage you to use <code>authoriser_contact_id (Contact.data.id)</code> to identify the authoriser of the Agreement.</aside>
+
 > Body parameter
 
 ```json
 {
-  "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+  "authoriser_contact_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
   "terms": {
     "per_payout": {
       "min_amount": null,
@@ -817,7 +819,7 @@ Propose an Agreement to another Split Contact
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |body|body|[ProposeAgreementRequest](#schemaproposeagreementrequest)|true|No description|
-|» authoriser_id|body|string|true|The Contact's account ID (`Contact.data.account.id`)|
+|» authoriser_contact_id|body|string|false|The Authoriser's contact ID (`Contact.data.id`)|
 |» terms|body|[Terms](#schematerms)|true|Terms|
 |»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
 |»»» min_amount|body|number\|null|false|Minimum amount in cents a PR can be in order to be auto-approved|
@@ -835,8 +837,8 @@ Propose an Agreement to another Split Contact
   "data": {
     "ref": "A.2",
     "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
-    "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-    "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
+    "authoriser_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
+    "contact_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
     "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "proposed",
     "responded_at": null,
@@ -9831,7 +9833,7 @@ func main() {
 
 ```json
 {
-  "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+  "authoriser_contact_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
   "terms": {
     "per_payout": {
       "min_amount": null,
@@ -9851,7 +9853,7 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|authoriser_id|string|true|The Contact's account ID (`Contact.data.account.id`)|
+|authoriser_contact_id|string|false|The Authoriser's contact ID (`Contact.data.id`)|
 |terms|[Terms](#schematerms)|true|No description|
 
 ## Terms
@@ -9929,8 +9931,8 @@ func main() {
   "data": {
     "ref": "A.2",
     "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
-    "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-    "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
+    "authoriser_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
+    "contact_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
     "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "proposed",
     "responded_at": null,
