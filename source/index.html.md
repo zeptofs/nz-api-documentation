@@ -694,7 +694,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ authoriser_contact_id: '8df89c16-330f-462b-8891-808d7bdceb7f',
-  terms: 
+  terms:
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
@@ -3429,7 +3429,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ title: 'Subscription Plan A',
-  terms: 
+  terms:
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
@@ -4247,7 +4247,7 @@ req.write(JSON.stringify({ description: 'Visible to both initiator and authorise
   matures_at: '12/19/2016 2:10:56 AM',
   amount: 99000,
   authoriser_contact_id: 'de86472c-c027-4735-a6a7-234366a27fc7',
-  metadata: 
+  metadata:
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -5726,7 +5726,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"description":"The SuperPackage","matures_at":"2016-09-13T00:00:00Z","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}},{"amount":30000,"description":"A scuba dive SDS5464","recipient_id":"dc6f1e60-3803-43ca-a200-7d641816f57f"}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"description":"The SuperPackage","matures_at":"2016-09-13T00:00:00Z","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}},{"amount":30000,"description":"A scuba dive SDS5464","recipient_contact_id":"dc6f1e60-3803-43ca-a200-7d641816f57f"}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -5743,7 +5743,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_contact_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -5779,19 +5779,19 @@ var req = http.request(options, function (res) {
 
 req.write(JSON.stringify({ description: 'The SuperPackage',
   matures_at: '2016-09-13T00:00:00Z',
-  payouts: 
+  payouts:
    [ { amount: 30000,
        description: 'A tandem skydive jump SB23094',
-       recipient_id: '48b89364-1577-4c81-ba02-96705895d457',
-       metadata: 
+       recipient_contact_id: '48b89364-1577-4c81-ba02-96705895d457',
+       metadata:
         { invoice_ref: 'BILL-0001',
           invoice_id: 'c80a9958-e805-47c0-ac2a-c947d7fd778d',
           custom_key: 'Custom string',
           another_custom_key: 'Maybe a URL' } },
      { amount: 30000,
        description: 'A scuba dive SDS5464',
-       recipient_id: 'dc6f1e60-3803-43ca-a200-7d641816f57f' } ],
-  metadata: 
+       recipient_contact_id: 'dc6f1e60-3803-43ca-a200-7d641816f57f' } ],
+  metadata:
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -5802,7 +5802,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api-sandbox.split.cash")
 
-payload = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_contact_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -5823,7 +5823,7 @@ HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/pay
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_contact_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -5834,7 +5834,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"description":"The SuperPackage","matures_at":"2016-09-13T00:00:00Z","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}},{"amount":30000,"description":"A scuba dive SDS5464","recipient_id":"dc6f1e60-3803-43ca-a200-7d641816f57f"}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"description":"The SuperPackage","matures_at":"2016-09-13T00:00:00Z","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}},{"amount":30000,"description":"A scuba dive SDS5464","recipient_contact_id":"dc6f1e60-3803-43ca-a200-7d641816f57f"}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api-sandbox.split.cash/payments');
 $request->setRequestMethod('POST');
@@ -5866,7 +5866,7 @@ func main() {
 
 	url := "https://api-sandbox.split.cash/payments"
 
-	payload := strings.NewReader("{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_contact_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -5897,7 +5897,7 @@ func main() {
     {
       "amount": 30000,
       "description": "A tandem skydive jump SB23094",
-      "recipient_id": "48b89364-1577-4c81-ba02-96705895d457",
+      "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
       "metadata": {
         "invoice_ref": "BILL-0001",
         "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
@@ -5908,7 +5908,7 @@ func main() {
     {
       "amount": 30000,
       "description": "A scuba dive SDS5464",
-      "recipient_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+      "recipient_contact_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
     }
   ],
   "metadata": {
@@ -6664,7 +6664,7 @@ var req = http.request(options, function (res) {
 req.write(JSON.stringify({ for_ref: 'D.1',
   amount: 500,
   reason: 'Because reason',
-  metadata: 
+  metadata:
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -7918,7 +7918,7 @@ var req = http.request(options, function (res) {
 
 req.write(JSON.stringify({ amount: 500,
   reason: 'Because reason',
-  metadata: 
+  metadata:
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -8969,7 +8969,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ expiry_in_seconds: 60,
-  terms: 
+  terms:
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
@@ -10710,7 +10710,7 @@ func main() {
     {
       "amount": 30000,
       "description": "A tandem skydive jump SB23094",
-      "recipient_id": "48b89364-1577-4c81-ba02-96705895d457",
+      "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
       "metadata": {
         "invoice_ref": "BILL-0001",
         "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
@@ -10721,7 +10721,7 @@ func main() {
     {
       "amount": 30000,
       "description": "A scuba dive SDS5464",
-      "recipient_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
+      "recipient_contact_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
     }
   ],
   "metadata": {
