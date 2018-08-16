@@ -121,11 +121,9 @@ If you're looking to only access your own account via the API, you can generate 
 
 * Now that you have an `access_token` and `refresh_token`, you can interact with your Split account via the API.
 
-    To do so, you must simply append the access token to the header of any API request:
-    
-    `Authorization: Bearer {access_token}`
+    To do so, you must simply append the access token to the header of any API request: `Authorization: Bearer {access_token}`
 
-    <small>The access token expires every 2 hours. To get a new access token use the [refresh grant strategy](/#authentication-and-authorisation) to swap a refresh token for a new access token.</small>
+<aside class="notice">The access token expires every 2 hours. To get a new access token use the <a href="/#authentication-and-authorisation">refresh grant strategy</a> to swap a refresh token for a new access token.</aside>
 
 ## OAuth grant flow
 1. **Register your application with Split**
@@ -1747,6 +1745,7 @@ By default, all incoming Agreements will be returned. You can apply filters to y
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
+|contact_id|query|string|false|Contact ID (`Contact.data.id`), single value, exact match|
 |initiator_id|query|string|false|Initiator ID (`Contact.data.account.id`), single value, exact match|
 |status|query|array[string]|false|Multiple values, exact match|
 
@@ -1961,6 +1960,7 @@ By default, all outgoing Agreements will be returned. You can apply filters to y
 |page|query|string|false|Page of results to return, single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
 |authoriser_id|query|string|false|Authoriser ID (`Contact.data.account.id`), single value, exact match|
+|contact_id|query|string|false|Contact ID (`Contact.data.id`), single value, exact match|
 |status|query|array[string]|false|Exact match|
 
 #### Enumerated Values
