@@ -6453,7 +6453,185 @@ Get a single payment by its reference
 
 <h1 id="Split-API-Payouts">Payouts</h1>
 
-Payouts are what a compose a Payment. One or all Payouts can be voided individually as part of the larger Payment.
+Payouts are what a Payment or Payment Request are made of and can be either a debit or a credit. One or all Payouts can be voided individually as part of the larger Payment or Payment Request.
+
+## Retry a credit/debit Payout
+
+<a id="opIdRetryAPayout"></a>
+
+> Code samples
+
+```shell
+curl --request POST \
+  --url https://api-sandbox.split.cash/payouts/C.2 \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api-sandbox.split.cash/payouts/C.2")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api-sandbox.split.cash",
+  "port": null,
+  "path": "/payouts/C.2",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+
+headers = {
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("POST", "/payouts/C.2", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payouts/C.2")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api-sandbox.split.cash/payouts/C.2');
+$request->setRequestMethod('POST');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api-sandbox.split.cash/payouts/C.2"
+
+	req, _ := http.NewRequest("POST", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`POST /payouts/{ref}`
+
+Split will prefail a debit and its associated credit transaction before ever sending it to the bank if we detect a high probability of insufficient funds.
+
+This endpoint allows you to retry the payout without having to recreate the parent request. e.g A Payment or Payment Request.
+
+<h3 id="Retry-a-credit/debit-Payout-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|ref|path|string|true|Payout debit or credit reference|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "data": {
+    "ref": "C.2",
+    "parent_ref": "PR.039a",
+    "type": "credit",
+    "category": "payout",
+    "created_at": "2016-12-05T23:15:00Z",
+    "matures_at": "2016-12-06T23:15:00Z",
+    "cleared_at": null,
+    "bank_ref": null,
+    "status": "maturing",
+    "party_contact_id": "33c6e31d3-1dc1-448b-9512-0320bc44fdcf",
+    "party_name": "Price and Sons",
+    "party_nickname": "price-and-sons-2",
+    "party_bank_ref": null,
+    "description": "Money for jam",
+    "amount": 1
+  }
+}
+```
+
+<h3 id="Retry a credit/debit Payout-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[RetryPayoutResponse](#schemaretrypayoutresponse)|
 
 ## Void a Payout
 
@@ -6603,7 +6781,7 @@ func main() {
 }
 ```
 
-`DELETE /payouts/{debit_ref}`
+`DELETE /payouts/{ref}`
 
 You can void any Payout debit from your account that has not yet matured. In the case where it has matured, you can send a Refund Request to the Payout recipient once the Payout has successfully cleared in order to reverse the transaction.
 
@@ -6619,7 +6797,7 @@ You can void any Payout debit from your account that has not yet matured. In the
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|debit_ref|path|string|true|Payout debit reference|
+|ref|path|string|true|Payout debit reference|
 |body|body|[VoidAPayoutRequest](#schemavoidapayoutrequest)|false|No description|
 |» details|body|string|false|Optional details about why the payout has been voided|
 
@@ -8909,7 +9087,7 @@ func main() {
       "matures_at": "2016-12-10T23:15:00Z",
       "cleared_at": "2016-12-10T23:15:00Z",
       "bank_ref": "DT.9a",
-      "status": "Cleared",
+      "status": "cleared",
       "party_contact_id": "31354923-b1e9-4d65-b03c-415ead89cbf3",
       "party_name": "Sanford-Rees",
       "party_nickname": null,
@@ -8926,7 +9104,7 @@ func main() {
       "matures_at": "2016-12-09T23:15:00Z",
       "cleared_at": null,
       "bank_ref": null,
-      "status": " Pending",
+      "status": "maturing",
       "party_contact_id": "3c6e31d3-1dc1-448b-9512-0320bc44fdcf",
       "party_name": "Gutmann-Schmidt",
       "party_nickname": null,
@@ -8943,7 +9121,7 @@ func main() {
       "matures_at": "2016-12-06T23:15:00Z",
       "cleared_at": "2016-12-09T23:15:00Z",
       "bank_ref": "CT.1",
-      "status": "Pending",
+      "status": "cleared",
       "party_contact_id": "33c6e31d3-1dc1-448b-9512-0320bc44fdcf",
       "party_name": "Price and Sons",
       "party_nickname": "price-and-sons-2",
@@ -11788,6 +11966,40 @@ func main() {
 |---|---|---|---|
 |data|[object]|true|No description|
 
+## RetryPayoutResponse
+
+<a id="schemaretrypayoutresponse"></a>
+
+```json
+{
+  "data": {
+    "ref": "C.2",
+    "parent_ref": "PR.039a",
+    "type": "credit",
+    "category": "payout",
+    "created_at": "2016-12-05T23:15:00Z",
+    "matures_at": "2016-12-06T23:15:00Z",
+    "cleared_at": null,
+    "bank_ref": null,
+    "status": "maturing",
+    "party_contact_id": "33c6e31d3-1dc1-448b-9512-0320bc44fdcf",
+    "party_name": "Price and Sons",
+    "party_nickname": "price-and-sons-2",
+    "party_bank_ref": null,
+    "description": "Money for jam",
+    "amount": 1
+  }
+}
+```
+
+### Properties
+
+*Retry a payout (response)*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
 ## ListAllTransactionsResponse
 
 <a id="schemalistalltransactionsresponse"></a>
@@ -11804,7 +12016,7 @@ func main() {
       "matures_at": "2016-12-10T23:15:00Z",
       "cleared_at": "2016-12-10T23:15:00Z",
       "bank_ref": "DT.9a",
-      "status": "Cleared",
+      "status": "cleared",
       "party_contact_id": "31354923-b1e9-4d65-b03c-415ead89cbf3",
       "party_name": "Sanford-Rees",
       "party_nickname": null,
@@ -11821,7 +12033,7 @@ func main() {
       "matures_at": "2016-12-09T23:15:00Z",
       "cleared_at": null,
       "bank_ref": null,
-      "status": " Pending",
+      "status": "maturing",
       "party_contact_id": "3c6e31d3-1dc1-448b-9512-0320bc44fdcf",
       "party_name": "Gutmann-Schmidt",
       "party_nickname": null,
@@ -11838,7 +12050,7 @@ func main() {
       "matures_at": "2016-12-06T23:15:00Z",
       "cleared_at": "2016-12-09T23:15:00Z",
       "bank_ref": "CT.1",
-      "status": "Pending",
+      "status": "cleared",
       "party_contact_id": "33c6e31d3-1dc1-448b-9512-0320bc44fdcf",
       "party_name": "Price and Sons",
       "party_nickname": "price-and-sons-2",
