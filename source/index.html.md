@@ -754,7 +754,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ authoriser_contact_id: '8df89c16-330f-462b-8891-808d7bdceb7f',
-  terms:
+  terms: 
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
@@ -3491,7 +3491,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ title: 'Subscription Plan A',
-  terms:
+  terms: 
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
@@ -4309,7 +4309,7 @@ req.write(JSON.stringify({ description: 'Visible to both initiator and authorise
   matures_at: '12/19/2016 2:10:56 AM',
   amount: 99000,
   authoriser_contact_id: 'de86472c-c027-4735-a6a7-234366a27fc7',
-  metadata:
+  metadata: 
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -5122,7 +5122,7 @@ func main() {
 
 `DELETE /payment_requests/{payment_request_ref}`
 
-A PR can only be cancelled if it has not yet matured.
+A Payment Request can be cancelled as long as the associated transaction's state is maturing or matured.
 
 <h3 id="Cancel-a-Payment-Request-parameters" class="parameters">Parameters</h3>
 
@@ -5841,11 +5841,11 @@ var req = http.request(options, function (res) {
 
 req.write(JSON.stringify({ description: 'The SuperPackage',
   matures_at: '2016-09-13T00:00:00Z',
-  payouts:
+  payouts: 
    [ { amount: 30000,
        description: 'A tandem skydive jump SB23094',
        recipient_contact_id: '48b89364-1577-4c81-ba02-96705895d457',
-       metadata:
+       metadata: 
         { invoice_ref: 'BILL-0001',
           invoice_id: 'c80a9958-e805-47c0-ac2a-c947d7fd778d',
           custom_key: 'Custom string',
@@ -5853,7 +5853,7 @@ req.write(JSON.stringify({ description: 'The SuperPackage',
      { amount: 30000,
        description: 'A scuba dive SDS5464',
        recipient_contact_id: 'dc6f1e60-3803-43ca-a200-7d641816f57f' } ],
-  metadata:
+  metadata: 
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -6726,7 +6726,7 @@ var req = http.request(options, function (res) {
 req.write(JSON.stringify({ for_ref: 'D.1',
   amount: 500,
   reason: 'Because reason',
-  metadata:
+  metadata: 
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -7980,7 +7980,7 @@ var req = http.request(options, function (res) {
 
 req.write(JSON.stringify({ amount: 500,
   reason: 'Because reason',
-  metadata:
+  metadata: 
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -9031,7 +9031,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ expiry_in_seconds: 60,
-  terms:
+  terms: 
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();

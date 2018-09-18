@@ -2238,7 +2238,7 @@ paths:
       tags:
         - Payment Requests
       summary: Cancel a Payment Request
-      description: A PR can only be cancelled if it has not yet matured.
+      description: A Payment Request can be cancelled as long as the associated transaction's state is maturing or matured.
       operationId: CancelAPaymentRequest
       parameters:
         - name: payment_request_ref
