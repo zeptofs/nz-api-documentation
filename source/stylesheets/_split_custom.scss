@@ -27,6 +27,11 @@ h3.parameters + table {
 
 li img { border: 1px solid $nav-subitem-bg }
 
+li aside {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .content h1 { background-color: white; }
 
 .content h2, .middle-header {

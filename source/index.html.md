@@ -67,12 +67,16 @@ Okay, lets get things setup!
   
     The quickest way to access your Split account via the API is using
     personal access tokens. Click on your newly created application from your [application
-list](https://go-sandbox.split.cash/oauth/applications) and click on **Personal access**.
+list](https://go-sandbox.split.cash/oauth/applications) and click on **+ Personal Access Token**.
     
-    [![Split locate personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_locate_personal_oauth_tokens.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_locate_personal_oauth_tokens.png)
+    [![Split locate personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_tokens_empty.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_tokens_empty.png)
     
-    [![Split personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_app_personal_tokens.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_app_personal_tokens.png)
+    _(You'll have the option to give the token a title)_
     
+    [![Split personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_token.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_token.png)
+  
+    <aside class="notice">Please note that personal access tokens do not expire.</aside>
+  
 4. **Use personal access token in Postman**
 
     You can use this `access_token` to authorise any requests to the
@@ -86,8 +90,6 @@ list](https://go-sandbox.split.cash/oauth/applications) and click on **Personal 
     You are now ready to interact with your Split account via the
     API! Go ahead and send a request using Postman.
     
-    <small>(Please note that access tokens expire after 2 hours)</small>
-    
     [![Postman use personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_request_response.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_request_response.png)
 
 ## Get started
@@ -96,7 +98,7 @@ This guide will help you setup an OAuth2 app in order to get authenticated & aut
 **Before you start:**
 
 * We use the term **user** below but the user can be a third party or the same user that owns the OAuth2 application.
-* As noted below, the access token expires every 2 hours. To get a new access token use the [refresh grant strategy](/#authentication-and-authorisation) to swap a refresh token for a new access token.
+* As noted below, some access tokens expire every 2 hours. To get a new access token use the [refresh grant strategy](/#authentication-and-authorisation) to swap a refresh token for a new access token.
 
 1. **Create a Split account**
 
@@ -106,24 +108,24 @@ This guide will help you setup an OAuth2 app in order to get authenticated & aut
 
     All requests to the Split API require a `access_token` for authentication. There are two options for obtaining these tokens, the correct option will depend on your use case:
     
-    **Personal access token** If you only need to access your own Split account via the API, then using personal access tokens are the most straight-forward way. Refer to [Personal access token](/#personal-access-token) to setup.
+    **Personal access token** If you only need to access your own Split account via the API, then using personal access tokens are the most straight-forward way. Refer to [Personal access token](/#personal-access-token) to setup. These tokens do not expire so no refreshing is required.
       
-    **OAuth grant flow** When you require your application to act on behalf of other Split accounts you'll need to implement the OAuth grant flow process. Refer to [OAuth grant flow guide](/#oauth-grant-flow) to setup. There is also an [OAuth grant flow tutorial](/#oauth-grant-flow-tutorial).
+    **OAuth grant flow** When you require your application to act on behalf of other Split accounts you'll need to implement the OAuth grant flow process. Refer to [OAuth grant flow guide](/#oauth-grant-flow) to setup. There is also an [OAuth grant flow tutorial](/#oauth-grant-flow-tutorial). These access tokens expire every 2 hours, unless the `offline_access` scope is used in which case the tokens will not expire.
 
 ## Personal access token
-If you're looking to only access your own account via the API, you can generate an access/refresh token pair from the UI.
+If you're looking to only access your own account via the API, you can generate a personal access token from the UI. These tokens do not expire, but can be deleted.
 
 * To do this, sign in to your Split account and [create an application](https://go-sandbox.split.cash/oauth/applications) if you haven't already. Click on your application from your [application list](https://go-sandbox.split.cash/oauth/applications) and click on **Personal access**.
 
-    [![Split locate personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_locate_personal_oauth_tokens.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_locate_personal_oauth_tokens.png)
+    [![Split locate personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_tokens_empty.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_tokens_empty.png)
     
-    [![Split personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_app_personal_tokens.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_app_personal_tokens.png)
+    _(You'll have the option to give the token a title)_
+    
+    [![Split personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_token.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_token.png)
 
-* Now that you have an `access_token` and `refresh_token`, you can interact with your Split account via the API.
+* Now that you have an `access_token` you can interact with your Split account via the API.
 
     To do so, you must simply append the access token to the header of any API request: `Authorization: Bearer {access_token}`
-
-<aside class="notice">The access token expires every 2 hours. To get a new access token use the <a href="/#authentication-and-authorisation">refresh grant strategy</a> to swap a refresh token for a new access token.</aside>
 
 ## OAuth grant flow
 1. **Register your application with Split**
@@ -456,6 +458,9 @@ Scopes define the level of access granted via the OAuth2 authorisation process. 
 | `refund_requests` | Manage user's Refund Requests |
 | `refunds` | Manage user's Refunds |
 | `transactions` | Access user's Transactions |
+| `offline_access` | Create non-expiring access tokens for user |
+
+  <aside class="notice">Please use `offline_access` with discretion, as you'll have no direct way to invalidate the token. Please contact Split Payments immediately if any token may have potentially been compromised.</aside> 
 
 ## Pagination
 
@@ -754,7 +759,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ authoriser_contact_id: '8df89c16-330f-462b-8891-808d7bdceb7f',
-  terms: 
+  terms:
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
@@ -3491,7 +3496,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ title: 'Subscription Plan A',
-  terms: 
+  terms:
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
@@ -4309,7 +4314,7 @@ req.write(JSON.stringify({ description: 'Visible to both initiator and authorise
   matures_at: '12/19/2016 2:10:56 AM',
   amount: 99000,
   authoriser_contact_id: 'de86472c-c027-4735-a6a7-234366a27fc7',
-  metadata: 
+  metadata:
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -5841,11 +5846,11 @@ var req = http.request(options, function (res) {
 
 req.write(JSON.stringify({ description: 'The SuperPackage',
   matures_at: '2016-09-13T00:00:00Z',
-  payouts: 
+  payouts:
    [ { amount: 30000,
        description: 'A tandem skydive jump SB23094',
        recipient_contact_id: '48b89364-1577-4c81-ba02-96705895d457',
-       metadata: 
+       metadata:
         { invoice_ref: 'BILL-0001',
           invoice_id: 'c80a9958-e805-47c0-ac2a-c947d7fd778d',
           custom_key: 'Custom string',
@@ -5853,7 +5858,7 @@ req.write(JSON.stringify({ description: 'The SuperPackage',
      { amount: 30000,
        description: 'A scuba dive SDS5464',
        recipient_contact_id: 'dc6f1e60-3803-43ca-a200-7d641816f57f' } ],
-  metadata: 
+  metadata:
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -6904,7 +6909,7 @@ var req = http.request(options, function (res) {
 req.write(JSON.stringify({ for_ref: 'D.1',
   amount: 500,
   reason: 'Because reason',
-  metadata: 
+  metadata:
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -8158,7 +8163,7 @@ var req = http.request(options, function (res) {
 
 req.write(JSON.stringify({ amount: 500,
   reason: 'Because reason',
-  metadata: 
+  metadata:
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -9209,7 +9214,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ expiry_in_seconds: 60,
-  terms: 
+  terms:
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
