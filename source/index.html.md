@@ -429,6 +429,33 @@ As an example, the following authorisation URL would display the **personal sign
 You can also pass the values directly to the sign up page outside of the OAuth2 authorisation process. Click on the following link to see the values preloaded: [https://go-sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgeco&first_name=George](https://go-sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgceco&first_name=George).
 
 ## Testing details
+### Payment failure bank accounts
+You can send Payments to the following reserved bank accounts to trigger specific failures.
+
+| Failure type             | Branch code (BSB) | Account number |
+|--------------------------|-------------------|----------------|
+| invalid_bsb_number       | `100000`          | `99999`        |
+| account_closed           | `300000`          | `99999`        |
+| customer_deceased        | `400000`          | `99999`        |
+| incorrect_account_number | `500000`          | `99999`        |
+| refer_to_split           | `700000`          | `99999`        |
+
+### Payment Request failure bank accounts
+You can send Payment Requests to the following reserved bank accounts to trigger specific failures.
+
+| Failure type             | Branch code (BSB) | Account number |
+|--------------------------|-------------------|----------------|
+| invalid_bsb_number       | `100000`          | `99999`        |
+| payment_stopped          | `200000`          | `99999`        |
+| account_closed           | `300000`          | `99999`        |
+| customer_deceased        | `400000`          | `99999`        |
+| incorrect_account_number | `500000`          | `99999`        |
+| refer_to_customer        | `600000`          | `99999`        |
+| refer_to_split           | `700000`          | `99999`        |
+| insufficient_funds       | `800000`          | `99999`        |
+
+<aside class="notice">Ensure you have a an Agreement with a Contact using one of the above bank accounts before you send a Payment Request or it'll be declined. By default, all Agreements sent to Contacts with a failure bank account will be automatically accepted.</aside>
+### Instant account verification accounts
 When using any of our hosted solutions ([Payment Requests](https://help.split.cash/payment-requests/open-payment-requests), [Open Agreements](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreements](http://help.split.cash/agreements/unassigned-agreement)) you may want to test the [Instant Account Verification (IAV)](http://help.split.cash/bank-accounts/instant-account-verification-iav) process where we accept online banking credentials to validate bank account access. To do so, you can use the following credentials:
 
 | Login | Password |
