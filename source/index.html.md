@@ -8898,6 +8898,7 @@ A transaction (debit or credit) can have the following statuses:
       "status": "returned",
       "failure_reason": "refer_to_customer",
       "failure_details": "Incorrect recipient"
+      "party_contact_id": "26297f44-c5e1-40a1-9864-3e0b0754c32a",
       "party_name": "Sanford-Rees",
       "party_nickname": "sanford-rees-8",
       "description": null,
@@ -9126,7 +9127,7 @@ func main() {
       "party_nickname": null,
       "party_bank_ref": "CT.11",
       "description": null,
-      "amount": 1
+      "amount": 20000
     },
     {
       "ref": "D.2",
@@ -9143,11 +9144,11 @@ func main() {
       "party_nickname": null,
       "party_bank_ref": null,
       "description": "Batteries for hire",
-      "amount": 1
+      "amount": 2949299
     },
     {
       "ref": "C.2",
-      "parent_ref": null,
+      "parent_ref": "PB.s0z",
       "type": "credit",
       "category": "payout",
       "created_at": "2016-12-05T23:15:00Z",
@@ -9159,8 +9160,12 @@ func main() {
       "party_name": "Price and Sons",
       "party_nickname": "price-and-sons-2",
       "party_bank_ref": null,
-      "description": "Money for jam",
-      "amount": 1
+      "description": "Online purchase",
+      "amount": 19999,
+      "metadata": {
+        "customer_id": "xur4492",
+        "product_ref": "TSXL392110x"
+      }
     }
   ]
 }
@@ -12073,7 +12078,7 @@ func main() {
       "party_nickname": null,
       "party_bank_ref": "CT.11",
       "description": null,
-      "amount": 1
+      "amount": 20000
     },
     {
       "ref": "D.2",
@@ -12090,11 +12095,11 @@ func main() {
       "party_nickname": null,
       "party_bank_ref": null,
       "description": "Batteries for hire",
-      "amount": 1
+      "amount": 2949299
     },
     {
       "ref": "C.2",
-      "parent_ref": null,
+      "parent_ref": "PB.s0z",
       "type": "credit",
       "category": "payout",
       "created_at": "2016-12-05T23:15:00Z",
@@ -12106,8 +12111,12 @@ func main() {
       "party_name": "Price and Sons",
       "party_nickname": "price-and-sons-2",
       "party_bank_ref": null,
-      "description": "Money for jam",
-      "amount": 1
+      "description": "Online purchase",
+      "amount": 19999,
+      "metadata": {
+        "customer_id": "xur4492",
+        "product_ref": "TSXL392110x"
+      }
     }
   ]
 }
