@@ -9067,7 +9067,7 @@ func main() {
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
-|ref|query|string|false|Single value, exact match|
+|ref (debit or credit)|query|string|false|Single value, exact match|
 |parent_ref|query|string|false|Single value, exact match|
 |bank_ref|query|string|false|Single value, exact match|
 |status|query|array[string]|false|Multiple values, exact match|

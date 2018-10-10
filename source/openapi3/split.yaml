@@ -2736,7 +2736,7 @@ paths:
           schema:
             type: string
           example: '100'
-        - name: ref
+        - name: ref (debit or credit)
           in: query
           description: 'Single value, exact match'
           style: form
