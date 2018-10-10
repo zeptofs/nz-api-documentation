@@ -786,7 +786,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ authoriser_contact_id: '8df89c16-330f-462b-8891-808d7bdceb7f',
-  terms:
+  terms: 
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
@@ -3523,7 +3523,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ title: 'Subscription Plan A',
-  terms:
+  terms: 
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
@@ -4341,7 +4341,7 @@ req.write(JSON.stringify({ description: 'Visible to both initiator and authorise
   matures_at: '12/19/2016 2:10:56 AM',
   amount: 99000,
   authoriser_contact_id: 'de86472c-c027-4735-a6a7-234366a27fc7',
-  metadata:
+  metadata: 
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -4498,6 +4498,7 @@ func main() {
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[MakeAPaymentRequestResponse](#schemamakeapaymentrequestresponse)|
+|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|When a payment is requested from an Anyone Contact with no valid Agreement|[MakeAPaymentRequestWithNoAgreementResponse](#schemamakeapaymentrequestwithnoagreementresponse)|
 
 ## Approve a Payment Request
 
@@ -5873,11 +5874,11 @@ var req = http.request(options, function (res) {
 
 req.write(JSON.stringify({ description: 'The SuperPackage',
   matures_at: '2016-09-13T00:00:00Z',
-  payouts:
+  payouts: 
    [ { amount: 30000,
        description: 'A tandem skydive jump SB23094',
        recipient_contact_id: '48b89364-1577-4c81-ba02-96705895d457',
-       metadata:
+       metadata: 
         { invoice_ref: 'BILL-0001',
           invoice_id: 'c80a9958-e805-47c0-ac2a-c947d7fd778d',
           custom_key: 'Custom string',
@@ -5885,7 +5886,7 @@ req.write(JSON.stringify({ description: 'The SuperPackage',
      { amount: 30000,
        description: 'A scuba dive SDS5464',
        recipient_contact_id: 'dc6f1e60-3803-43ca-a200-7d641816f57f' } ],
-  metadata:
+  metadata: 
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -6936,7 +6937,7 @@ var req = http.request(options, function (res) {
 req.write(JSON.stringify({ for_ref: 'D.1',
   amount: 500,
   reason: 'Because reason',
-  metadata:
+  metadata: 
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -8190,7 +8191,7 @@ var req = http.request(options, function (res) {
 
 req.write(JSON.stringify({ amount: 500,
   reason: 'Because reason',
-  metadata:
+  metadata: 
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -9241,7 +9242,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ expiry_in_seconds: 60,
-  terms:
+  terms: 
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
@@ -11382,6 +11383,24 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
+
+## MakeAPaymentRequestWithNoAgreementResponse
+
+<a id="schemamakeapaymentrequestwithnoagreementresponse"></a>
+
+```json
+{
+  "errors": "Authoriser contact (de86472c-c027-4735-a6a7-234366a27fc7) is not a Split account holder and therefore must have a valid agreement in place before a Payment Request can be issued."
+}
+```
+
+### Properties
+
+*Make a Payment Request to an Anyone Contact with no valid Agreement (response)*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|errors|string|true|No description|
 
 ## GetAPaymentRequestResponse
 
