@@ -4460,7 +4460,7 @@ func main() {
 |---|---|---|---|---|
 |body|body|[MakeAPaymentRequestRequest](#schemamakeapaymentrequestrequest)|true|No description|
 |» description|body|string|true|Description visible to the initiator (payee) & authoriser (payer)|
-|» matures_at|body|string|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved|
+|» matures_at|body|string|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
 |» amount|body|number|true|Amount in cents to pay the initiator|
 |» authoriser_contact_id|body|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data an certain Split customisations|
@@ -6019,7 +6019,7 @@ func main() {
 |---|---|---|---|---|
 |body|body|[MakeAPaymentRequest](#schemamakeapaymentrequest)|true|No description|
 |» description|body|string|true|User description. Only visible to the payer|
-|» matures_at|body|string|true|Date & time in UTC ISO8601 the Payment should be processed|
+|» matures_at|body|string|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
 |» payouts|body|[[Payout](#schemapayout)]|true|One or many Payouts|
 |»» Payout|body|[Payout](#schemapayout)|false|The actual Payout|
 |»»» amount|body|number|true|Amount in cents to pay the recipient|
@@ -11016,7 +11016,7 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |description|string|true|User description. Only visible to the payer|
-|matures_at|string|true|Date & time in UTC ISO8601 the Payment should be processed|
+|matures_at|string|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
 |payouts|[[Payout](#schemapayout)]|true|One or many Payouts|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
@@ -11348,7 +11348,7 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |description|string|true|Description visible to the initiator (payee) & authoriser (payer)|
-|matures_at|string|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved|
+|matures_at|string|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
 |amount|number|true|Amount in cents to pay the initiator|
 |authoriser_contact_id|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
 |metadata|[Metadata](#schemametadata)|false|No description|
