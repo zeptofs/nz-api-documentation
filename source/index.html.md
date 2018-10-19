@@ -2596,6 +2596,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
 |account_id|query|string|false|Single value, string search|
 |name|query|string|false|Single value, string search|
 |nickname|query|string|false|Single value, string search|
+|email|query|string|false|Single value, string search|
 |bank_account_id|query|string|false|Single value, exact match|
 |bank_account_branch_code|query|string|false|Single value, exact match|
 |bank_account_account_number|query|string|false|Single value, exact match|

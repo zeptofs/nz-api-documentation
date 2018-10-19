@@ -1847,6 +1847,13 @@ paths:
           schema:
             type: string
           example: Some_nickname
+        - name: email
+          in: query
+          description: 'Single value, string search'
+          style: form
+          schema:
+            type: string
+          example: george@gmail.com
         - name: bank_account_id
           in: query
           description: 'Single value, exact match'
