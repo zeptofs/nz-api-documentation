@@ -721,6 +721,7 @@ An Agreement can have the following statuses:
 | `accepted` | The Agreement have been accepted and is active. |
 | `cancelled` | The Agreement has been cancelled (The initiator or authoriser can cancel an Agreement). |
 | `declined` | The Agreement has been declined. |
+| `expended` | The Agreement has been expended (Only for [single_use Unassigned Agreements](/#Split-API-Unassigned-Agreements)). |
 
 ## Propose an Agreement
 
@@ -9372,6 +9373,7 @@ Create an Unassigned Agreement
 |---|---|---|---|---|
 |body|body|[ProposeUnassignedAgreementRequest](#schemaproposeunassignedagreementrequest)|true|No description|
 |» expiry_in_seconds|body|number|true|The amount of time in seconds before the Unassigned Agreement can no longer be accepted.|
+|» single_use|body|boolean|false|Optionally propose a single use agreement. When the Unassigned Agreement is accepted and a Payment Request is approved according to the Agreement terms, the agreement will automatically become <code>expended</code>.<br><br>The proposed agreement must have equal max/min <code>per_payout</code> amounts and <code>null</code> <code>per_frequency</code> amounts.<br><br>Furthermore, we will automatically check that the authoriser's bank account has sufficient funds to honour the agreement terms.|
 |» terms|body|[Terms](#schematerms)|true|Terms|
 |»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
 |»»» min_amount|body|number\|null|false|Minimum amount in cents a PR can be in order to be auto-approved|
@@ -12158,6 +12160,7 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |expiry_in_seconds|number|true|The amount of time in seconds before the Unassigned Agreement can no longer be accepted.|
+|single_use|boolean|false|Optionally propose a single use agreement. When the Unassigned Agreement is accepted and a Payment Request is approved according to the Agreement terms, the agreement will automatically become <code>expended</code>.<br><br>The proposed agreement must have equal max/min <code>per_payout</code> amounts and <code>null</code> <code>per_frequency</code> amounts.<br><br>Furthermore, we will automatically check that the authoriser's bank account has sufficient funds to honour the agreement terms.|
 |terms|[Terms](#schematerms)|true|No description|
 
 ## ProposeUnassignedAgreementResponse
