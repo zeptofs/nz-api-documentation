@@ -2831,6 +2831,13 @@ paths:
           schema:
             type: string
           example: CT.3a
+        - name: party_contact_id
+          in: query
+          description: 'Single value, exact match'
+          style: form
+          schema:
+            type: string
+          example: a67036fc-217e-437a-83f4-89e90724bea0
         - name: description
           in: query
           description: 'Single value, string search'
