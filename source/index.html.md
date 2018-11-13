@@ -435,7 +435,7 @@ Try out your happy paths and not-so happy paths, the sandbox is a great place to
 
 The sandbox works on 2.5 minute cycle to better illustrate how transactions are received and the lifecyle they go through. In other words, every 2.5 minutes we simulate communicating with financial institutions and update statuses and events accordingly.
 ## Testing details
-All 6 digits BSBs are valid in the sandbox with the exception of `100000` which is a place keeper for an invalid BSB. In production, only valid and real BSB are accepted. 
+All 6 digits BSBs are valid in the sandbox with the exception of `100000` which is a place keeper for an invalid BSB. In production, only valid and real BSB are accepted.
 ### Payment failure bank accounts
 You can send Payments to the following reserved bank accounts to trigger specific failures.
 
@@ -792,7 +792,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ authoriser_contact_id: '8df89c16-330f-462b-8891-808d7bdceb7f',
-  terms: 
+  terms:
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
@@ -3530,7 +3530,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ title: 'Subscription Plan A',
-  terms: 
+  terms:
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
@@ -4293,7 +4293,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"description":"Visible to both initiator and authoriser","matures_at":"12/19/2016 2:10:56 AM","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -4310,7 +4310,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"12/19/2016 2:10:56 AM\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -4345,10 +4345,10 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ description: 'Visible to both initiator and authoriser',
-  matures_at: '12/19/2016 2:10:56 AM',
+  matures_at: '2016-12-19T02:10:56Z',
   amount: 99000,
   authoriser_contact_id: 'de86472c-c027-4735-a6a7-234366a27fc7',
-  metadata: 
+  metadata:
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -4359,7 +4359,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api-sandbox.split.cash")
 
-payload = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"12/19/2016 2:10:56 AM\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -4380,7 +4380,7 @@ HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/pay
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"12/19/2016 2:10:56 AM\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -4391,7 +4391,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"description":"Visible to both initiator and authoriser","matures_at":"12/19/2016 2:10:56 AM","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api-sandbox.split.cash/payment_requests');
 $request->setRequestMethod('POST');
@@ -4423,7 +4423,7 @@ func main() {
 
 	url := "https://api-sandbox.split.cash/payment_requests"
 
-	payload := strings.NewReader("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"12/19/2016 2:10:56 AM\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -4451,7 +4451,7 @@ func main() {
 ```json
 {
   "description": "Visible to both initiator and authoriser",
-  "matures_at": "12/19/2016 2:10:56 AM",
+  "matures_at": "2016-12-19T02:10:56Z",
   "amount": 99000,
   "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
   "metadata": {
@@ -5881,11 +5881,11 @@ var req = http.request(options, function (res) {
 
 req.write(JSON.stringify({ description: 'The SuperPackage',
   matures_at: '2016-09-13T00:00:00Z',
-  payouts: 
+  payouts:
    [ { amount: 30000,
        description: 'A tandem skydive jump SB23094',
        recipient_contact_id: '48b89364-1577-4c81-ba02-96705895d457',
-       metadata: 
+       metadata:
         { invoice_ref: 'BILL-0001',
           invoice_id: 'c80a9958-e805-47c0-ac2a-c947d7fd778d',
           custom_key: 'Custom string',
@@ -5893,7 +5893,7 @@ req.write(JSON.stringify({ description: 'The SuperPackage',
      { amount: 30000,
        description: 'A scuba dive SDS5464',
        recipient_contact_id: 'dc6f1e60-3803-43ca-a200-7d641816f57f' } ],
-  metadata: 
+  metadata:
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -6944,7 +6944,7 @@ var req = http.request(options, function (res) {
 req.write(JSON.stringify({ for_ref: 'D.1',
   amount: 500,
   reason: 'Because reason',
-  metadata: 
+  metadata:
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -8198,7 +8198,7 @@ var req = http.request(options, function (res) {
 
 req.write(JSON.stringify({ amount: 500,
   reason: 'Because reason',
-  metadata: 
+  metadata:
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
 req.end();
@@ -9255,7 +9255,7 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ expiry_in_seconds: 60,
-  terms: 
+  terms:
    { per_payout: { min_amount: null, max_amount: 10000 },
      per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
@@ -11340,7 +11340,7 @@ func main() {
 ```json
 {
   "description": "Visible to both initiator and authoriser",
-  "matures_at": "12/19/2016 2:10:56 AM",
+  "matures_at": "2016-12-19T02:10:56Z",
   "amount": 99000,
   "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
   "metadata": {
