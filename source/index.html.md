@@ -939,6 +939,7 @@ Propose an Agreement to another Split Contact
     "contact_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
     "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "proposed",
+    "status_reason": null,
     "responded_at": null,
     "created_at": "2017-03-20T00:53:27Z",
     "terms": {
@@ -1118,6 +1119,7 @@ Approve an incoming Agreement
     "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
     "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "accepted",
+    "status_reason": null,
     "responded_at": "2017-03-20T02:13:11Z",
     "created_at": "2017-03-20T00:53:27Z",
     "terms": {
@@ -1297,6 +1299,7 @@ Decline an incoming Agreement
     "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
     "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "declined",
+    "status_reason": null,
     "responded_at": "2017-03-20T02:13:11Z",
     "created_at": "2017-03-20T00:53:27Z",
     "terms": {
@@ -1476,6 +1479,7 @@ Get a single Agreement by its reference
     "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
     "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "approved",
+    "status_reason": null,
     "responded_at": "2017-03-20T02:13:11Z",
     "created_at": "2017-03-20T00:53:27Z",
     "terms": {
@@ -1810,6 +1814,7 @@ By default, all incoming Agreements will be returned. You can apply filters to y
       "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
       "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
       "status": "proposed",
+      "status_reason": null,
       "responded_at": null,
       "created_at": "2017-03-20T00:53:27Z",
       "terms": {
@@ -1830,6 +1835,7 @@ By default, all incoming Agreements will be returned. You can apply filters to y
       "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
       "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
       "status": "proposed",
+      "status_reason": null,
       "responded_at": null,
       "created_at": "2017-03-16T22:51:48Z",
       "terms": {
@@ -2024,6 +2030,7 @@ By default, all outgoing Agreements will be returned. You can apply filters to y
       "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
       "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
       "status": "proposed",
+      "status_reason": null,
       "responded_at": null,
       "created_at": "2017-03-20T00:53:27Z",
       "terms": {
@@ -2044,6 +2051,7 @@ By default, all outgoing Agreements will be returned. You can apply filters to y
       "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
       "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
       "status": "proposed",
+      "status_reason": null,
       "responded_at": null,
       "created_at": "2017-03-16T22:51:48Z",
       "terms": {
@@ -10222,6 +10230,7 @@ func main() {
     "contact_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
     "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "proposed",
+    "status_reason": null,
     "responded_at": null,
     "created_at": "2017-03-20T00:53:27Z",
     "terms": {
@@ -10259,6 +10268,7 @@ func main() {
     "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
     "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "accepted",
+    "status_reason": null,
     "responded_at": "2017-03-20T02:13:11Z",
     "created_at": "2017-03-20T00:53:27Z",
     "terms": {
@@ -10296,6 +10306,7 @@ func main() {
     "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
     "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "declined",
+    "status_reason": null,
     "responded_at": "2017-03-20T02:13:11Z",
     "created_at": "2017-03-20T00:53:27Z",
     "terms": {
@@ -10333,6 +10344,7 @@ func main() {
     "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
     "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
     "status": "approved",
+    "status_reason": null,
     "responded_at": "2017-03-20T02:13:11Z",
     "created_at": "2017-03-20T00:53:27Z",
     "terms": {
@@ -10371,6 +10383,7 @@ func main() {
       "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
       "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
       "status": "proposed",
+      "status_reason": null,
       "responded_at": null,
       "created_at": "2017-03-20T00:53:27Z",
       "terms": {
@@ -10391,6 +10404,7 @@ func main() {
       "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
       "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
       "status": "proposed",
+      "status_reason": null,
       "responded_at": null,
       "created_at": "2017-03-16T22:51:48Z",
       "terms": {
@@ -10430,6 +10444,7 @@ func main() {
       "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
       "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
       "status": "proposed",
+      "status_reason": null,
       "responded_at": null,
       "created_at": "2017-03-20T00:53:27Z",
       "terms": {
@@ -10450,6 +10465,7 @@ func main() {
       "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
       "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
       "status": "proposed",
+      "status_reason": null,
       "responded_at": null,
       "created_at": "2017-03-16T22:51:48Z",
       "terms": {
