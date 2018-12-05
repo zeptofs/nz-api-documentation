@@ -6511,7 +6511,7 @@ Payouts are what a Payment or Payment Request are made of and can be either a de
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/payouts/C.2 \
+  --url https://api-sandbox.split.cash/payouts/C.2/retry \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -6520,7 +6520,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payouts/C.2")
+url = URI("https://api-sandbox.split.cash/payouts/C.2/retry")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -6541,7 +6541,7 @@ var options = {
   "method": "POST",
   "hostname": "api-sandbox.split.cash",
   "port": null,
-  "path": "/payouts/C.2",
+  "path": "/payouts/C.2/retry",
   "headers": {
     "accept": "application/json",
     "authorization": "Bearer {access-token}"
@@ -6574,7 +6574,7 @@ headers = {
     'authorization': "Bearer {access-token}"
     }
 
-conn.request("POST", "/payouts/C.2", headers=headers)
+conn.request("POST", "/payouts/C.2/retry", headers=headers)
 
 res = conn.getresponse()
 data = res.read()
@@ -6583,7 +6583,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payouts/C.2")
+HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payouts/C.2/retry")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -6595,7 +6595,7 @@ HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/pay
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payouts/C.2');
+$request->setRequestUrl('https://api-sandbox.split.cash/payouts/C.2/retry');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -6619,7 +6619,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payouts/C.2"
+	url := "https://api-sandbox.split.cash/payouts/C.2/retry"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -6637,7 +6637,7 @@ func main() {
 }
 ```
 
-`POST /payouts/{ref}`
+`POST /payouts/{ref}/retry`
 
 Split will prefail a debit and its associated credit transaction before ever sending it to the bank if we detect a high probability of insufficient funds.
 
