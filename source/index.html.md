@@ -8884,6 +8884,7 @@ A transaction (debit or credit) can have the following statuses:
 |--------|-------------|
 | `maturing` | The maturation date has not yet been reached |
 | `matured` | The maturation date has been reached and the transaction is eligible for processing. |
+| `preprocessing` | The transaction is undergoing pre-checks before being sent to the bank. |
 | `processing` | The transaction has been submitted to the bank. |
 | `clearing` | Waiting for confirmation from the bank that the transaction has succeeded. |
 | `cleared` | The transaction is complete. |
@@ -9107,6 +9108,7 @@ func main() {
 |---|---|
 |status|maturing|
 |status|matured|
+|status|preprocessing|
 |status|processing|
 |status|clearing|
 |status|cleared|
