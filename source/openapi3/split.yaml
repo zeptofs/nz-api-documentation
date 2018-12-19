@@ -2010,6 +2010,29 @@ paths:
                 $ref: '#/components/schemas/UpdateAContactResponse'
         '404':
           description: Not Found
+  '/contacts/{id}/refresh_balance':
+    post:
+      tags:
+        - Contacts
+      summary: Refresh contact bank connection
+      description: Request the bank connection for a contact to refresh available funds. This is intended for use in conjuction with the [Payment Request](/#request-payment) `precheck_funds` option.
+      operationId: RefreshBalanceContact
+      parameters:
+        - name: id
+          in: path
+          description: Contact ID (`Contact.data.id`)
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: UUID
+          example: 55afddde-4296-4daf-8e49-7ba481ef9608
+      responses:
+        '204':
+          description: No Content (success)
+        '422':
+          description: Unprocessable Entity (errors)
   /open_agreements:
     post:
       tags:
@@ -3973,6 +3996,10 @@ components:
           type: string
           description: The Contact the payment will be requested from (`Contact.data.id`)'
           example: de86472c-c027-4735-a6a7-234366a27fc7
+        precheck_funds:
+          type: boolean
+          description: Optional parameter to enforce prechecking of available funds before approving payment request. Authoriser contact must have valid agreement and bank connection. If the available funds for a contact is out of date, the payment request will have a state of `unverified` while a balance check is run. To help avoid this delay, a balance refresh can be run preemptively, see [Contact balance refresh](/#refresh-contact-bank-connection) 
+          example: "false"
         metadata:
           $ref: '#/components/schemas/Metadata'
     MakeAPaymentRequestResponse:
