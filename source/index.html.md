@@ -3584,7 +3584,7 @@ func main() {
 
 `POST /contacts/{id}/refresh_balance`
 
-Request the bank connection for a contact to refresh available funds. This is intended for use in conjuction with the `precheck_funds` option, see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)
+Request the bank connection for a contact to refresh available funds. This is intended for use in conjunction with the `precheck_funds` option, see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)
 
 <h3 id="Refresh-contact-bank-connection-parameters" class="parameters">Parameters</h3>
 
@@ -4427,16 +4427,20 @@ A Payment Request can have the following statuses:
 | Status | Description |
 |-------|-------------|
 | `pending_approval` | Waiting for the authoriser to approve the PR. |
-| `unverified` | Waiting for bank connection to refresh available funds (only applicable when `precheck_funds` enabled). |
+| `unverified` | Waiting for available funds response (only applicable when `precheck_funds` enabled). |
 | `approved` | The authoriser has approved the PR. |
 | `declined` | The payer has declined the PR. |
 | `cancelled` | The initiator has cancelled the PR. |
 ### Precheck funds lifecycle
-When the `precheck_funds` option is enabled, prechecking of available funds will be completed before approving payment request. The authoriser contact must have valid agreement and bank connection for this option to work. 
+<aside class="notice">Split will automatically precheck for available funds right before debit messages are sent to the bank. You can however enable prechecking earlier in the process such as when a Payment Request is approved.</aside>
+When the `precheck_funds` option is enabled, prechecking of available funds will be completed before approving the Payment Request. The authoriser contact must have valid agreement and bank connection to make use of this option.
 
-There is **synchronous** and **asynchronous** lifecycles for this option. If the available funds for a contact is out of date, the payment request will follow an **asynchronous** path and return the payment request with a state of `unverified` while a balance check is run. Once the precheck has completed, it will approve or decline the payment request based on available funds. This process can be followed by subscribing to the relevent webhooks.
+There are **synchronous** and **asynchronous** lifecycles when the `precheck_funds` option is enabled.
 
-If the available funds for a contact is current, it will responsed immediately(**synchronously**) with either a state of `approved` or an error meesage if there is insuffient funds for the request. If you prefer the synchronous response you can preemptively run a balance refresh, see [Contact balance refresh](/#refresh-contact-bank-connection) atleast 1 minute before making the payment request.
++ When the available funds for a contact's bank account are considered out of date, the API response will return the Payment Request with a state of `unverified` while we refresh and ensure there are sufficient available funds. Once the precheck has completed, the Payment Request state will transition to either `approved` or `declined`. This process can be followed by subscribing to the relevant webhook events or regularly polling the Payment Request and verifying its status.
++ When the available funds for a contact are current, the API will respond immediately with a final state of either `approved` or an error message if there are insufficient funds.
+
+You can gain some control over this process by preemptively telling Split to refresh a contact's available balance at least 1 minute before making a Payment Request. See [Contact balance refresh](/#refresh-contact-bank-connection) for more.
 
 ## Request Payment
 
@@ -4629,7 +4633,7 @@ func main() {
 |» matures_at|body|string|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
 |» amount|body|number|true|Amount in cents to pay the initiator|
 |» authoriser_contact_id|body|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
-|» precheck_funds|body|boolean|false|Enforce prechecking of available funds before approving payment request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
+|» precheck_funds|body|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data an certain Split customisations|
 
 > Example responses
@@ -11531,7 +11535,7 @@ func main() {
 |matures_at|string|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
 |amount|number|true|Amount in cents to pay the initiator|
 |authoriser_contact_id|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
-|precheck_funds|boolean|false|Enforce prechecking of available funds before approving payment request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
+|precheck_funds|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
 ## MakeAPaymentRequestResponse
