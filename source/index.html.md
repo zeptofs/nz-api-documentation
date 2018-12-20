@@ -3584,7 +3584,7 @@ func main() {
 
 `POST /contacts/{id}/refresh_balance`
 
-Request the bank connection for a contact to refresh available funds. This is intended for use in conjuction with the [Payment Request](/#request-payment) `precheck_funds` option.
+Request the bank connection for a contact to refresh available funds. This is intended for use in conjuction with the `precheck_funds` option, see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)
 
 <h3 id="Refresh-contact-bank-connection-parameters" class="parameters">Parameters</h3>
 
@@ -4427,9 +4427,16 @@ A Payment Request can have the following statuses:
 | Status | Description |
 |-------|-------------|
 | `pending_approval` | Waiting for the authoriser to approve the PR. |
+| `unverified` | Waiting for bank connection to refresh available funds (only applicable when `precheck_funds` enabled). |
 | `approved` | The authoriser has approved the PR. |
 | `declined` | The payer has declined the PR. |
 | `cancelled` | The initiator has cancelled the PR. |
+### Precheck funds lifecycle
+When the `precheck_funds` option is enabled, prechecking of available funds will be completed before approving payment request. The authoriser contact must have valid agreement and bank connection for this option to work. 
+
+There is **synchronous** and **asynchronous** lifecycles for this option. If the available funds for a contact is out of date, the payment request will follow an **asynchronous** path and return the payment request with a state of `unverified` while a balance check is run. Once the precheck has completed, it will approve or decline the payment request based on available funds. This process can be followed by subscribing to the relevent webhooks.
+
+If the available funds for a contact is current, it will responsed immediately(**synchronously**) with either a state of `approved` or an error meesage if there is insuffient funds for the request. If you prefer the synchronous response you can preemptively run a balance refresh, see [Contact balance refresh](/#refresh-contact-bank-connection) atleast 1 minute before making the payment request.
 
 ## Request Payment
 
@@ -4622,7 +4629,7 @@ func main() {
 |» matures_at|body|string|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
 |» amount|body|number|true|Amount in cents to pay the initiator|
 |» authoriser_contact_id|body|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
-|» precheck_funds|body|boolean|false|Optional parameter to enforce prechecking of available funds before approving payment request. Authoriser contact must have valid agreement and bank connection. If the available funds for a contact is out of date, the payment request will have a state of `unverified` while a balance check is run. To help avoid this delay, a balance refresh can be run preemptively, see [Contact balance refresh](/#refresh-contact-bank-connection)|
+|» precheck_funds|body|boolean|false|Enforce prechecking of available funds before approving payment request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data an certain Split customisations|
 
 > Example responses
@@ -11524,7 +11531,7 @@ func main() {
 |matures_at|string|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
 |amount|number|true|Amount in cents to pay the initiator|
 |authoriser_contact_id|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
-|precheck_funds|boolean|false|Optional parameter to enforce prechecking of available funds before approving payment request. Authoriser contact must have valid agreement and bank connection. If the available funds for a contact is out of date, the payment request will have a state of `unverified` while a balance check is run. To help avoid this delay, a balance refresh can be run preemptively, see [Contact balance refresh](/#refresh-contact-bank-connection)|
+|precheck_funds|boolean|false|Enforce prechecking of available funds before approving payment request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
 ## MakeAPaymentRequestResponse

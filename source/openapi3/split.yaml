@@ -1308,12 +1308,24 @@ tags:
       |-------|-------------|
 
       | `pending_approval` | Waiting for the authoriser to approve the PR. |
+      
+      | `unverified` | Waiting for bank connection to refresh available funds (only applicable when `precheck_funds` enabled). |
 
       | `approved` | The authoriser has approved the PR. |
 
       | `declined` | The payer has declined the PR. |
 
       | `cancelled` | The initiator has cancelled the PR. |
+      
+      ### Precheck funds lifecycle
+      
+      When the `precheck_funds` option is enabled, prechecking of available funds will be completed before approving payment request. The authoriser contact must have valid agreement and bank connection for this option to work. 
+      
+      
+      There is **synchronous** and **asynchronous** lifecycles for this option. If the available funds for a contact is out of date, the payment request will follow an **asynchronous** path and return the payment request with a state of `unverified` while a balance check is run. Once the precheck has completed, it will approve or decline the payment request based on available funds. This process can be followed by subscribing to the relevent webhooks.
+      
+      
+      If the available funds for a contact is current, it will responsed immediately(**synchronously**) with either a state of `approved` or an error meesage if there is insuffient funds for the request. If you prefer the synchronous response you can preemptively run a balance refresh, see [Contact balance refresh](/#refresh-contact-bank-connection) atleast 1 minute before making the payment request.
   - name: Refunds
     description: >
       Refunds can be issued for any successfully cleared Payout (credit)
@@ -2015,7 +2027,7 @@ paths:
       tags:
         - Contacts
       summary: Refresh contact bank connection
-      description: Request the bank connection for a contact to refresh available funds. This is intended for use in conjuction with the [Payment Request](/#request-payment) `precheck_funds` option.
+      description: Request the bank connection for a contact to refresh available funds. This is intended for use in conjuction with the `precheck_funds` option, see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)
       operationId: RefreshBalanceContact
       parameters:
         - name: id
@@ -3998,7 +4010,7 @@ components:
           example: de86472c-c027-4735-a6a7-234366a27fc7
         precheck_funds:
           type: boolean
-          description: Optional parameter to enforce prechecking of available funds before approving payment request. Authoriser contact must have valid agreement and bank connection. If the available funds for a contact is out of date, the payment request will have a state of `unverified` while a balance check is run. To help avoid this delay, a balance refresh can be run preemptively, see [Contact balance refresh](/#refresh-contact-bank-connection) 
+          description: Enforce prechecking of available funds before approving payment request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle) 
           example: "false"
         metadata:
           $ref: '#/components/schemas/Metadata'
