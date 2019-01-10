@@ -433,7 +433,7 @@ You can also pass the values directly to the sign up page outside of the OAuth2 
 # Sandbox
 Try out your happy paths and not-so happy paths, the sandbox is a great place to get started without transfering actual funds. All transactions are simulated and no communication with financial institutions is performed.
 
-The sandbox works on 2.5 minute cycle to better illustrate how transactions are received and the lifecyle they go through. In other words, every 2.5 minutes we simulate communicating with financial institutions and update statuses and events accordingly.
+The sandbox works on 1 minute cycle to better illustrate how transactions are received and the lifecyle they go through. In other words, every minute we simulate communicating with financial institutions and update statuses and events accordingly.
 ## Testing details
 All 6 digits BSBs are valid in the sandbox with the exception of `100000` which is a place keeper for an invalid BSB. In production, only valid and real BSB are accepted.
 ### Payment failure bank accounts
