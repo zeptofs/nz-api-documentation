@@ -3255,7 +3255,7 @@ curl --request PATCH \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"name":"My very own alias"}'
+  --data '{"name":"My very own alias","email":"updated@email.com"}'
 ```
 
 ```ruby
@@ -3272,7 +3272,7 @@ request = Net::HTTP::Patch.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"name\":\"My very own alias\"}"
+request.body = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\"}"
 
 response = http.request(request)
 puts response.read_body
@@ -3306,7 +3306,7 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({ name: 'My very own alias' }));
+req.write(JSON.stringify({ name: 'My very own alias', email: 'updated@email.com' }));
 req.end();
 ```
 
@@ -3315,7 +3315,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api-sandbox.split.cash")
 
-payload = "{\"name\":\"My very own alias\"}"
+payload = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\"}"
 
 headers = {
     'content-type': "application/json",
@@ -3336,7 +3336,7 @@ HttpResponse<String> response = Unirest.patch("https://api-sandbox.split.cash/co
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"name\":\"My very own alias\"}")
+  .body("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\"}")
   .asString();
 ```
 
@@ -3347,7 +3347,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"name":"My very own alias"}');
+$body->append('{"name":"My very own alias","email":"updated@email.com"}');
 
 $request->setRequestUrl('https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
 $request->setRequestMethod('PATCH');
@@ -3379,7 +3379,7 @@ func main() {
 
 	url := "https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
 
-	payload := strings.NewReader("{\"name\":\"My very own alias\"}")
+	payload := strings.NewReader("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\"}")
 
 	req, _ := http.NewRequest("PATCH", url, payload)
 
@@ -3400,7 +3400,7 @@ func main() {
 
 `PATCH /contacts/{id}`
 
-You can update the name of any Contact. This is essentially an alias you can use to provide something contextually meaninful.
+You can update the name and email of any Contact. This is essentially an alias you can use to provide something contextually meaningful.
 
 <aside class="notice">
   Any previous transactions to that Contact will retain the Contact name that was current at the time.
@@ -3410,7 +3410,8 @@ You can update the name of any Contact. This is essentially an alias you can use
 
 ```json
 {
-  "name": "My very own alias"
+  "name": "My very own alias",
+  "email": "updated@email.com"
 }
 ```
 
@@ -3420,7 +3421,8 @@ You can update the name of any Contact. This is essentially an alias you can use
 |---|---|---|---|---|
 |id|path|string|true|Contact ID (`Contact.data.id`)|
 |body|body|[UpdateAContactRequest](#schemaupdateacontactrequest)|true|No description|
-|» name|body|string|true|The name of the Contact|
+|» name|body|string|false|The name of the Contact|
+|» email|body|string|false|The email of the Contact|
 
 > Example responses
 
@@ -11125,7 +11127,8 @@ func main() {
 
 ```json
 {
-  "name": "My very own alias"
+  "name": "My very own alias",
+  "email": "updated@email.com"
 }
 ```
 
@@ -11135,7 +11138,8 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|name|string|true|The name of the Contact|
+|name|string|false|The name of the Contact|
+|email|string|false|The email of the Contact|
 
 ## UpdateAContactResponse
 
