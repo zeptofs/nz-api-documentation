@@ -2007,8 +2007,8 @@ paths:
         - Contacts
       summary: Update a Contact
       description: >
-        You can update the name of any Contact. This is essentially an alias you
-        can use to provide something contextually meaninful.
+        You can update the name and email of any Contact. This is essentially an alias you
+        can use to provide something contextually meaningful.
 
 
         <aside class="notice">
@@ -3721,15 +3721,17 @@ components:
             name: Outstanding Tours Pty Ltd
     UpdateAContactRequest:
       title: Update a Contact (request)
-      required:
-        - name
       type: object
       properties:
         name:
           type: string
           description: The name of the Contact
+        email:
+          type: string
+          description: The email of the Contact
       example:
         name: My very own alias
+        email: updated@email.com
     UpdateAContactResponse:
       title: Update a Contact (response)
       required:
