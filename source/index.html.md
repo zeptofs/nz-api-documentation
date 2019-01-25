@@ -436,8 +436,40 @@ Try out your happy paths and not-so happy paths, the sandbox is a great place to
 The sandbox works on 1 minute cycle to better illustrate how transactions are received and the lifecyle they go through. In other words, every minute we simulate communicating with financial institutions and update statuses and events accordingly.
 ## Testing details
 All 6 digits BSBs are valid in the sandbox with the exception of `100000` which is a place keeper for an invalid BSB. In production, only valid and real BSB are accepted.
-### Payment failure bank accounts
-You can send Payments to the following reserved bank accounts to trigger specific failures.
+### Payment credit failure bank accounts
+
+> Example payout reversal response
+
+```json
+{
+  "data": [
+    {
+      "ref": "C.3",
+      "parent_ref": "PB.1",
+      "type": "credit",
+      "category": "payout_reversal",
+      "created_at": "2016-12-07T23:15:00Z",
+      "matures_at": "2016-12-10T23:15:00Z",
+      "cleared_at": null,
+      "bank_ref": null,
+      "status": "maturing",
+      "status_changed_at": "2016-12-08T23:15:00Z",
+      "party_contact_id": "26297f44-c5e1-40a1-9864-3e0b0754c32a",
+      "party_name": "Sanford-Rees",
+      "party_nickname": "sanford-rees-8",
+      "description": "Payout reversal of D.1 for Sanford-Rees due to no account or incorrect account number"
+      "amount": 1,
+      "reversal_details": {
+        "source_debit_ref": "D.1",
+        "source_credit_failure_reason": "incorrect_account_number",
+      }
+    }
+  ]
+}
+```
+You can send Payments to the following reserved bank accounts to trigger specific failures on the credit side.
+
+When Split is unable to credit funds to a recipient, we will automatically create a payout reversal credit back to the payer. Furthermore, within the payout reversal credit, Split will include details in the `description` and under the `reversal_details` key as to why the original credit to the recipient failed.
 
 | Failure type             | Branch code (BSB) | Account number |
 |--------------------------|-------------------|----------------|
@@ -9130,8 +9162,8 @@ A transaction (debit or credit) can have the following statuses:
       "bank_ref": null,
       "status": "returned",
       "status_changed_at": "2016-12-08T23:15:00Z",
-      "failure_reason": "refer_to_customer",
-      "failure_details": "Incorrect recipient"
+      "failure_reason": "user_voided",
+      "failure_details": "Wrong amount - approved by Stacey"
       "party_contact_id": "26297f44-c5e1-40a1-9864-3e0b0754c32a",
       "party_name": "Sanford-Rees",
       "party_nickname": "sanford-rees-8",
@@ -9146,18 +9178,20 @@ The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompani
 
 | Reason | Description |
 |--------|-------------|
+| `refer_to_customer` | **(Debit only)** Usually due to insufficient funds |
+| `insufficient_funds` | **(Debit only)** Insufficient funds |
+| `payment_stopped` | **(Debit only)** The payment was stopped at the bank. Can be due to a customer requesting a stop payment with their financial institution. |
 | `invalid_bsb_number` | BSB number is invalid |
-| `payment_stopped` | The payment was stopped at the bank. Can be due to a customer requesting a stop payment with their financial institution. |
 | `account_closed` | The bank account is closed |
 | `customer_deceased` | Customer is deceased |
 | `incorrect_account_number` | Account number is incorrect |
-| `refer_to_customer` | Usually due to insufficient funds |
 | `refer_to_split` | Failed due to reasons not listed here. Please contact us. |
-| `insufficient_funds` | Insufficient funds |
 | `user_voided` | Voided by payout initiator |
 | `admin_voided` | Voided by Split Payments admin |
 
-Some failures will include additional details which will be returned in `failure_details`
+<aside class="notice">
+  The <code>user_voided</code> and <code>admin_voided</code> <code>failure_reason</code>s can sometimes be accompanied by the <code>failure_details</code> key which includes user submitted comments relating to the <code>failure_reason</code>.
+</aside>
 
 ## List all transactions
 
