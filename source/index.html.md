@@ -639,7 +639,7 @@ Split-Signature: 1514772000.93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc
 
 Split signs the webhook events it sends to your endpoints. We do so by including a signature in each event’s `Split-Signature` header. This allows you to validate that the events were indeed sent by Split.
 
-Before you can verify signatures, you need to retrieve your endpoint’s secret from your Webhooks settings. Each endpoint has its own unique secret; if you use multiple endpoints, you must obtain a secret for each one. If you use multiple endpoints, you must obtain a secret for each one.
+Before you can verify signatures, you need to retrieve your endpoint’s secret from your Webhooks settings. Each endpoint has its own unique secret; if you use multiple endpoints, you must obtain a secret for each one.
 
 The `Split-Signature` header contains a timestamp and one or more signatures. All separated by `.` (dot).
 

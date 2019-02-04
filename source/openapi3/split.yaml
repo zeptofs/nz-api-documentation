@@ -998,8 +998,7 @@ info:
 
     Before you can verify signatures, you need to retrieve your endpoint’s
     secret from your Webhooks settings. Each endpoint has its own unique secret;
-    if you use multiple endpoints, you must obtain a secret for each one. If you
-    use multiple endpoints, you must obtain a secret for each one.
+    if you use multiple endpoints, you must obtain a secret for each one.
 
 
     The `Split-Signature` header contains a timestamp and one or more
