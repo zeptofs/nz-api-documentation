@@ -387,6 +387,40 @@ Keys expire after 24 hours. If there is a subsequent request with the same idemp
 * Only the `POST` action for the Payments, Payment Requests, Refunds, Refund Requests support the use of the `Idempotency-Key`.
 * Endpoints that use the `GET` or `DELETE` actions are idempotent by nature.
 
+## Error responses
+
+> Example detailed error response
+
+```json
+{
+  "errors": [
+    {
+      "title": "A Specific Error",
+      "detail": "Details about the error",
+      "links": {
+        "about": "https://docs.split.cash/..."
+      }
+    }
+  ]
+}
+```
+> Example resource error response
+
+```json
+{
+  "errors": "A sentence explaining error/s encounted"
+}
+```
+The Split API returns two different types of error responses depending on the context.
+
+**Detailed error responses** are returned for:
+
+* Authentication
+* Request types
+* Idempotency
+
+All other errors relating to Split specific resources(e.g. Contacts) will return the **Resource error response** style.
+
 ## Speeding up onboarding
 Consider the following scenario:
 
