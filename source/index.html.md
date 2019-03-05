@@ -467,11 +467,11 @@ You can also pass the values directly to the sign up page outside of the OAuth2 
 # Sandbox Testing Details
 Try out your happy paths and not-so happy paths, the sandbox is a great place to get started without transferring actual funds. All transactions are simulated and no communication with financial institutions is performed.
 
-The sandbox works on 1 minute cycle to better illustrate how transactions are received and the lifecyle they go through. In other words, every minute we simulate communicating with financial institutions and update statuses and events accordingly.
+The sandbox works on a 1 minute cycle to better illustrate how transactions are received and the lifecyle they go through. In other words, every minute, we simulate communicating with financial institutions and update statuses and events accordingly.
 
-All 6 digits BSBs are valid in the sandbox with the exception of `100000` which is a place keeper for an invalid BSB. In production, only valid and real BSB are accepted.
+All 6 digits BSBs are valid in the sandbox with the exception of `100000` which is a place keeper for an invalid BSB. In production, only real BSBs are accepted.
 ## Transaction failures
-To simulate [transaction failures](#failure-reasons) create a Payment or Payment Request with specific amount listed in the table. Some errors could happen for either side of the transaction.
+To simulate [transaction failures](#failure-reasons) create a Payment or Payment Request with a specific amount listed in the table.
 
 | Transaction failure reason | Debit | Credit |
 |----------------------------|-------|--------|
@@ -486,16 +486,21 @@ To simulate [transaction failures](#failure-reasons) create a Payment or Payment
 | `insufficient_funds`       |  $0.11  |          |
 | `payment_stopped`          |  $0.12  |          |
 
-<aside class="notice">
-  For example if you want to test a Payment to somebody with invalid account number, you need to initiate a Payment of <code>$0.54</code>.
-  <br>
-  When paying a contact we will mimic a successful direct debit from your bank account but we will fail the credit to the contact's bank account. Split will then automatically create a <code>payout_reversal</code> credit to your account.
-</aside>
-<aside class="notice">
-  In another example when you request a payment from a closed account, you need to initiate a Payment Request for <code>$0.02</code>.
-  <br>
-  Ensure you have an Agreement with a Contact before you send a Payment Request or it'll be declined. You can use special accounts listed below.
-</aside>
+### Example scenarios
+
+  1. Pay a contact with an invalid account number:
+    * Initiate a Payment for <code>$0.54</code>.
+    * Split will mimic a successful debit from your bank account.
+    * Split will mimic a failure to credit the contact's bank account.
+    * Split will automatically create a <code>payout_reversal</code> credit transaction back to your bank account.
+  2. Pay a contact whilst having insufficient funds:
+    * Initiate a Payment for <code>$0.11</code>.
+    * Split will mimic a failure to debit your bank account.
+    * Split will mark the debit as `returned` due to `insufficient_funds`.
+    * Split will void the scheduled credit to the contact's bank account.
+  3. Request payment from a contact with a closed bank account:
+    * Initiate a Payment Request for <code>$0.02</code>.
+    * Split will mimic a failure to debit the contact's bank account.
 
 ## Special accounts
 There are some accounts with a special behaviour. You can add them to your Contacts by nickname or bank details.
