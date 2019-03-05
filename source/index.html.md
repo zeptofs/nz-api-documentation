@@ -797,6 +797,37 @@ class Main {
 }
 
 ```
+<!-- This example is commented out since the docs do not include C#
+```csharp
+using System; using System.Security.Cryptography;
+class MainClass {
+  public static void Main (string[] args) {
+    var splitSignature = "1514772000.f04cb05adb985b29d84616fbf3868e8e58403ff819cdc47ad8fc47e6acbce29f";
+    var secret = "1234";
+    var message = "full payload of the request";
+
+    var header = splitSignature.Split('.');
+    var timeStamp = header[0];
+    var givenSignature = header[1];
+
+    var signedPayload = timeStamp + "." + message;
+
+    var encoding = new System.Text.ASCIIEncoding();
+    var hmacsha256 = new HMACSHA256(encoding.GetBytes(secret));
+
+    byte[] hashmessage = hmacsha256.ComputeHash(encoding.GetBytes(signedPayload));
+    var expectedSignature = BitConverter.ToString(hashmessage).Replace("-", "").ToLower();
+
+    Console.WriteLine(expectedSignature);
+    // f04cb05adb985b29d84616fbf3868e8e58403ff819cdc47ad8fc47e6acbce29f
+
+    Console.WriteLine(givenSignature);
+    // f04cb05adb985b29d84616fbf3868e8e58403ff819cdc47ad8fc47e6acbce29f
+  }
+}
+
+```
+-->
 
 **Step 1. Extract the timestamp and signatures from the header**
 
