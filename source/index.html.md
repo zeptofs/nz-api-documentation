@@ -35,8 +35,8 @@ Due to the above, certain endpoints and techniques will differ slightly dependin
 * All communication is via `https` and supports **only** `TLSv1.2`.
 * Production API: `https://api.split.cash/`.
 * Production UI: `https://go.split.cash/`.
-* Sandbox API: `https://api-sandbox.split.cash/`.
-* Sandbox UI: `https://go-sandbox.split.cash/`.
+* Sandbox API: `https://api.sandbox.split.cash/`.
+* Sandbox UI: `https://go.sandbox.split.cash/`.
 * Data is sent and received as JSON.
 * Currencies are represented by 3 characters as defined in [ISO 4217](http://www.xe.com/iso4217.php).
 * Dates & times are returned in UTC using [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format with second accuracy. With requests, when no TZ is supplied, the configured TZ of the authenticated user is used.
@@ -55,11 +55,11 @@ Okay, lets get things setup!
 
 1. **Create a Split account**
     
-    If you haven't already, you'll want to create a sandbox Split account at [https://go-sandbox.split.cash](https://go-sandbox.split.cash)
+    If you haven't already, you'll want to create a sandbox Split account at [https://go.sandbox.split.cash](https://go.sandbox.split.cash)
 
 2. **Register your application with Split**
 
-    Sign in and create an OAuth2 application: [https://go-sandbox.split.cash/oauth/applications](https://go-sandbox.split.cash/oauth/applications).
+    Sign in and create an OAuth2 application: [https://go.sandbox.split.cash/oauth/applications](https://go.sandbox.split.cash/oauth/applications).
     
     [![Split OAuth2 app create](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_oauth2_app_create.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_oauth2_app_create.png)
 
@@ -67,7 +67,7 @@ Okay, lets get things setup!
   
     The quickest way to access your Split account via the API is using
     personal access tokens. Click on your newly created application from your [application
-list](https://go-sandbox.split.cash/oauth/applications) and click on **+ Personal Access Token**.
+list](https://go.sandbox.split.cash/oauth/applications) and click on **+ Personal Access Token**.
     
     [![Split locate personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_tokens_empty.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_tokens_empty.png)
     
@@ -102,7 +102,7 @@ This guide will help you setup an OAuth2 app in order to get authenticated & aut
 
 1. **Create a Split account**
 
-    If you haven't already, you'll want to create a sandbox Split account at [https://go-sandbox.split.cash](https://go-sandbox.split.cash).
+    If you haven't already, you'll want to create a sandbox Split account at [https://go.sandbox.split.cash](https://go.sandbox.split.cash).
     
 2. **Choose authentication method**
 
@@ -115,7 +115,7 @@ This guide will help you setup an OAuth2 app in order to get authenticated & aut
 ## Personal access token
 If you're looking to only access your own account via the API, you can generate a personal access token from the UI. These tokens do not expire, but can be deleted.
 
-* To do this, sign in to your Split account and [create an application](https://go-sandbox.split.cash/oauth/applications) if you haven't already. Click on your application from your [application list](https://go-sandbox.split.cash/oauth/applications) and click on **Personal access**.
+* To do this, sign in to your Split account and [create an application](https://go.sandbox.split.cash/oauth/applications) if you haven't already. Click on your application from your [application list](https://go.sandbox.split.cash/oauth/applications) and click on **Personal access**.
 
     [![Split locate personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_tokens_empty.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_tokens_empty.png)
     
@@ -130,7 +130,7 @@ If you're looking to only access your own account via the API, you can generate 
 ## OAuth grant flow
 1. **Register your application with Split**
 
-    Once you've got your account up and running, sign in and create an OAuth2 profile for your application: [https://go-sandbox.split.cash/oauth/applications](https://go-sandbox.split.cash/oauth/applications)
+    Once you've got your account up and running, sign in and create an OAuth2 profile for your application: [https://go.sandbox.split.cash/oauth/applications](https://go.sandbox.split.cash/oauth/applications)
     
     | Parameter | Description |
     |-----------|-------------|
@@ -142,7 +142,7 @@ If you're looking to only access your own account via the API, you can generate 
     Construct the initial URL the user will need to visit in order to grant your application permission to act on his/her behalf. The constructed URL describes the level of permission ([`scope`](/#scopes)), the application requesting permission (`client_id`) and where the user gets redirected once they've granted permission (`redirect_uri`).
     
     The URL should be formatted to look like this:
-    `https://go-sandbox.split.cash/oauth/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&scope={scope}`
+    `https://go.sandbox.split.cash/oauth/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&scope={scope}`
     
     | Parameter | Description |
     |-----------|-------------|
@@ -159,7 +159,7 @@ If you're looking to only access your own account via the API, you can generate 
     
     After the user has authorised your application, they will be returned to your application at the URL specified in `redirect_uri` along with the `code` query parameter as the authorisation code.
     
-    Finally, the authorisation code can than be exchanged for an access token and refresh token pair by POSTing to: `https://go-sandbox.split.cash/oauth/token`
+    Finally, the authorisation code can than be exchanged for an access token and refresh token pair by POSTing to: `https://go.sandbox.split.cash/oauth/token`
     
     | Parameter | Description |
     |-----------|-------------|
@@ -185,11 +185,11 @@ Before you start, load up our API collection:
 
 1. **Create a Split account**
     
-    If you haven't already, you'll want to create a sandbox Split account at [https://go-sandbox.split.cash](https://go-sandbox.split.cash)
+    If you haven't already, you'll want to create a sandbox Split account at [https://go.sandbox.split.cash](https://go.sandbox.split.cash)
 
 2. **Register your application with Split**
 
-    Sign in and create an OAuth2 application: [https://go-sandbox.split.cash/oauth/applications](https://go-sandbox.split.cash/oauth/applications).
+    Sign in and create an OAuth2 application: [https://go.sandbox.split.cash/oauth/applications](https://go.sandbox.split.cash/oauth/applications).
     
     Use the special Postman callback URL: `https://www.getpostman.com/oauth2/callback`
     
@@ -269,7 +269,7 @@ curl -F "grant_type=refresh_token" \
      -F "client_id={{oauth2_application_id}}" \
      -F "client_secret={{oauth2_application_secret }}" \
      -F "refresh_token={{refresh_token}}" \
-     -X POST https://go-sandbox.split.cash/oauth/token
+     -X POST https://go.sandbox.split.cash/oauth/token
 ```
 
 > Example response
@@ -460,9 +460,9 @@ In order to speed up the process, we allow query string params to be appended to
 All values should be [URL encoded](https://en.wikipedia.org/wiki/Query_string#URL_encoding).
 
 As an example, the following authorisation URL would display the **personal sign up** & prefill the first name field with **George**:
-`https://go-sandbox.split.cash/oauth/authorize?response_type=code&client_id=xxx&redirect_uri=xxx&scope=xxx&landing=sign_up&first_name=George`
+`https://go.sandbox.split.cash/oauth/authorize?response_type=code&client_id=xxx&redirect_uri=xxx&scope=xxx&landing=sign_up&first_name=George`
 
-You can also pass the values directly to the sign up page outside of the OAuth2 authorisation process. Click on the following link to see the values preloaded: [https://go-sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgeco&first_name=George](https://go-sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgceco&first_name=George).
+You can also pass the values directly to the sign up page outside of the OAuth2 authorisation process. Click on the following link to see the values preloaded: [https://go.sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgeco&first_name=George](https://go.sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgceco&first_name=George).
 
 # Sandbox Testing Details
 Try out your happy paths and not-so happy paths, the sandbox is a great place to get started without transferring actual funds. All transactions are simulated and no communication with financial institutions is performed.
@@ -571,7 +571,7 @@ Scopes define the level of access granted via the OAuth2 authorisation process. 
 > Example response header
 
 ```
-Link: <http://api-sandbox.split.cash/contacts?page=5>; rel="last", <http://api-sandbox.split.cash/contacts?page=2>; rel="next"
+Link: <http://api.sandbox.split.cash/contacts?page=5>; rel="last", <http://api.sandbox.split.cash/contacts?page=2>; rel="next"
 Per-Page: 25
 Total: 5
 ```
@@ -890,7 +890,7 @@ An Agreement can have the following statuses:
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/agreements \
+  --url https://api.sandbox.split.cash/agreements \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -901,7 +901,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/agreements")
+url = URI("https://api.sandbox.split.cash/agreements")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -922,7 +922,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/agreements",
   "headers": {
@@ -955,7 +955,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 payload = "{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
 
@@ -974,7 +974,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/agreements")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/agreements")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -991,7 +991,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"authoriser_contact_id":"8df89c16-330f-462b-8891-808d7bdceb7f","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}');
 
-$request->setRequestUrl('https://api-sandbox.split.cash/agreements');
+$request->setRequestUrl('https://api.sandbox.split.cash/agreements');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -1019,7 +1019,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/agreements"
+	url := "https://api.sandbox.split.cash/agreements"
 
 	payload := strings.NewReader("{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
 
@@ -1124,7 +1124,7 @@ Propose an Agreement to another Split Contact
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/agreements/A.2/accept \
+  --url https://api.sandbox.split.cash/agreements/A.2/accept \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -1133,7 +1133,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/agreements/A.2/accept")
+url = URI("https://api.sandbox.split.cash/agreements/A.2/accept")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -1152,7 +1152,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/agreements/A.2/accept",
   "headers": {
@@ -1180,7 +1180,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -1196,7 +1196,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/agreements/A.2/accept")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/agreements/A.2/accept")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -1208,7 +1208,7 @@ HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/agr
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/agreements/A.2/accept');
+$request->setRequestUrl('https://api.sandbox.split.cash/agreements/A.2/accept');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -1232,7 +1232,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/agreements/A.2/accept"
+	url := "https://api.sandbox.split.cash/agreements/A.2/accept"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -1304,7 +1304,7 @@ Approve an incoming Agreement
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/agreements/A.2/decline \
+  --url https://api.sandbox.split.cash/agreements/A.2/decline \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -1313,7 +1313,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/agreements/A.2/decline")
+url = URI("https://api.sandbox.split.cash/agreements/A.2/decline")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -1332,7 +1332,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/agreements/A.2/decline",
   "headers": {
@@ -1360,7 +1360,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -1376,7 +1376,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/agreements/A.2/decline")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/agreements/A.2/decline")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -1388,7 +1388,7 @@ HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/agr
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/agreements/A.2/decline');
+$request->setRequestUrl('https://api.sandbox.split.cash/agreements/A.2/decline');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -1412,7 +1412,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/agreements/A.2/decline"
+	url := "https://api.sandbox.split.cash/agreements/A.2/decline"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -1484,7 +1484,7 @@ Decline an incoming Agreement
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/agreements/A.2 \
+  --url https://api.sandbox.split.cash/agreements/A.2 \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -1493,7 +1493,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/agreements/A.2")
+url = URI("https://api.sandbox.split.cash/agreements/A.2")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -1512,7 +1512,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/agreements/A.2",
   "headers": {
@@ -1540,7 +1540,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -1556,7 +1556,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/agreements/A.2")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/agreements/A.2")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -1568,7 +1568,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/agre
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/agreements/A.2');
+$request->setRequestUrl('https://api.sandbox.split.cash/agreements/A.2');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -1592,7 +1592,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/agreements/A.2"
+	url := "https://api.sandbox.split.cash/agreements/A.2"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -1664,7 +1664,7 @@ Get a single Agreement by its reference
 
 ```shell
 curl --request DELETE \
-  --url https://api-sandbox.split.cash/agreements/A.2 \
+  --url https://api.sandbox.split.cash/agreements/A.2 \
   --header 'authorization: Bearer {access-token}'
 ```
 
@@ -1672,7 +1672,7 @@ curl --request DELETE \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/agreements/A.2")
+url = URI("https://api.sandbox.split.cash/agreements/A.2")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -1690,7 +1690,7 @@ var http = require("https");
 
 var options = {
   "method": "DELETE",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/agreements/A.2",
   "headers": {
@@ -1717,7 +1717,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = { 'authorization': "Bearer {access-token}" }
 
@@ -1730,7 +1730,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/agreements/A.2")
+HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/agreements/A.2")
   .header("authorization", "Bearer {access-token}")
   .asString();
 ```
@@ -1741,7 +1741,7 @@ HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/a
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/agreements/A.2');
+$request->setRequestUrl('https://api.sandbox.split.cash/agreements/A.2');
 $request->setRequestMethod('DELETE');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}'
@@ -1764,7 +1764,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/agreements/A.2"
+	url := "https://api.sandbox.split.cash/agreements/A.2"
 
 	req, _ := http.NewRequest("DELETE", url, nil)
 
@@ -1805,7 +1805,7 @@ An Agreement can be cancelled by the initiator at any time whilst the authoriser
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/agreements/incoming \
+  --url https://api.sandbox.split.cash/agreements/incoming \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -1814,7 +1814,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/agreements/incoming")
+url = URI("https://api.sandbox.split.cash/agreements/incoming")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -1833,7 +1833,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/agreements/incoming",
   "headers": {
@@ -1861,7 +1861,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -1877,7 +1877,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/agreements/incoming")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/agreements/incoming")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -1889,7 +1889,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/agre
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/agreements/incoming');
+$request->setRequestUrl('https://api.sandbox.split.cash/agreements/incoming');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -1913,7 +1913,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/agreements/incoming"
+	url := "https://api.sandbox.split.cash/agreements/incoming"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -2021,7 +2021,7 @@ By default, all incoming Agreements will be returned. You can apply filters to y
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/agreements/outgoing \
+  --url https://api.sandbox.split.cash/agreements/outgoing \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -2030,7 +2030,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/agreements/outgoing")
+url = URI("https://api.sandbox.split.cash/agreements/outgoing")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -2049,7 +2049,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/agreements/outgoing",
   "headers": {
@@ -2077,7 +2077,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -2093,7 +2093,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/agreements/outgoing")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/agreements/outgoing")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -2105,7 +2105,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/agre
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/agreements/outgoing');
+$request->setRequestUrl('https://api.sandbox.split.cash/agreements/outgoing');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -2129,7 +2129,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/agreements/outgoing"
+	url := "https://api.sandbox.split.cash/agreements/outgoing"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -2241,7 +2241,7 @@ Your currently linked up bank accounts.
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/bank_accounts \
+  --url https://api.sandbox.split.cash/bank_accounts \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -2250,7 +2250,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/bank_accounts")
+url = URI("https://api.sandbox.split.cash/bank_accounts")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -2269,7 +2269,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/bank_accounts",
   "headers": {
@@ -2297,7 +2297,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -2313,7 +2313,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/bank_accounts")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/bank_accounts")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -2325,7 +2325,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/bank
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/bank_accounts');
+$request->setRequestUrl('https://api.sandbox.split.cash/bank_accounts');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -2349,7 +2349,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/bank_accounts"
+	url := "https://api.sandbox.split.cash/bank_accounts"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -2416,7 +2416,7 @@ Your Contacts form an address book of parties with whom you can interact. In ord
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/contacts \
+  --url https://api.sandbox.split.cash/contacts \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -2427,7 +2427,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/contacts")
+url = URI("https://api.sandbox.split.cash/contacts")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -2448,7 +2448,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/contacts",
   "headers": {
@@ -2478,7 +2478,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 payload = "{\"nickname\":\"outstanding_tours\"}"
 
@@ -2497,7 +2497,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/contacts")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -2514,7 +2514,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"nickname":"outstanding_tours"}');
 
-$request->setRequestUrl('https://api-sandbox.split.cash/contacts');
+$request->setRequestUrl('https://api.sandbox.split.cash/contacts');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -2542,7 +2542,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/contacts"
+	url := "https://api.sandbox.split.cash/contacts"
 
 	payload := strings.NewReader("{\"nickname\":\"outstanding_tours\"}")
 
@@ -2625,7 +2625,7 @@ Add a Split Contact
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/contacts \
+  --url https://api.sandbox.split.cash/contacts \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -2634,7 +2634,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/contacts")
+url = URI("https://api.sandbox.split.cash/contacts")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -2653,7 +2653,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/contacts",
   "headers": {
@@ -2681,7 +2681,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -2697,7 +2697,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/contacts")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/contacts")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -2709,7 +2709,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/cont
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/contacts');
+$request->setRequestUrl('https://api.sandbox.split.cash/contacts');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -2733,7 +2733,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/contacts"
+	url := "https://api.sandbox.split.cash/contacts"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -2867,7 +2867,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/contacts/anyone \
+  --url https://api.sandbox.split.cash/contacts/anyone \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -2878,7 +2878,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/contacts/anyone")
+url = URI("https://api.sandbox.split.cash/contacts/anyone")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -2899,7 +2899,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/contacts/anyone",
   "headers": {
@@ -2932,7 +2932,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 payload = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\"}"
 
@@ -2951,7 +2951,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/contacts/anyone")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts/anyone")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -2968,7 +2968,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"name":"Hunter Thompson","email":"hunter@batcountry.com","branch_code":"123456","account_number":"13048322"}');
 
-$request->setRequestUrl('https://api-sandbox.split.cash/contacts/anyone');
+$request->setRequestUrl('https://api.sandbox.split.cash/contacts/anyone');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -2996,7 +2996,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/contacts/anyone"
+	url := "https://api.sandbox.split.cash/contacts/anyone"
 
 	payload := strings.NewReader("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\"}")
 
@@ -3085,7 +3085,7 @@ When you want to pay somebody that doesn't have a Split account, you can add the
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
+  --url https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -3094,7 +3094,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
+url = URI("https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -3113,7 +3113,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608",
   "headers": {
@@ -3141,7 +3141,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -3157,7 +3157,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -3169,7 +3169,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/cont
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
+$request->setRequestUrl('https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -3193,7 +3193,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
+	url := "https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -3264,7 +3264,7 @@ Get a single Contact by its ID
 
 ```shell
 curl --request DELETE \
-  --url https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
+  --url https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
   --header 'authorization: Bearer {access-token}'
 ```
 
@@ -3272,7 +3272,7 @@ curl --request DELETE \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
+url = URI("https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -3290,7 +3290,7 @@ var http = require("https");
 
 var options = {
   "method": "DELETE",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608",
   "headers": {
@@ -3317,7 +3317,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = { 'authorization': "Bearer {access-token}" }
 
@@ -3330,7 +3330,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
+HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
   .header("authorization", "Bearer {access-token}")
   .asString();
 ```
@@ -3341,7 +3341,7 @@ HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/c
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
+$request->setRequestUrl('https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
 $request->setRequestMethod('DELETE');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}'
@@ -3364,7 +3364,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
+	url := "https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
 
 	req, _ := http.NewRequest("DELETE", url, nil)
 
@@ -3405,7 +3405,7 @@ func main() {
 
 ```shell
 curl --request PATCH \
-  --url https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
+  --url https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -3416,7 +3416,7 @@ curl --request PATCH \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
+url = URI("https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -3437,7 +3437,7 @@ var http = require("https");
 
 var options = {
   "method": "PATCH",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608",
   "headers": {
@@ -3467,7 +3467,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 payload = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\"}"
 
@@ -3486,7 +3486,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.patch("https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
+HttpResponse<String> response = Unirest.patch("https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -3503,7 +3503,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"name":"My very own alias","email":"updated@email.com"}');
 
-$request->setRequestUrl('https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
+$request->setRequestUrl('https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
 $request->setRequestMethod('PATCH');
 $request->setBody($body);
 
@@ -3531,7 +3531,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
+	url := "https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
 
 	payload := strings.NewReader("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\"}")
 
@@ -3621,7 +3621,7 @@ You can update the name and email of any Contact. This is essentially an alias y
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance \
+  --url https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance \
   --header 'authorization: Bearer {access-token}'
 ```
 
@@ -3629,7 +3629,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance")
+url = URI("https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -3647,7 +3647,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance",
   "headers": {
@@ -3674,7 +3674,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = { 'authorization': "Bearer {access-token}" }
 
@@ -3687,7 +3687,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance")
   .header("authorization", "Bearer {access-token}")
   .asString();
 ```
@@ -3698,7 +3698,7 @@ HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/con
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance');
+$request->setRequestUrl('https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}'
@@ -3721,7 +3721,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance"
+	url := "https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -3780,7 +3780,7 @@ An Open Agreement can have the following statuses:
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/open_agreements \
+  --url https://api.sandbox.split.cash/open_agreements \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -3791,7 +3791,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/open_agreements")
+url = URI("https://api.sandbox.split.cash/open_agreements")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -3812,7 +3812,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/open_agreements",
   "headers": {
@@ -3845,7 +3845,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 payload = "{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
 
@@ -3864,7 +3864,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/open_agreements")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/open_agreements")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -3881,7 +3881,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"title":"Subscription Plan A","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}');
 
-$request->setRequestUrl('https://api-sandbox.split.cash/open_agreements');
+$request->setRequestUrl('https://api.sandbox.split.cash/open_agreements');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -3909,7 +3909,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/open_agreements"
+	url := "https://api.sandbox.split.cash/open_agreements"
 
 	payload := strings.NewReader("{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
 
@@ -3989,7 +3989,7 @@ Create an Open Agreement that can be accepted by anyone.
         "max_amount": 1000000
       }
     },
-    "link": "https://go-sandbox.split.cash/open_agreements/aecff76d-13e0-4e17-b7c5-844ae07fa675/agreements/invitation"
+    "link": "https://go.sandbox.split.cash/open_agreements/aecff76d-13e0-4e17-b7c5-844ae07fa675/agreements/invitation"
   }
 }
 ```
@@ -4008,7 +4008,7 @@ Create an Open Agreement that can be accepted by anyone.
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/open_agreements \
+  --url https://api.sandbox.split.cash/open_agreements \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -4017,7 +4017,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/open_agreements")
+url = URI("https://api.sandbox.split.cash/open_agreements")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -4036,7 +4036,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/open_agreements",
   "headers": {
@@ -4064,7 +4064,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -4080,7 +4080,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/open_agreements")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/open_agreements")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -4092,7 +4092,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/open
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/open_agreements');
+$request->setRequestUrl('https://api.sandbox.split.cash/open_agreements');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -4116,7 +4116,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/open_agreements"
+	url := "https://api.sandbox.split.cash/open_agreements"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -4165,7 +4165,7 @@ func main() {
           "max_amount": 1000000
         }
       },
-      "link": "https://go-sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+      "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
     },
     {
       "ref": "OA.2",
@@ -4182,7 +4182,7 @@ func main() {
           "max_amount": null
         }
       },
-      "link": "https://go-sandbox.split.cash/open_agreements/948e3662-154d-42d1-bdc9-a05c251d3981/agreements/invitation"
+      "link": "https://go.sandbox.split.cash/open_agreements/948e3662-154d-42d1-bdc9-a05c251d3981/agreements/invitation"
     }
   ]
 }
@@ -4202,7 +4202,7 @@ func main() {
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/open_agreements/OA.1/activate \
+  --url https://api.sandbox.split.cash/open_agreements/OA.1/activate \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -4211,7 +4211,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/open_agreements/OA.1/activate")
+url = URI("https://api.sandbox.split.cash/open_agreements/OA.1/activate")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -4230,7 +4230,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/open_agreements/OA.1/activate",
   "headers": {
@@ -4258,7 +4258,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -4274,7 +4274,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/open_agreements/OA.1/activate")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/open_agreements/OA.1/activate")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -4286,7 +4286,7 @@ HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/ope
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/open_agreements/OA.1/activate');
+$request->setRequestUrl('https://api.sandbox.split.cash/open_agreements/OA.1/activate');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -4310,7 +4310,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/open_agreements/OA.1/activate"
+	url := "https://api.sandbox.split.cash/open_agreements/OA.1/activate"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -4359,7 +4359,7 @@ Allow the Open Agreement to viewed and accepted
         "max_amount": 1000000
       }
     },
-    "link": "https://go-sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+    "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
   }
 }
 ```
@@ -4378,7 +4378,7 @@ Allow the Open Agreement to viewed and accepted
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/open_agreements/OA.1/close \
+  --url https://api.sandbox.split.cash/open_agreements/OA.1/close \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -4387,7 +4387,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/open_agreements/OA.1/close")
+url = URI("https://api.sandbox.split.cash/open_agreements/OA.1/close")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -4406,7 +4406,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/open_agreements/OA.1/close",
   "headers": {
@@ -4434,7 +4434,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -4450,7 +4450,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/open_agreements/OA.1/close")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/open_agreements/OA.1/close")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -4462,7 +4462,7 @@ HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/ope
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/open_agreements/OA.1/close');
+$request->setRequestUrl('https://api.sandbox.split.cash/open_agreements/OA.1/close');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -4486,7 +4486,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/open_agreements/OA.1/close"
+	url := "https://api.sandbox.split.cash/open_agreements/OA.1/close"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -4535,7 +4535,7 @@ Disable the Open Agreement from being viewed or accepted
         "max_amount": 1000000
       }
     },
-    "link": "https://go-sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+    "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
   }
 }
 ```
@@ -4613,7 +4613,7 @@ You can gain some control over this process by preemptively telling Split to ref
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/payment_requests \
+  --url https://api.sandbox.split.cash/payment_requests \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -4624,7 +4624,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payment_requests")
+url = URI("https://api.sandbox.split.cash/payment_requests")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -4645,7 +4645,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payment_requests",
   "headers": {
@@ -4682,7 +4682,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 payload = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"precheck_funds\":\"false\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
@@ -4701,7 +4701,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payment_requests")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payment_requests")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -4718,7 +4718,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","precheck_funds":"false","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payment_requests');
+$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -4746,7 +4746,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payment_requests"
+	url := "https://api.sandbox.split.cash/payment_requests"
 
 	payload := strings.NewReader("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"precheck_funds\":\"false\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
@@ -4842,7 +4842,7 @@ func main() {
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/payment_requests/PR.3/approve \
+  --url https://api.sandbox.split.cash/payment_requests/PR.3/approve \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -4851,7 +4851,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payment_requests/PR.3/approve")
+url = URI("https://api.sandbox.split.cash/payment_requests/PR.3/approve")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -4870,7 +4870,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payment_requests/PR.3/approve",
   "headers": {
@@ -4898,7 +4898,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -4914,7 +4914,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payment_requests/PR.3/approve")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payment_requests/PR.3/approve")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -4926,7 +4926,7 @@ HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/pay
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payment_requests/PR.3/approve');
+$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/PR.3/approve');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -4950,7 +4950,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payment_requests/PR.3/approve"
+	url := "https://api.sandbox.split.cash/payment_requests/PR.3/approve"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -5018,7 +5018,7 @@ func main() {
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/payment_requests/PR.3/decline \
+  --url https://api.sandbox.split.cash/payment_requests/PR.3/decline \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -5027,7 +5027,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payment_requests/PR.3/decline")
+url = URI("https://api.sandbox.split.cash/payment_requests/PR.3/decline")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -5046,7 +5046,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payment_requests/PR.3/decline",
   "headers": {
@@ -5074,7 +5074,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -5090,7 +5090,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payment_requests/PR.3/decline")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payment_requests/PR.3/decline")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -5102,7 +5102,7 @@ HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/pay
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payment_requests/PR.3/decline');
+$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/PR.3/decline');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -5126,7 +5126,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payment_requests/PR.3/decline"
+	url := "https://api.sandbox.split.cash/payment_requests/PR.3/decline"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -5194,7 +5194,7 @@ func main() {
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/payment_requests/PR.3 \
+  --url https://api.sandbox.split.cash/payment_requests/PR.3 \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -5203,7 +5203,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payment_requests/PR.3")
+url = URI("https://api.sandbox.split.cash/payment_requests/PR.3")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -5222,7 +5222,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payment_requests/PR.3",
   "headers": {
@@ -5250,7 +5250,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -5266,7 +5266,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payment_requests/PR.3")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payment_requests/PR.3")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -5278,7 +5278,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/paym
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payment_requests/PR.3');
+$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/PR.3');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -5302,7 +5302,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payment_requests/PR.3"
+	url := "https://api.sandbox.split.cash/payment_requests/PR.3"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -5370,7 +5370,7 @@ func main() {
 
 ```shell
 curl --request DELETE \
-  --url https://api-sandbox.split.cash/payment_requests/PR.3 \
+  --url https://api.sandbox.split.cash/payment_requests/PR.3 \
   --header 'authorization: Bearer {access-token}'
 ```
 
@@ -5378,7 +5378,7 @@ curl --request DELETE \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payment_requests/PR.3")
+url = URI("https://api.sandbox.split.cash/payment_requests/PR.3")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -5396,7 +5396,7 @@ var http = require("https");
 
 var options = {
   "method": "DELETE",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payment_requests/PR.3",
   "headers": {
@@ -5423,7 +5423,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = { 'authorization': "Bearer {access-token}" }
 
@@ -5436,7 +5436,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/payment_requests/PR.3")
+HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/payment_requests/PR.3")
   .header("authorization", "Bearer {access-token}")
   .asString();
 ```
@@ -5447,7 +5447,7 @@ HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/p
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payment_requests/PR.3');
+$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/PR.3');
 $request->setRequestMethod('DELETE');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}'
@@ -5470,7 +5470,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payment_requests/PR.3"
+	url := "https://api.sandbox.split.cash/payment_requests/PR.3"
 
 	req, _ := http.NewRequest("DELETE", url, nil)
 
@@ -5511,7 +5511,7 @@ A Payment Request can be cancelled as long as the associated transaction's state
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/payment_requests/incoming \
+  --url https://api.sandbox.split.cash/payment_requests/incoming \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -5520,7 +5520,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payment_requests/incoming")
+url = URI("https://api.sandbox.split.cash/payment_requests/incoming")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -5539,7 +5539,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payment_requests/incoming",
   "headers": {
@@ -5567,7 +5567,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -5583,7 +5583,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payment_requests/incoming")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payment_requests/incoming")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -5595,7 +5595,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/paym
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payment_requests/incoming');
+$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/incoming');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -5619,7 +5619,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payment_requests/incoming"
+	url := "https://api.sandbox.split.cash/payment_requests/incoming"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -5705,7 +5705,7 @@ func main() {
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/payment_requests/outgoing \
+  --url https://api.sandbox.split.cash/payment_requests/outgoing \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -5714,7 +5714,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payment_requests/outgoing")
+url = URI("https://api.sandbox.split.cash/payment_requests/outgoing")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -5733,7 +5733,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payment_requests/outgoing",
   "headers": {
@@ -5761,7 +5761,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -5777,7 +5777,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payment_requests/outgoing")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payment_requests/outgoing")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -5789,7 +5789,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/paym
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payment_requests/outgoing');
+$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/outgoing');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -5813,7 +5813,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payment_requests/outgoing"
+	url := "https://api.sandbox.split.cash/payment_requests/outgoing"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -5895,7 +5895,7 @@ func main() {
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/payment_requests/PR.3/history \
+  --url https://api.sandbox.split.cash/payment_requests/PR.3/history \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -5904,7 +5904,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payment_requests/PR.3/history")
+url = URI("https://api.sandbox.split.cash/payment_requests/PR.3/history")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -5923,7 +5923,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payment_requests/PR.3/history",
   "headers": {
@@ -5951,7 +5951,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -5967,7 +5967,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payment_requests/PR.3/history")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payment_requests/PR.3/history")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -5979,7 +5979,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/paym
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payment_requests/PR.3/history');
+$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/PR.3/history');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -6003,7 +6003,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payment_requests/PR.3/history"
+	url := "https://api.sandbox.split.cash/payment_requests/PR.3/history"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -6181,7 +6181,7 @@ When Split is unable to credit funds to a recipient, we will automatically creat
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/payments \
+  --url https://api.sandbox.split.cash/payments \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -6192,7 +6192,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payments")
+url = URI("https://api.sandbox.split.cash/payments")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -6213,7 +6213,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payments",
   "headers": {
@@ -6259,7 +6259,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 payload = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_contact_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
@@ -6278,7 +6278,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payments")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payments")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -6295,7 +6295,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"description":"The SuperPackage","matures_at":"2016-09-13T00:00:00Z","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}},{"amount":30000,"description":"A scuba dive SDS5464","recipient_contact_id":"dc6f1e60-3803-43ca-a200-7d641816f57f"}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payments');
+$request->setRequestUrl('https://api.sandbox.split.cash/payments');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -6323,7 +6323,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payments"
+	url := "https://api.sandbox.split.cash/payments"
 
 	payload := strings.NewReader("{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_contact_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
@@ -6459,7 +6459,7 @@ func main() {
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/payments \
+  --url https://api.sandbox.split.cash/payments \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -6468,7 +6468,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payments")
+url = URI("https://api.sandbox.split.cash/payments")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -6487,7 +6487,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payments",
   "headers": {
@@ -6515,7 +6515,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -6531,7 +6531,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payments")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payments")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -6543,7 +6543,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/paym
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payments');
+$request->setRequestUrl('https://api.sandbox.split.cash/payments');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -6567,7 +6567,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payments"
+	url := "https://api.sandbox.split.cash/payments"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -6658,7 +6658,7 @@ func main() {
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/payments/PB.1 \
+  --url https://api.sandbox.split.cash/payments/PB.1 \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -6667,7 +6667,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payments/PB.1")
+url = URI("https://api.sandbox.split.cash/payments/PB.1")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -6686,7 +6686,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payments/PB.1",
   "headers": {
@@ -6714,7 +6714,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -6730,7 +6730,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payments/PB.1")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payments/PB.1")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -6742,7 +6742,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/paym
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payments/PB.1');
+$request->setRequestUrl('https://api.sandbox.split.cash/payments/PB.1');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -6766,7 +6766,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payments/PB.1"
+	url := "https://api.sandbox.split.cash/payments/PB.1"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -6860,7 +6860,7 @@ Payouts are what a Payment or Payment Request are made of and can be either a de
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/payouts/C.2/retry \
+  --url https://api.sandbox.split.cash/payouts/C.2/retry \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -6869,7 +6869,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payouts/C.2/retry")
+url = URI("https://api.sandbox.split.cash/payouts/C.2/retry")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -6888,7 +6888,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payouts/C.2/retry",
   "headers": {
@@ -6916,7 +6916,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -6932,7 +6932,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payouts/C.2/retry")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payouts/C.2/retry")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -6944,7 +6944,7 @@ HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/pay
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payouts/C.2/retry');
+$request->setRequestUrl('https://api.sandbox.split.cash/payouts/C.2/retry');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -6968,7 +6968,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payouts/C.2/retry"
+	url := "https://api.sandbox.split.cash/payouts/C.2/retry"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -7039,7 +7039,7 @@ This endpoint allows you to retry the payout without having to recreate the pare
 
 ```shell
 curl --request DELETE \
-  --url https://api-sandbox.split.cash/payouts/D.1 \
+  --url https://api.sandbox.split.cash/payouts/D.1 \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
   --data '{"details":"Incorrect recipient"}'
@@ -7049,7 +7049,7 @@ curl --request DELETE \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payouts/D.1")
+url = URI("https://api.sandbox.split.cash/payouts/D.1")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -7069,7 +7069,7 @@ var http = require("https");
 
 var options = {
   "method": "DELETE",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payouts/D.1",
   "headers": {
@@ -7098,7 +7098,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 payload = "{\"details\":\"Incorrect recipient\"}"
 
@@ -7116,7 +7116,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/payouts/D.1")
+HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/payouts/D.1")
   .header("content-type", "application/json")
   .header("authorization", "Bearer {access-token}")
   .body("{\"details\":\"Incorrect recipient\"}")
@@ -7132,7 +7132,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"details":"Incorrect recipient"}');
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payouts/D.1');
+$request->setRequestUrl('https://api.sandbox.split.cash/payouts/D.1');
 $request->setRequestMethod('DELETE');
 $request->setBody($body);
 
@@ -7159,7 +7159,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payouts/D.1"
+	url := "https://api.sandbox.split.cash/payouts/D.1"
 
 	payload := strings.NewReader("{\"details\":\"Incorrect recipient\"}")
 
@@ -7244,7 +7244,7 @@ A Refund Request can have the following statuses:
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/payout_refund_requests \
+  --url https://api.sandbox.split.cash/payout_refund_requests \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -7255,7 +7255,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payout_refund_requests")
+url = URI("https://api.sandbox.split.cash/payout_refund_requests")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -7276,7 +7276,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payout_refund_requests",
   "headers": {
@@ -7311,7 +7311,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 payload = "{\"for_ref\":\"D.1\",\"amount\":500,\"reason\":\"Because reason\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
@@ -7330,7 +7330,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payout_refund_requests")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payout_refund_requests")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -7347,7 +7347,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"for_ref":"D.1","amount":500,"reason":"Because reason","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payout_refund_requests');
+$request->setRequestUrl('https://api.sandbox.split.cash/payout_refund_requests');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -7375,7 +7375,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payout_refund_requests"
+	url := "https://api.sandbox.split.cash/payout_refund_requests"
 
 	payload := strings.NewReader("{\"for_ref\":\"D.1\",\"amount\":500,\"reason\":\"Because reason\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
@@ -7466,7 +7466,7 @@ Certain rules apply to the creation of a Refund Request:
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/payout_refund_requests/PR.3/approve \
+  --url https://api.sandbox.split.cash/payout_refund_requests/PR.3/approve \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -7475,7 +7475,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payout_refund_requests/PR.3/approve")
+url = URI("https://api.sandbox.split.cash/payout_refund_requests/PR.3/approve")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -7494,7 +7494,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payout_refund_requests/PR.3/approve",
   "headers": {
@@ -7522,7 +7522,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -7538,7 +7538,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payout_refund_requests/PR.3/approve")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payout_refund_requests/PR.3/approve")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -7550,7 +7550,7 @@ HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/pay
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payout_refund_requests/PR.3/approve');
+$request->setRequestUrl('https://api.sandbox.split.cash/payout_refund_requests/PR.3/approve');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -7574,7 +7574,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payout_refund_requests/PR.3/approve"
+	url := "https://api.sandbox.split.cash/payout_refund_requests/PR.3/approve"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -7639,7 +7639,7 @@ func main() {
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/payout_refund_requests/PR.3/decline \
+  --url https://api.sandbox.split.cash/payout_refund_requests/PR.3/decline \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -7648,7 +7648,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payout_refund_requests/PR.3/decline")
+url = URI("https://api.sandbox.split.cash/payout_refund_requests/PR.3/decline")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -7667,7 +7667,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payout_refund_requests/PR.3/decline",
   "headers": {
@@ -7695,7 +7695,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -7711,7 +7711,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/payout_refund_requests/PR.3/decline")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payout_refund_requests/PR.3/decline")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -7723,7 +7723,7 @@ HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/pay
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payout_refund_requests/PR.3/decline');
+$request->setRequestUrl('https://api.sandbox.split.cash/payout_refund_requests/PR.3/decline');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -7747,7 +7747,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payout_refund_requests/PR.3/decline"
+	url := "https://api.sandbox.split.cash/payout_refund_requests/PR.3/decline"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -7812,7 +7812,7 @@ func main() {
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/payout_refund_requests/RR.2 \
+  --url https://api.sandbox.split.cash/payout_refund_requests/RR.2 \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -7821,7 +7821,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payout_refund_requests/RR.2")
+url = URI("https://api.sandbox.split.cash/payout_refund_requests/RR.2")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -7840,7 +7840,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payout_refund_requests/RR.2",
   "headers": {
@@ -7868,7 +7868,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -7884,7 +7884,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payout_refund_requests/RR.2")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payout_refund_requests/RR.2")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -7896,7 +7896,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payo
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payout_refund_requests/RR.2');
+$request->setRequestUrl('https://api.sandbox.split.cash/payout_refund_requests/RR.2');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -7920,7 +7920,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payout_refund_requests/RR.2"
+	url := "https://api.sandbox.split.cash/payout_refund_requests/RR.2"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -7987,7 +7987,7 @@ Get a specific Refund Request by its reference
 
 ```shell
 curl --request DELETE \
-  --url https://api-sandbox.split.cash/payout_refund_requests/RR.2 \
+  --url https://api.sandbox.split.cash/payout_refund_requests/RR.2 \
   --header 'authorization: Bearer {access-token}'
 ```
 
@@ -7995,7 +7995,7 @@ curl --request DELETE \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payout_refund_requests/RR.2")
+url = URI("https://api.sandbox.split.cash/payout_refund_requests/RR.2")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -8013,7 +8013,7 @@ var http = require("https");
 
 var options = {
   "method": "DELETE",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payout_refund_requests/RR.2",
   "headers": {
@@ -8040,7 +8040,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = { 'authorization': "Bearer {access-token}" }
 
@@ -8053,7 +8053,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/payout_refund_requests/RR.2")
+HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/payout_refund_requests/RR.2")
   .header("authorization", "Bearer {access-token}")
   .asString();
 ```
@@ -8064,7 +8064,7 @@ HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/p
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payout_refund_requests/RR.2');
+$request->setRequestUrl('https://api.sandbox.split.cash/payout_refund_requests/RR.2');
 $request->setRequestMethod('DELETE');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}'
@@ -8087,7 +8087,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payout_refund_requests/RR.2"
+	url := "https://api.sandbox.split.cash/payout_refund_requests/RR.2"
 
 	req, _ := http.NewRequest("DELETE", url, nil)
 
@@ -8128,7 +8128,7 @@ A Refund Request can only be canceled if it is pending approval.
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/payout_refund_requests/incoming \
+  --url https://api.sandbox.split.cash/payout_refund_requests/incoming \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -8137,7 +8137,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payout_refund_requests/incoming")
+url = URI("https://api.sandbox.split.cash/payout_refund_requests/incoming")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -8156,7 +8156,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payout_refund_requests/incoming",
   "headers": {
@@ -8184,7 +8184,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -8200,7 +8200,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payout_refund_requests/incoming")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payout_refund_requests/incoming")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -8212,7 +8212,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payo
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payout_refund_requests/incoming');
+$request->setRequestUrl('https://api.sandbox.split.cash/payout_refund_requests/incoming');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -8236,7 +8236,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payout_refund_requests/incoming"
+	url := "https://api.sandbox.split.cash/payout_refund_requests/incoming"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -8304,7 +8304,7 @@ func main() {
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/payout_refund_requests/outgoing \
+  --url https://api.sandbox.split.cash/payout_refund_requests/outgoing \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -8313,7 +8313,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/payout_refund_requests/outgoing")
+url = URI("https://api.sandbox.split.cash/payout_refund_requests/outgoing")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -8332,7 +8332,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/payout_refund_requests/outgoing",
   "headers": {
@@ -8360,7 +8360,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -8376,7 +8376,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payout_refund_requests/outgoing")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payout_refund_requests/outgoing")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -8388,7 +8388,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/payo
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/payout_refund_requests/outgoing');
+$request->setRequestUrl('https://api.sandbox.split.cash/payout_refund_requests/outgoing');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -8412,7 +8412,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/payout_refund_requests/outgoing"
+	url := "https://api.sandbox.split.cash/payout_refund_requests/outgoing"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -8499,7 +8499,7 @@ There are two response fields that differ depending on the direction:
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/credits/string/refunds \
+  --url https://api.sandbox.split.cash/credits/string/refunds \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -8510,7 +8510,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/credits/string/refunds")
+url = URI("https://api.sandbox.split.cash/credits/string/refunds")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -8531,7 +8531,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/credits/string/refunds",
   "headers": {
@@ -8565,7 +8565,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 payload = "{\"amount\":500,\"reason\":\"Because reason\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
@@ -8584,7 +8584,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/credits/string/refunds")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/credits/string/refunds")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -8601,7 +8601,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"amount":500,"reason":"Because reason","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
-$request->setRequestUrl('https://api-sandbox.split.cash/credits/string/refunds');
+$request->setRequestUrl('https://api.sandbox.split.cash/credits/string/refunds');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -8629,7 +8629,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/credits/string/refunds"
+	url := "https://api.sandbox.split.cash/credits/string/refunds"
 
 	payload := strings.NewReader("{\"amount\":500,\"reason\":\"Because reason\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
@@ -8715,7 +8715,7 @@ Certain rules apply to the issuance of a refund:
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/refunds/incoming \
+  --url https://api.sandbox.split.cash/refunds/incoming \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -8724,7 +8724,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/refunds/incoming")
+url = URI("https://api.sandbox.split.cash/refunds/incoming")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -8743,7 +8743,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/refunds/incoming",
   "headers": {
@@ -8771,7 +8771,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -8787,7 +8787,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/refunds/incoming")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/refunds/incoming")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -8799,7 +8799,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/refu
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/refunds/incoming');
+$request->setRequestUrl('https://api.sandbox.split.cash/refunds/incoming');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -8823,7 +8823,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/refunds/incoming"
+	url := "https://api.sandbox.split.cash/refunds/incoming"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -8887,7 +8887,7 @@ func main() {
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/refunds/outgoing \
+  --url https://api.sandbox.split.cash/refunds/outgoing \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -8896,7 +8896,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/refunds/outgoing")
+url = URI("https://api.sandbox.split.cash/refunds/outgoing")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -8915,7 +8915,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/refunds/outgoing",
   "headers": {
@@ -8943,7 +8943,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -8959,7 +8959,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/refunds/outgoing")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/refunds/outgoing")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -8971,7 +8971,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/refu
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/refunds/outgoing');
+$request->setRequestUrl('https://api.sandbox.split.cash/refunds/outgoing');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -8995,7 +8995,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/refunds/outgoing"
+	url := "https://api.sandbox.split.cash/refunds/outgoing"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -9059,7 +9059,7 @@ func main() {
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/refunds/PRF.1 \
+  --url https://api.sandbox.split.cash/refunds/PRF.1 \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -9068,7 +9068,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/refunds/PRF.1")
+url = URI("https://api.sandbox.split.cash/refunds/PRF.1")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -9087,7 +9087,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/refunds/PRF.1",
   "headers": {
@@ -9115,7 +9115,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -9131,7 +9131,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/refunds/PRF.1")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/refunds/PRF.1")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -9143,7 +9143,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/refu
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/refunds/PRF.1');
+$request->setRequestUrl('https://api.sandbox.split.cash/refunds/PRF.1');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -9167,7 +9167,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/refunds/PRF.1"
+	url := "https://api.sandbox.split.cash/refunds/PRF.1"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -9302,7 +9302,7 @@ The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompani
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/transactions \
+  --url https://api.sandbox.split.cash/transactions \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -9311,7 +9311,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/transactions")
+url = URI("https://api.sandbox.split.cash/transactions")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -9330,7 +9330,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/transactions",
   "headers": {
@@ -9358,7 +9358,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -9374,7 +9374,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/transactions")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/transactions")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -9386,7 +9386,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/tran
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/transactions');
+$request->setRequestUrl('https://api.sandbox.split.cash/transactions');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -9410,7 +9410,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/transactions"
+	url := "https://api.sandbox.split.cash/transactions"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -9567,7 +9567,7 @@ Unassigned Agreements are shared using the generated link available in the respo
 
 ```shell
 curl --request POST \
-  --url https://api-sandbox.split.cash/unassigned_agreements \
+  --url https://api.sandbox.split.cash/unassigned_agreements \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -9578,7 +9578,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/unassigned_agreements")
+url = URI("https://api.sandbox.split.cash/unassigned_agreements")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -9599,7 +9599,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/unassigned_agreements",
   "headers": {
@@ -9632,7 +9632,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 payload = "{\"expiry_in_seconds\":60,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
 
@@ -9651,7 +9651,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api-sandbox.split.cash/unassigned_agreements")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/unassigned_agreements")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -9668,7 +9668,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"expiry_in_seconds":60,"terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}');
 
-$request->setRequestUrl('https://api-sandbox.split.cash/unassigned_agreements');
+$request->setRequestUrl('https://api.sandbox.split.cash/unassigned_agreements');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -9696,7 +9696,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/unassigned_agreements"
+	url := "https://api.sandbox.split.cash/unassigned_agreements"
 
 	payload := strings.NewReader("{\"expiry_in_seconds\":60,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
 
@@ -9779,7 +9779,7 @@ Create an Unassigned Agreement
       }
     },
     "assignment_expires_at": "2017-03-20T00:54:27Z",
-    "link": "https://go-sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+    "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
   }
 }
 ```
@@ -9798,7 +9798,7 @@ Create an Unassigned Agreement
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/unassigned_agreements \
+  --url https://api.sandbox.split.cash/unassigned_agreements \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -9807,7 +9807,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/unassigned_agreements")
+url = URI("https://api.sandbox.split.cash/unassigned_agreements")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -9826,7 +9826,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/unassigned_agreements",
   "headers": {
@@ -9854,7 +9854,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -9870,7 +9870,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/unassigned_agreements")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/unassigned_agreements")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -9882,7 +9882,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/unas
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/unassigned_agreements');
+$request->setRequestUrl('https://api.sandbox.split.cash/unassigned_agreements');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -9906,7 +9906,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/unassigned_agreements"
+	url := "https://api.sandbox.split.cash/unassigned_agreements"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -9959,7 +9959,7 @@ Will return all Unassigned Agreements that have not yet be accepted.
         }
       },
       "assignment_expires_at": "2017-03-20T00:54:27Z",
-      "link": "https://go-sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+      "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
     },
     {
       "ref": "A.7ea",
@@ -9978,7 +9978,7 @@ Will return all Unassigned Agreements that have not yet be accepted.
         }
       },
       "assignment_expires_at": "2017-03-21T00:54:27Z",
-      "link": "https://go-sandbox.split.cash/unassigned_agreements/4e2728cc-b4ba-42c2-a6c3-26a7758de58d/invitation"
+      "link": "https://go.sandbox.split.cash/unassigned_agreements/4e2728cc-b4ba-42c2-a6c3-26a7758de58d/invitation"
     }
   ]
 }
@@ -9998,7 +9998,7 @@ Will return all Unassigned Agreements that have not yet be accepted.
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/unassigned_agreements/A.4k \
+  --url https://api.sandbox.split.cash/unassigned_agreements/A.4k \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -10007,7 +10007,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/unassigned_agreements/A.4k")
+url = URI("https://api.sandbox.split.cash/unassigned_agreements/A.4k")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -10026,7 +10026,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/unassigned_agreements/A.4k",
   "headers": {
@@ -10054,7 +10054,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -10070,7 +10070,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/unassigned_agreements/A.4k")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/unassigned_agreements/A.4k")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -10082,7 +10082,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/unas
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/unassigned_agreements/A.4k');
+$request->setRequestUrl('https://api.sandbox.split.cash/unassigned_agreements/A.4k');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -10106,7 +10106,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/unassigned_agreements/A.4k"
+	url := "https://api.sandbox.split.cash/unassigned_agreements/A.4k"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -10157,7 +10157,7 @@ Get a single Unassigned Agreement by its reference
       }
     },
     "assignment_expires_at": "2017-03-20T00:54:27Z",
-    "link": "https://go-sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+    "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
   }
 }
 ```
@@ -10176,7 +10176,7 @@ Get a single Unassigned Agreement by its reference
 
 ```shell
 curl --request DELETE \
-  --url https://api-sandbox.split.cash/unassigned_agreements/A.2 \
+  --url https://api.sandbox.split.cash/unassigned_agreements/A.2 \
   --header 'authorization: Bearer {access-token}'
 ```
 
@@ -10184,7 +10184,7 @@ curl --request DELETE \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/unassigned_agreements/A.2")
+url = URI("https://api.sandbox.split.cash/unassigned_agreements/A.2")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -10202,7 +10202,7 @@ var http = require("https");
 
 var options = {
   "method": "DELETE",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/unassigned_agreements/A.2",
   "headers": {
@@ -10229,7 +10229,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = { 'authorization': "Bearer {access-token}" }
 
@@ -10242,7 +10242,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/unassigned_agreements/A.2")
+HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/unassigned_agreements/A.2")
   .header("authorization", "Bearer {access-token}")
   .asString();
 ```
@@ -10253,7 +10253,7 @@ HttpResponse<String> response = Unirest.delete("https://api-sandbox.split.cash/u
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/unassigned_agreements/A.2');
+$request->setRequestUrl('https://api.sandbox.split.cash/unassigned_agreements/A.2');
 $request->setRequestMethod('DELETE');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}'
@@ -10276,7 +10276,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/unassigned_agreements/A.2"
+	url := "https://api.sandbox.split.cash/unassigned_agreements/A.2"
 
 	req, _ := http.NewRequest("DELETE", url, nil)
 
@@ -10321,7 +10321,7 @@ All about the currently authenticated user.
 
 ```shell
 curl --request GET \
-  --url https://api-sandbox.split.cash/user \
+  --url https://api.sandbox.split.cash/user \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -10330,7 +10330,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api-sandbox.split.cash/user")
+url = URI("https://api.sandbox.split.cash/user")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -10349,7 +10349,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api-sandbox.split.cash",
+  "hostname": "api.sandbox.split.cash",
   "port": null,
   "path": "/user",
   "headers": {
@@ -10377,7 +10377,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api-sandbox.split.cash")
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
 headers = {
     'accept': "application/json",
@@ -10393,7 +10393,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/user")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/user")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -10405,7 +10405,7 @@ HttpResponse<String> response = Unirest.get("https://api-sandbox.split.cash/user
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api-sandbox.split.cash/user');
+$request->setRequestUrl('https://api.sandbox.split.cash/user');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -10429,7 +10429,7 @@ import (
 
 func main() {
 
-	url := "https://api-sandbox.split.cash/user"
+	url := "https://api.sandbox.split.cash/user"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -10934,7 +10934,7 @@ func main() {
         "max_amount": 1000000
       }
     },
-    "link": "https://go-sandbox.split.cash/open_agreements/aecff76d-13e0-4e17-b7c5-844ae07fa675/agreements/invitation"
+    "link": "https://go.sandbox.split.cash/open_agreements/aecff76d-13e0-4e17-b7c5-844ae07fa675/agreements/invitation"
   }
 }
 ```
@@ -10969,7 +10969,7 @@ func main() {
           "max_amount": 1000000
         }
       },
-      "link": "https://go-sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+      "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
     },
     {
       "ref": "OA.2",
@@ -10986,7 +10986,7 @@ func main() {
           "max_amount": null
         }
       },
-      "link": "https://go-sandbox.split.cash/open_agreements/948e3662-154d-42d1-bdc9-a05c251d3981/agreements/invitation"
+      "link": "https://go.sandbox.split.cash/open_agreements/948e3662-154d-42d1-bdc9-a05c251d3981/agreements/invitation"
     }
   ]
 }
@@ -11021,7 +11021,7 @@ func main() {
         "max_amount": 1000000
       }
     },
-    "link": "https://go-sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+    "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
   }
 }
 ```
@@ -11055,7 +11055,7 @@ func main() {
         "max_amount": 1000000
       }
     },
-    "link": "https://go-sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+    "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
   }
 }
 ```
@@ -12576,7 +12576,7 @@ func main() {
       }
     },
     "assignment_expires_at": "2017-03-20T00:54:27Z",
-    "link": "https://go-sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+    "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
   }
 }
 ```
@@ -12613,7 +12613,7 @@ func main() {
         }
       },
       "assignment_expires_at": "2017-03-20T00:54:27Z",
-      "link": "https://go-sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+      "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
     },
     {
       "ref": "A.7ea",
@@ -12632,7 +12632,7 @@ func main() {
         }
       },
       "assignment_expires_at": "2017-03-21T00:54:27Z",
-      "link": "https://go-sandbox.split.cash/unassigned_agreements/4e2728cc-b4ba-42c2-a6c3-26a7758de58d/invitation"
+      "link": "https://go.sandbox.split.cash/unassigned_agreements/4e2728cc-b4ba-42c2-a6c3-26a7758de58d/invitation"
     }
   ]
 }
@@ -12669,7 +12669,7 @@ func main() {
       }
     },
     "assignment_expires_at": "2017-03-20T00:54:27Z",
-    "link": "https://go-sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+    "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
   }
 }
 ```
