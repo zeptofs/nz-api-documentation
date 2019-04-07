@@ -2598,7 +2598,9 @@ Add a Split Contact
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "verified"
+      "state": "verified",
+      "iav_provider": null,
+      "iav_status": null
     },
     "account": {
       "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
@@ -2786,7 +2788,9 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "account_number": "494307",
         "branch_code": "435434",
         "bank_name": "National Australia Bank",
-        "state": "verified"
+        "state": "verified",
+        "iav_provider": "split",
+        "iav_status": "active"
       },
       "account": {
         "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
@@ -2805,7 +2809,9 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "account_number": "4395959",
         "branch_code": "068231",
         "bank_name": "National Australia Bank",
-        "state": "verified"
+        "state": "verified",
+        "iav_provider": "split",
+        "iav_status": "credentials_invalid"
       },
       "account": {
         "id": "362f7fe8-4af2-4902-b3d7-b5ab704ef2e7",
@@ -2824,7 +2830,9 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "account_number": null,
         "branch_code": null,
         "bank_name": null,
-        "state": "disabled"
+        "state": "disabled",
+        "iav_provider": null,
+        "iav_status": null
       },
       "account": {
         "id": "a31dc907-9c7a-4736-84c9-1149cf03de42",
@@ -2843,7 +2851,9 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "account_number": "13048322",
         "branch_code": "123456",
         "bank_name": "National Australia Bank",
-        "state": "pending_verification"
+        "state": "pending_verification",
+        "iav_provider": null,
+        "iav_status": null
       },
       "anyone_account": {
         "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
@@ -3062,7 +3072,9 @@ When you want to pay somebody that doesn't have a Split account, you can add the
       "account_number": "13048322",
       "branch_code": "123456",
       "bank_name": "National Australia Bank",
-      "state": "pending_verification"
+      "state": "pending_verification",
+      "iav_provider": null,
+      "iav_status": null
     },
     "anyone_account": {
       "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
@@ -3237,7 +3249,9 @@ Get a single Contact by its ID
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "pending_verification"
+      "state": "pending_verification",
+      "iav_provider": "split",
+      "iav_status": "active"
     },
     "account": {
       "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
@@ -3594,7 +3608,9 @@ You can update the name and email of any Contact. This is essentially an alias y
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "pending_verification"
+      "state": "pending_verification",
+      "iav_provider": null,
+      "iav_status": null
     },
     "account": {
       "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
@@ -11102,7 +11118,9 @@ func main() {
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "verified"
+      "state": "verified",
+      "iav_provider": null,
+      "iav_status": null
     },
     "account": {
       "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
@@ -11139,7 +11157,9 @@ func main() {
         "account_number": "494307",
         "branch_code": "435434",
         "bank_name": "National Australia Bank",
-        "state": "verified"
+        "state": "verified",
+        "iav_provider": "split",
+        "iav_status": "active"
       },
       "account": {
         "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
@@ -11158,7 +11178,9 @@ func main() {
         "account_number": "4395959",
         "branch_code": "068231",
         "bank_name": "National Australia Bank",
-        "state": "verified"
+        "state": "verified",
+        "iav_provider": "split",
+        "iav_status": "credentials_invalid"
       },
       "account": {
         "id": "362f7fe8-4af2-4902-b3d7-b5ab704ef2e7",
@@ -11177,7 +11199,9 @@ func main() {
         "account_number": null,
         "branch_code": null,
         "bank_name": null,
-        "state": "disabled"
+        "state": "disabled",
+        "iav_provider": null,
+        "iav_status": null
       },
       "account": {
         "id": "a31dc907-9c7a-4736-84c9-1149cf03de42",
@@ -11196,7 +11220,9 @@ func main() {
         "account_number": "13048322",
         "branch_code": "123456",
         "bank_name": "National Australia Bank",
-        "state": "pending_verification"
+        "state": "pending_verification",
+        "iav_provider": null,
+        "iav_status": null
       },
       "anyone_account": {
         "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
@@ -11254,7 +11280,9 @@ func main() {
       "account_number": "13048322",
       "branch_code": "123456",
       "bank_name": "National Australia Bank",
-      "state": "pending_verification"
+      "state": "pending_verification",
+      "iav_provider": null,
+      "iav_status": null
     },
     "anyone_account": {
       "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
@@ -11287,7 +11315,9 @@ func main() {
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "pending_verification"
+      "state": "pending_verification",
+      "iav_provider": "split",
+      "iav_status": "active"
     },
     "account": {
       "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
@@ -11343,7 +11373,9 @@ func main() {
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "pending_verification"
+      "state": "pending_verification",
+      "iav_provider": null,
+      "iav_status": null
     },
     "account": {
       "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
