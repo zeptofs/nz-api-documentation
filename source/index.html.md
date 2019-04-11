@@ -1296,7 +1296,7 @@ Approve an incoming Agreement
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ApproveAgreementResponse](#schemaapproveagreementresponse)|
 
-## Decline and Agreement
+## Decline an Agreement
 
 <a id="opIdDeclineAgreement"></a>
 
@@ -1434,7 +1434,7 @@ func main() {
 
 Decline an incoming Agreement
 
-<h3 id="Decline-and-Agreement-parameters" class="parameters">Parameters</h3>
+<h3 id="Decline-an-Agreement-parameters" class="parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -1470,7 +1470,7 @@ Decline an incoming Agreement
 }
 ```
 
-<h3 id="Decline and Agreement-responses">Responses</h3>
+<h3 id="Decline an Agreement-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
