@@ -1868,7 +1868,7 @@ paths:
     post:
       tags:
         - Agreements
-      summary: Decline and Agreement
+      summary: Decline an Agreement
       description: Decline an incoming Agreement
       operationId: DeclineAgreement
       parameters:
