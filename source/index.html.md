@@ -9295,9 +9295,9 @@ The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompani
 
 | Reason | Description |
 |--------|-------------|
-| `refer_to_customer` | **(Debit only)** Usually due to insufficient funds |
-| `insufficient_funds` | **(Debit only)** Insufficient funds |
-| `payment_stopped` | **(Debit only)** The payment was stopped at the bank. Can be due to a customer requesting a stop payment with their financial institution. |
+| `refer_to_customer` | Usually due to insufficient funds |
+| `insufficient_funds` | Insufficient funds |
+| `payment_stopped` | The payment was stopped at the bank. Can be due to a customer requesting a stop payment with their financial institution. |
 | `invalid_bsb_number` | BSB number is invalid |
 | `account_closed` | The bank account is closed |
 | `customer_deceased` | Customer is deceased |
