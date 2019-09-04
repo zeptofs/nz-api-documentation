@@ -627,6 +627,7 @@ You can elect to assign a remitter name on a per-request basis when submitting P
   ]
 }
 ```
+Please refer our [help centre webhooks article](http://help.split.cash/en/articles/3303626-webhooks) for more information and an overview of what you can achieve with webhooks.
 
 We support two main categories of webhooks:
 
