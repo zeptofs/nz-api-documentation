@@ -978,7 +978,7 @@ info:
 
     ```
 
-    Please refer our [help centre webhooks article](http://help.split.cash/en/articles/3303626-webhooks) for more information and an overview of what you can achieve with webhooks.
+    Please refer to our [help centre webhooks article](http://help.split.cash/en/articles/3303626-webhooks) for more information and an overview of what you can achieve with webhooks.
 
 
     We support two main categories of webhooks:
@@ -998,6 +998,17 @@ info:
     webhook URLs. The live environment however will only POST to HTTPS URLs.
 
     </aside>
+
+
+    ### Our delivery promises
+
+    1. A webhook event delivery is only considered failed if we don't receive any http response code (2xx, 4xx, 5xx, etc...)
+
+    2. We will auto-retry failed deliveries every 5 minutes for 1 hour.
+
+    3. Webhook events delivery order are not guaranteed.
+
+    4. We guarantee atleast 1 delivery attempt.
 
 
     ### Request ID
