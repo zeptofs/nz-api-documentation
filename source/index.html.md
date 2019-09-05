@@ -627,6 +627,7 @@ You can elect to assign a remitter name on a per-request basis when submitting P
   ]
 }
 ```
+Please refer to our help centre [article on webhooks](http://help.split.cash/en/articles/3303626-webhooks) for more information and an overview of what you can achieve with webhooks.
 
 We support two main categories of webhooks:
 
@@ -636,6 +637,12 @@ We support two main categories of webhooks:
 All events posted to the designated URL fit the same structure.
 <aside class="notice">The sandbox environment allow both HTTP and HTTPS webhook URLs. The live environment however will only POST to HTTPS URLs.
 </aside>
+
+### Our Delivery Promises
+1. We only consider a webhook event delivery as failed if we don't receive any http response code (2xx, 4xx, 5xx, etc.)
+2. We will auto-retry failed deliveries every 5 minutes for 1 hour.
+3. Delivery order for webhook events is not guaranteed.
+4. We guarantee at least 1 delivery attempt.
 
 ### Request ID
 
