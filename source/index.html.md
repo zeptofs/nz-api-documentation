@@ -638,7 +638,7 @@ All events posted to the designated URL fit the same structure.
 <aside class="notice">The sandbox environment allow both HTTP and HTTPS webhook URLs. The live environment however will only POST to HTTPS URLs.
 </aside>
 
-### Our delivery promises
+### Our Delivery Promises
 1. We only consider a webhook event delivery as failed if we don't receive any http response code (2xx, 4xx, 5xx, etc.)
 2. We will auto-retry failed deliveries every 5 minutes for 1 hour.
 3. Delivery order for webhook events is not guaranteed.

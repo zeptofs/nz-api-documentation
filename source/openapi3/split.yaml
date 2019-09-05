@@ -1000,7 +1000,7 @@ info:
     </aside>
 
 
-    ### Our delivery promises
+    ### Our Delivery Promises
 
     1. We only consider a webhook event delivery as failed if we don't receive any http response code (2xx, 4xx, 5xx, etc.)
 
