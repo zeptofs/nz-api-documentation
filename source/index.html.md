@@ -109,7 +109,7 @@ This guide will help you setup an OAuth2 app in order to get authenticated & aut
 
 2. **Choose authentication method**
 
-    All requests to the Split API require a `access_token` for authentication. There are two options for obtaining these tokens, the correct option will depend on your use case:
+    All requests to the Split API require an `access_token` for authentication. There are two options for obtaining these tokens, the correct option will depend on your use case:
 
     **Personal access token** If you only need to access your own Split account via the API, then using personal access tokens are the most straight-forward way. Refer to [Personal access token](/#personal-access-token) to setup. These tokens do not expire so no refreshing is required.
 
@@ -162,7 +162,7 @@ If you're looking to only access your own account via the API, you can generate 
 
     After the user has authorised your application, they will be returned to your application at the URL specified in `redirect_uri` along with the `code` query parameter as the authorisation code.
 
-    Finally, the authorisation code can than be exchanged for an access token and refresh token pair by POSTing to: `https://go.sandbox.split.cash/oauth/token`
+    Finally, the authorisation code can then be exchanged for an access token and refresh token pair by POSTing to: `https://go.sandbox.split.cash/oauth/token`
 
     | Parameter | Description |
     |-----------|-------------|
@@ -200,13 +200,9 @@ Before you start, load up our API collection:
 
 3. **In Postman, setup your environment variables**
 
-    Click on **Manage Environments**
+    We've included the **Split Payments Public Sandbox** environment to get you started. Select it in the top right corner of the window then click the <img class="inline-1" alt="Postman Quick-Look icon" src="https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_quick_look_icon.png" /> icon and click **edit**.
 
-    [![Postman environment variables](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_environment_gear.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_environment_gear.png)
-
-    We've included the **Split Payments Public Sandbox** environment to get you started. Go ahead an click on it.
-
-    [![Select Postman environment](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_select_environment.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_select_environment.png)
+    [![Edit Postman environment](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_edit_environment.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_edit_environment.png)
 
     Using the details from the OAuth2 app you created earlier, fill in the **oauth2_application_id** & **oauth2_secret** fields.
 
