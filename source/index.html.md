@@ -164,7 +164,7 @@ If you're looking to only access your own account via the API, you can generate 
 
     Finally, the authorisation code can then be exchanged for an access token and refresh token pair by POSTing to: `https://go.sandbox.split.cash/oauth/token`
 
-    **NOTE** The authorisation code that you get will be a ONE-TIME use code. It will not work again if you try to POST it a second time.
+    **Note:** The authorisation code is a ONE-TIME use code. It will not work again if you try to POST it a second time.
 
     | Parameter | Description |
     |-----------|-------------|
