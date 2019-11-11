@@ -207,12 +207,14 @@ info:
 
         Finally, the authorisation code can then be exchanged for an access token and refresh token pair by POSTing to: `https://go.sandbox.split.cash/oauth/token`
 
+        **Note** The authorisation code is a ONE-TIME use code. It will not work again if you try to POST it a second time.
+
         | Parameter | Description |
         |-----------|-------------|
         | `grant_type` | Set to `authorization_code` |
         | `client_id` | This is your `Application ID` as generated when you registered your application with Split |
         | `client_secret` | This is your `Secret` as generated when you registered your application with Split |
-        | `code` | The authorisation code returned with the user |
+        | `code` | The authorisation code returned with the user (ONE-TIME use) |
         | `redirect_uri` | Same URL used in step 3 |
 
     4. **Wrap-up**
