@@ -2424,7 +2424,7 @@ By default, all Bank Accounts will be returned. There can currently be only 1 ac
       "branch_code": "302193",
       "bank_name": "National Australia Bank",
       "account_number": "119302",
-      "status": "removed"
+      "status": "active"
     }
   ]
 }
@@ -9697,7 +9697,7 @@ func main() {
       "branch_code": "302193",
       "bank_name": "National Australia Bank",
       "account_number": "119302",
-      "status": "removed"
+      "status": "active"
     }
   ]
 }
