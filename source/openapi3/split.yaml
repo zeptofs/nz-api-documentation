@@ -3580,7 +3580,7 @@ components:
             branch_code: '302193'
             bank_name: National Australia Bank
             account_number: '119302'
-            status: removed
+            status: active
     ListAllBankConnectionsResponse:
       title: List all Bank Connections (response)
       required:
