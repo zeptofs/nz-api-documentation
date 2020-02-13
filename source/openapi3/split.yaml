@@ -2145,7 +2145,7 @@ paths:
           schema:
             type: string
             format: UUID
-          example: a87f6739-1652-4438-8906-648cd11b0136
+          example: c397645b-bd4f-4fc6-b1fe-4993fef6c3c7
       responses:
         '200':
           description: OK
@@ -3594,10 +3594,10 @@ components:
           description: ''
       example:
         data:
-          - id: 292e4642-7c10-49d8-8b44-fc29c9ef18b3
+          - id: fb497754-87e2-407d-871f-32aec39d09d4
             provider_name: split
             state: active
-            refreshed_at: '2020-02-12T19:53:00.000+11:00'
+            refreshed_at: '2020-02-13T20:05:00.000+11:00'
             removed_at:
             failure_reason:
             institution:
@@ -3607,12 +3607,12 @@ components:
               id: 626e15b1-aa4a-496e-b5d6-3f8c1a6d2189
               name: George Morissette
               email: randy@windler.net
-            update_credentials_invite:
-              split_url: http://go.split.cash/authorise_bank_connections/heathcote-partners-1/292e4642-7c10-49d8-8b44-fc29c9ef18b3
-          - id: e846c6fc-0eb0-4637-81ec-033539ca4be9
+            links:
+              update_bank_connection: http://go.split.cash/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4
+          - id: ddbee875-7344-4d74-9503-6233149fe1a0
             provider_name: split
             state: credentials_invalid
-            refreshed_at: '2020-02-12T19:53:00.000+11:00'
+            refreshed_at: '2020-02-13T20:05:00.000+11:00'
             removed_at:
             failure_reason:
             institution:
@@ -3622,8 +3622,9 @@ components:
               id: 72e37667-6364-440f-b1bd-56df5654e258
               name: Joel Boyle
               email: travis@hermanntorp.net
-            update_credentials_invite:
-              split_url: http://go.split.cash/authorise_bank_connections/heathcote-partners-1/e846c6fc-0eb0-4637-81ec-033539ca4be9
+            links:
+              update_bank_connection: http://go.split.cash/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0
+
     CreateOpenAgreementRequest:
       title: Create an Open Agreement (request)
       required:
@@ -3946,19 +3947,22 @@ components:
           type: object
       example:
         data:
-            id: a87f6739-1652-4438-8906-648cd11b0136
-            provider_name: split
-            state: credentials_invalid
-            refreshed_at: '2020-02-13T18:38:00.000+11:00'
-            removed_at: 
-            failure_reason: 
-            institution:
-              short_name: CBA
-              full_name: Commonwealth Bank of Australia
-            contact:
-              id: 72e37667-6364-440f-b1bd-56df5654e258
-              name: Joel Boyle
-              email: travis@hermanntorp.net
+          id: c397645b-bd4f-4fc6-b1fe-4993fef6c3c7
+          provider_name: split
+          state: credentials_invalid
+          refreshed_at: '2020-02-13T20:01:00.000+11:00'
+          removed_at: 
+          failure_reason: 
+          institution:
+            short_name: CBA
+            full_name: Commonwealth Bank of Australia
+          contact:
+            id: 72e37667-6364-440f-b1bd-56df5654e258
+            name: Joel Boyle
+            email: travis@hermanntorp.net
+          links:
+            update_bank_connection: http://go.split.cash/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7
+
     GetAContactResponse:
       title: Get a Contact (response)
       required:

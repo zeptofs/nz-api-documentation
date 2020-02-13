@@ -2603,10 +2603,10 @@ By default, all Bank Connections will be returned. You can apply filters to your
 {
   "data": [
     {
-      "id": "292e4642-7c10-49d8-8b44-fc29c9ef18b3",
+      "id": "fb497754-87e2-407d-871f-32aec39d09d4",
       "provider_name": "split",
       "state": "active",
-      "refreshed_at": "2020-02-12T19:53:00.000+11:00",
+      "refreshed_at": "2020-02-13T20:05:00.000+11:00",
       "removed_at": null,
       "failure_reason": null,
       "institution": {
@@ -2618,15 +2618,15 @@ By default, all Bank Connections will be returned. You can apply filters to your
         "name": "George Morissette",
         "email": "randy@windler.net"
       },
-      "update_credentials_invite": {
-        "split_url": "http://go.split.cash/authorise_bank_connections/heathcote-partners-1/292e4642-7c10-49d8-8b44-fc29c9ef18b3"
+      "links": {
+        "update_bank_connection": "http://go.split.cash/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4"
       }
     },
     {
-      "id": "e846c6fc-0eb0-4637-81ec-033539ca4be9",
+      "id": "ddbee875-7344-4d74-9503-6233149fe1a0",
       "provider_name": "split",
       "state": "credentials_invalid",
-      "refreshed_at": "2020-02-12T19:53:00.000+11:00",
+      "refreshed_at": "2020-02-13T20:05:00.000+11:00",
       "removed_at": null,
       "failure_reason": null,
       "institution": {
@@ -2638,8 +2638,8 @@ By default, all Bank Connections will be returned. You can apply filters to your
         "name": "Joel Boyle",
         "email": "travis@hermanntorp.net"
       },
-      "update_credentials_invite": {
-        "split_url": "http://go.split.cash/authorise_bank_connections/heathcote-partners-1/e846c6fc-0eb0-4637-81ec-033539ca4be9"
+      "links": {
+        "update_bank_connection": "http://go.split.cash/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0"
       }
     }
   ]
@@ -2660,7 +2660,7 @@ By default, all Bank Connections will be returned. You can apply filters to your
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/bank_connections/a87f6739-1652-4438-8906-648cd11b0136 \
+  --url https://api.sandbox.split.cash/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7 \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -2669,7 +2669,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/bank_connections/a87f6739-1652-4438-8906-648cd11b0136")
+url = URI("https://api.sandbox.split.cash/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -2690,7 +2690,7 @@ var options = {
   "method": "GET",
   "hostname": "api.sandbox.split.cash",
   "port": null,
-  "path": "/bank_connections/a87f6739-1652-4438-8906-648cd11b0136",
+  "path": "/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7",
   "headers": {
     "accept": "application/json",
     "authorization": "Bearer {access-token}"
@@ -2723,7 +2723,7 @@ headers = {
     'authorization': "Bearer {access-token}"
     }
 
-conn.request("GET", "/bank_connections/a87f6739-1652-4438-8906-648cd11b0136", headers=headers)
+conn.request("GET", "/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7", headers=headers)
 
 res = conn.getresponse()
 data = res.read()
@@ -2732,7 +2732,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/bank_connections/a87f6739-1652-4438-8906-648cd11b0136")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -2744,7 +2744,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/bank
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/bank_connections/a87f6739-1652-4438-8906-648cd11b0136');
+$request->setRequestUrl('https://api.sandbox.split.cash/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -2768,7 +2768,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/bank_connections/a87f6739-1652-4438-8906-648cd11b0136"
+	url := "https://api.sandbox.split.cash/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -2803,10 +2803,10 @@ Get a single Bank Connection by its ID
 ```json
 {
   "data": {
-    "id": "a87f6739-1652-4438-8906-648cd11b0136",
+    "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7",
     "provider_name": "split",
     "state": "credentials_invalid",
-    "refreshed_at": "2020-02-13T18:38:00.000+11:00",
+    "refreshed_at": "2020-02-13T20:01:00.000+11:00",
     "removed_at": null,
     "failure_reason": null,
     "institution": {
@@ -2817,6 +2817,9 @@ Get a single Bank Connection by its ID
       "id": "72e37667-6364-440f-b1bd-56df5654e258",
       "name": "Joel Boyle",
       "email": "travis@hermanntorp.net"
+    },
+    "links": {
+      "update_bank_connection": "http://go.split.cash/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
     }
   }
 }
@@ -10253,10 +10256,10 @@ func main() {
 {
   "data": [
     {
-      "id": "292e4642-7c10-49d8-8b44-fc29c9ef18b3",
+      "id": "fb497754-87e2-407d-871f-32aec39d09d4",
       "provider_name": "split",
       "state": "active",
-      "refreshed_at": "2020-02-12T19:53:00.000+11:00",
+      "refreshed_at": "2020-02-13T20:05:00.000+11:00",
       "removed_at": null,
       "failure_reason": null,
       "institution": {
@@ -10268,15 +10271,15 @@ func main() {
         "name": "George Morissette",
         "email": "randy@windler.net"
       },
-      "update_credentials_invite": {
-        "split_url": "http://go.split.cash/authorise_bank_connections/heathcote-partners-1/292e4642-7c10-49d8-8b44-fc29c9ef18b3"
+      "links": {
+        "update_bank_connection": "http://go.split.cash/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4"
       }
     },
     {
-      "id": "e846c6fc-0eb0-4637-81ec-033539ca4be9",
+      "id": "ddbee875-7344-4d74-9503-6233149fe1a0",
       "provider_name": "split",
       "state": "credentials_invalid",
-      "refreshed_at": "2020-02-12T19:53:00.000+11:00",
+      "refreshed_at": "2020-02-13T20:05:00.000+11:00",
       "removed_at": null,
       "failure_reason": null,
       "institution": {
@@ -10288,8 +10291,8 @@ func main() {
         "name": "Joel Boyle",
         "email": "travis@hermanntorp.net"
       },
-      "update_credentials_invite": {
-        "split_url": "http://go.split.cash/authorise_bank_connections/heathcote-partners-1/e846c6fc-0eb0-4637-81ec-033539ca4be9"
+      "links": {
+        "update_bank_connection": "http://go.split.cash/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0"
       }
     }
   ]
@@ -10728,10 +10731,10 @@ func main() {
 ```json
 {
   "data": {
-    "id": "a87f6739-1652-4438-8906-648cd11b0136",
+    "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7",
     "provider_name": "split",
     "state": "credentials_invalid",
-    "refreshed_at": "2020-02-13T18:38:00.000+11:00",
+    "refreshed_at": "2020-02-13T20:01:00.000+11:00",
     "removed_at": null,
     "failure_reason": null,
     "institution": {
@@ -10742,6 +10745,9 @@ func main() {
       "id": "72e37667-6364-440f-b1bd-56df5654e258",
       "name": "Joel Boyle",
       "email": "travis@hermanntorp.net"
+    },
+    "links": {
+      "update_bank_connection": "http://go.split.cash/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
     }
   }
 }
