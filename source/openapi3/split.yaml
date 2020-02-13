@@ -2085,10 +2085,10 @@ paths:
     get:
       tags:
         - BankConnections
-      summary: List all BankConnections
+      summary: List all Bank Connections
       description: >
-        By default, all BankConnections will be returned. You can apply filters to your
-        query to customise the returned BankConnection list.
+        By default, all Bank Connections will be returned. You can apply filters to your
+        query to customise the returned Bank Connection list.
       operationId: ListAllBankConnections
       responses:
         '200':
@@ -2133,7 +2133,7 @@ paths:
       tags:
         - BankConnections
       summary: Get a Bank Connection
-      description: Get a single BankConnection by its ID
+      description: Get a single Bank Connection by its ID
       operationId: GetABankConnection
       parameters:
         - name: id
@@ -2158,9 +2158,9 @@ paths:
     delete:
       tags:
         - BankConnections
-      summary: Remove a BankConnection
+      summary: Remove a Bank Connection
       description: >
-        <aside class="notice">Removing a BankConnection will not affect your
+        <aside class="notice">Removing a Bank Connection will not affect your
         transaction history.</aside>
       operationId: RemoveABankConnection
       parameters:

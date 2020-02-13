@@ -2438,7 +2438,7 @@ By default, all Bank Accounts will be returned. There can currently be only 1 ac
 
 <h1 id="Split-API-BankConnections">BankConnections</h1>
 
-## List all BankConnections
+## List all Bank Connections
 
 <a id="opIdListAllBankConnections"></a>
 
@@ -2574,9 +2574,9 @@ func main() {
 
 `GET /bank_connections`
 
-By default, all BankConnections will be returned. You can apply filters to your query to customise the returned BankConnection list.
+By default, all Bank Connections will be returned. You can apply filters to your query to customise the returned Bank Connection list.
 
-<h3 id="List-all-BankConnections-parameters" class="parameters">Parameters</h3>
+<h3 id="List-all-Bank-Connections-parameters" class="parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -2646,7 +2646,7 @@ By default, all BankConnections will be returned. You can apply filters to your 
 }
 ```
 
-<h3 id="List all BankConnections-responses">Responses</h3>
+<h3 id="List all Bank Connections-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -2788,7 +2788,7 @@ func main() {
 
 `GET /bank_connections/{id}`
 
-Get a single BankConnection by its ID
+Get a single Bank Connection by its ID
 
 <h3 id="Get-a-Bank-Connection-parameters" class="parameters">Parameters</h3>
 
@@ -2829,7 +2829,7 @@ Get a single BankConnection by its ID
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetABankConnectionResponse](#schemagetabankconnectionresponse)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
 
-## Remove a BankConnection
+## Remove a Bank Connection
 
 <a id="opIdRemoveABankConnection"></a>
 
@@ -2956,15 +2956,15 @@ func main() {
 
 `DELETE /bank_connections/{id}`
 
-<aside class="notice">Removing a BankConnection will not affect your transaction history.</aside>
+<aside class="notice">Removing a Bank Connection will not affect your transaction history.</aside>
 
-<h3 id="Remove-a-BankConnection-parameters" class="parameters">Parameters</h3>
+<h3 id="Remove-a-Bank-Connection-parameters" class="parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |id|path|string(UUID)|true|BankConnection ID (`BankConnection.data.id`)|
 
-<h3 id="Remove a BankConnection-responses">Responses</h3>
+<h3 id="Remove a Bank Connection-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
