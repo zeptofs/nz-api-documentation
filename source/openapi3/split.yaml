@@ -2081,6 +2081,101 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListAllBankAccountsResponse'
+  /bank_connections:
+    get:
+      tags:
+        - BankConnections
+      summary: List all BankConnections
+      description: >
+        By default, all BankConnections will be returned. You can apply filters to your
+        query to customise the returned BankConnection list.
+      operationId: ListAllBankConnections
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListAllBankConnectionsResponse'
+      parameters:
+        - name: page
+          in: query
+          description: 'Page of results to return, single value, exact match'
+          style: form
+          schema:
+            type: string
+          example: '1'
+        - name: per_page
+          in: query
+          description: 'Number of results per page, single value, exact match'
+          style: form
+          schema:
+            type: string
+          example: '100'
+        - name: provider_name
+          in: query
+          description: 'Single value, exact match'
+          style: simple
+          schema:
+            type: string
+            enum: [basiq, proviso, split]
+          example: basiq
+        - name: state
+          in: query
+          description: 'Single value, exact match'
+          style: simple
+          schema:
+            type: string
+            enum: [active, credentials_invalid]
+          example: credentials_invalid
+  /bank_connections/{id}:
+    get:
+      tags:
+        - BankConnections
+      summary: Get a Bank Connection
+      description: Get a single BankConnection by its ID
+      operationId: GetABankConnection
+      parameters:
+        - name: id
+          in: path
+          description: BankConnection ID (`BankConnection.data.id`)
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: UUID
+          example: a87f6739-1652-4438-8906-648cd11b0136
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetABankConnectionResponse'
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - BankConnections
+      summary: Remove a BankConnection
+      description: >
+        <aside class="notice">Removing a BankConnection will not affect your
+        transaction history.</aside>
+      operationId: RemoveABankConnection
+      parameters:
+        - name: id
+          in: path
+          description: BankConnection ID (`BankConnection.data.id`)
+          required: true
+          style: simple
+          schema:
+            type: string
+            format: UUID
+          example: 01586a3f-f25b-404f-b135-c42a1b7ef4de
+      responses:
+        '204':
+          description: ''
   /contacts:
     post:
       tags:
@@ -3485,7 +3580,50 @@ components:
             branch_code: '302193'
             bank_name: National Australia Bank
             account_number: '119302'
-            status: active
+            status: removed
+    ListAllBankConnectionsResponse:
+      title: List all Bank Connections (response)
+      required:
+        - data
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+          description: ''
+      example:
+        data:
+          - id: 292e4642-7c10-49d8-8b44-fc29c9ef18b3
+            provider_name: split
+            state: active
+            refreshed_at: '2020-02-12T19:53:00.000+11:00'
+            removed_at:
+            failure_reason:
+            institution:
+              short_name: CBA
+              full_name: Commonwealth Bank of Australia
+            contact:
+              id: 626e15b1-aa4a-496e-b5d6-3f8c1a6d2189
+              name: George Morissette
+              email: randy@windler.net
+            update_credentials_invite:
+              split_url: http://go.split.cash/authorise_bank_connections/heathcote-partners-1/292e4642-7c10-49d8-8b44-fc29c9ef18b3
+          - id: e846c6fc-0eb0-4637-81ec-033539ca4be9
+            provider_name: split
+            state: credentials_invalid
+            refreshed_at: '2020-02-12T19:53:00.000+11:00'
+            removed_at:
+            failure_reason:
+            institution:
+              short_name: CBA
+              full_name: Commonwealth Bank of Australia
+            contact:
+              id: 72e37667-6364-440f-b1bd-56df5654e258
+              name: Joel Boyle
+              email: travis@hermanntorp.net
+            update_credentials_invite:
+              split_url: http://go.split.cash/authorise_bank_connections/heathcote-partners-1/e846c6fc-0eb0-4637-81ec-033539ca4be9
     CreateOpenAgreementRequest:
       title: Create an Open Agreement (request)
       required:
@@ -3798,6 +3936,29 @@ components:
             iav_status: null
           anyone_account:
             id: 77be6ecc-5fa7-454b-86d6-02a5f147878d
+    GetABankConnectionResponse:
+      title: Get a BankConnection (response)
+      required:
+        - data
+      type: object
+      properties:
+        data:
+          type: object
+      example:
+        data:
+            id: a87f6739-1652-4438-8906-648cd11b0136
+            provider_name: split
+            state: credentials_invalid
+            refreshed_at: '2020-02-13T18:38:00.000+11:00'
+            removed_at: 
+            failure_reason: 
+            institution:
+              short_name: CBA
+              full_name: Commonwealth Bank of Australia
+            contact:
+              id: 72e37667-6364-440f-b1bd-56df5654e258
+              name: Joel Boyle
+              email: travis@hermanntorp.net
     GetAContactResponse:
       title: Get a Contact (response)
       required:
@@ -3948,7 +4109,7 @@ components:
     Metadata:
       title: Metadata
       type: object
-      description: Use for your custom data and certain Split customisations
+      description: Use for your custom data and certain Split customisations. This data will be attached to the Payment Request and its associated Payouts, Transactions and Webhook Events.
       properties: {}
       example:
         custom_key: Custom string
