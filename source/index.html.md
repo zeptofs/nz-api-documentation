@@ -2436,7 +2436,16 @@ By default, all Bank Accounts will be returned. There can currently be only 1 ac
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllBankAccountsResponse](#schemalistallbankaccountsresponse)|
 
-<h1 id="Split-API-BankConnections">BankConnections</h1>
+<h1 id="Split-API-Bank-Connections">Bank Connections</h1>
+
+Bank connections are read-only connections to your contacts' banking data. This allows Split (and yourself) to make intelligent transactional decisions leading to better outcomes.
+
+Use these endpoints to:
+
+  * List your bank connections and check their status
+  * Retrieve a link that you can share with your contact to update their invalidated bank connection (e.g Their online banking credentials have changed)
+
+<aside class="notice">Looking to add a new bank connection to a contact? See the <a href="#get-a-contact">get a contact endpoint</a></aside>
 
 ## List all Bank Connections
 
@@ -2819,7 +2828,7 @@ Get a single Bank Connection by its ID
       "email": "travis@hermanntorp.net"
     },
     "links": {
-      "update_bank_connection": "http://go.split.cash/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
+      "update_bank_connection": "https://go.sandbox.split.cash/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
     }
   }
 }
@@ -3181,15 +3190,22 @@ Add a Split Contact
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "verified",
+      "state": "active",
       "iav_provider": null,
-      "iav_status": null
+      "iav_status": null,
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
     },
     "account": {
       "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
       "nickname": "outstanding_tours",
       "abn": "123456789",
       "name": "Outstanding Tours Pty Ltd"
+    },
+    "links": {
+      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -3346,7 +3362,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
-|account_id|query|string|false|Single value, string search|
 |name|query|string|false|Single value, string search|
 |nickname|query|string|false|Single value, string search|
 |email|query|string|false|Single value, string search|
@@ -3371,15 +3386,16 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "account_number": "494307",
         "branch_code": "435434",
         "bank_name": "National Australia Bank",
-        "state": "verified",
+        "state": "active",
         "iav_provider": "split",
-        "iav_status": "active"
+        "iav_status": "active",
+        "blocks": {
+          "debits_blocked": false,
+          "credits_blocked": false
+        }
       },
-      "account": {
-        "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
-        "nickname": "outstanding_tours",
-        "abn": "123456789",
-        "name": "Outstanding Tours Pty Ltd"
+      "bank_connection": {
+        "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
       }
     },
     {
@@ -3392,15 +3408,16 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "account_number": "4395959",
         "branch_code": "068231",
         "bank_name": "National Australia Bank",
-        "state": "verified",
+        "state": "active",
         "iav_provider": "split",
-        "iav_status": "credentials_invalid"
+        "iav_status": "credentials_invalid",
+        "blocks": {
+          "debits_blocked": false,
+          "credits_blocked": false
+        }
       },
-      "account": {
-        "id": "362f7fe8-4af2-4902-b3d7-b5ab704ef2e7",
-        "nickname": "adventure_dudes",
-        "abn": "126754389",
-        "name": "Adventure Dudes Pty Ltd"
+      "bank_connection": {
+        "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
       }
     },
     {
@@ -3415,13 +3432,14 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "bank_name": null,
         "state": "disabled",
         "iav_provider": null,
-        "iav_status": null
+        "iav_status": null,
+        "blocks": {
+          "debits_blocked": false,
+          "credits_blocked": false
+        }
       },
-      "account": {
-        "id": "a31dc907-9c7a-4736-84c9-1149cf03de42",
-        "nickname": "surfing_world",
-        "abn": "295443789",
-        "name": "Surfing World Pty Ltd"
+      "links": {
+        "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     },
     {
@@ -3436,10 +3454,14 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "bank_name": "National Australia Bank",
         "state": "pending_verification",
         "iav_provider": null,
-        "iav_status": null
+        "iav_status": null,
+        "blocks": {
+          "debits_blocked": false,
+          "credits_blocked": false
+        }
       },
-      "anyone_account": {
-        "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
+      "links": {
+        "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     }
   ]
@@ -3669,10 +3691,14 @@ When you want to pay somebody that doesn't have a Split account, you can add the
       "bank_name": "National Australia Bank",
       "state": "pending_verification",
       "iav_provider": null,
-      "iav_status": null
+      "iav_status": null,
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
     },
-    "anyone_account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
+    "links": {
+      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -3844,15 +3870,16 @@ Get a single Contact by its ID
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "pending_verification",
-      "iav_provider": "split",
-      "iav_status": "active"
+      "state": "active",
+      "iav_provider": null,
+      "iav_status": null,
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
     },
-    "account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
-      "nickname": "outstanding_tours",
-      "abn": "123456789",
-      "name": "Outstanding Tours Pty Ltd"
+    "links": {
+      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -4203,15 +4230,16 @@ You can update the name and email of any Contact. This is essentially an alias y
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "pending_verification",
-      "iav_provider": null,
-      "iav_status": null
+      "state": "active",
+      "iav_provider": "split",
+      "iav_status": "active",
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
     },
-    "account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
-      "nickname": "outstanding_tours",
-      "abn": "123456789",
-      "name": "Outstanding Tours Pty Ltd"
+    "bank_connection": {
+      "id": "1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -10534,15 +10562,22 @@ func main() {
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "verified",
+      "state": "active",
       "iav_provider": null,
-      "iav_status": null
+      "iav_status": null,
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
     },
     "account": {
       "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
       "nickname": "outstanding_tours",
       "abn": "123456789",
       "name": "Outstanding Tours Pty Ltd"
+    },
+    "links": {
+      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -10573,15 +10608,16 @@ func main() {
         "account_number": "494307",
         "branch_code": "435434",
         "bank_name": "National Australia Bank",
-        "state": "verified",
+        "state": "active",
         "iav_provider": "split",
-        "iav_status": "active"
+        "iav_status": "active",
+        "blocks": {
+          "debits_blocked": false,
+          "credits_blocked": false
+        }
       },
-      "account": {
-        "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
-        "nickname": "outstanding_tours",
-        "abn": "123456789",
-        "name": "Outstanding Tours Pty Ltd"
+      "bank_connection": {
+        "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
       }
     },
     {
@@ -10594,15 +10630,16 @@ func main() {
         "account_number": "4395959",
         "branch_code": "068231",
         "bank_name": "National Australia Bank",
-        "state": "verified",
+        "state": "active",
         "iav_provider": "split",
-        "iav_status": "credentials_invalid"
+        "iav_status": "credentials_invalid",
+        "blocks": {
+          "debits_blocked": false,
+          "credits_blocked": false
+        }
       },
-      "account": {
-        "id": "362f7fe8-4af2-4902-b3d7-b5ab704ef2e7",
-        "nickname": "adventure_dudes",
-        "abn": "126754389",
-        "name": "Adventure Dudes Pty Ltd"
+      "bank_connection": {
+        "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
       }
     },
     {
@@ -10617,13 +10654,14 @@ func main() {
         "bank_name": null,
         "state": "disabled",
         "iav_provider": null,
-        "iav_status": null
+        "iav_status": null,
+        "blocks": {
+          "debits_blocked": false,
+          "credits_blocked": false
+        }
       },
-      "account": {
-        "id": "a31dc907-9c7a-4736-84c9-1149cf03de42",
-        "nickname": "surfing_world",
-        "abn": "295443789",
-        "name": "Surfing World Pty Ltd"
+      "links": {
+        "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     },
     {
@@ -10638,10 +10676,14 @@ func main() {
         "bank_name": "National Australia Bank",
         "state": "pending_verification",
         "iav_provider": null,
-        "iav_status": null
+        "iav_status": null,
+        "blocks": {
+          "debits_blocked": false,
+          "credits_blocked": false
+        }
       },
-      "anyone_account": {
-        "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
+      "links": {
+        "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     }
   ]
@@ -10707,10 +10749,14 @@ func main() {
       "bank_name": "National Australia Bank",
       "state": "pending_verification",
       "iav_provider": null,
-      "iav_status": null
+      "iav_status": null,
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
     },
-    "anyone_account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
+    "links": {
+      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -10747,7 +10793,7 @@ func main() {
       "email": "travis@hermanntorp.net"
     },
     "links": {
-      "update_bank_connection": "http://go.split.cash/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
+      "update_bank_connection": "https://go.sandbox.split.cash/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
     }
   }
 }
@@ -10777,15 +10823,16 @@ func main() {
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "pending_verification",
-      "iav_provider": "split",
-      "iav_status": "active"
+      "state": "active",
+      "iav_provider": null,
+      "iav_status": null,
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
     },
-    "account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
-      "nickname": "outstanding_tours",
-      "abn": "123456789",
-      "name": "Outstanding Tours Pty Ltd"
+    "links": {
+      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -10835,15 +10882,16 @@ func main() {
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "pending_verification",
-      "iav_provider": null,
-      "iav_status": null
+      "state": "active",
+      "iav_provider": "split",
+      "iav_status": "active",
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
     },
-    "account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
-      "nickname": "outstanding_tours",
-      "abn": "123456789",
-      "name": "Outstanding Tours Pty Ltd"
+    "bank_connection": {
+      "id": "1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
