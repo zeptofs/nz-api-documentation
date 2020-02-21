@@ -2436,6 +2436,552 @@ By default, all Bank Accounts will be returned. There can currently be only 1 ac
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllBankAccountsResponse](#schemalistallbankaccountsresponse)|
 
+<h1 id="Split-API-Bank-Connections">Bank Connections</h1>
+
+Bank connections are read-only connections to your contacts' banking data. This allows Split (and yourself) to make intelligent transactional decisions leading to better outcomes.
+
+Use these endpoints to:
+
+  * List your bank connections and check their status
+  * Retrieve a link that you can share with your contact to update their invalidated bank connection (e.g Their online banking credentials have changed)
+
+<aside class="notice">Looking to add a new bank connection to a contact? See the <a href="#get-a-contact">get a contact endpoint</a></aside>
+
+## List all Bank Connections
+
+<a id="opIdListAllBankConnections"></a>
+
+> Code samples
+
+```shell
+curl --request GET \
+  --url https://api.sandbox.split.cash/bank_connections \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/bank_connections")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/bank_connections",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = {
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("GET", "/bank_connections", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/bank_connections")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/bank_connections');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/bank_connections"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`GET /bank_connections`
+
+By default, all Bank Connections will be returned. You can apply filters to your query to customise the returned Bank Connection list.
+
+<h3 id="List-all-Bank-Connections-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
+|provider_name|query|string|false|Single value, exact match|
+|state|query|string|false|Single value, exact match|
+
+#### Enumerated Values
+
+|Parameter|Value|
+|---|---|
+|provider_name|basiq|
+|provider_name|proviso|
+|provider_name|split|
+|state|active|
+|state|credentials_invalid|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "data": [
+    {
+      "id": "fb497754-87e2-407d-871f-32aec39d09d4",
+      "provider_name": "split",
+      "state": "active",
+      "refreshed_at": "2020-02-13T20:05:00.000+11:00",
+      "removed_at": null,
+      "failure_reason": null,
+      "institution": {
+        "short_name": "CBA",
+        "full_name": "Commonwealth Bank of Australia"
+      },
+      "contact": {
+        "id": "626e15b1-aa4a-496e-b5d6-3f8c1a6d2189",
+        "name": "George Morissette",
+        "email": "randy@windler.net"
+      },
+      "links": {
+        "update_bank_connection": "http://go.split.cash/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4"
+      }
+    },
+    {
+      "id": "ddbee875-7344-4d74-9503-6233149fe1a0",
+      "provider_name": "split",
+      "state": "credentials_invalid",
+      "refreshed_at": "2020-02-13T20:05:00.000+11:00",
+      "removed_at": null,
+      "failure_reason": null,
+      "institution": {
+        "short_name": "CBA",
+        "full_name": "Commonwealth Bank of Australia"
+      },
+      "contact": {
+        "id": "72e37667-6364-440f-b1bd-56df5654e258",
+        "name": "Joel Boyle",
+        "email": "travis@hermanntorp.net"
+      },
+      "links": {
+        "update_bank_connection": "http://go.split.cash/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0"
+      }
+    }
+  ]
+}
+```
+
+<h3 id="List all Bank Connections-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllBankConnectionsResponse](#schemalistallbankconnectionsresponse)|
+
+## Get a Bank Connection
+
+<a id="opIdGetABankConnection"></a>
+
+> Code samples
+
+```shell
+curl --request GET \
+  --url https://api.sandbox.split.cash/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7 \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = {
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("GET", "/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`GET /bank_connections/{id}`
+
+Get a single Bank Connection by its ID
+
+<h3 id="Get-a-Bank-Connection-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string(UUID)|true|BankConnection ID (`BankConnection.data.id`)|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "data": {
+    "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7",
+    "provider_name": "split",
+    "state": "credentials_invalid",
+    "refreshed_at": "2020-02-13T20:01:00.000+11:00",
+    "removed_at": null,
+    "failure_reason": null,
+    "institution": {
+      "short_name": "CBA",
+      "full_name": "Commonwealth Bank of Australia"
+    },
+    "contact": {
+      "id": "72e37667-6364-440f-b1bd-56df5654e258",
+      "name": "Joel Boyle",
+      "email": "travis@hermanntorp.net"
+    },
+    "links": {
+      "update_bank_connection": "https://go.sandbox.split.cash/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
+    }
+  }
+}
+```
+
+<h3 id="Get a Bank Connection-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetABankConnectionResponse](#schemagetabankconnectionresponse)|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
+
+## Remove a Bank Connection
+
+<a id="opIdRemoveABankConnection"></a>
+
+> Code samples
+
+```shell
+curl --request DELETE \
+  --url https://api.sandbox.split.cash/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Delete.new(url)
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "DELETE",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de",
+  "headers": {
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = { 'authorization': "Bearer {access-token}" }
+
+conn.request("DELETE", "/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de');
+$request->setRequestMethod('DELETE');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de"
+
+	req, _ := http.NewRequest("DELETE", url, nil)
+
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`DELETE /bank_connections/{id}`
+
+<aside class="notice">Removing a Bank Connection will not affect your transaction history.</aside>
+
+<h3 id="Remove-a-Bank-Connection-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string(UUID)|true|BankConnection ID (`BankConnection.data.id`)|
+
+<h3 id="Remove a Bank Connection-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No description|None|
+
 <h1 id="Split-API-Contacts">Contacts</h1>
 
 Your Contacts form an address book of parties with whom you can interact. In order to initiate any type of transaction you must first have the party in your Contact list.
@@ -2622,7 +3168,7 @@ Add a Split Contact
 |---|---|---|---|---|
 |body|body|[AddASplitContactRequest](#schemaaddasplitcontactrequest)|true|No description|
 |» nickname|body|string|true|Split account nickname|
-|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations|
+|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations. This data will be attached to the Payment Request and its associated Payouts, Transactions and Webhook Events.|
 
 > Example responses
 
@@ -2644,15 +3190,22 @@ Add a Split Contact
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "verified",
+      "state": "active",
       "iav_provider": null,
-      "iav_status": null
+      "iav_status": null,
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
     },
     "account": {
       "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
       "nickname": "outstanding_tours",
       "abn": "123456789",
       "name": "Outstanding Tours Pty Ltd"
+    },
+    "links": {
+      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -2809,7 +3362,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
 |---|---|---|---|---|
 |page|query|string|false|Page of results to return, single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
-|account_id|query|string|false|Single value, string search|
 |name|query|string|false|Single value, string search|
 |nickname|query|string|false|Single value, string search|
 |email|query|string|false|Single value, string search|
@@ -2834,15 +3386,16 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "account_number": "494307",
         "branch_code": "435434",
         "bank_name": "National Australia Bank",
-        "state": "verified",
+        "state": "active",
         "iav_provider": "split",
-        "iav_status": "active"
+        "iav_status": "active",
+        "blocks": {
+          "debits_blocked": false,
+          "credits_blocked": false
+        }
       },
-      "account": {
-        "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
-        "nickname": "outstanding_tours",
-        "abn": "123456789",
-        "name": "Outstanding Tours Pty Ltd"
+      "bank_connection": {
+        "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
       }
     },
     {
@@ -2855,15 +3408,16 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "account_number": "4395959",
         "branch_code": "068231",
         "bank_name": "National Australia Bank",
-        "state": "verified",
+        "state": "active",
         "iav_provider": "split",
-        "iav_status": "credentials_invalid"
+        "iav_status": "credentials_invalid",
+        "blocks": {
+          "debits_blocked": false,
+          "credits_blocked": false
+        }
       },
-      "account": {
-        "id": "362f7fe8-4af2-4902-b3d7-b5ab704ef2e7",
-        "nickname": "adventure_dudes",
-        "abn": "126754389",
-        "name": "Adventure Dudes Pty Ltd"
+      "bank_connection": {
+        "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
       }
     },
     {
@@ -2878,13 +3432,14 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "bank_name": null,
         "state": "disabled",
         "iav_provider": null,
-        "iav_status": null
+        "iav_status": null,
+        "blocks": {
+          "debits_blocked": false,
+          "credits_blocked": false
+        }
       },
-      "account": {
-        "id": "a31dc907-9c7a-4736-84c9-1149cf03de42",
-        "nickname": "surfing_world",
-        "abn": "295443789",
-        "name": "Surfing World Pty Ltd"
+      "links": {
+        "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     },
     {
@@ -2899,10 +3454,14 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "bank_name": "National Australia Bank",
         "state": "pending_verification",
         "iav_provider": null,
-        "iav_status": null
+        "iav_status": null,
+        "blocks": {
+          "debits_blocked": false,
+          "credits_blocked": false
+        }
       },
-      "anyone_account": {
-        "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
+      "links": {
+        "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     }
   ]
@@ -3108,7 +3667,7 @@ When you want to pay somebody that doesn't have a Split account, you can add the
 |» email|body|string|true|The email of the Contact|
 |» branch_code|body|string|true|The bank account BSB of the Contact|
 |» account_number|body|string|true|The bank account number of the Contact|
-|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations|
+|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations. This data will be attached to the Payment Request and its associated Payouts, Transactions and Webhook Events.|
 
 > Example responses
 
@@ -3132,10 +3691,14 @@ When you want to pay somebody that doesn't have a Split account, you can add the
       "bank_name": "National Australia Bank",
       "state": "pending_verification",
       "iav_provider": null,
-      "iav_status": null
+      "iav_status": null,
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
     },
-    "anyone_account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
+    "links": {
+      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -3307,15 +3870,16 @@ Get a single Contact by its ID
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "pending_verification",
-      "iav_provider": "split",
-      "iav_status": "active"
+      "state": "active",
+      "iav_provider": null,
+      "iav_status": null,
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
     },
-    "account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
-      "nickname": "outstanding_tours",
-      "abn": "123456789",
-      "name": "Outstanding Tours Pty Ltd"
+    "links": {
+      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -3666,15 +4230,16 @@ You can update the name and email of any Contact. This is essentially an alias y
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "pending_verification",
-      "iav_provider": null,
-      "iav_status": null
+      "state": "active",
+      "iav_provider": "split",
+      "iav_status": "active",
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
     },
-    "account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
-      "nickname": "outstanding_tours",
-      "abn": "123456789",
-      "name": "Outstanding Tours Pty Ltd"
+    "bank_connection": {
+      "id": "1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -4873,7 +5438,7 @@ func main() {
 |» amount|body|number|true|Amount in cents to pay the initiator|
 |» authoriser_contact_id|body|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
 |» precheck_funds|body|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
-|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations|
+|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations. This data will be attached to the Payment Request and its associated Payouts, Transactions and Webhook Events.|
 
 > Example responses
 
@@ -6479,8 +7044,8 @@ func main() {
 |»»» amount|body|number|true|Amount in cents to pay the recipient|
 |»»» description|body|string|true|Description that both the payer an recipient can see|
 |»»» recipient_contact_id|body|string|true|Contact to pay (`Contact.data.id`)|
-|»»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations|
-|»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations|
+|»»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations. This data will be attached to the Payment Request and its associated Payouts, Transactions and Webhook Events.|
+|»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations. This data will be attached to the Payment Request and its associated Payouts, Transactions and Webhook Events.|
 
 #### Detailed descriptions
 
@@ -7500,7 +8065,7 @@ Certain rules apply to the issuance of a refund:
 |body|body|[IssueARefundRequest](#schemaissuearefundrequest)|true|No description|
 |» amount|body|number|true|Amount in cents refund|
 |» reason|body|string|false|Reason for the refund. Visible to both parties.|
-|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations|
+|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations. This data will be attached to the Payment Request and its associated Payouts, Transactions and Webhook Events.|
 
 > Example responses
 
@@ -9711,6 +10276,65 @@ func main() {
 |---|---|---|---|
 |data|[object]|true|No description|
 
+## ListAllBankConnectionsResponse
+
+<a id="schemalistallbankconnectionsresponse"></a>
+
+```json
+{
+  "data": [
+    {
+      "id": "fb497754-87e2-407d-871f-32aec39d09d4",
+      "provider_name": "split",
+      "state": "active",
+      "refreshed_at": "2020-02-13T20:05:00.000+11:00",
+      "removed_at": null,
+      "failure_reason": null,
+      "institution": {
+        "short_name": "CBA",
+        "full_name": "Commonwealth Bank of Australia"
+      },
+      "contact": {
+        "id": "626e15b1-aa4a-496e-b5d6-3f8c1a6d2189",
+        "name": "George Morissette",
+        "email": "randy@windler.net"
+      },
+      "links": {
+        "update_bank_connection": "http://go.split.cash/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4"
+      }
+    },
+    {
+      "id": "ddbee875-7344-4d74-9503-6233149fe1a0",
+      "provider_name": "split",
+      "state": "credentials_invalid",
+      "refreshed_at": "2020-02-13T20:05:00.000+11:00",
+      "removed_at": null,
+      "failure_reason": null,
+      "institution": {
+        "short_name": "CBA",
+        "full_name": "Commonwealth Bank of Australia"
+      },
+      "contact": {
+        "id": "72e37667-6364-440f-b1bd-56df5654e258",
+        "name": "Joel Boyle",
+        "email": "travis@hermanntorp.net"
+      },
+      "links": {
+        "update_bank_connection": "http://go.split.cash/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0"
+      }
+    }
+  ]
+}
+```
+
+### Properties
+
+*List all Bank Connections (response)*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
 ## CreateOpenAgreementRequest
 
 <a id="schemacreateopenagreementrequest"></a>
@@ -9938,15 +10562,22 @@ func main() {
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "verified",
+      "state": "active",
       "iav_provider": null,
-      "iav_status": null
+      "iav_status": null,
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
     },
     "account": {
       "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
       "nickname": "outstanding_tours",
       "abn": "123456789",
       "name": "Outstanding Tours Pty Ltd"
+    },
+    "links": {
+      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -9977,15 +10608,16 @@ func main() {
         "account_number": "494307",
         "branch_code": "435434",
         "bank_name": "National Australia Bank",
-        "state": "verified",
+        "state": "active",
         "iav_provider": "split",
-        "iav_status": "active"
+        "iav_status": "active",
+        "blocks": {
+          "debits_blocked": false,
+          "credits_blocked": false
+        }
       },
-      "account": {
-        "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
-        "nickname": "outstanding_tours",
-        "abn": "123456789",
-        "name": "Outstanding Tours Pty Ltd"
+      "bank_connection": {
+        "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
       }
     },
     {
@@ -9998,15 +10630,16 @@ func main() {
         "account_number": "4395959",
         "branch_code": "068231",
         "bank_name": "National Australia Bank",
-        "state": "verified",
+        "state": "active",
         "iav_provider": "split",
-        "iav_status": "credentials_invalid"
+        "iav_status": "credentials_invalid",
+        "blocks": {
+          "debits_blocked": false,
+          "credits_blocked": false
+        }
       },
-      "account": {
-        "id": "362f7fe8-4af2-4902-b3d7-b5ab704ef2e7",
-        "nickname": "adventure_dudes",
-        "abn": "126754389",
-        "name": "Adventure Dudes Pty Ltd"
+      "bank_connection": {
+        "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
       }
     },
     {
@@ -10021,13 +10654,14 @@ func main() {
         "bank_name": null,
         "state": "disabled",
         "iav_provider": null,
-        "iav_status": null
+        "iav_status": null,
+        "blocks": {
+          "debits_blocked": false,
+          "credits_blocked": false
+        }
       },
-      "account": {
-        "id": "a31dc907-9c7a-4736-84c9-1149cf03de42",
-        "nickname": "surfing_world",
-        "abn": "295443789",
-        "name": "Surfing World Pty Ltd"
+      "links": {
+        "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     },
     {
@@ -10042,10 +10676,14 @@ func main() {
         "bank_name": "National Australia Bank",
         "state": "pending_verification",
         "iav_provider": null,
-        "iav_status": null
+        "iav_status": null,
+        "blocks": {
+          "debits_blocked": false,
+          "credits_blocked": false
+        }
       },
-      "anyone_account": {
-        "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
+      "links": {
+        "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     }
   ]
@@ -10111,10 +10749,14 @@ func main() {
       "bank_name": "National Australia Bank",
       "state": "pending_verification",
       "iav_provider": null,
-      "iav_status": null
+      "iav_status": null,
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
     },
-    "anyone_account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
+    "links": {
+      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -10123,6 +10765,43 @@ func main() {
 ### Properties
 
 *Add an Anyone Contact (response)*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+## GetABankConnectionResponse
+
+<a id="schemagetabankconnectionresponse"></a>
+
+```json
+{
+  "data": {
+    "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7",
+    "provider_name": "split",
+    "state": "credentials_invalid",
+    "refreshed_at": "2020-02-13T20:01:00.000+11:00",
+    "removed_at": null,
+    "failure_reason": null,
+    "institution": {
+      "short_name": "CBA",
+      "full_name": "Commonwealth Bank of Australia"
+    },
+    "contact": {
+      "id": "72e37667-6364-440f-b1bd-56df5654e258",
+      "name": "Joel Boyle",
+      "email": "travis@hermanntorp.net"
+    },
+    "links": {
+      "update_bank_connection": "https://go.sandbox.split.cash/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
+    }
+  }
+}
+```
+
+### Properties
+
+*Get a BankConnection (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
@@ -10144,15 +10823,16 @@ func main() {
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "pending_verification",
-      "iav_provider": "split",
-      "iav_status": "active"
+      "state": "active",
+      "iav_provider": null,
+      "iav_status": null,
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
     },
-    "account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
-      "nickname": "outstanding_tours",
-      "abn": "123456789",
-      "name": "Outstanding Tours Pty Ltd"
+    "links": {
+      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -10202,15 +10882,16 @@ func main() {
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
-      "state": "pending_verification",
-      "iav_provider": null,
-      "iav_status": null
+      "state": "active",
+      "iav_provider": "split",
+      "iav_status": "active",
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
     },
-    "account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
-      "nickname": "outstanding_tours",
-      "abn": "123456789",
-      "name": "Outstanding Tours Pty Ltd"
+    "bank_connection": {
+      "id": "1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
