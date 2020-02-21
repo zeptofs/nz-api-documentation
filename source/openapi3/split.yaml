@@ -947,7 +947,7 @@ info:
 
     Split will automatically aggregate debits that are:
 
-    
+
     - From the same bank account; and
 
     - Initiated by the same Split account.
@@ -955,7 +955,7 @@ info:
 
     Likewise for credits:
 
-    
+
     - To the same bank account; and
 
     - Initiated by the same Split account.
@@ -3212,7 +3212,7 @@ components:
     ProposeAgreementRequest:
       title: Propose an Agreement (request)
       required:
-        - authoriser_id
+        - authoriser_contact_id
         - terms
       type: object
       properties:
