@@ -392,6 +392,7 @@ Keys expire after 24 hours. If there is a subsequent request with the same idemp
 * The `Idempotency-Key` header is optional but recommended.
 * Only the `POST` action for the Payments, Payment Requests and Refunds endpoints support the use of the `Idempotency-Key`.
 * Endpoints that use the `GET` or `DELETE` actions are idempotent by nature.
+* A request that quickly follows another with the same idempotency key may return with `503 Service Unavailable`. If so, retry the request after the number of seconds specified in the `Retry-After` response header.
 
 ## Error responses
 
