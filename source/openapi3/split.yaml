@@ -624,6 +624,21 @@ info:
     All other errors relating to Split specific resources(e.g. Contacts) will return the **Resource error response** style.
 
 
+    ## 403 errors
+
+    **403 Errors** are generally returned from any of our endpoints if your
+    application is not authorised to access what it is trying to. This is usually
+    due to the incorrect **scopes** being used when setting up your application
+    or specifying the incorrect scopes when having a user go through your OAuth
+    process.
+
+
+    If you receive this error and believe you should be able to access the
+    associated endpoint, go through [your applications]
+    (https://go.sandbox.split.cash/oauth/applications) and ensure that the feature
+    you are trying to use, is in your scopes.
+
+
     ## Speeding up onboarding
 
     Consider the following scenario:
