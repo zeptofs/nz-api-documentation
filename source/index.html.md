@@ -426,11 +426,13 @@ The Split API returns two different types of error responses depending on the co
 * Idempotency
 
 All other errors relating to Split specific resources(e.g. Contacts) will return the **Resource error response** style.
+<div class="middle-header">403 errors</div>
 
-## 403 errors
-**403 Errors** are generally returned from any of our endpoints if your application is not authorised to access what it is trying to. This is usually due to the incorrect **scopes** being used when setting up your application or specifying the incorrect scopes when having a user go through your OAuth process.
+**403 errors** are generally returned from any of our endpoints if your application does not have the required authorisation. This is usually due to:
 
-If you receive this error and believe you should be able to access the associated endpoint, go through [your applications] (https://go.sandbox.split.cash/oauth/applications) and ensure that the feature you are trying to use, is in your scopes.
+* An [invalid/expired `access_token`](/#authentication-and-authorisation); or
+* The required **scopes** not being present when setting up your [OAuth application](https://go.sandbox.split.cash/oauth/applications); or
+* The required **scopes** not being present in the [authorisation code link](/#oauth-grant-flow) used to present your user with an authorisation request.
 
 ## Speeding up onboarding
 Consider the following scenario:
@@ -986,13 +988,10 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({
-  authoriser_contact_id: '8df89c16-330f-462b-8891-808d7bdceb7f',
-  terms: {
-    per_payout: { min_amount: null, max_amount: 10000 },
-    per_frequency: { days: 7, max_amount: 1000000 }
-  }
-}));
+req.write(JSON.stringify({ authoriser_contact_id: '8df89c16-330f-462b-8891-808d7bdceb7f',
+  terms:
+   { per_payout: { min_amount: null, max_amount: 10000 },
+     per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
 ```
 
@@ -3062,10 +3061,10 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({
-  nickname: 'outstanding_tours',
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
+req.write(JSON.stringify({ nickname: 'outstanding_tours',
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
 req.end();
 ```
 
@@ -3548,13 +3547,13 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({
-  name: 'Hunter Thompson',
+req.write(JSON.stringify({ name: 'Hunter Thompson',
   email: 'hunter@batcountry.com',
   branch_code: '123456',
   account_number: '13048322',
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
 req.end();
 ```
 
@@ -4485,13 +4484,10 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({
-  title: 'Subscription Plan A',
-  terms: {
-    per_payout: { min_amount: null, max_amount: 10000 },
-    per_frequency: { days: 7, max_amount: 1000000 }
-  }
-}));
+req.write(JSON.stringify({ title: 'Subscription Plan A',
+  terms:
+   { per_payout: { min_amount: null, max_amount: 10000 },
+     per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
 ```
 
@@ -5320,14 +5316,14 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({
-  description: 'Visible to both initiator and authoriser',
+req.write(JSON.stringify({ description: 'Visible to both initiator and authoriser',
   matures_at: '2016-12-19T02:10:56Z',
   amount: 99000,
   authoriser_contact_id: 'de86472c-c027-4735-a6a7-234366a27fc7',
   precheck_funds: 'false',
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
 req.end();
 ```
 
@@ -6896,29 +6892,23 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({
-  description: 'The SuperPackage',
+req.write(JSON.stringify({ description: 'The SuperPackage',
   matures_at: '2016-09-13T00:00:00Z',
-  payouts: [
-    {
-      amount: 30000,
-      description: 'A tandem skydive jump SB23094',
-      recipient_contact_id: '48b89364-1577-4c81-ba02-96705895d457',
-      metadata: {
-        invoice_ref: 'BILL-0001',
-        invoice_id: 'c80a9958-e805-47c0-ac2a-c947d7fd778d',
-        custom_key: 'Custom string',
-        another_custom_key: 'Maybe a URL'
-      }
-    },
-    {
-      amount: 30000,
-      description: 'A scuba dive SDS5464',
-      recipient_contact_id: 'dc6f1e60-3803-43ca-a200-7d641816f57f'
-    }
-  ],
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
+  payouts:
+   [ { amount: 30000,
+       description: 'A tandem skydive jump SB23094',
+       recipient_contact_id: '48b89364-1577-4c81-ba02-96705895d457',
+       metadata:
+        { invoice_ref: 'BILL-0001',
+          invoice_id: 'c80a9958-e805-47c0-ac2a-c947d7fd778d',
+          custom_key: 'Custom string',
+          another_custom_key: 'Maybe a URL' } },
+     { amount: 30000,
+       description: 'A scuba dive SDS5464',
+       recipient_contact_id: 'dc6f1e60-3803-43ca-a200-7d641816f57f' } ],
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
 req.end();
 ```
 
@@ -7952,11 +7942,11 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({
-  amount: 500,
+req.write(JSON.stringify({ amount: 500,
   reason: 'Because reason',
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
 req.end();
 ```
 
@@ -9022,13 +9012,10 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({
-  expiry_in_seconds: 60,
-  terms: {
-    per_payout: { min_amount: null, max_amount: 10000 },
-    per_frequency: { days: 7, max_amount: 1000000 }
-  }
-}));
+req.write(JSON.stringify({ expiry_in_seconds: 60,
+  terms:
+   { per_payout: { min_amount: null, max_amount: 10000 },
+     per_frequency: { days: 7, max_amount: 1000000 } } }));
 req.end();
 ```
 
