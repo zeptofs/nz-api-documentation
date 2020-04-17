@@ -392,6 +392,7 @@ Keys expire after 24 hours. If there is a subsequent request with the same idemp
 * The `Idempotency-Key` header is optional but recommended.
 * Only the `POST` action for the Payments, Payment Requests and Refunds endpoints support the use of the `Idempotency-Key`.
 * Endpoints that use the `GET` or `DELETE` actions are idempotent by nature.
+* A request that quickly follows another with the same idempotency key may return with `503 Service Unavailable`. If so, retry the request after the number of seconds specified in the `Retry-After` response header.
 
 ## Error responses
 
@@ -937,7 +938,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"authoriser_contact_id":"8df89c16-330f-462b-8891-808d7bdceb7f","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}'
+  --data '{"authoriser_contact_id":"8df89c16-330f-462b-8891-808d7bdceb7f","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}},"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -954,7 +955,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
+request.body = "{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -991,7 +992,10 @@ var req = http.request(options, function (res) {
 req.write(JSON.stringify({ authoriser_contact_id: '8df89c16-330f-462b-8891-808d7bdceb7f',
   terms:
    { per_payout: { min_amount: null, max_amount: 10000 },
-     per_frequency: { days: 7, max_amount: 1000000 } } }));
+     per_frequency: { days: 7, max_amount: 1000000 } },
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
 req.end();
 ```
 
@@ -1000,7 +1004,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
-payload = "{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
+payload = "{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -1021,7 +1025,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/agr
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
+  .body("{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -1032,7 +1036,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"authoriser_contact_id":"8df89c16-330f-462b-8891-808d7bdceb7f","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}');
+$body->append('{"authoriser_contact_id":"8df89c16-330f-462b-8891-808d7bdceb7f","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}},"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api.sandbox.split.cash/agreements');
 $request->setRequestMethod('POST');
@@ -1064,7 +1068,7 @@ func main() {
 
 	url := "https://api.sandbox.split.cash/agreements"
 
-	payload := strings.NewReader("{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
+	payload := strings.NewReader("{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -1105,6 +1109,10 @@ Propose an Agreement to another Split Contact
       "days": 7,
       "max_amount": 1000000
     }
+  },
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
   }
 }
 ```
@@ -1117,11 +1125,12 @@ Propose an Agreement to another Split Contact
 |» authoriser_contact_id|body|string|true|The Authoriser's contact ID (`Contact.data.id`)|
 |» terms|body|[Terms](#schematerms)|true|Terms|
 |»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
-|»»» min_amount|body|number|false|Minimum amount in cents a PR can be in order to be auto-approved|
-|»»» max_amount|body|number|false|Maximum amount in cents a PR can be in order to be auto-approved|
+|»»» min_amount|body|number|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|»»» max_amount|body|number|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
 |»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
-|»»» days|body|number|false|Amount of days to apply against the frequency|
-|»»» max_amount|body|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
+|»»» days|body|number|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
+|»»» max_amount|body|number|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
+|»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
 > Example responses
 
@@ -3178,7 +3187,7 @@ Add a Split Contact
 |---|---|---|---|---|
 |body|body|[AddASplitContactRequest](#schemaaddasplitcontactrequest)|true|No description|
 |» nickname|body|string|true|Split account nickname|
-|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations. This data will be attached to the Payment Request and its associated Payouts, Transactions and Webhook Events.|
+|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
 > Example responses
 
@@ -3677,7 +3686,7 @@ When you want to pay somebody that doesn't have a Split account, you can add the
 |» email|body|string|true|The email of the Contact|
 |» branch_code|body|string|true|The bank account BSB of the Contact|
 |» account_number|body|string|true|The bank account number of the Contact|
-|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations. This data will be attached to the Payment Request and its associated Payouts, Transactions and Webhook Events.|
+|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
 > Example responses
 
@@ -4433,7 +4442,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"title":"Subscription Plan A","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}'
+  --data '{"title":"Subscription Plan A","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}},"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -4450,7 +4459,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
+request.body = "{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -4487,7 +4496,10 @@ var req = http.request(options, function (res) {
 req.write(JSON.stringify({ title: 'Subscription Plan A',
   terms:
    { per_payout: { min_amount: null, max_amount: 10000 },
-     per_frequency: { days: 7, max_amount: 1000000 } } }));
+     per_frequency: { days: 7, max_amount: 1000000 } },
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
 req.end();
 ```
 
@@ -4496,7 +4508,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
-payload = "{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
+payload = "{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -4517,7 +4529,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/ope
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
+  .body("{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -4528,7 +4540,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"title":"Subscription Plan A","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}');
+$body->append('{"title":"Subscription Plan A","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}},"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api.sandbox.split.cash/open_agreements');
 $request->setRequestMethod('POST');
@@ -4560,7 +4572,7 @@ func main() {
 
 	url := "https://api.sandbox.split.cash/open_agreements"
 
-	payload := strings.NewReader("{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
+	payload := strings.NewReader("{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -4599,6 +4611,10 @@ Create an Open Agreement that can be accepted by anyone.
       "days": 7,
       "max_amount": 1000000
     }
+  },
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
   }
 }
 ```
@@ -4611,11 +4627,12 @@ Create an Open Agreement that can be accepted by anyone.
 |» title|body|string|true|Title of the Open Agreement (Visible to authorisers)|
 |» terms|body|[Terms](#schematerms)|true|Terms|
 |»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
-|»»» min_amount|body|number|false|Minimum amount in cents a PR can be in order to be auto-approved|
-|»»» max_amount|body|number|false|Maximum amount in cents a PR can be in order to be auto-approved|
+|»»» min_amount|body|number|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|»»» max_amount|body|number|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
 |»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
-|»»» days|body|number|false|Amount of days to apply against the frequency|
-|»»» max_amount|body|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
+|»»» days|body|number|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
+|»»» max_amount|body|number|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
+|»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
 > Example responses
 
@@ -5265,7 +5282,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","precheck_funds":"false","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56.000Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","precheck_funds":false,"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -5282,7 +5299,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"precheck_funds\":\"false\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"precheck_funds\":false,\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -5317,10 +5334,10 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ description: 'Visible to both initiator and authoriser',
-  matures_at: '2016-12-19T02:10:56Z',
+  matures_at: '2016-12-19T02:10:56.000Z',
   amount: 99000,
   authoriser_contact_id: 'de86472c-c027-4735-a6a7-234366a27fc7',
-  precheck_funds: 'false',
+  precheck_funds: false,
   metadata:
    { custom_key: 'Custom string',
      another_custom_key: 'Maybe a URL' } }));
@@ -5332,7 +5349,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
-payload = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"precheck_funds\":\"false\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"precheck_funds\":false,\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -5353,7 +5370,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/pay
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"precheck_funds\":\"false\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"precheck_funds\":false,\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -5364,7 +5381,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","precheck_funds":"false","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56.000Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","precheck_funds":false,"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api.sandbox.split.cash/payment_requests');
 $request->setRequestMethod('POST');
@@ -5396,7 +5413,7 @@ func main() {
 
 	url := "https://api.sandbox.split.cash/payment_requests"
 
-	payload := strings.NewReader("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"precheck_funds\":\"false\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"precheck_funds\":false,\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -5424,10 +5441,10 @@ func main() {
 ```json
 {
   "description": "Visible to both initiator and authoriser",
-  "matures_at": "2016-12-19T02:10:56Z",
+  "matures_at": "2016-12-19T02:10:56.000Z",
   "amount": 99000,
   "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-  "precheck_funds": "false",
+  "precheck_funds": false,
   "metadata": {
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
@@ -5445,7 +5462,7 @@ func main() {
 |» amount|body|number|true|Amount in cents to pay the initiator|
 |» authoriser_contact_id|body|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
 |» precheck_funds|body|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
-|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations. This data will be attached to the Payment Request and its associated Payouts, Transactions and Webhook Events.|
+|» metadata|body|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
 > Example responses
 
@@ -7045,8 +7062,8 @@ func main() {
 |»»» amount|body|number|true|Amount in cents to pay the recipient|
 |»»» description|body|string|true|Description that both the payer an recipient can see|
 |»»» recipient_contact_id|body|string|true|Contact to pay (`Contact.data.id`)|
-|»»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations. This data will be attached to the Payment Request and its associated Payouts, Transactions and Webhook Events.|
-|»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations. This data will be attached to the Payment Request and its associated Payouts, Transactions and Webhook Events.|
+|»»» metadata|body|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
+|»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
 #### Detailed descriptions
 
@@ -8066,7 +8083,7 @@ Certain rules apply to the issuance of a refund:
 |body|body|[IssueARefundRequest](#schemaissuearefundrequest)|true|No description|
 |» amount|body|number|true|Amount in cents refund|
 |» reason|body|string|false|Reason for the refund. Visible to both parties.|
-|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations. This data will be attached to the Payment Request and its associated Payouts, Transactions and Webhook Events.|
+|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
 > Example responses
 
@@ -8961,7 +8978,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"expiry_in_seconds":60,"terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}'
+  --data '{"expiry_in_seconds":60,"single_use":false,"terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}},"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -8978,7 +8995,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"expiry_in_seconds\":60,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
+request.body = "{\"expiry_in_seconds\":60,\"single_use\":false,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -9013,9 +9030,13 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ expiry_in_seconds: 60,
+  single_use: false,
   terms:
    { per_payout: { min_amount: null, max_amount: 10000 },
-     per_frequency: { days: 7, max_amount: 1000000 } } }));
+     per_frequency: { days: 7, max_amount: 1000000 } },
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
 req.end();
 ```
 
@@ -9024,7 +9045,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
-payload = "{\"expiry_in_seconds\":60,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}"
+payload = "{\"expiry_in_seconds\":60,\"single_use\":false,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -9045,7 +9066,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/una
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"expiry_in_seconds\":60,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
+  .body("{\"expiry_in_seconds\":60,\"single_use\":false,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -9056,7 +9077,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"expiry_in_seconds":60,"terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}}}');
+$body->append('{"expiry_in_seconds":60,"single_use":false,"terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}},"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api.sandbox.split.cash/unassigned_agreements');
 $request->setRequestMethod('POST');
@@ -9088,7 +9109,7 @@ func main() {
 
 	url := "https://api.sandbox.split.cash/unassigned_agreements"
 
-	payload := strings.NewReader("{\"expiry_in_seconds\":60,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}}}")
+	payload := strings.NewReader("{\"expiry_in_seconds\":60,\"single_use\":false,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -9118,6 +9139,7 @@ Create an Unassigned Agreement
 ```json
 {
   "expiry_in_seconds": 60,
+  "single_use": false,
   "terms": {
     "per_payout": {
       "min_amount": null,
@@ -9127,6 +9149,10 @@ Create an Unassigned Agreement
       "days": 7,
       "max_amount": 1000000
     }
+  },
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
   }
 }
 ```
@@ -9140,11 +9166,12 @@ Create an Unassigned Agreement
 |» single_use|body|boolean|false|Optionally propose a single use agreement. When the Unassigned Agreement is accepted and a Payment Request is approved according to the Agreement terms, the agreement will automatically become <code>expended</code>.<br><br>The proposed agreement must have equal max/min <code>per_payout</code> amounts and <code>null</code> <code>per_frequency</code> amounts.<br><br>Furthermore, we will automatically check that the authoriser's bank account has sufficient funds to honour the agreement terms.|
 |» terms|body|[Terms](#schematerms)|true|Terms|
 |»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
-|»»» min_amount|body|number|false|Minimum amount in cents a PR can be in order to be auto-approved|
-|»»» max_amount|body|number|false|Maximum amount in cents a PR can be in order to be auto-approved|
+|»»» min_amount|body|number|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|»»» max_amount|body|number|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
 |»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
-|»»» days|body|number|false|Amount of days to apply against the frequency|
-|»»» max_amount|body|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
+|»»» days|body|number|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
+|»»» max_amount|body|number|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
+|»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
 > Example responses
 
@@ -9169,7 +9196,11 @@ Create an Unassigned Agreement
       }
     },
     "assignment_expires_at": "2017-03-20T00:54:27Z",
-    "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+    "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
   }
 }
 ```
@@ -9888,6 +9919,10 @@ func main() {
       "days": 7,
       "max_amount": 1000000
     }
+  },
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
   }
 }
 ```
@@ -9900,6 +9935,7 @@ func main() {
 |---|---|---|---|
 |authoriser_contact_id|string|true|The Authoriser's contact ID (`Contact.data.id`)|
 |terms|[Terms](#schematerms)|true|No description|
+|metadata|[Metadata](#schemametadata)|false|No description|
 
 ## Terms
 
@@ -9944,8 +9980,8 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|min_amount|number|false|Minimum amount in cents a PR can be in order to be auto-approved|
-|max_amount|number|false|Maximum amount in cents a PR can be in order to be auto-approved|
+|min_amount|number|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|max_amount|number|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
 
 ## PerFrequency
 
@@ -9964,8 +10000,8 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|days|number|false|Amount of days to apply against the frequency|
-|max_amount|number|false|Maximum amount in cents the total of all PRs can be for the duration of the frequency|
+|days|number|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
+|max_amount|number|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
 
 ## ProposeAgreementResponse
 
@@ -10349,6 +10385,10 @@ func main() {
       "days": 7,
       "max_amount": 1000000
     }
+  },
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
   }
 }
 ```
@@ -10361,6 +10401,7 @@ func main() {
 |---|---|---|---|
 |title|string|true|Title of the Open Agreement (Visible to authorisers)|
 |terms|[Terms](#schematerms)|true|No description|
+|metadata|[Metadata](#schemametadata)|false|No description|
 
 ## CreateOpenAgreementResponse
 
@@ -10956,10 +10997,7 @@ func main() {
   "amount": 30000,
   "description": "A tandem skydive jump SB23094",
   "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
+  "metadata": null
 }
 ```
 
@@ -10972,7 +11010,7 @@ func main() {
 |amount|number|true|Amount in cents to pay the recipient|
 |description|string|true|Description that both the payer an recipient can see|
 |recipient_contact_id|string|true|Contact to pay (`Contact.data.id`)|
-|metadata|[Metadata](#schemametadata)|false|No description|
+|metadata|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
 ## VoidAPayoutRequest
 
@@ -11260,10 +11298,10 @@ func main() {
 ```json
 {
   "description": "Visible to both initiator and authoriser",
-  "matures_at": "2016-12-19T02:10:56Z",
+  "matures_at": "2016-12-19T02:10:56.000Z",
   "amount": 99000,
   "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-  "precheck_funds": "false",
+  "precheck_funds": false,
   "metadata": {
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
@@ -11282,7 +11320,7 @@ func main() {
 |amount|number|true|Amount in cents to pay the initiator|
 |authoriser_contact_id|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
 |precheck_funds|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
-|metadata|[Metadata](#schemametadata)|false|No description|
+|metadata|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
 ## MakeAPaymentRequestResponse
 
@@ -11849,6 +11887,7 @@ func main() {
 ```json
 {
   "expiry_in_seconds": 60,
+  "single_use": false,
   "terms": {
     "per_payout": {
       "min_amount": null,
@@ -11858,6 +11897,10 @@ func main() {
       "days": 7,
       "max_amount": 1000000
     }
+  },
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
   }
 }
 ```
@@ -11871,6 +11914,7 @@ func main() {
 |expiry_in_seconds|number|true|The amount of time in seconds before the Unassigned Agreement can no longer be accepted.|
 |single_use|boolean|false|Optionally propose a single use agreement. When the Unassigned Agreement is accepted and a Payment Request is approved according to the Agreement terms, the agreement will automatically become <code>expended</code>.<br><br>The proposed agreement must have equal max/min <code>per_payout</code> amounts and <code>null</code> <code>per_frequency</code> amounts.<br><br>Furthermore, we will automatically check that the authoriser's bank account has sufficient funds to honour the agreement terms.|
 |terms|[Terms](#schematerms)|true|No description|
+|metadata|[Metadata](#schemametadata)|false|No description|
 
 ## ProposeUnassignedAgreementResponse
 
@@ -11895,7 +11939,11 @@ func main() {
       }
     },
     "assignment_expires_at": "2017-03-20T00:54:27Z",
-    "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+    "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
   }
 }
 ```
