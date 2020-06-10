@@ -5289,7 +5289,7 @@ If you would like to also precheck available funds before a Payment Request is a
 
 **Precheck for Payment Requests**
 
-When the `precheck_funds` option is enabled, prechecking of available funds will be completed before approving the Payment Request. The authoriser contact must have valid agreement and bank connection to make use of this option.
+When the `precheck_funds` option is enabled, prechecking of available funds will be completed before approving the Payment Request. The authoriser contact must have a valid agreement and bank connection to make use of this option.
 
 There are **synchronous** and **asynchronous** lifecycles when the `precheck_funds` option is enabled.
 
@@ -5463,6 +5463,7 @@ func main() {
 `POST /payment_requests`
 
 <aside class="notice">[23/07/2018] Please note that we've deprecated <code>authoriser_id</code> in favour of <code>authoriser_contact_id</code>. We will continue to support the use of <code>authoriser_id (Contact.data.bank_account.id)</code> but encourage you to use <code>authoriser_contact_id (Contact.data.id)</code> to identify the authoriser of the Payment Request.</aside>
+<aside class="notice"> Please note that <code>your_bank_account_id</code> refers to the <code>initiator_bank_account_id</code>. You can use this to identify issues related to the initiator's bank account.</aside>
 
 > Body parameter
 
@@ -5501,6 +5502,7 @@ func main() {
   "data": {
     "ref": "PR.3",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "authoriser_id": "970e4526-67d9-4ed9-b554-f5cf390ab775",
     "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
     "schedule_ref": null,
@@ -5679,6 +5681,7 @@ func main() {
   "data": {
     "ref": "PR.3",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "authoriser_id": "d194c54b-9183-410c-966b-50485c5ce3f0",
     "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
     "schedule_ref": null,
@@ -5856,6 +5859,7 @@ func main() {
   "data": {
     "ref": "PR.3",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "authoriser_id": "d194c54b-9183-410c-966b-50485c5ce3f0",
     "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
     "schedule_ref": null,
@@ -6033,6 +6037,7 @@ func main() {
   "data": {
     "ref": "PR.3",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "authoriser_id": "970e4526-67d9-4ed9-b554-f5cf390ab775",
     "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
     "schedule_ref": null,
@@ -6353,6 +6358,7 @@ func main() {
     {
       "ref": "PR.2",
       "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "your_bank_account_id": "049528f7-6698-40a6-8221-52ec406e5424",
       "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
       "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
       "schedule_ref": "PRS.1",
@@ -6369,6 +6375,7 @@ func main() {
     {
       "ref": "PR.3",
       "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "your_bank_account_id": "049528f7-6698-40a6-8221-52ec406e5424",
       "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
       "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
       "schedule_ref": null,
@@ -6549,6 +6556,7 @@ func main() {
     {
       "ref": "PR.4",
       "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
       "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
       "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
       "schedule_ref": "PRS.2",
@@ -6565,6 +6573,7 @@ func main() {
     {
       "ref": "PR.5",
       "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
       "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
       "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
       "schedule_ref": null,
@@ -6870,7 +6879,7 @@ Gives you visibility of the entire Payment Request lifecycle including the gener
   ]
 }
 ```
-The Payment is simply a group of Payouts therefore it does not have a particular status. Its Payouts however have their status regularly updated, for a list of possible Payout statuses check out the [Transactions](/#Split-API-Transactions).
+A Payment is simply a group of Payouts, therefore it does not have a particular status. Its Payouts however have their status regularly updated. For a list of possible Payout statuses check out the [Transactions](/#Split-API-Transactions).
 
 When Split is unable to credit funds to a recipient, we will automatically create a payout reversal credit back to the payer. Furthermore, within the payout reversal credit, Split will include details in the `description` and under the `reversal_details` key as to why the original credit to the recipient failed.
 
@@ -7103,6 +7112,7 @@ func main() {
 
 **»» Payout**: The actual Payout
 <aside class="notice">[23/07/2018] Please note that we've deprecated <code>recipient_id</code> in favour of <code>recipient_contact_id</code>. We will continue to support the use of <code>recipient_id (Contact.data.bank_account.id)</code> but encourage you to use <code>recipient_contact_id (Contact.data.id)</code> to identify the recipient of the payout.</aside>
+<aside class="notice"> Please note that <code>your_bank_account_id</code> refers to the <code>initiator_bank_account_id</code>. You can use this to identify issues related to the initiator's bank account.</aside>
 
 > Example responses
 
@@ -7112,6 +7122,7 @@ func main() {
 {
   "data": {
     "ref": "PB.1",
+    "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
     "payouts": [
       {
         "ref": "D.1",
@@ -7310,6 +7321,7 @@ func main() {
   "data": [
     {
       "ref": "PB.1",
+      "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
       "payouts": [
         {
           "ref": "D.1",
@@ -7509,6 +7521,7 @@ Get a single payment by its reference
 {
   "data": {
     "ref": "PB.1",
+    "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
     "payouts": [
       {
         "ref": "D.1",
@@ -8092,9 +8105,11 @@ func main() {
 `POST /credits/{credit_ref}/refunds`
 
 Certain rules apply to the issuance of a refund:
-
-* Must be applied against a successfully cleared payout (credit)
-* The refund amount may not exceed the original amount of the credit
+<ul>
+  <li>Must be applied against a successfully cleared payout (credit)</li>
+  <li>The refund amount must not exceed the original amount of the credit</li>
+</ul>
+<aside class="notice"> Please note that <code>your_bank_account_id</code> refers to the <code>initiator_bank_account_id</code>. You can use this to identify issues related to the initiator's bank account.</aside>
 
 > Body parameter
 
@@ -8129,6 +8144,7 @@ Certain rules apply to the issuance of a refund:
     "ref": "PRF.1",
     "for_ref": "C.59",
     "debit_ref": "D.hi",
+    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "created_at": "2017-05-08T07:20:24Z",
     "amount": 500,
     "reason": "Because reason",
@@ -8300,6 +8316,7 @@ func main() {
       "ref": "PRF.2",
       "for_ref": "D.5",
       "credit_ref": "C.q",
+      "your_bank_account_id": "049528f7-6698-40a6-8221-52ec406e5424",
       "created_at": "2017-05-09T04:45:26Z",
       "amount": 5,
       "reason": "Because reason",
@@ -8472,6 +8489,7 @@ func main() {
       "ref": "PRF.2",
       "for_ref": "C.5",
       "debit_ref": "D.5a",
+      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
       "created_at": "2017-05-09T04:45:26Z",
       "amount": 5,
       "reason": "Because reason",
@@ -8644,6 +8662,7 @@ Get a single Refund by its reference
     "ref": "PRF.1",
     "for_ref": "C.59",
     "debit_ref": "D.hi",
+    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "created_at": "2017-05-08T07:20:24Z",
     "amount": 500,
     "reason": "Because reason",
@@ -11106,6 +11125,7 @@ func main() {
 {
   "data": {
     "ref": "PB.1",
+    "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
     "payouts": [
       {
         "ref": "D.1",
@@ -11163,6 +11183,7 @@ func main() {
   "data": {
     "ref": "PR.3",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "authoriser_id": "d194c54b-9183-410c-966b-50485c5ce3f0",
     "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
     "schedule_ref": null,
@@ -11200,6 +11221,7 @@ func main() {
   "data": {
     "ref": "PR.3",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "authoriser_id": "d194c54b-9183-410c-966b-50485c5ce3f0",
     "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
     "schedule_ref": null,
@@ -11237,6 +11259,7 @@ func main() {
   "data": [
     {
       "ref": "PB.1",
+      "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
       "payouts": [
         {
           "ref": "D.1",
@@ -11294,6 +11317,7 @@ func main() {
 {
   "data": {
     "ref": "PB.1",
+    "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
     "payouts": [
       {
         "ref": "D.1",
@@ -11382,6 +11406,7 @@ func main() {
   "data": {
     "ref": "PR.3",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "authoriser_id": "970e4526-67d9-4ed9-b554-f5cf390ab775",
     "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
     "schedule_ref": null,
@@ -11437,6 +11462,7 @@ func main() {
   "data": {
     "ref": "PR.3",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "authoriser_id": "970e4526-67d9-4ed9-b554-f5cf390ab775",
     "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
     "schedule_ref": null,
@@ -11475,6 +11501,7 @@ func main() {
     {
       "ref": "PR.2",
       "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "your_bank_account_id": "049528f7-6698-40a6-8221-52ec406e5424",
       "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
       "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
       "schedule_ref": "PRS.1",
@@ -11491,6 +11518,7 @@ func main() {
     {
       "ref": "PR.3",
       "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "your_bank_account_id": "049528f7-6698-40a6-8221-52ec406e5424",
       "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
       "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
       "schedule_ref": null,
@@ -11530,6 +11558,7 @@ func main() {
     {
       "ref": "PR.4",
       "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
       "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
       "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
       "schedule_ref": "PRS.2",
@@ -11546,6 +11575,7 @@ func main() {
     {
       "ref": "PR.5",
       "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
       "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
       "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
       "schedule_ref": null,
@@ -11709,6 +11739,7 @@ func main() {
     "ref": "PRF.1",
     "for_ref": "C.59",
     "debit_ref": "D.hi",
+    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "created_at": "2017-05-08T07:20:24Z",
     "amount": 500,
     "reason": "Because reason",
@@ -11739,6 +11770,7 @@ func main() {
       "ref": "PRF.2",
       "for_ref": "D.5",
       "credit_ref": "C.q",
+      "your_bank_account_id": "049528f7-6698-40a6-8221-52ec406e5424",
       "created_at": "2017-05-09T04:45:26Z",
       "amount": 5,
       "reason": "Because reason",
@@ -11770,6 +11802,7 @@ func main() {
       "ref": "PRF.2",
       "for_ref": "C.5",
       "debit_ref": "D.5a",
+      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
       "created_at": "2017-05-09T04:45:26Z",
       "amount": 5,
       "reason": "Because reason",
@@ -11800,6 +11833,7 @@ func main() {
     "ref": "PRF.1",
     "for_ref": "C.59",
     "debit_ref": "D.hi",
+    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "created_at": "2017-05-08T07:20:24Z",
     "amount": 500,
     "reason": "Because reason",
