@@ -4142,7 +4142,7 @@ components:
           example: '9/13/2016 12:00:00 AM'
         your_bank_account_id:
           type: string
-          description: Refers to `initiator_bank_account_id`. You can use this to identify issues related to the initiator's bank account.
+          description: Specify which bank account we should use to settle/disburse the funds for this transaction. If you don't use this, your primary account will be used.
           style: form
           schema:
             type: string
@@ -4438,7 +4438,7 @@ components:
           example: "false"
         your_bank_account_id:
           type: string
-          description: Refers to `initiator_bank_account_id`. You can use this to identify issues related to the initiator's bank account.
+          description: Specify which bank account we should use to settle/disburse the funds for this transaction. If you don't use this, your primary account will be used.
           style: form
           schema:
             type: string
@@ -4694,7 +4694,7 @@ components:
           example: Because reason
         your_bank_account_id:
           type: string
-          description: Refers to `initiator_bank_account_id`. You can use this to identify issues related to the initiator's bank account.
+          description: Specify which bank account we should use to settle/disburse the funds for this transaction. If you don't use this, your primary account will be used.
           style: form
           schema:
             type: string
@@ -4704,6 +4704,7 @@ components:
       example:
         amount: 500
         reason: Because reason
+        your_bank_account_id: 9c70871d-8e36-4c3e-8a9c-c0ee20e7c679
         metadata:
           custom_key: Custom string
           another_custom_key: Maybe a URL

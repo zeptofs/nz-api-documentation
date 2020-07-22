@@ -5493,7 +5493,7 @@ func main() {
 |» amount|body|number|true|Amount in cents to pay the initiator|
 |» authoriser_contact_id|body|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
 |» precheck_funds|body|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
-|» your_bank_account_id|body|string|false|Refers to `initiator_bank_account_id`. You can use this to identify issues related to the initiator's bank account.|
+|» your_bank_account_id|body|string|false|Specify which bank account we should use to settle/disburse the funds for this transaction. If you don't use this, your primary account will be used.|
 |» metadata|body|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
 > Example responses
@@ -7105,7 +7105,7 @@ func main() {
 |body|body|[MakeAPaymentRequest](#schemamakeapaymentrequest)|true|No description|
 |» description|body|string|true|User description. Only visible to the payer|
 |» matures_at|body|string|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
-|» your_bank_account_id|body|string|false|Refers to `initiator_bank_account_id`. You can use this to identify issues related to the initiator's bank account.|
+|» your_bank_account_id|body|string|false|Specify which bank account we should use to settle/disburse the funds for this transaction. If you don't use this, your primary account will be used.|
 |» payouts|body|[[Payout](#schemapayout)]|true|One or many Payouts|
 |»» Payout|body|[Payout](#schemapayout)|false|The actual Payout|
 |»»» amount|body|number|true|Amount in cents to pay the recipient|
@@ -7961,7 +7961,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"amount":500,"reason":"Because reason","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"amount":500,"reason":"Because reason","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -7978,7 +7978,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"amount\":500,\"reason\":\"Because reason\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -8015,6 +8015,7 @@ var req = http.request(options, function (res) {
 req.write(JSON.stringify({
   amount: 500,
   reason: 'Because reason',
+  your_bank_account_id: '9c70871d-8e36-4c3e-8a9c-c0ee20e7c679',
   metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
 }));
 req.end();
@@ -8025,7 +8026,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
-payload = "{\"amount\":500,\"reason\":\"Because reason\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -8046,7 +8047,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/cre
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"amount\":500,\"reason\":\"Because reason\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -8057,7 +8058,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"amount":500,"reason":"Because reason","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"amount":500,"reason":"Because reason","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api.sandbox.split.cash/credits/string/refunds');
 $request->setRequestMethod('POST');
@@ -8089,7 +8090,7 @@ func main() {
 
 	url := "https://api.sandbox.split.cash/credits/string/refunds"
 
-	payload := strings.NewReader("{\"amount\":500,\"reason\":\"Because reason\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -8123,6 +8124,7 @@ Certain rules apply to the issuance of a refund:
 {
   "amount": 500,
   "reason": "Because reason",
+  "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
   "metadata": {
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
@@ -8138,7 +8140,7 @@ Certain rules apply to the issuance of a refund:
 |body|body|[IssueARefundRequest](#schemaissuearefundrequest)|true|No description|
 |» amount|body|number|true|Amount in cents refund|
 |» reason|body|string|false|Reason for the refund. Visible to both parties.|
-|» your_bank_account_id|body|string|false|Refers to `initiator_bank_account_id`. You can use this to identify issues related to the initiator's bank account.|
+|» your_bank_account_id|body|string|false|Specify which bank account we should use to settle/disburse the funds for this transaction. If you don't use this, your primary account will be used.|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
 > Example responses
@@ -11063,7 +11065,7 @@ func main() {
 |---|---|---|---|
 |description|string|true|User description. Only visible to the payer|
 |matures_at|string|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
-|your_bank_account_id|string|false|Refers to `initiator_bank_account_id`. You can use this to identify issues related to the initiator's bank account.|
+|your_bank_account_id|string|false|Specify which bank account we should use to settle/disburse the funds for this transaction. If you don't use this, your primary account will be used.|
 |payouts|[[Payout](#schemapayout)]|true|One or many Payouts|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
@@ -11405,7 +11407,7 @@ func main() {
 |amount|number|true|Amount in cents to pay the initiator|
 |authoriser_contact_id|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
 |precheck_funds|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
-|your_bank_account_id|string|false|Refers to `initiator_bank_account_id`. You can use this to identify issues related to the initiator's bank account.|
+|your_bank_account_id|string|false|Specify which bank account we should use to settle/disburse the funds for this transaction. If you don't use this, your primary account will be used.|
 |metadata|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
 ## MakeAPaymentRequestResponse
@@ -11723,6 +11725,7 @@ func main() {
 {
   "amount": 500,
   "reason": "Because reason",
+  "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
   "metadata": {
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
@@ -11738,7 +11741,7 @@ func main() {
 |---|---|---|---|
 |amount|number|true|Amount in cents refund|
 |reason|string|false|Reason for the refund. Visible to both parties.|
-|your_bank_account_id|string|false|Refers to `initiator_bank_account_id`. You can use this to identify issues related to the initiator's bank account.|
+|your_bank_account_id|string|false|Specify which bank account we should use to settle/disburse the funds for this transaction. If you don't use this, your primary account will be used.|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
 ## IssueARefundResponse
