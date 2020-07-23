@@ -4142,7 +4142,7 @@ components:
           example: '9/13/2016 12:00:00 AM'
         your_bank_account_id:
           type: string
-          description: Specify where we should settle the funds for this transaction. If omitted, your primary bank account will be used.
+          description: Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.
           style: form
           schema:
             type: string
@@ -4694,7 +4694,7 @@ components:
           example: Because reason
         your_bank_account_id:
           type: string
-          description: Specify where we should settle the funds for this transaction. If omitted, your primary bank account will be used.
+          description: Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.
           style: form
           schema:
             type: string
