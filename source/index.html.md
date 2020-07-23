@@ -5493,7 +5493,7 @@ func main() {
 |» amount|body|number|true|Amount in cents to pay the initiator|
 |» authoriser_contact_id|body|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
 |» precheck_funds|body|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
-|» your_bank_account_id|body|string|false|Specify which bank account we should use to settle/disburse the funds for this transaction. If you don't use this, your primary account will be used.|
+|» your_bank_account_id|body|string|false|Specify where we should take the funds this transaction. If omitted, your primary bank account will be used.|
 |» metadata|body|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
 > Example responses
@@ -7105,7 +7105,7 @@ func main() {
 |body|body|[MakeAPaymentRequest](#schemamakeapaymentrequest)|true|No description|
 |» description|body|string|true|User description. Only visible to the payer|
 |» matures_at|body|string|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
-|» your_bank_account_id|body|string|false|Specify which bank account we should use to settle/disburse the funds for this transaction. If you don't use this, your primary account will be used.|
+|» your_bank_account_id|body|string|false|Specify where we should take the funds this transaction. If omitted, your primary bank account will be used.|
 |» payouts|body|[[Payout](#schemapayout)]|true|One or many Payouts|
 |»» Payout|body|[Payout](#schemapayout)|false|The actual Payout|
 |»»» amount|body|number|true|Amount in cents to pay the recipient|
@@ -8140,7 +8140,7 @@ Certain rules apply to the issuance of a refund:
 |body|body|[IssueARefundRequest](#schemaissuearefundrequest)|true|No description|
 |» amount|body|number|true|Amount in cents refund|
 |» reason|body|string|false|Reason for the refund. Visible to both parties.|
-|» your_bank_account_id|body|string|false|Specify which bank account we should use to settle/disburse the funds for this transaction. If you don't use this, your primary account will be used.|
+|» your_bank_account_id|body|string|false|Specify where we should take the funds this transaction. If omitted, your primary bank account will be used.|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
 > Example responses
@@ -11065,7 +11065,7 @@ func main() {
 |---|---|---|---|
 |description|string|true|User description. Only visible to the payer|
 |matures_at|string|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
-|your_bank_account_id|string|false|Specify which bank account we should use to settle/disburse the funds for this transaction. If you don't use this, your primary account will be used.|
+|your_bank_account_id|string|false|Specify where we should take the funds this transaction. If omitted, your primary bank account will be used.|
 |payouts|[[Payout](#schemapayout)]|true|One or many Payouts|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
@@ -11407,7 +11407,7 @@ func main() {
 |amount|number|true|Amount in cents to pay the initiator|
 |authoriser_contact_id|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
 |precheck_funds|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
-|your_bank_account_id|string|false|Specify which bank account we should use to settle/disburse the funds for this transaction. If you don't use this, your primary account will be used.|
+|your_bank_account_id|string|false|Specify where we should take the funds this transaction. If omitted, your primary bank account will be used.|
 |metadata|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
 ## MakeAPaymentRequestResponse
@@ -11741,7 +11741,7 @@ func main() {
 |---|---|---|---|
 |amount|number|true|Amount in cents refund|
 |reason|string|false|Reason for the refund. Visible to both parties.|
-|your_bank_account_id|string|false|Specify which bank account we should use to settle/disburse the funds for this transaction. If you don't use this, your primary account will be used.|
+|your_bank_account_id|string|false|Specify where we should take the funds this transaction. If omitted, your primary bank account will be used.|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
 ## IssueARefundResponse
