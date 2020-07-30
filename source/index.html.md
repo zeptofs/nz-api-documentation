@@ -2436,14 +2436,16 @@ By default, all Bank Accounts will be returned. There can currently be only 1 ac
       "branch_code": "493192",
       "bank_name": "National Australia Bank",
       "account_number": "3993013",
-      "status": "active"
+      "status": "active",
+      "title": "AU.493192.3993013"
     },
     {
       "id": "56df206a-aaff-471a-b075-11882bc8906a",
       "branch_code": "302193",
       "bank_name": "National Australia Bank",
       "account_number": "119302",
-      "status": "active"
+      "status": "active",
+      "title": "Trust Account"
     }
   ]
 }
@@ -10352,14 +10354,16 @@ func main() {
       "branch_code": "493192",
       "bank_name": "National Australia Bank",
       "account_number": "3993013",
-      "status": "active"
+      "status": "active",
+      "title": "AU.493192.3993013"
     },
     {
       "id": "56df206a-aaff-471a-b075-11882bc8906a",
       "branch_code": "302193",
       "bank_name": "National Australia Bank",
       "account_number": "119302",
-      "status": "active"
+      "status": "active",
+      "title": "Trust Account"
     }
   ]
 }
