@@ -8741,7 +8741,8 @@ A transaction (debit or credit) can have the following statuses:
       "party_name": "Sanford-Rees",
       "party_nickname": "sanford-rees-8",
       "description": null,
-      "amount": 1
+      "amount": 1,
+      "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
     }
   ]
 }
@@ -8973,7 +8974,8 @@ func main() {
       "party_nickname": null,
       "party_bank_ref": "CT.11",
       "description": null,
-      "amount": 20000
+      "amount": 20000,
+      "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
     },
     {
       "ref": "D.2",
@@ -8991,7 +8993,8 @@ func main() {
       "party_nickname": null,
       "party_bank_ref": null,
       "description": "Batteries for hire",
-      "amount": 2949299
+      "amount": 2949299,
+      "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
     },
     {
       "ref": "C.2",
@@ -9010,6 +9013,7 @@ func main() {
       "party_bank_ref": null,
       "description": "Online purchase",
       "amount": 19999,
+      "bank_account_id": "c2e329ae-606f-4311-a9ab-a751baa1915c",
       "metadata": {
         "customer_id": "xur4492",
         "product_ref": "TSXL392110x"
@@ -11943,7 +11947,8 @@ func main() {
       "party_nickname": null,
       "party_bank_ref": "CT.11",
       "description": null,
-      "amount": 20000
+      "amount": 20000,
+      "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
     },
     {
       "ref": "D.2",
@@ -11961,7 +11966,8 @@ func main() {
       "party_nickname": null,
       "party_bank_ref": null,
       "description": "Batteries for hire",
-      "amount": 2949299
+      "amount": 2949299,
+      "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
     },
     {
       "ref": "C.2",
@@ -11980,6 +11986,7 @@ func main() {
       "party_bank_ref": null,
       "description": "Online purchase",
       "amount": 19999,
+      "bank_account_id": "c2e329ae-606f-4311-a9ab-a751baa1915c",
       "metadata": {
         "customer_id": "xur4492",
         "product_ref": "TSXL392110x"
