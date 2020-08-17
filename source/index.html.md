@@ -557,8 +557,11 @@ When using any of our hosted solutions ([Payment Requests](https://help.split.ca
 | `12345678` | `TestMyMoney` |
 
 <aside class="notice">The credentials will work with any of the available financial institutions.</aside>
-# Configuration
+## Available balances in the Sandbox
+If your integration includes allowing us to pre-fail transactions prior to being processed, you may want to test that your system is handling these events correctly. A transaction will pre-fail when the available balance of the customers account is less than the amount of the payment being requested. This is checked during pre-processing just before your debit is sent for processing if there is an active bank connection.
 
+In the Sandbox environment, if the contact you are attempting to debit has a bank connection that was created through our Instant Account Verification feature, the available balance of their bank account will always be `$123.45`. Any payment requests above this amount will pre-fail and any amount less than or equal to this amount will succeed.
+# Configuration
 ## Scopes
 Scopes define the level of access granted via the OAuth2 authorisation process. As a best practice, only use the scopes your application will require.
 
