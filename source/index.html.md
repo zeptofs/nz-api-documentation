@@ -8715,7 +8715,9 @@ Get a single Refund by its reference
 
 <h1 id="Split-API-Transactions">Transactions</h1>
 
-The transactions endpoint provides a detailed look at all past, current and future scheduled debits & credits relating to the Split account. In other words, we not only show the transactions initiated by the Split account but also show transactions where the Split account is on the receiving end - even for payments that have not yet matured.
+By default, the transactions endpoint provides a detailed look at all past, current and future debits & credits applied to your bank/float accounts.
+
+<aside class="notice">Want to also know about the debits & credits applied to the other party? No problem! Use the <code>both_parties=true</code> query string.</aside>
 
 ##Lifecycle
 
@@ -8931,12 +8933,13 @@ func main() {
 |ref (debit or credit)|query|string|false|Single value, exact match|
 |parent_ref|query|string|false|Single value, exact match|
 |bank_ref|query|string|false|Single value, exact match|
+|both_parties|query|boolean|false|Single value, exact match. Will also list debits & credits applied to the other party|
 |status|query|array[string]|false|Multiple values, exact match|
 |category|query|array[string]|false|Multiple values, exact match|
 |type|query|array[string]|false|Multiple values, exact match|
-|other_party|query|string|false|Single value, string search|
+|other_party|query|string|false|Single value, string search. Cannot be combine with <code>both_parties</code> query string|
 |other_party_bank_ref|query|string|false|Single value, exact match|
-|party_contact_id|query|string|false|Single value, exact match|
+|party_contact_id|query|string|false|Single value, exact match. Cannot be combine with <code>both_parties</code> query string|
 |description|query|string|false|Single value, string search|
 |min_amount|query|integer|false|Cents, single value, exact match|
 |max_amount|query|integer|false|Cents, single value, exact match|
