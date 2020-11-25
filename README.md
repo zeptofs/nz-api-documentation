@@ -20,8 +20,11 @@ Get started
 3. `$ yarn install`
 4. `$ bundle exec foreman start`
 5. Browse to http://localhost:4567 to preview the documentation.
-4. Edit the `source/openapi3/split.yaml` or any themes/templates. The preview should update a few seconds after
+6. Edit the `source/openapi3/split.yaml` or any themes/templates. The preview should update a few seconds after
 you save your changes.
+7. Changes to the YAML file will be built and output to the `source/`
+   directory, so don't edit the build output in there.
+8. Commit both the YAML and the build output changes.
 
 
 Note: Currently only changes to split.yaml will trigger the automatic update.
