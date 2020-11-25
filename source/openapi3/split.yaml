@@ -956,8 +956,10 @@ info:
 
 
     All collections are paginated to 25 items by default and the pagination
-    information may be found in the response header. You can customise the
-    pagination by appending `?per_page=x` and/or `?page=x` to the endpoint URL.
+    information may be found in the response header. You can customise the pagination by appending `?per_page=x` and/or `?page=x` to the endpoint URL.
+
+
+    <aside class="notice">The maximum <code>per_page</code> value is <code>100</code>. Any value above this will be ignored and <code>100</code> will be used instead.</aside>
 
 
     ## Remitter
@@ -990,7 +992,7 @@ info:
     remitter name along the entry on their bank statement.
 
 
-    <aside class="notice">The remitter name MUST be between 3 and 16
+    <aside class="notice">The remitter name MUST be between <code>3</code> and <code>16</code>
     characters.</aside>
 
 
@@ -1749,7 +1751,7 @@ tags:
   - name: Transactions
     description: >
       By default, the transactions endpoint provides a detailed look at all past, current
-      and future debits & credits applied to your bank/float accounts.
+      and future debits & credits related to your account.
 
 
       <aside class="notice">Want to also know about the debits & credits applied to the other party? No problem! Use the <code>both_parties=true</code> query string.</aside>
@@ -3045,7 +3047,7 @@ paths:
       tags:
         - Transactions
       summary: List all transactions
-      description: ''
+      description: '<aside class="notice">By default, Split will search and return all transactions created in the <strong>last 30 days</strong>. You can adjust this up to <strong>1 year</strong> by defining the <code>min_created_date</code> query string parameter defined below.</aside>'
       operationId: ListAllTransactions
       parameters:
         - name: page
