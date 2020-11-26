@@ -601,6 +601,8 @@ Total: 5
 
 All collections are paginated to 25 items by default and the pagination information may be found in the response header. You can customise the pagination by appending `?per_page=x` and/or `?page=x` to the endpoint URL.
 
+<aside class="notice">The maximum <code>per_page</code> value is <code>100</code>. Any value above this will be ignored and <code>100</code> will be used instead.</aside>
+
 ## Remitter
 
 > Example request
@@ -619,7 +621,7 @@ You can elect to assign a remitter name on a per-request basis when submitting P
 * **For Payments**, the party being credited will see the designated remitter name along the entry on their bank statement.
 * **For Payment Requests**, the party being debited will see the designated remitter name along the entry on their bank statement.
 
-<aside class="notice">The remitter name MUST be between 3 and 16 characters.</aside>
+<aside class="notice">The remitter name MUST be between <code>3</code> and <code>16</code> characters.</aside>
 
 ## Aggregation
 
@@ -8715,7 +8717,7 @@ Get a single Refund by its reference
 
 <h1 id="Split-API-Transactions">Transactions</h1>
 
-By default, the transactions endpoint provides a detailed look at all past, current and future debits & credits applied to your bank/float accounts.
+By default, the transactions endpoint provides a detailed look at all past, current and future debits & credits related to your account.
 
 <aside class="notice">Want to also know about the debits & credits applied to the other party? No problem! Use the <code>both_parties=true</code> query string.</aside>
 
@@ -8923,6 +8925,8 @@ func main() {
 ```
 
 `GET /transactions`
+
+<aside class="notice">By default, Split will search and return all transactions created in the <strong>last 30 days</strong>. You can adjust this up to <strong>1 year</strong> by defining the <code>min_created_date</code> query string parameter defined below.</aside>
 
 <h3 id="List-all-transactions-parameters" class="parameters">Parameters</h3>
 
