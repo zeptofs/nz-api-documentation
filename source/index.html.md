@@ -3034,6 +3034,480 @@ Your Contacts form an address book of parties with whom you can interact. In ord
 
 <aside class="notice">In the case of Open Payment Requests & Open Agreements, the authorising party will be automatically added to your Contacts list.</aside>
 
+## Add a Contact
+
+<a id="opIdAddAnAnyoneContact"></a>
+
+> Code samples
+
+```shell
+curl --request POST \
+  --url https://api.sandbox.split.cash/contacts/anyone \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data '{"name":"Hunter Thompson","email":"hunter@batcountry.com","branch_code":"123456","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/contacts/anyone")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["content-type"] = 'application/json'
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+request.body = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/contacts/anyone",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({
+  name: 'Hunter Thompson',
+  email: 'hunter@batcountry.com',
+  branch_code: '123456',
+  account_number: '13048322',
+  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
+}));
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+payload = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+
+headers = {
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("POST", "/contacts/anyone", payload, headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts/anyone")
+  .header("content-type", "application/json")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .body("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('{"name":"Hunter Thompson","email":"hunter@batcountry.com","branch_code":"123456","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+
+$request->setRequestUrl('https://api.sandbox.split.cash/contacts/anyone');
+$request->setRequestMethod('POST');
+$request->setBody($body);
+
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json',
+  'content-type' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/contacts/anyone"
+
+	payload := strings.NewReader("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("content-type", "application/json")
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`POST /contacts/anyone`
+
+Use this endpoint when you want to pay somebody.
+
+<aside class="notice">
+  A Contact added this way cannot be debited.
+</aside>
+
+> Body parameter
+
+```json
+{
+  "name": "Hunter Thompson",
+  "email": "hunter@batcountry.com",
+  "branch_code": "123456",
+  "account_number": "13048322",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}
+```
+
+<h3 id="Add-a-Contact-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[AddAnAnyoneContactRequest](#schemaaddananyonecontactrequest)|true|No description|
+|» name|body|string|true|The name of the Contact (140 max. characters)|
+|» email|body|string|true|The email of the Contact (256 max. characters)|
+|» branch_code|body|string|true|The bank account BSB of the Contact|
+|» account_number|body|string|true|The bank account number of the Contact|
+|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
+
+> Example responses
+
+> 201 Response
+
+```json
+{
+  "data": {
+    "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
+    "name": "Hunter Thompson",
+    "email": "hunter@batcountry.com",
+    "type": "anyone",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    },
+    "bank_account": {
+      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+      "account_number": "13048322",
+      "branch_code": "123456",
+      "bank_name": "National Australia Bank",
+      "state": "pending_verification",
+      "iav_provider": null,
+      "iav_status": null,
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
+    },
+    "links": {
+      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+    }
+  }
+}
+```
+
+<h3 id="Add a Contact-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddAnAnyoneContactResponse](#schemaaddananyonecontactresponse)|
+
+## Add a receivable Contact
+
+<a id="opIdAddAReceivableContact"></a>
+
+> Code samples
+
+```shell
+curl --request POST \
+  --url https://api.sandbox.split.cash/contacts/receivable \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data '{"name":"Delphine Jestin","email":"delphine@gmail.com","payid_email":"delphine_123@merchant.com.au","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/contacts/receivable")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["content-type"] = 'application/json'
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+request.body = "{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/contacts/receivable",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({
+  name: 'Delphine Jestin',
+  email: 'delphine@gmail.com',
+  payid_email: 'delphine_123@merchant.com.au',
+  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
+}));
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+payload = "{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+
+headers = {
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("POST", "/contacts/receivable", payload, headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts/receivable")
+  .header("content-type", "application/json")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .body("{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('{"name":"Delphine Jestin","email":"delphine@gmail.com","payid_email":"delphine_123@merchant.com.au","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+
+$request->setRequestUrl('https://api.sandbox.split.cash/contacts/receivable');
+$request->setRequestMethod('POST');
+$request->setBody($body);
+
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json',
+  'content-type' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/contacts/receivable"
+
+	payload := strings.NewReader("{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("content-type", "application/json")
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`POST /contacts/receivable`
+
+Receive funds from a Contact by allowing them to pay to a personalised PayID or account number. Perfect for reconciling incoming funds to a customer, receiving funds instantly, eliminating human error & improving your customer's experience.
+
+<aside class="notice">When creating this type of contact, the initial response <code>payid_details.state</code> value will always be <code>pending</code>. After a few seconds, it'll transition to <code>active</code>. We suggest you use webhooks to be informed of this state change</aside>
+
+> Body parameter
+
+```json
+{
+  "name": "Delphine Jestin",
+  "email": "delphine@gmail.com",
+  "payid_email": "delphine_123@merchant.com.au",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}
+```
+
+<h3 id="Add-a-receivable-Contact-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[AddAReceivableContactRequest](#schemaaddareceivablecontactrequest)|true|No description|
+|» name|body|string|true|Contact name (140 max. characters)|
+|» email|body|string|true|Contact email (256 max. characters)|
+|» payid_email|body|string|true|Contact PayID email (256 max. characters)|
+|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
+
+> Example responses
+
+> 201 Response
+
+```json
+{
+  "data": {
+    "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
+    "name": "Delphine Jestin",
+    "email": "delphine@gmail.com",
+    "type": "anyone",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    },
+    "bank_account": {
+      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+      "account_number": "1408281",
+      "branch_code": "802919",
+      "bank_name": "Split Float Account",
+      "state": "active",
+      "iav_provider": null,
+      "iav_status": null,
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
+    },
+    "anyone_account": {
+      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
+    },
+    "payid_details": {
+      "alias_value": "delphine_123@merchant.com.au",
+      "alias_type": "email",
+      "alias_name": "Delphine Jestin",
+      "state": "pending"
+    }
+  }
+}
+```
+
+<h3 id="Add a receivable Contact-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddAReceivableContactResponse](#schemaaddareceivablecontactresponse)|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
+
 ## Add a Split Contact
 
 <a id="opIdAddASplitContact"></a>
@@ -3519,242 +3993,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllContactsResponse](#schemalistallcontactsresponse)|
-
-## Add an Anyone Contact
-
-<a id="opIdAddAnAnyoneContact"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://api.sandbox.split.cash/contacts/anyone \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
-  --data '{"name":"Hunter Thompson","email":"hunter@batcountry.com","branch_code":"123456","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/contacts/anyone")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/contacts/anyone",
-  "headers": {
-    "content-type": "application/json",
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.write(JSON.stringify({
-  name: 'Hunter Thompson',
-  email: 'hunter@batcountry.com',
-  branch_code: '123456',
-  account_number: '13048322',
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-payload = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
-
-headers = {
-    'content-type': "application/json",
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/contacts/anyone", payload, headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts/anyone")
-  .header("content-type", "application/json")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .body("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$body = new http\Message\Body;
-$body->append('{"name":"Hunter Thompson","email":"hunter@batcountry.com","branch_code":"123456","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
-
-$request->setRequestUrl('https://api.sandbox.split.cash/contacts/anyone');
-$request->setRequestMethod('POST');
-$request->setBody($body);
-
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json',
-  'content-type' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"strings"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/contacts/anyone"
-
-	payload := strings.NewReader("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
-
-	req, _ := http.NewRequest("POST", url, payload)
-
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /contacts/anyone`
-
-When you want to pay somebody that doesn't have a Split account, you can add them as an Anyone Contact.
-
-<aside class="notice">
-  Anyone Contacts added this way can be used solely as payout recipients in a Payment.
-</aside>
-
-> Body parameter
-
-```json
-{
-  "name": "Hunter Thompson",
-  "email": "hunter@batcountry.com",
-  "branch_code": "123456",
-  "account_number": "13048322",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}
-```
-
-<h3 id="Add-an-Anyone-Contact-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[AddAnAnyoneContactRequest](#schemaaddananyonecontactrequest)|true|No description|
-|» name|body|string|true|The name of the Contact|
-|» email|body|string|true|The email of the Contact|
-|» branch_code|body|string|true|The bank account BSB of the Contact|
-|» account_number|body|string|true|The bank account number of the Contact|
-|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
-
-> Example responses
-
-> 201 Response
-
-```json
-{
-  "data": {
-    "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
-    "name": "Hunter Thompson",
-    "email": "hunter@batcountry.com",
-    "type": "anyone",
-    "metadata": {
-      "custom_key": "Custom string",
-      "another_custom_key": "Maybe a URL"
-    },
-    "bank_account": {
-      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-      "account_number": "13048322",
-      "branch_code": "123456",
-      "bank_name": "National Australia Bank",
-      "state": "pending_verification",
-      "iav_provider": null,
-      "iav_status": null,
-      "blocks": {
-        "debits_blocked": false,
-        "credits_blocked": false
-      }
-    },
-    "links": {
-      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
-    }
-  }
-}
-```
-
-<h3 id="Add an Anyone Contact-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddAnAnyoneContactResponse](#schemaaddananyonecontactresponse)|
 
 ## Get a Contact
 
@@ -10741,6 +10979,116 @@ func main() {
 |---|---|---|---|
 |data|object|true|No description|
 
+## AddAReceivableContactRequest
+
+<a id="schemaaddareceivablecontactrequest"></a>
+
+```json
+{
+  "name": "Delphine Jestin",
+  "email": "delphine@gmail.com",
+  "payid_email": "delphine_123@merchant.com.au",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}
+```
+
+### Properties
+
+*Add a receivable Contact (request)*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|name|string|true|Contact name (140 max. characters)|
+|email|string|true|Contact email (256 max. characters)|
+|payid_email|string|true|Contact PayID email (256 max. characters)|
+|metadata|[Metadata](#schemametadata)|false|No description|
+
+## AddAReceivableContactResponse
+
+<a id="schemaaddareceivablecontactresponse"></a>
+
+```json
+{
+  "data": {
+    "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
+    "name": "Delphine Jestin",
+    "email": "delphine@gmail.com",
+    "type": "anyone",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    },
+    "bank_account": {
+      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+      "account_number": "1408281",
+      "branch_code": "802919",
+      "bank_name": "Split Float Account",
+      "state": "active",
+      "iav_provider": null,
+      "iav_status": null,
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
+    },
+    "anyone_account": {
+      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
+    },
+    "payid_details": {
+      "alias_value": "delphine_123@merchant.com.au",
+      "alias_type": "email",
+      "alias_name": "Delphine Jestin",
+      "state": "pending"
+    }
+  }
+}
+```
+
+### Properties
+
+*Add a receivable Contact (response)*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|false|No description|
+|» id|uuid|false|No description|
+|» name|string|false|Contact name (140 max. characters)|
+|» email|string|false|Contact email (256 max. characters)|
+|» type|string|false|Fixed to 'anyone'|
+|» metadata|[Metadata](#schemametadata)|false|No description|
+|» bank_account|object|false|No description|
+|»» id|uuid|false|No description|
+|»» account_number|string|false|Split generated account number (9 max. characters)|
+|»» branch_code|string|false|Split branch code (fixed 6 characters)|
+|»» bank_name|string|false|Fixed to 'Split Float Acount'|
+|»» state|string|false|Fixed to 'Active'|
+|»» iav_provider|string|false|Always null|
+|»» iav_status|string|false|Always null|
+|»» blocks|object|false|No description|
+|»»» debits_blocked|boolean|false|Used by Split admins in case of fraud|
+|»»» credits_blocked|boolean|false|Used by Split admins in case of fraud|
+|»» anyone_account|object|false|No description|
+|»»» id|uuid|false|No description|
+|»» payid_details|object|false|No description|
+|»»» alias_value|string|false|The PayID email|
+|»»» alias_type|string|false|Type of PayID. Fixed to 'email'|
+|»»» alias_name|string|false|The contact name|
+|»»» state|string|false|Pending -> Active or Failed -> Deregistered (Contact removed)|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|state|active|
+|state|removed|
+|state|pending|
+|state|active|
+|state|failed|
+|state|deregistered|
+
 ## ListAllContactsResponse
 
 <a id="schemalistallcontactsresponse"></a>
@@ -10867,12 +11215,12 @@ func main() {
 
 ### Properties
 
-*Add an Anyone Contact (request)*
+*Add a Contact (request)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|name|string|true|The name of the Contact|
-|email|string|true|The email of the Contact|
+|name|string|true|The name of the Contact (140 max. characters)|
+|email|string|true|The email of the Contact (256 max. characters)|
 |branch_code|string|true|The bank account BSB of the Contact|
 |account_number|string|true|The bank account number of the Contact|
 |metadata|[Metadata](#schemametadata)|false|No description|
@@ -10914,7 +11262,7 @@ func main() {
 
 ### Properties
 
-*Add an Anyone Contact (response)*
+*Add a Contact (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
