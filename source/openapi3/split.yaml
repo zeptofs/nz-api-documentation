@@ -1470,6 +1470,7 @@ info:
 
     We take backwards compatibility seriously. The following list contains backwards compatible changes:
 
+    - **2020-12-15** - Improve webhooks section
 
     - **2020-12-15** - Add changelog
 
