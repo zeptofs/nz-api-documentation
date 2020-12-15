@@ -3934,7 +3934,8 @@ components:
           type: object
           properties:
             id:
-              type: uuid
+              type: string
+              format: uuid
             name:
               type: string
               description: Contact name (140 max. characters)
@@ -3950,7 +3951,8 @@ components:
               type: object
               properties:
                 id:
-                  type: uuid
+                  type: string
+                  format: uuid
                 account_number:
                   type: string
                   description: Split generated account number (9 max. characters)
@@ -3985,7 +3987,8 @@ components:
               type: object
               properties:
                 id:
-                  type: uuid
+                  type: string
+                  format:  uuid
             payid_details:
               type: object
               properties:

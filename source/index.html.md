@@ -11054,13 +11054,13 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|false|No description|
-|» id|uuid|false|No description|
+|» id|string(uuid)|false|No description|
 |» name|string|false|Contact name (140 max. characters)|
 |» email|string|false|Contact email (256 max. characters)|
 |» type|string|false|Fixed to 'anyone'|
 |» metadata|[Metadata](#schemametadata)|false|No description|
 |» bank_account|object|false|No description|
-|»» id|uuid|false|No description|
+|»» id|string(uuid)|false|No description|
 |»» account_number|string|false|Split generated account number (9 max. characters)|
 |»» branch_code|string|false|Split branch code (fixed 6 characters)|
 |»» bank_name|string|false|Fixed to 'Split Float Acount'|
@@ -11071,7 +11071,7 @@ func main() {
 |»»» debits_blocked|boolean|false|Used by Split admins in case of fraud|
 |»»» credits_blocked|boolean|false|Used by Split admins in case of fraud|
 |»» anyone_account|object|false|No description|
-|»»» id|uuid|false|No description|
+|»»» id|string(uuid)|false|No description|
 |»» payid_details|object|false|No description|
 |»»» alias_value|string|false|The PayID email|
 |»»» alias_type|string|false|Type of PayID. Fixed to 'email'|
