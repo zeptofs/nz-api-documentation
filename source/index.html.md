@@ -912,6 +912,14 @@ Compare the signature in the header to the expected signature. If a signature ma
 
 To protect against timing attacks, use a constant-time string comparison to compare the expected signature to each of the received signatures.
 
+# Changelog
+We take backwards compatibility seriously. The following list contains backwards compatible changes:
+
+- **2020-12-15** - Add changelog
+- **2020-12-15** - Re-word Payment Requests introduction to better cover its use with Receivable Contacts.
+
+Our docs are open sourced if you're looking for more: [https://github.com/splitpayments/api-documentation](https://github.com/splitpayments/api-documentation)
+
 <h1 id="Split-API-Agreements">Agreements</h1>
 
 An Agreement is an arrangement between two parties that allows them to agree on terms for which future Payment Requests will be auto-approved.
@@ -1106,8 +1114,6 @@ func main() {
 Propose an Agreement to another Split Contact
 
 <aside class="notice">You can set any of the term metrics to <code>null</code> if you wish them to not have a limit.</aside>
-
-<aside class="notice">[31/07/2018] Please note that we've deprecated <code>authoriser_id</code> in favour of <code>authoriser_contact_id</code>. We will continue to support the use of <code>authoriser_id (Contact.data.account.id)</code> but encourage you to use <code>authoriser_contact_id (Contact.data.id)</code> to identify the authoriser of the Agreement.</aside>
 
 > Body parameter
 
@@ -5711,7 +5717,6 @@ func main() {
 
 `POST /payment_requests`
 
-<aside class="notice">[23/07/2018] Please note that we've deprecated <code>authoriser_id</code> in favour of <code>authoriser_contact_id</code>. We will continue to support the use of <code>authoriser_id (Contact.data.bank_account.id)</code> but encourage you to use <code>authoriser_contact_id (Contact.data.id)</code> to identify the authoriser of the Payment Request.</aside>
 <aside class="notice"> Please note that <code>your_bank_account_id</code> refers to the <code>initiator_bank_account_id</code>. You can use this to identify issues related to the initiator's bank account.</aside>
 
 > Body parameter
@@ -7365,7 +7370,6 @@ func main() {
 #### Detailed descriptions
 
 **»» Payout**: The actual Payout
-<aside class="notice">[23/07/2018] Please note that we've deprecated <code>recipient_id</code> in favour of <code>recipient_contact_id</code>. We will continue to support the use of <code>recipient_id (Contact.data.bank_account.id)</code> but encourage you to use <code>recipient_contact_id (Contact.data.id)</code> to identify the recipient of the payout.</aside>
 <aside class="notice"> Please note that <code>your_bank_account_id</code> refers to the <code>initiator_bank_account_id</code>. You can use this to identify issues related to the initiator's bank account.</aside>
 
 > Example responses
