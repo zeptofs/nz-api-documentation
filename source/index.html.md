@@ -5717,8 +5717,6 @@ func main() {
 
 `POST /payment_requests`
 
-<aside class="notice"> Please note that <code>your_bank_account_id</code> refers to the <code>initiator_bank_account_id</code>. You can use this to identify issues related to the initiator's bank account.</aside>
-
 > Body parameter
 
 ```json
@@ -7367,11 +7365,6 @@ func main() {
 |»»» metadata|body|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 |»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
-#### Detailed descriptions
-
-**»» Payout**: The actual Payout
-<aside class="notice"> Please note that <code>your_bank_account_id</code> refers to the <code>initiator_bank_account_id</code>. You can use this to identify issues related to the initiator's bank account.</aside>
-
 > Example responses
 
 > 201 Response
@@ -8368,7 +8361,6 @@ Certain rules apply to the issuance of a refund:
   <li>Must be applied against a successfully cleared payout (credit)</li>
   <li>The refund amount must not exceed the original amount of the credit</li>
 </ul>
-<aside class="notice"> Please note that <code>your_bank_account_id</code> refers to the <code>initiator_bank_account_id</code>. You can use this to identify issues related to the initiator's bank account.</aside>
 
 > Body parameter
 
