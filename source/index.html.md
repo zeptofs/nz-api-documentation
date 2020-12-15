@@ -652,14 +652,7 @@ Should you prefer aggregation to be disabled, please contact [support@splitpayme
     }
   },
   "data": [
-    {
-      // The data section will follow the same type of structure
-      // as the event type it is representing. For example, if the
-      // event type was "debit.scheduled", the data representation
-      // structure would be that of a debit object. Too see what a
-      // debit object structure looks like, see the Transactions
-      // section.
-    }
+    {}
   ]
 }
 ```
@@ -670,9 +663,23 @@ We support two main categories of webhooks:
 1. **Owner**: These webhooks are managed by the owner of the Split account and only report on events owned by the Split account.
 2. **App**: These webhooks are managed by the Split OAuth2 application owner and will report on events relating to any authorised Split account (limited by scope).
 
-All events posted to the designated URL fit the same structure.
-<aside class="notice">The sandbox environment allow both HTTP and HTTPS webhook URLs. The live environment however will only POST to HTTPS URLs.
-</aside>
+| Name | Type | Required | Description |
+|-|-|-|-|
+| event | object | true | Webhook event details |
+| » type | string | true | The webhook event key (list available in the webhook settings) |
+| » at | string(date-time) | true | When the event occurred |
+| » who | object | true | Who the webhook event relates to |
+| »» account_id | string(uuid) | true | The Split account who the owner of the event |
+| »» bank_account_id | string(uuid) | true | The above Split account's bank account |
+| data | [object] | true | Array of response bodies |
+
+To see an example of the `data.[object]` response along with its expected format, first determine the event you're interested in then locate its equivalent API request/response.
+
+For example:
+
+  * Given I want to listen to the `Payment Request - Added` webhook event
+  * Then I'd use the [Get a Payment Request](/#get-a-payment-request) endpoint if I was polling the API
+  * Therefore the [Get a Payment Request Response schema](/#schemagetapaymentrequestresponse) is the format Split will use for the webhook `data.[object]`.
 
 ### Our Delivery Promises
 1. We only consider a webhook event delivery as failed if we don't receive any http response code (2xx, 4xx, 5xx, etc.)
@@ -911,6 +918,8 @@ Compute an HMAC with the SHA256 hash function. Use the endpoint’s signing secr
 Compare the signature in the header to the expected signature. If a signature matches, compute the difference between the current timestamp and the received timestamp, then decide if the difference is within your tolerance.
 
 To protect against timing attacks, use a constant-time string comparison to compare the expected signature to each of the received signatures.
+
+<aside class="notice">The sandbox environment allow both HTTP and HTTPS webhook URLs. The live environment however will only POST to HTTPS URLs.</aside>
 
 # Changelog
 We take backwards compatibility seriously. The following list contains backwards compatible changes:
