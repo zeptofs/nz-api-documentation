@@ -24,7 +24,8 @@ Get started
 you save your changes.
 7. Changes to the YAML file will be built and output to the `source/`
    directory, so don't edit the build output in there.
-8. Commit both the YAML and the build output changes.
+8. Don't forget to update the Changelog section of the docs
+9. Commit both the YAML and the build output changes.
 
 
 Note: Currently only changes to split.yaml will trigger the automatic update.
