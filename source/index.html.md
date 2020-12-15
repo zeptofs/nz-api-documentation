@@ -923,11 +923,12 @@ To protect against timing attacks, use a constant-time string comparison to comp
 
 # Changelog
 We take backwards compatibility seriously. The following list contains backwards compatible changes:
+
 - **2020-12-15** - Improve webhooks section
 - **2020-12-15** - Add changelog
 - **2020-12-15** - Re-word Payment Requests introduction to better cover its use with Receivable Contacts.
 
-Our docs are open sourced if you're looking for more: [https://github.com/splitpayments/api-documentation](https://github.com/splitpayments/api-documentation)
+Looking for more? Our docs are open sourced! [https://github.com/splitpayments/api-documentation](https://github.com/splitpayments/api-documentation)
 
 <h1 id="Split-API-Agreements">Agreements</h1>
 
