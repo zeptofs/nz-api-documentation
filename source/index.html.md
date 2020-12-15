@@ -669,7 +669,7 @@ We support two main categories of webhooks:
 | » type | string | true | The webhook event key (list available in the webhook settings) |
 | » at | string(date-time) | true | When the event occurred |
 | » who | object | true | Who the webhook event relates to |
-| »» account_id | string(uuid) | true | The Split account who the owner of the event |
+| »» account_id | string(uuid) | true | The Split account who's the owner of the event |
 | »» bank_account_id | string(uuid) | true | The above Split account's bank account |
 | data | [object] | true | Array of response bodies |
 

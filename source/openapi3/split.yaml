@@ -1070,7 +1070,7 @@ info:
 
     | » who | object | true | Who the webhook event relates to |
 
-    | »» account_id | string(uuid) | true | The Split account who the owner of the event |
+    | »» account_id | string(uuid) | true | The Split account who's the owner of the event |
 
     | »» bank_account_id | string(uuid) | true | The above Split account's bank account |
 
