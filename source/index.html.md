@@ -5740,12 +5740,12 @@ func main() {
 |---|---|---|---|---|
 |body|body|[MakeAPaymentRequestRequest](#schemamakeapaymentrequestrequest)|true|No description|
 |» description|body|string|true|Description visible to the initiator (payee) & authoriser (payer)|
-|» matures_at|body|string|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
-|» amount|body|number|true|Amount in cents to pay the initiator|
+|» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
+|» amount|body|integer|true|Amount in cents to pay the initiator|
 |» authoriser_contact_id|body|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
 |» precheck_funds|body|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
 |» your_bank_account_id|body|string|false|Specify where we should settle the funds for this transaction. If omitted, your primary bank account will be used.|
-|» metadata|body|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
+|» metadata|body|object|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
 > Example responses
 
@@ -5761,6 +5761,8 @@ func main() {
     "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
     "schedule_ref": null,
     "status": "pending_approval",
+    "status_reason": null,
+    "matures_at": "2016-12-25T00:00:00Z",
     "responded_at": null,
     "created_at": "2016-12-19T02:10:56Z",
     "credit_ref": null,
@@ -5783,362 +5785,6 @@ func main() {
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Created|[MakeAPaymentRequestResponse](#schemamakeapaymentrequestresponse)|
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|When a payment is requested from an Anyone Contact with no valid Agreement|[MakeAPaymentRequestWithNoAgreementResponse](#schemamakeapaymentrequestwithnoagreementresponse)|
-
-## Approve a Payment Request
-
-<a id="opIdApprovePaymentRequest"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://api.sandbox.split.cash/payment_requests/PR.3/approve \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/payment_requests/PR.3/approve")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/payment_requests/PR.3/approve",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/payment_requests/PR.3/approve", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payment_requests/PR.3/approve")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/PR.3/approve');
-$request->setRequestMethod('POST');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/payment_requests/PR.3/approve"
-
-	req, _ := http.NewRequest("POST", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /payment_requests/{payment_request_ref}/approve`
-
-<h3 id="Approve-a-Payment-Request-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|payment_request_ref|path|string|true|Single value, exact match|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": {
-    "ref": "PR.3",
-    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
-    "authoriser_id": "d194c54b-9183-410c-966b-50485c5ce3f0",
-    "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-    "schedule_ref": null,
-    "status": "approved",
-    "responded_at": "2016-12-19T02:38:04Z",
-    "created_at": "2016-12-19T02:10:56Z",
-    "debit_ref": "D.b",
-    "payout": {
-      "amount": 99000,
-      "description": "The elite package for 4",
-      "matures_at": "2016-12-25T00:00:00Z"
-    },
-    "metadata": {
-      "custom_key": "Custom string",
-      "another_custom_key": "Maybe a URL"
-    }
-  }
-}
-```
-
-<h3 id="Approve a Payment Request-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ApprovePaymentRequestResponse](#schemaapprovepaymentrequestresponse)|
-
-## Decline a Payment Request
-
-<a id="opIdDeclinePaymentRequest"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://api.sandbox.split.cash/payment_requests/PR.3/decline \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/payment_requests/PR.3/decline")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/payment_requests/PR.3/decline",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/payment_requests/PR.3/decline", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payment_requests/PR.3/decline")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/PR.3/decline');
-$request->setRequestMethod('POST');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/payment_requests/PR.3/decline"
-
-	req, _ := http.NewRequest("POST", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /payment_requests/{payment_request_ref}/decline`
-
-<h3 id="Decline-a-Payment-Request-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|payment_request_ref|path|string|true|Single value, exact match|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": {
-    "ref": "PR.3",
-    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
-    "authoriser_id": "d194c54b-9183-410c-966b-50485c5ce3f0",
-    "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-    "schedule_ref": null,
-    "status": "declined",
-    "responded_at": "2016-12-19T02:38:04Z",
-    "created_at": "2016-12-19T02:10:56Z",
-    "debit_ref": null,
-    "payout": {
-      "amount": 99000,
-      "description": "The elite package for 4",
-      "matures_at": "2016-12-25T00:00:00Z"
-    },
-    "metadata": {
-      "custom_key": "Custom string",
-      "another_custom_key": "Maybe a URL"
-    }
-  }
-}
-```
-
-<h3 id="Decline a Payment Request-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|No description|[DeclinePaymentRequestResponse](#schemadeclinepaymentrequestresponse)|
 
 ## Get a Payment Request
 
@@ -6296,6 +5942,8 @@ func main() {
     "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
     "schedule_ref": null,
     "status": "approved",
+    "status_reason": null,
+    "matures_at": "2016-12-25T00:00:00Z",
     "responded_at": "2016-12-19T02:38:04Z",
     "created_at": "2016-12-19T02:10:56Z",
     "credit_ref": "C.b",
@@ -6318,346 +5966,7 @@ func main() {
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAPaymentRequestResponse](#schemagetapaymentrequestresponse)|
 
-## Cancel a Payment Request
-
-<a id="opIdCancelAPaymentRequest"></a>
-
-> Code samples
-
-```shell
-curl --request DELETE \
-  --url https://api.sandbox.split.cash/payment_requests/PR.3 \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/payment_requests/PR.3")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Delete.new(url)
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "DELETE",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/payment_requests/PR.3",
-  "headers": {
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = { 'authorization': "Bearer {access-token}" }
-
-conn.request("DELETE", "/payment_requests/PR.3", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/payment_requests/PR.3")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/PR.3');
-$request->setRequestMethod('DELETE');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/payment_requests/PR.3"
-
-	req, _ := http.NewRequest("DELETE", url, nil)
-
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`DELETE /payment_requests/{payment_request_ref}`
-
-A Payment Request can be cancelled as long as the associated transaction's state is maturing or matured.
-
-<h3 id="Cancel-a-Payment-Request-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|payment_request_ref|path|string|true|Single value, exact match|
-
-<h3 id="Cancel a Payment Request-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
-
-## List incoming Payment Requests
-
-<a id="opIdListIncomingPaymentRequests"></a>
-
-> Code samples
-
-```shell
-curl --request GET \
-  --url https://api.sandbox.split.cash/payment_requests/incoming \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/payment_requests/incoming")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "GET",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/payment_requests/incoming",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("GET", "/payment_requests/incoming", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payment_requests/incoming")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/incoming');
-$request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/payment_requests/incoming"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`GET /payment_requests/incoming`
-
-<h3 id="List-incoming-Payment-Requests-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|page|query|string|false|Page of results to return, single value, exact match|
-|per_page|query|string|false|Number of results per page, single value, exact match|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": [
-    {
-      "ref": "PR.2",
-      "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-      "your_bank_account_id": "049528f7-6698-40a6-8221-52ec406e5424",
-      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-      "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-      "schedule_ref": "PRS.1",
-      "status": "approved",
-      "responded_at": "2016-12-19T02:10:18Z",
-      "created_at": "2016-12-19T02:09:09Z",
-      "debit_ref": "D.a",
-      "payout": {
-        "amount": 30000,
-        "description": "The SuperPackage",
-        "matures_at": "2016-12-20T00:00:00Z"
-      }
-    },
-    {
-      "ref": "PR.3",
-      "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-      "your_bank_account_id": "049528f7-6698-40a6-8221-52ec406e5424",
-      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-      "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-      "schedule_ref": null,
-      "status": "pending_approval",
-      "responded_at": null,
-      "created_at": "2016-12-19T02:10:56Z",
-      "debit_ref": null,
-      "payout": {
-        "amount": 99000,
-        "description": "The elite package for 4",
-        "matures_at": "2016-12-25T00:00:00Z"
-      },
-      "metadata": {
-        "custom_key": "Custom string",
-        "another_custom_key": "Maybe a URL"
-      }
-    }
-  ]
-}
-```
-
-<h3 id="List incoming Payment Requests-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListIncomingPaymentRequestsResponse](#schemalistincomingpaymentrequestsresponse)|
-
-## List outgoing Payment Requests
+## List Payment Requests
 
 <a id="opIdListOutgoingPaymentRequests"></a>
 
@@ -6793,7 +6102,9 @@ func main() {
 
 `GET /payment_requests/outgoing`
 
-<h3 id="List-outgoing-Payment-Requests-parameters" class="parameters">Parameters</h3>
+Payment Requests where you're the creditor and collecting funds from the debtor. Alternatively the debtor is sending you funds ([Receivable Contacts](/#add-a-receivable-contact))
+
+<h3 id="List-Payment-Requests-parameters" class="parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -6815,6 +6126,8 @@ func main() {
       "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
       "schedule_ref": "PRS.2",
       "status": "approved",
+      "status_reason": null,
+      "matures_at": "2016-12-20T00:00:00Z",
       "responded_at": "2016-12-19T02:10:18Z",
       "created_at": "2016-12-19T02:09:09Z",
       "credit_ref": "C.a",
@@ -6832,6 +6145,8 @@ func main() {
       "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
       "schedule_ref": null,
       "status": "pending_approval",
+      "status_reason": null,
+      "matures_at": "2016-12-25T00:00:00Z",
       "responded_at": null,
       "created_at": "2016-12-19T02:10:56Z",
       "credit_ref": null,
@@ -6845,7 +6160,7 @@ func main() {
 }
 ```
 
-<h3 id="List outgoing Payment Requests-responses">Responses</h3>
+<h3 id="List Payment Requests-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -7095,6 +6410,711 @@ Gives you visibility of the entire Payment Request lifecycle including the gener
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAPaymentRequestsHistoryResponse](#schemagetapaymentrequestshistoryresponse)|
+
+## Cancel a Payment Request
+
+<a id="opIdCancelAPaymentRequest"></a>
+
+> Code samples
+
+```shell
+curl --request DELETE \
+  --url https://api.sandbox.split.cash/payment_requests/PR.3/history \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/payment_requests/PR.3/history")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Delete.new(url)
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "DELETE",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/payment_requests/PR.3/history",
+  "headers": {
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = { 'authorization': "Bearer {access-token}" }
+
+conn.request("DELETE", "/payment_requests/PR.3/history", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/payment_requests/PR.3/history")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/PR.3/history');
+$request->setRequestMethod('DELETE');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/payment_requests/PR.3/history"
+
+	req, _ := http.NewRequest("DELETE", url, nil)
+
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`DELETE /payment_requests/{payment_request_ref}/history`
+
+A Payment Request can be cancelled as long as the associated transaction's state is maturing or matured.
+
+<h3 id="Cancel-a-Payment-Request-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|payment_request_ref|path|string|true|Single value, exact match|
+
+<h3 id="Cancel a Payment Request-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
+
+## List incoming Payment Requests
+
+<a id="opIdListIncomingPaymentRequests"></a>
+
+> Code samples
+
+```shell
+curl --request GET \
+  --url https://api.sandbox.split.cash/payment_requests/incoming \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/payment_requests/incoming")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/payment_requests/incoming",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = {
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("GET", "/payment_requests/incoming", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payment_requests/incoming")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/incoming');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/payment_requests/incoming"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`GET /payment_requests/incoming`
+
+Payment Requests where you're the debtor and another Split account is collecting funds from you.
+
+<h3 id="List-incoming-Payment-Requests-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "data": [
+    {
+      "ref": "PR.2",
+      "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "your_bank_account_id": "049528f7-6698-40a6-8221-52ec406e5424",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "schedule_ref": "PRS.1",
+      "status": "approved",
+      "status_reason": null,
+      "matures_at": "2016-12-20T00:00:00Z",
+      "responded_at": "2016-12-19T02:10:18Z",
+      "created_at": "2016-12-19T02:09:09Z",
+      "debit_ref": "D.a",
+      "payout": {
+        "amount": 30000,
+        "description": "The SuperPackage",
+        "matures_at": "2016-12-20T00:00:00Z"
+      }
+    },
+    {
+      "ref": "PR.3",
+      "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "your_bank_account_id": "049528f7-6698-40a6-8221-52ec406e5424",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "schedule_ref": null,
+      "status": "pending_approval",
+      "status_reason": null,
+      "matures_at": "2016-12-25T00:00:00Z",
+      "responded_at": null,
+      "created_at": "2016-12-19T02:10:56Z",
+      "debit_ref": null,
+      "payout": {
+        "amount": 99000,
+        "description": "The elite package for 4",
+        "matures_at": "2016-12-25T00:00:00Z"
+      },
+      "metadata": {
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    }
+  ]
+}
+```
+
+<h3 id="List incoming Payment Requests-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListIncomingPaymentRequestsResponse](#schemalistincomingpaymentrequestsresponse)|
+
+## Approve a Payment Request
+
+<a id="opIdApprovePaymentRequest"></a>
+
+> Code samples
+
+```shell
+curl --request POST \
+  --url https://api.sandbox.split.cash/payment_requests/PR.3/approve \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/payment_requests/PR.3/approve")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/payment_requests/PR.3/approve",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = {
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("POST", "/payment_requests/PR.3/approve", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payment_requests/PR.3/approve")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/PR.3/approve');
+$request->setRequestMethod('POST');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/payment_requests/PR.3/approve"
+
+	req, _ := http.NewRequest("POST", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`POST /payment_requests/{payment_request_ref}/approve`
+
+<h3 id="Approve-a-Payment-Request-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|payment_request_ref|path|string|true|Single value, exact match|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "data": {
+    "ref": "PR.3",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
+    "authoriser_id": "d194c54b-9183-410c-966b-50485c5ce3f0",
+    "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "schedule_ref": null,
+    "status": "approved",
+    "status_reason": null,
+    "matures_at": "2016-12-25T00:00:00Z",
+    "responded_at": "2016-12-19T02:38:04Z",
+    "created_at": "2016-12-19T02:10:56Z",
+    "debit_ref": "D.b",
+    "payout": {
+      "amount": 99000,
+      "description": "The elite package for 4",
+      "matures_at": "2016-12-25T00:00:00Z"
+    },
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+<h3 id="Approve a Payment Request-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ApprovePaymentRequestResponse](#schemaapprovepaymentrequestresponse)|
+
+## Decline a Payment Request
+
+<a id="opIdDeclinePaymentRequest"></a>
+
+> Code samples
+
+```shell
+curl --request POST \
+  --url https://api.sandbox.split.cash/payment_requests/PR.3/decline \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/payment_requests/PR.3/decline")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/payment_requests/PR.3/decline",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = {
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("POST", "/payment_requests/PR.3/decline", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payment_requests/PR.3/decline")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/PR.3/decline');
+$request->setRequestMethod('POST');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/payment_requests/PR.3/decline"
+
+	req, _ := http.NewRequest("POST", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`POST /payment_requests/{payment_request_ref}/decline`
+
+<h3 id="Decline-a-Payment-Request-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|payment_request_ref|path|string|true|Single value, exact match|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "data": {
+    "ref": "PR.3",
+    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
+    "authoriser_id": "d194c54b-9183-410c-966b-50485c5ce3f0",
+    "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+    "schedule_ref": null,
+    "status": "declined",
+    "status_reason": null,
+    "matures_at": "2016-12-25T00:00:00Z",
+    "responded_at": "2016-12-19T02:38:04Z",
+    "created_at": "2016-12-19T02:10:56Z",
+    "debit_ref": null,
+    "payout": {
+      "amount": 99000,
+      "description": "The elite package for 4",
+      "matures_at": "2016-12-25T00:00:00Z"
+    },
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+<h3 id="Decline a Payment Request-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|No description|[DeclinePaymentRequestResponse](#schemadeclinepaymentrequestresponse)|
 
 <h1 id="Split-API-Payments">Payments</h1>
 
@@ -7355,7 +7375,7 @@ func main() {
 |---|---|---|---|---|
 |body|body|[MakeAPaymentRequest](#schemamakeapaymentrequest)|true|No description|
 |» description|body|string|true|User description. Only visible to the payer|
-|» matures_at|body|string|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
+|» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
 |» your_bank_account_id|body|string|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |» payouts|body|[[Payout](#schemapayout)]|true|One or many Payouts|
 |»» Payout|body|[Payout](#schemapayout)|false|The actual Payout|
@@ -11440,7 +11460,7 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |description|string|true|User description. Only visible to the payer|
-|matures_at|string|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
+|matures_at|string(date-time)|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
 |your_bank_account_id|string|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |payouts|[[Payout](#schemapayout)]|true|One or many Payouts|
 |metadata|[Metadata](#schemametadata)|false|No description|
@@ -11575,6 +11595,8 @@ func main() {
     "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
     "schedule_ref": null,
     "status": "approved",
+    "status_reason": null,
+    "matures_at": "2016-12-25T00:00:00Z",
     "responded_at": "2016-12-19T02:38:04Z",
     "created_at": "2016-12-19T02:10:56Z",
     "debit_ref": "D.b",
@@ -11613,6 +11635,8 @@ func main() {
     "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
     "schedule_ref": null,
     "status": "declined",
+    "status_reason": null,
+    "matures_at": "2016-12-25T00:00:00Z",
     "responded_at": "2016-12-19T02:38:04Z",
     "created_at": "2016-12-19T02:10:56Z",
     "debit_ref": null,
@@ -11779,12 +11803,12 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |description|string|true|Description visible to the initiator (payee) & authoriser (payer)|
-|matures_at|string|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
-|amount|number|true|Amount in cents to pay the initiator|
+|matures_at|string(date-time)|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
+|amount|integer|true|Amount in cents to pay the initiator|
 |authoriser_contact_id|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
 |precheck_funds|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
 |your_bank_account_id|string|false|Specify where we should settle the funds for this transaction. If omitted, your primary bank account will be used.|
-|metadata|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
+|metadata|object|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
 ## MakeAPaymentRequestResponse
 
@@ -11800,6 +11824,8 @@ func main() {
     "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
     "schedule_ref": null,
     "status": "pending_approval",
+    "status_reason": null,
+    "matures_at": "2016-12-25T00:00:00Z",
     "responded_at": null,
     "created_at": "2016-12-19T02:10:56Z",
     "credit_ref": null,
@@ -11823,6 +11849,35 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
+|» ref|string|true|The Payment Reference reference (PR.*)|
+|» initiator_id|string(uuid)|true|Your bank account ID where the funds will settle|
+|» your_bank_account_id|string(uuid)|true|Your bank account ID where the funds will settle (alias of `initiator_id`)|
+|» authoriser_id|string(uuid)|true|The debtor's bank account ID|
+|» authoriser_contact_id|string(uuid)|true|The contact ID representing the debtor within Split|
+|» schedule_ref|string|true|The schedule that generated the Payment request if applicable|
+|» status|string|true|The status of the Payment Request|
+|» status_reason|string|true|Only used when the `status` is `declined` due to prechecking.|
+|» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
+|» responded_at|string(date-time)|true|The date-time when the Payment Request status changed|
+|» created_at|string(date-time)|true|The date-time when the Payment Request was created|
+|» credit_ref|string|true|The resulting credit entry reference (available once approved)|
+|» payout|object|true|No description|
+|»» amount|integer|true|Amount in cents|
+|»» description|string|true|Payment Request description|
+|»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
+|» metadata|object|false|Your custom keyed data|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|status|pending_approval|
+|status|unverified|
+|status|approved|
+|status|declined|
+|status|cancelled|
+|status_reason|The balance of the nominated bank account for this Payment Request is not available.|
+|status_reason|The nominated bank account for this Payment Request has insufficient funds.|
 
 ## MakeAPaymentRequestWithNoAgreementResponse
 
@@ -11856,6 +11911,8 @@ func main() {
     "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
     "schedule_ref": null,
     "status": "approved",
+    "status_reason": null,
+    "matures_at": "2016-12-25T00:00:00Z",
     "responded_at": "2016-12-19T02:38:04Z",
     "created_at": "2016-12-19T02:10:56Z",
     "credit_ref": "C.b",
@@ -11879,6 +11936,36 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
+|» ref|string|true|The Payment Reference reference (PR.*)|
+|» initiator_id|string(uuid)|true|Your bank account ID where the funds will settle|
+|» your_bank_account_id|string(uuid)|true|Your bank account ID where the funds will settle (alias of `initiator_id`)|
+|» authoriser_id|string(uuid)|true|The debtor's bank account ID|
+|» authoriser_contact_id|string(uuid)|true|The contact ID representing the debtor within Split|
+|» schedule_ref|string|true|The schedule that generated the Payment request if applicable|
+|» status|string|true|The status of the Payment Request|
+|» status_reason|string|true|Only used when the `status` is `declined` due to prechecking.|
+|» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
+|» responded_at|string(date-time)|true|The date-time when the Payment Request status changed|
+|» created_at|string(date-time)|true|The date-time when the Payment Request was created|
+|» credit_ref|string|false|The resulting credit entry reference (available once approved, if applicable)|
+|» debit_ref|string|false|The resulting debit entry reference (available once approved, if applicable)|
+|» payout|object|true|No description|
+|»» amount|integer|true|Amount in cents|
+|»» description|string|true|Payment Request description|
+|»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
+|» metadata|object|false|Your custom keyed data|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|status|pending_approval|
+|status|unverified|
+|status|approved|
+|status|declined|
+|status|cancelled|
+|status_reason|The balance of the nominated bank account for this Payment Request is not available.|
+|status_reason|The nominated bank account for this Payment Request has insufficient funds.|
 
 ## ListIncomingPaymentRequestsResponse
 
@@ -11895,6 +11982,8 @@ func main() {
       "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
       "schedule_ref": "PRS.1",
       "status": "approved",
+      "status_reason": null,
+      "matures_at": "2016-12-20T00:00:00Z",
       "responded_at": "2016-12-19T02:10:18Z",
       "created_at": "2016-12-19T02:09:09Z",
       "debit_ref": "D.a",
@@ -11912,6 +12001,8 @@ func main() {
       "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
       "schedule_ref": null,
       "status": "pending_approval",
+      "status_reason": null,
+      "matures_at": "2016-12-25T00:00:00Z",
       "responded_at": null,
       "created_at": "2016-12-19T02:10:56Z",
       "debit_ref": null,
@@ -11935,7 +12026,36 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|data|[object]|true|No description|
+|data|array|true|No description|
+|» ref|string|true|The Payment Reference reference (PR.*)|
+|» initiator_id|string(uuid)|true|Your bank account ID where the funds will settle|
+|» your_bank_account_id|string(uuid)|true|Your bank account ID where the funds will settle (alias of `initiator_id`)|
+|» authoriser_id|string(uuid)|true|The debtor's bank account ID|
+|» authoriser_contact_id|string(uuid)|true|The contact ID representing the debtor within Split|
+|» schedule_ref|string|true|The schedule that generated the Payment request if applicable|
+|» status|string|true|The status of the Payment Request|
+|» status_reason|string|true|Only used when the `status` is `declined` due to prechecking.|
+|» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
+|» responded_at|string(date-time)|true|The date-time when the Payment Request status changed|
+|» created_at|string(date-time)|true|The date-time when the Payment Request was created|
+|» debit_ref|string|true|The resulting debit entry reference (available once approved)|
+|» payout|object|true|No description|
+|»» amount|integer|true|Amount in cents|
+|»» description|string|true|Payment Request description|
+|»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
+|» metadata|object|false|Your custom keyed data added to the object|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|status|pending_approval|
+|status|unverified|
+|status|approved|
+|status|declined|
+|status|cancelled|
+|status_reason|The balance of the nominated bank account for this Payment Request is not available.|
+|status_reason|The nominated bank account for this Payment Request has insufficient funds.|
 
 ## ListOutgoingPaymentRequestsResponse
 
@@ -11952,6 +12072,8 @@ func main() {
       "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
       "schedule_ref": "PRS.2",
       "status": "approved",
+      "status_reason": null,
+      "matures_at": "2016-12-20T00:00:00Z",
       "responded_at": "2016-12-19T02:10:18Z",
       "created_at": "2016-12-19T02:09:09Z",
       "credit_ref": "C.a",
@@ -11969,6 +12091,8 @@ func main() {
       "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
       "schedule_ref": null,
       "status": "pending_approval",
+      "status_reason": null,
+      "matures_at": "2016-12-25T00:00:00Z",
       "responded_at": null,
       "created_at": "2016-12-19T02:10:56Z",
       "credit_ref": null,
@@ -11989,6 +12113,35 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
+|» ref|string|true|The Payment Reference reference (PR.*)|
+|» initiator_id|string(uuid)|true|Your bank account ID where the funds will settle|
+|» your_bank_account_id|string(uuid)|true|Your bank account ID where the funds will settle (alias of `initiator_id`)|
+|» authoriser_id|string(uuid)|true|The debtor's bank account ID|
+|» authoriser_contact_id|string(uuid)|true|The contact ID representing the debtor within Split|
+|» schedule_ref|string|true|The schedule that generated the Payment request if applicable|
+|» status|string|true|The status of the Payment Request|
+|» status_reason|string|true|Only used when the `status` is `declined` due to prechecking.|
+|» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
+|» responded_at|string(date-time)|true|The date-time when the Payment Request status changed|
+|» created_at|string(date-time)|true|The date-time when the Payment Request was created|
+|» credit_ref|string|true|The resulting credit entry reference (available once approved)|
+|» payout|object|true|No description|
+|»» amount|integer|true|Amount in cents|
+|»» description|string|true|Payment Request description|
+|»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
+|» metadata|[object]|false|Your custom keyed data|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|status|pending_approval|
+|status|unverified|
+|status|approved|
+|status|declined|
+|status|cancelled|
+|status_reason|The balance of the nominated bank account for this Payment Request is not available.|
+|status_reason|The nominated bank account for this Payment Request has insufficient funds.|
 
 ## GetAPaymentRequestsHistoryResponse
 
@@ -12092,6 +12245,19 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
+|» type|string|true|The type of object affected|
+|» event|string|true|The event that occurred|
+|» at|string(date-time)|true|When the event occurred|
+|» ref|string|true|The reference of the affected object|
+|» by|string|true|Who triggered the change/event|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|type|payout_request|
+|type|debit|
+|type|credit|
 
 ## IssueARefundRequest
 
