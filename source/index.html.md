@@ -5506,59 +5506,43 @@ Disable the Open Agreement from being viewed or accepted
 
 <h1 id="Split-API-Payment-Requests">Payment Requests</h1>
 
-A Payment Request (PR) is used to request payment from another party. Additionally, a Payment Request can be approved by anybody, not just other Split users. This is achieved by using our [Instant Account Verification process](http://help.split.cash/bank-accounts/instant-account-verification-iav) as part of approving a [Payment Request](https://help.split.cash/payment-requests/open-payment-requests).
+A Payment Request (PR) is used to identify incoming funds from another party.
 
 <div class="middle-header">Applicable scenarios</div>
 
-1. **A Split account sends a PR to a Contact that is a Split account:**
-    1. The authoriser must either approve or decline the request; **or**
-    2. Given there is an Agreement in place and the PR is within the terms of the Agreement, then the PR will be automatically approved; **or**
-    3. Given the PR is **not** within the terms of the Agreement, then the authoriser must either approve or decline the request.
-2. **A Split accounts sends a PR to a Contact that is not a Split account:**
-    1. Given there is an Agreement in place and the PR is within the terms of the Agreement, then the PR will be automatically approved; **or**
-    2. Given the PR is **not** within the terms of the Agreement, then the PR will not be created; **or**
-    3. There is no Agreement in place, then the PR will not be created.
-
-<div class="middle-header">Direction</div>
-
-Payment Requests are broken up by direction:
-
-1. **Incoming:** An incoming Payment Request (you are the authoriser/payer)
-2. **Outgoing:** An outgoing Payment Request (you are the initiator/payee)
-
-There are two response fields that differ depending on the direction:
-
-| Field | Description |
-|-------|-------------|
-| `debit_ref` | Only visible to the PR authoriser (incoming PRs). This reference corresponds to the newly created debit to process the approved PR. |
-| `credit_ref` | Only visible to the PR initiator (outgoing PRs). This reference corresponds to the newly created credit from the approved PR. |
+1. **You send a Payment Request to a [Contact](/#Split-API-Contacts) in order to collect funds:**
+    1. Given there is an Agreement in place and the Payment Request is within the terms of the Agreement, then it will be automatically approved; **or**
+    1. Given the Payment Request is **not** within the terms of the Agreement, then it will not be created; **or**
+    1. There is no Agreement in place, then it will not be created.
+1. **Your customer sends funds to you as a [Receivable Contact](/#add-a-receivable-contact):**
+    1. A *receivable* Payment Request will be automatically created and approved to identify the movement of funds from your customer to your chosen Split float account.
 
 ##Lifecycle
+
+<aside class="notice">Payment Requests generated from a customer sending you funds will always be <code>approved</code> and is not subjet to any prechecking outlined below.</aside>
 
 A Payment Request can have the following statuses:
 
 | Status | Description |
 |-------|-------------|
-| `pending_approval` | Waiting for the authoriser to approve the PR. |
+| `pending_approval` | Waiting for the debtor to approve the Payment Request. |
 | `unverified` | Waiting for available funds response (only applicable when `precheck_funds` enabled). |
-| `approved` | The authoriser has approved the PR. |
-| `declined` | The payer has declined the PR. |
-| `cancelled` | The initiator has cancelled the PR. |
+| `approved` | The debtor has approved the Payment Request. |
+| `declined` | The debtor has declined the Payment Request. |
+| `cancelled` | The creditor has cancelled the Payment Request. |
 
-### Precheck funds lifecycle
+<div class="middle-header">Prechecking</div>
 
-Split will automatically check for available funds right before debits are sent to the bank. This check is performed for all contacts with [Instant Account Verification (IAV)](http://help.split.cash/bank-accounts/instant-account-verification-iav).
+Split will automatically check for available funds before **attempting to debit** the debtor. This check is only performed for contacts with an active [bank connection](/#Split-API-Bank-Connections).
 
-If you would like to also precheck available funds before a Payment Request is allowed to be approved, there is an optional precheck attribute as outlined below.
+**Prechecking as part of a Payment Request approval**
 
-**Precheck for Payment Requests**
-
-When the `precheck_funds` option is enabled, prechecking of available funds will be completed before approving the Payment Request. The authoriser contact must have a valid agreement and bank connection to make use of this option.
+When the `precheck_funds` option is enabled, **approval** of a Payment Request will only be allowed when there are sufficient funds. The debtor contact must have a valid agreement and bank connection to make use of this option.
 
 There are **synchronous** and **asynchronous** lifecycles when the `precheck_funds` option is enabled.
 
-+ When the available funds for a contact's bank account are considered out of date, the API response will return the Payment Request with a state of `unverified` while we refresh and ensure there are sufficient available funds. Once the precheck has completed, the Payment Request state will transition to either `approved` or `declined`. This process can be followed by subscribing to the relevant webhook events or regularly polling the Payment Request and verifying its status.
-+ When the available funds for a contact are current, the API will respond immediately with a final state of either `approved` or an error message if there are insufficient funds.
+- When the available funds for a contact's bank account are considered out of date, the API response will return the Payment Request with a state of `unverified` while the bank account data is refreshed. Once the precheck has completed, the Payment Request state will transition to either `approved` or `declined`. This process can be followed by subscribing to the relevant webhook events or regularly polling the Payment Request and verifying its status.
+- When the available funds for a contact are current, the API will respond immediately with a final state of either `approved` or an error message if there are insufficient funds.
 
 You can gain some control over this process by preemptively telling Split to refresh a contact's available balance at least 1 minute before making a Payment Request. See [Contact balance refresh](/#refresh-contact-bank-connection) for more.
 
