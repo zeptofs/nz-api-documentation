@@ -1207,6 +1207,543 @@ Propose an Agreement to another Split Contact
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Created|[ProposeAgreementResponse](#schemaproposeagreementresponse)|
 
+## List Agreements
+
+<a id="opIdListOutgoingAgreements"></a>
+
+> Code samples
+
+```shell
+curl --request GET \
+  --url https://api.sandbox.split.cash/agreements/outgoing \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/agreements/outgoing")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/agreements/outgoing",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = {
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("GET", "/agreements/outgoing", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/agreements/outgoing")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/agreements/outgoing');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/agreements/outgoing"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`GET /agreements/outgoing`
+
+By default, all outgoing Agreements will be returned. You can apply filters to your query to customise the returned Agreements.
+
+<h3 id="List-Agreements-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
+|authoriser_id|query|string|false|Authoriser ID (`Contact.data.account.id`), single value, exact match|
+|contact_id|query|string|false|Contact ID (`Contact.data.id`), single value, exact match|
+|status|query|array[string]|false|Exact match|
+
+#### Enumerated Values
+
+|Parameter|Value|
+|---|---|
+|status|proposed|
+|status|accepted|
+|status|declined|
+|status|cancelled|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "data": [
+    {
+      "ref": "A.4",
+      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+      "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+      "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
+      "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
+      "status": "proposed",
+      "status_reason": null,
+      "responded_at": null,
+      "created_at": "2017-03-20T00:53:27Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": 10000,
+          "min_amount": 1
+        },
+        "per_frequency": {
+          "days": 7,
+          "max_amount": 1000000
+        }
+      }
+    },
+    {
+      "ref": "A.3",
+      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+      "authoriser_id": "56df206a-aaff-471a-b075-11882bc8906a",
+      "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
+      "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
+      "status": "proposed",
+      "status_reason": null,
+      "responded_at": null,
+      "created_at": "2017-03-16T22:51:48Z",
+      "terms": {
+        "per_payout": {
+          "max_amount": 5000,
+          "min_amount": 0
+        },
+        "per_frequency": {
+          "days": "1",
+          "max_amount": 10000
+        }
+      }
+    }
+  ]
+}
+```
+
+<h3 id="List Agreements-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingAgreementsResponse](#schemalistoutgoingagreementsresponse)|
+
+## Get an Agreement
+
+<a id="opIdGetAgreement"></a>
+
+> Code samples
+
+```shell
+curl --request GET \
+  --url https://api.sandbox.split.cash/agreements/A.2 \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/agreements/A.2")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/agreements/A.2",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = {
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("GET", "/agreements/A.2", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/agreements/A.2")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/agreements/A.2');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/agreements/A.2"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`GET /agreements/{agreement_ref}`
+
+Get a single Agreement by its reference
+
+<h3 id="Get-an-Agreement-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|agreement_ref|path|string|true|Single value, exact match|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "data": {
+    "ref": "A.2",
+    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
+    "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
+    "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
+    "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
+    "status": "approved",
+    "status_reason": null,
+    "responded_at": "2017-03-20T02:13:11Z",
+    "created_at": "2017-03-20T00:53:27Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": 10000,
+        "min_amount": 1
+      },
+      "per_frequency": {
+        "days": 7,
+        "max_amount": 1000000
+      }
+    }
+  }
+}
+```
+
+<h3 id="Get an Agreement-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAgreementResponse](#schemagetagreementresponse)|
+
+## Cancel an Agreement
+
+<a id="opIdCancelAgreement"></a>
+
+> Code samples
+
+```shell
+curl --request DELETE \
+  --url https://api.sandbox.split.cash/agreements/A.2 \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/agreements/A.2")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Delete.new(url)
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "DELETE",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/agreements/A.2",
+  "headers": {
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = { 'authorization': "Bearer {access-token}" }
+
+conn.request("DELETE", "/agreements/A.2", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/agreements/A.2")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/agreements/A.2');
+$request->setRequestMethod('DELETE');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/agreements/A.2"
+
+	req, _ := http.NewRequest("DELETE", url, nil)
+
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`DELETE /agreements/{agreement_ref}`
+
+An Agreement can be cancelled by the initiator at any time whilst the authoriser (Agreement recipient) can only cancel a previously accepted Agreement.
+
+<h3 id="Cancel-an-Agreement-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|agreement_ref|path|string|true|Single value, exact match|
+
+<h3 id="Cancel an Agreement-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
+
 ## Approve an Agreement
 
 <a id="opIdApproveAgreement"></a>
@@ -1567,327 +2104,6 @@ Decline an incoming Agreement
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[DeclineAgreementResponse](#schemadeclineagreementresponse)|
 
-## Get an Agreement
-
-<a id="opIdGetAgreement"></a>
-
-> Code samples
-
-```shell
-curl --request GET \
-  --url https://api.sandbox.split.cash/agreements/A.2 \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/agreements/A.2")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "GET",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/agreements/A.2",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("GET", "/agreements/A.2", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/agreements/A.2")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/agreements/A.2');
-$request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/agreements/A.2"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`GET /agreements/{agreement_ref}`
-
-Get a single Agreement by its reference
-
-<h3 id="Get-an-Agreement-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|agreement_ref|path|string|true|Single value, exact match|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": {
-    "ref": "A.2",
-    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
-    "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-    "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
-    "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
-    "status": "approved",
-    "status_reason": null,
-    "responded_at": "2017-03-20T02:13:11Z",
-    "created_at": "2017-03-20T00:53:27Z",
-    "terms": {
-      "per_payout": {
-        "max_amount": 10000,
-        "min_amount": 1
-      },
-      "per_frequency": {
-        "days": 7,
-        "max_amount": 1000000
-      }
-    }
-  }
-}
-```
-
-<h3 id="Get an Agreement-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAgreementResponse](#schemagetagreementresponse)|
-
-## Cancel an Agreement
-
-<a id="opIdCancelAgreement"></a>
-
-> Code samples
-
-```shell
-curl --request DELETE \
-  --url https://api.sandbox.split.cash/agreements/A.2 \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/agreements/A.2")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Delete.new(url)
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "DELETE",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/agreements/A.2",
-  "headers": {
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = { 'authorization': "Bearer {access-token}" }
-
-conn.request("DELETE", "/agreements/A.2", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/agreements/A.2")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/agreements/A.2');
-$request->setRequestMethod('DELETE');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/agreements/A.2"
-
-	req, _ := http.NewRequest("DELETE", url, nil)
-
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`DELETE /agreements/{agreement_ref}`
-
-An Agreement can be cancelled by the initiator at any time whilst the authoriser (Agreement recipient) can only cancel a previously accepted Agreement.
-
-<h3 id="Cancel-an-Agreement-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|agreement_ref|path|string|true|Single value, exact match|
-
-<h3 id="Cancel an Agreement-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
-
 ## List incoming Agreements
 
 <a id="opIdListIncomingAgreements"></a>
@@ -2103,222 +2319,6 @@ By default, all incoming Agreements will be returned. You can apply filters to y
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListIncomingAgreementsResponse](#schemalistincomingagreementsresponse)|
-
-## List outgoing Agreements
-
-<a id="opIdListOutgoingAgreements"></a>
-
-> Code samples
-
-```shell
-curl --request GET \
-  --url https://api.sandbox.split.cash/agreements/outgoing \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/agreements/outgoing")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "GET",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/agreements/outgoing",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("GET", "/agreements/outgoing", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/agreements/outgoing")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/agreements/outgoing');
-$request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/agreements/outgoing"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`GET /agreements/outgoing`
-
-By default, all outgoing Agreements will be returned. You can apply filters to your query to customise the returned Agreements.
-
-<h3 id="List-outgoing-Agreements-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|page|query|string|false|Page of results to return, single value, exact match|
-|per_page|query|string|false|Number of results per page, single value, exact match|
-|authoriser_id|query|string|false|Authoriser ID (`Contact.data.account.id`), single value, exact match|
-|contact_id|query|string|false|Contact ID (`Contact.data.id`), single value, exact match|
-|status|query|array[string]|false|Exact match|
-
-#### Enumerated Values
-
-|Parameter|Value|
-|---|---|
-|status|proposed|
-|status|accepted|
-|status|declined|
-|status|cancelled|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": [
-    {
-      "ref": "A.4",
-      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
-      "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-      "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
-      "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
-      "status": "proposed",
-      "status_reason": null,
-      "responded_at": null,
-      "created_at": "2017-03-20T00:53:27Z",
-      "terms": {
-        "per_payout": {
-          "max_amount": 10000,
-          "min_amount": 1
-        },
-        "per_frequency": {
-          "days": 7,
-          "max_amount": 1000000
-        }
-      }
-    },
-    {
-      "ref": "A.3",
-      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
-      "authoriser_id": "56df206a-aaff-471a-b075-11882bc8906a",
-      "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
-      "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
-      "status": "proposed",
-      "status_reason": null,
-      "responded_at": null,
-      "created_at": "2017-03-16T22:51:48Z",
-      "terms": {
-        "per_payout": {
-          "max_amount": 5000,
-          "min_amount": 0
-        },
-        "per_frequency": {
-          "days": "1",
-          "max_amount": 10000
-        }
-      }
-    }
-  ]
-}
-```
-
-<h3 id="List outgoing Agreements-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingAgreementsResponse](#schemalistoutgoingagreementsresponse)|
 
 <h1 id="Split-API-Bank-Accounts">Bank Accounts</h1>
 
@@ -10509,6 +10509,27 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
+|» ref|string|true|The Agreement reference (Min: 3 - Max: 18)|
+|» initiator_id|string(uuid)|true|Your Split account ID|
+|» authoriser_id|string(uuid)|true|The authoriser's account ID (AnyoneAccount)|
+|» contact_id|string(uuid)|true|The contact ID representing the authoriser within Split|
+|» bank_account_id|string(uuid)|true|The authoriser's bank account ID|
+|» status|string|true|The status of the Agreement|
+|» status_reason|string|true|The reason the agreement was cancelled. This is a free text field.|
+|» responded_at|string(date-time)|true|The date-time when the Agreement status changed|
+|» created_at|string(date-time)|true|The date-time when the Agreement was created|
+|» terms|[Terms](#schematerms)|true|No description|
+|» metadata|object|false|Your custom keyed data|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|status|proposed|
+|status|accepted|
+|status|cancelled|
+|status|declined|
+|status|expended|
 
 ## ListIncomingAgreementsResponse
 
@@ -11868,7 +11889,7 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
-|» ref|string|true|The Payment Reference reference (PR.*)|
+|» ref|string|true|The Payment Request reference (PR.*)|
 |» initiator_id|string(uuid)|true|Your bank account ID where the funds will settle|
 |» your_bank_account_id|string(uuid)|true|Your bank account ID where the funds will settle (alias of `initiator_id`)|
 |» authoriser_id|string(uuid)|true|The debtor's bank account ID|

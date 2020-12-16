@@ -1936,6 +1936,111 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProposeAgreementResponse'
+  /agreements/outgoing:
+    get:
+      tags:
+        - Agreements
+      summary: List Agreements
+      description: >-
+        By default, all outgoing Agreements will be returned. You can apply
+        filters to your query to customise the returned Agreements.
+      operationId: ListOutgoingAgreements
+      parameters:
+        - name: page
+          in: query
+          description: 'Page of results to return, single value, exact match'
+          style: form
+          schema:
+            type: string
+          example: '1'
+        - name: per_page
+          in: query
+          description: 'Number of results per page, single value, exact match'
+          style: form
+          schema:
+            type: string
+          example: '100'
+        - name: authoriser_id
+          in: query
+          description: 'Authoriser ID (`Contact.data.account.id`), single value, exact match'
+          style: form
+          schema:
+            type: string
+          example: 2c4dec90-8a4c-4685-b620-bd1d7ca05a60
+        - name: contact_id
+          in: query
+          description: 'Contact ID (`Contact.data.id`), single value, exact match'
+          style: form
+          schema:
+            type: string
+          example: e5edc264-1771-4809-9cf5-b40baaee15f7
+        - name: status
+          in: query
+          description: Exact match
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+            enum:
+              - proposed
+              - accepted
+              - declined
+              - cancelled
+          example:
+            - proposed
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOutgoingAgreementsResponse'
+  '/agreements/{agreement_ref}':
+    get:
+      tags:
+        - Agreements
+      summary: Get an Agreement
+      description: Get a single Agreement by its reference
+      operationId: GetAgreement
+      parameters:
+        - name: agreement_ref
+          in: path
+          description: 'Single value, exact match'
+          required: true
+          style: simple
+          schema:
+            type: string
+          example: A.2
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAgreementResponse'
+    delete:
+      tags:
+        - Agreements
+      summary: Cancel an Agreement
+      description: >-
+        An Agreement can be cancelled by the initiator at any time whilst the
+        authoriser (Agreement recipient) can only cancel a previously accepted
+        Agreement.
+      operationId: CancelAgreement
+      parameters:
+        - name: agreement_ref
+          in: path
+          description: 'Single value, exact match'
+          required: true
+          style: simple
+          schema:
+            type: string
+          example: A.2
+      responses:
+        '204':
+          description: No Content
   '/agreements/{agreement_ref}/accept':
     post:
       tags:
@@ -1982,50 +2087,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeclineAgreementResponse'
-  '/agreements/{agreement_ref}':
-    get:
-      tags:
-        - Agreements
-      summary: Get an Agreement
-      description: Get a single Agreement by its reference
-      operationId: GetAgreement
-      parameters:
-        - name: agreement_ref
-          in: path
-          description: 'Single value, exact match'
-          required: true
-          style: simple
-          schema:
-            type: string
-          example: A.2
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetAgreementResponse'
-    delete:
-      tags:
-        - Agreements
-      summary: Cancel an Agreement
-      description: >-
-        An Agreement can be cancelled by the initiator at any time whilst the
-        authoriser (Agreement recipient) can only cancel a previously accepted
-        Agreement.
-      operationId: CancelAgreement
-      parameters:
-        - name: agreement_ref
-          in: path
-          description: 'Single value, exact match'
-          required: true
-          style: simple
-          schema:
-            type: string
-          example: A.2
-      responses:
-        '204':
-          description: No Content
   /agreements/incoming:
     get:
       tags:
@@ -2087,67 +2148,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListIncomingAgreementsResponse'
-  /agreements/outgoing:
-    get:
-      tags:
-        - Agreements
-      summary: List outgoing Agreements
-      description: >-
-        By default, all outgoing Agreements will be returned. You can apply
-        filters to your query to customise the returned Agreements.
-      operationId: ListOutgoingAgreements
-      parameters:
-        - name: page
-          in: query
-          description: 'Page of results to return, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '1'
-        - name: per_page
-          in: query
-          description: 'Number of results per page, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '100'
-        - name: authoriser_id
-          in: query
-          description: 'Authoriser ID (`Contact.data.account.id`), single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: 2c4dec90-8a4c-4685-b620-bd1d7ca05a60
-        - name: contact_id
-          in: query
-          description: 'Contact ID (`Contact.data.id`), single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: e5edc264-1771-4809-9cf5-b40baaee15f7
-        - name: status
-          in: query
-          description: Exact match
-          style: form
-          explode: false
-          schema:
-            type: array
-            items:
-              type: string
-            enum:
-              - proposed
-              - accepted
-              - declined
-              - cancelled
-          example:
-            - proposed
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ListOutgoingAgreementsResponse'
   /bank_accounts:
     get:
       tags:
@@ -3569,6 +3569,65 @@ components:
       properties:
         data:
           type: object
+          required:
+            - ref
+            - initiator_id
+            - authoriser_id
+            - contact_id
+            - bank_account_id
+            - status
+            - status_reason
+            - responded_at
+            - created_at
+            - payout
+            - terms
+          properties:
+            ref:
+              type: string
+              minLength: 3
+              maxLenght: 18
+              description: "The Agreement reference (Min: 3 - Max: 18)"
+            initiator_id:
+              type: string
+              format: uuid
+              description: Your Split account ID
+            authoriser_id:
+              type: string
+              format: uuid
+              description: The authoriser's account ID (AnyoneAccount)
+            contact_id:
+              type: string
+              format: uuid
+              description: The contact ID representing the authoriser within Split
+            bank_account_id:
+              type: string
+              format: uuid
+              description: The authoriser's bank account ID
+            status:
+              type: string
+              description: The status of the Agreement
+              enum:
+                - proposed
+                - accepted
+                - cancelled
+                - declined
+                - expended
+            status_reason:
+              type: string
+              description: The reason the agreement was cancelled. This is a free text field.
+            responded_at:
+              type: string
+              format: date-time
+              description: The date-time when the Agreement status changed
+            created_at:
+              type: string
+              format: date-time
+              description: The date-time when the Agreement was created
+            terms:
+              $ref: '#/components/schemas/Terms'
+            metadata:
+              type: object
+              description: Your custom keyed data
       example:
         data:
           ref: A.2
@@ -4680,7 +4739,7 @@ components:
           properties:
             ref:
               type: string
-              description: The Payment Reference reference (PR.*)
+              description: The Payment Request reference (PR.*)
             initiator_id:
               type: string
               format: uuid
