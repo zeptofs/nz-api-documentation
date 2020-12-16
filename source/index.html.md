@@ -3451,7 +3451,7 @@ func main() {
 Receive funds from a Contact by allowing them to pay to a personalised PayID or account number. Perfect for reconciling incoming funds to a customer, receiving funds instantly, eliminating human error & improving your customer's experience.
 
 <aside class="notice">When creating this type of contact, the initial response <code>payid_details.state</code> value will always be <code>pending</code>. After a few seconds, it'll transition to <code>active</code>. We suggest you use webhooks to be informed of this state change</aside>
-<aside class="notice">You can test receiving payments to a receivable contact in our Sandbox environment using the <a href="#simulate-incoming-payid-payment">PayID simulation endpoint</a>.</aside>
+<aside class="notice">You can test receiving payments to a Receivable Contact in our sandbox environment using the <a href="#simulate-incoming-payid-payment">PayID simulation endpoint</a>.</aside>
 
 > Body parameter
 
@@ -9141,8 +9141,8 @@ Simulate receiving a real time PayID payment from one of your receivable contact
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |body|body|[SimulateIncomingPayIDPaymentRequest](#schemasimulateincomingpayidpaymentrequest)|true|No description|
-|» payid_email|body|string|true|The PayID of a receivable contact you have previously created.|
-|» amount|body|number|true|Amount in cents|
+|» payid_email|body|string|true|Receivable contact PayID email (256 max. characters)|
+|» amount|body|number|true|Amount in cents (Min: 1 - Max: 99999999999)|
 
 > Example responses
 
@@ -12953,8 +12953,8 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|payid_email|string|true|The PayID of a receivable contact you have previously created.|
-|amount|number|true|Amount in cents|
+|payid_email|string|true|Receivable contact PayID email (256 max. characters)|
+|amount|number|true|Amount in cents (Min: 1 - Max: 99999999999)|
 
 ## SimulateIncomingPayIDPaymentResponse
 
@@ -12975,7 +12975,7 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
-|» id|string(uuid)|true|A unique ID which can be provided to Split for debugging purposes.|
-|» payid_email|string|true|The value provided.|
-|» amount|number|true|The value provided.|
+|» id|string(uuid)|true|A unique ID which can be provided to Split for debugging purposes|
+|» payid_email|string|true|The PayID email value provided (256 max. characters)|
+|» amount|number|true|The amount value provided (Min: 1 - Max: 99999999999)|
 

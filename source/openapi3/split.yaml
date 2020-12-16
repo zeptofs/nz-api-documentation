@@ -1887,8 +1887,7 @@ tags:
     description: |
       All about the currently authenticated user.
   - name: Sandbox Only
-    description: |
-      Special testing endpoints that only exist in the Sandbox environment.
+    description: Special testing endpoints that only exist in the Sandbox environment.
 paths:
   /agreements:
     post:
@@ -2278,7 +2277,7 @@ paths:
 
 
         <aside class="notice">When creating this type of contact, the initial response <code>payid_details.state</code> value will always be <code>pending</code>. After a few seconds, it'll transition to <code>active</code>. We suggest you use webhooks to be informed of this state change</aside>
-        <aside class="notice">You can test receiving payments to a receivable contact in our Sandbox environment using the <a href="#simulate-incoming-payid-payment">PayID simulation endpoint</a>.</aside>
+        <aside class="notice">You can test receiving payments to a Receivable Contact in our sandbox environment using the <a href="#simulate-incoming-payid-payment">PayID simulation endpoint</a>.</aside>
       operationId: AddAReceivableContact
       parameters: []
       requestBody:
@@ -3380,8 +3379,7 @@ paths:
       tags:
         - Sandbox Only
       summary: Simulate incoming PayID payment
-      description: >-
-        Simulate receiving a real time PayID payment from one of your receivable contacts.
+      description: Simulate receiving a real time PayID payment from one of your receivable contacts.
       operationId: SimulateIncomingPayIDPayment
       requestBody:
         description: ''
@@ -5639,10 +5637,13 @@ components:
       properties:
         payid_email:
           type: string
-          description: The PayID of a receivable contact you have previously created.
+          max: 256
+          description: Receivable contact PayID email (256 max. characters)
         amount:
           type: number
-          description: Amount in cents
+          min: 1
+          max: 99999999999
+          description: 'Amount in cents (Min: 1 - Max: 99999999999)'
       example:
         payid_email: incoming@split.cash
         amount: 10000
@@ -5661,13 +5662,17 @@ components:
             id:
               type: string
               format: uuid
-              description: A unique ID which can be provided to Split for debugging purposes.
+              description: A unique ID which can be provided to Split for debugging purposes
             payid_email:
               type: string
-              description: The value provided.
+              min: 6
+              max: 256
+              description: The PayID email value provided (256 max. characters)
             amount:
               type: number
-              description: The value provided.
+              min: 1
+              max: 99999999999
+              description: 'The amount value provided (Min: 1 - Max: 99999999999)'
       example:
         data:
           id: 92c75281-5b60-489a-bd8a-e513ba9277c5
