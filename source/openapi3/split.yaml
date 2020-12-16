@@ -1886,6 +1886,9 @@ tags:
   - name: Users
     description: |
       All about the currently authenticated user.
+  - name: Sandbox Only
+    description: |
+      Special testing endpoints that only exist in the Sandbox environment.
 paths:
   /agreements:
     post:
@@ -3371,6 +3374,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetUserDetailsResponse'
+  /simulate/incoming_payid_payment:
+    post:
+      tags:
+        - Sandbox Only
+      summary: Simulate incoming PayID payment
+      description: >-
+        Simulate receiving a real time PayID payment from one of your receivable contacts.
+      operationId: SimulateIncomingPayIDPayment
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulateIncomingPayIDPaymentRequest'
+        required: true
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimulateIncomingPayIDPaymentResponse'
 components:
   securitySchemes:
     bearerAuth:
@@ -5605,5 +5630,47 @@ components:
             suburb: Lead
             state: NSW
             postcode: '2478'
+    SimulateIncomingPayIDPaymentRequest:
+      required:
+        - payid_email
+        - amount
+      type: object
+      properties:
+        payid_email:
+          type: string
+          description: The PayID of a receivable contact you have previously created.
+        amount:
+          type: number
+          description: Amount in cents
+      example:
+        payid_email: incoming@split.cash
+        amount: 10000
+    SimulateIncomingPayIDPaymentResponse:
+      required:
+        - data
+      type: object
+      properties:
+        data:
+          type: object
+          required:
+            - id
+            - payid_email
+            - amount
+          properties:
+            id:
+              type: string
+              format: uuid
+              description: A unique ID which can be provided to Split for debugging purposes.
+            payid_email:
+              type: string
+              description: The value provided.
+            amount:
+              type: number
+              description: The value provided.
+      example:
+        data:
+          id: 92c75281-5b60-489a-bd8a-e513ba9277c5
+          payid_email: incoming@split.cash
+          amount: 10000
 security:
   - bearerAuth: []

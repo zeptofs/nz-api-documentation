@@ -8963,6 +8963,206 @@ Get a single Refund by its reference
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[RetrieveARefundResponse](#schemaretrievearefundresponse)|
 
+<h1 id="Split-API-Sandbox-Only">Sandbox Only</h1>
+
+Special testing endpoints that only exist in the Sandbox environment.
+
+## Simulate incoming PayID payment
+
+<a id="opIdSimulateIncomingPayIDPayment"></a>
+
+> Code samples
+
+```shell
+curl --request POST \
+  --url https://api.sandbox.split.cash/simulate/incoming_payid_payment \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data '{"payid_email":"incoming@split.cash","amount":10000}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/simulate/incoming_payid_payment")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["content-type"] = 'application/json'
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+request.body = "{\"payid_email\":\"incoming@split.cash\",\"amount\":10000}"
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/simulate/incoming_payid_payment",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({ payid_email: 'incoming@split.cash', amount: 10000 }));
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+payload = "{\"payid_email\":\"incoming@split.cash\",\"amount\":10000}"
+
+headers = {
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("POST", "/simulate/incoming_payid_payment", payload, headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/simulate/incoming_payid_payment")
+  .header("content-type", "application/json")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .body("{\"payid_email\":\"incoming@split.cash\",\"amount\":10000}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('{"payid_email":"incoming@split.cash","amount":10000}');
+
+$request->setRequestUrl('https://api.sandbox.split.cash/simulate/incoming_payid_payment');
+$request->setRequestMethod('POST');
+$request->setBody($body);
+
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json',
+  'content-type' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/simulate/incoming_payid_payment"
+
+	payload := strings.NewReader("{\"payid_email\":\"incoming@split.cash\",\"amount\":10000}")
+
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("content-type", "application/json")
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`POST /simulate/incoming_payid_payment`
+
+Simulate receiving a real time PayID payment from one of your receivable contacts.
+
+> Body parameter
+
+```json
+{
+  "payid_email": "incoming@split.cash",
+  "amount": 10000
+}
+```
+
+<h3 id="Simulate-incoming-PayID-payment-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[SimulateIncomingPayIDPaymentRequest](#schemasimulateincomingpayidpaymentrequest)|true|No description|
+|» payid_email|body|string|true|The PayID of a receivable contact you have previously created.|
+|» amount|body|number|true|Amount in cents|
+
+> Example responses
+
+> 201 Response
+
+```json
+{
+  "data": {
+    "id": "92c75281-5b60-489a-bd8a-e513ba9277c5",
+    "payid_email": "incoming@split.cash",
+    "amount": 10000
+  }
+}
+```
+
+<h3 id="Simulate incoming PayID payment-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|OK|[SimulateIncomingPayIDPaymentResponse](#schemasimulateincomingpayidpaymentresponse)|
+
 <h1 id="Split-API-Transactions">Transactions</h1>
 
 By default, the transactions endpoint provides a detailed look at all past, current and future debits & credits related to your account.
@@ -12736,4 +12936,45 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
+
+## SimulateIncomingPayIDPaymentRequest
+
+<a id="schemasimulateincomingpayidpaymentrequest"></a>
+
+```json
+{
+  "payid_email": "incoming@split.cash",
+  "amount": 10000
+}
+```
+
+### Properties
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|payid_email|string|true|The PayID of a receivable contact you have previously created.|
+|amount|number|true|Amount in cents|
+
+## SimulateIncomingPayIDPaymentResponse
+
+<a id="schemasimulateincomingpayidpaymentresponse"></a>
+
+```json
+{
+  "data": {
+    "id": "92c75281-5b60-489a-bd8a-e513ba9277c5",
+    "payid_email": "incoming@split.cash",
+    "amount": 10000
+  }
+}
+```
+
+### Properties
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+|» id|string(uuid)|true|A unique ID which can be provided to Split for debugging purposes.|
+|» payid_email|string|true|The value provided.|
+|» amount|number|true|The value provided.|
 
