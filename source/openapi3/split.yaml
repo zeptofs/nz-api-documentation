@@ -1077,14 +1077,34 @@ info:
     | data | [object] | true | Array of response bodies |
 
 
-    To see an example of the `data.[object]` response along with its expected format, first determine the event you're interested in then locate its equivalent API request/response.
+    ### Data schemas
+
+    Use the following table to discover what type of response schema to expect for for the `data.[{}]` component of the webhook delivery.
 
 
-    For example:
+    | Event                    | Data schema                                                               |
 
-      * Given I want to listen to the `Payment Request - Added` webhook event
-      * Then I'd use the [Get a Payment Request](/#get-a-payment-request) endpoint if I was polling the API
-      * Therefore the [Get a Payment Request Response schema](/#schemagetapaymentrequestresponse) is the format Split will use for the webhook `data.[object]`.
+    |--------------------------|---------------------------------------------------------------------------|
+
+    | `agreement.*`            | [GetAnAgreementResponse](/#schemagetagreementresponse)                    |
+
+    | `contact.*`              | [GetAContactResponse](/#schemagetacontactresponse)                        |
+
+    | `credit.*`               | [ListAllTransactionsResponse](/#schemalistalltransactionsresponse)        |
+
+    | `creditor_debit.*`       | [ListAllTransactionsResponse](/#schemalistalltransactionsresponse)        |
+
+    | `debit.*`                | [ListAllTransactionsResponse](/#schemalistalltransactionsresponse)        |
+
+    | `debtor_credit.*`        | [ListAllTransactionsResponse](/#schemalistalltransactionsresponse)        |
+
+    | `open_agreement.*`       | [ListAllOpenAgreementsRespose](/#schemalistallopenagreementsresponse)     |
+
+    | `payment.*`              | [GetAPaymentResponse](/#schemagetapaymentresponse)                        |
+
+    | `payment_request.*`      | [GetAPaymentRequestResponse](/#schemagetapaymentrequestresponse)          |
+
+    | `unassigned_agreement.*` | [GetAnUnassignedAgreementResponse](#schemagetunassignedagreementresponse) |
 
 
     ### Our Delivery Promises
@@ -1470,6 +1490,8 @@ info:
 
     We take backwards compatibility seriously. The following list contains backwards compatible changes:
 
+
+    - **2020-12-16** - Add webhook schema table
 
     - **2020-12-15** - Improve webhooks section
 
