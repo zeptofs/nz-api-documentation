@@ -4320,7 +4320,12 @@ func main() {
 
 `DELETE /contacts/{id}`
 
-<aside class="notice">Removing a Contact will not affect your transaction history.</aside>
+<aside class="notice">
+  <ul>
+    <li>Removing a Contact will not affect your transaction history.</li>
+    <li>Removing a Receivable Contact will deactivate any associated PayIDs.</li>
+  </ul>
+</aside>
 
 <h3 id="Remove-a-Contact-parameters" class="parameters">Parameters</h3>
 

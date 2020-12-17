@@ -2424,8 +2424,12 @@ paths:
         - Contacts
       summary: Remove a Contact
       description: >
-        <aside class="notice">Removing a Contact will not affect your
-        transaction history.</aside>
+        <aside class="notice">
+          <ul>
+            <li>Removing a Contact will not affect your transaction history.</li>
+            <li>Removing a Receivable Contact will deactivate any associated PayIDs.</li>
+          </ul>
+        </aside>
       operationId: RemoveAContact
       parameters:
         - name: id
