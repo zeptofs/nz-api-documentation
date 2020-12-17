@@ -3450,8 +3450,17 @@ func main() {
 
 Receive funds from a Contact by allowing them to pay to a personalised PayID or account number. Perfect for reconciling incoming funds to a customer, receiving funds instantly, eliminating human error & improving your customer's experience.
 
-<aside class="notice">When creating this type of contact, the initial response <code>payid_details.state</code> value will always be <code>pending</code>. After a few seconds, it'll transition to <code>active</code>. We suggest you use webhooks to be informed of this state change</aside>
-<aside class="notice">You can test receiving payments to a Receivable Contact in our sandbox environment using the <a href="#simulate-incoming-payid-payment">PayID simulation endpoint</a>.</aside>
+<aside class="notice">
+  When creating this type of contact, the initial response <code>payid_details.state</code> value will always be <code>pending</code>. After a few seconds, it'll transition to <code>active</code>. We suggest you use webhooks to be informed of this state change
+</aside>
+<aside class="notice">
+  While unlikely, it is possible that we will be unable to register the given PayID. In this case <code>payid_details.state</code> will transition to <code>failed</code>.
+
+  You can simulate this path in sandbox by adding <code>+failure</code> to your <code>payid_email</code> e.g <code>test+failure@split.cash</code>
+</aside>
+<aside class="notice">
+  You can test receiving payments to a Receivable Contact in our sandbox environment using the <a href="#simulate-incoming-payid-payment">PayID simulation endpoint</a>.
+</aside>
 
 > Body parameter
 
