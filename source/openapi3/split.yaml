@@ -1887,7 +1887,7 @@ tags:
     description: |
       All about the currently authenticated user.
   - name: Sandbox Only
-    description: Special testing endpoints that only exist in the Sandbox environment.
+    description: Special testing endpoints that only exist in the sandbox environment.
 paths:
   /agreements:
     post:
@@ -2271,7 +2271,7 @@ paths:
     post:
       tags:
         - Contacts
-      summary: Add a receivable Contact
+      summary: Add a Receivable Contact
       description: |
         Receive funds from a Contact by allowing them to pay to a personalised PayID or account number. Perfect for reconciling incoming funds to a customer, receiving funds instantly, eliminating human error & improving your customer's experience.
 
@@ -3379,7 +3379,7 @@ paths:
       tags:
         - Sandbox Only
       summary: Simulate incoming PayID payment
-      description: Simulate receiving a real time PayID payment from one of your receivable contacts.
+      description: Simulate receiving a real time PayID payment from one of your Receivable Contacts.
       operationId: SimulateIncomingPayIDPayment
       requestBody:
         description: ''
@@ -3944,7 +3944,7 @@ components:
           links:
             add_bank_connection: https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80
     AddAReceivableContactRequest:
-      title: Add a receivable Contact (request)
+      title: Add a Receivable Contact (request)
       required:
         - name
         - email
@@ -3970,7 +3970,7 @@ components:
           custom_key: Custom string
           another_custom_key: Maybe a URL
     AddAReceivableContactResponse:
-      title: Add a receivable Contact (response)
+      title: Add a Receivable Contact (response)
       type: object
       properties:
         data:
@@ -5637,8 +5637,9 @@ components:
       properties:
         payid_email:
           type: string
+          min: 6
           max: 256
-          description: Receivable contact PayID email (256 max. characters)
+          description: 'Receivable Contact PayID email (Min: 6 - Max: 256)'
         amount:
           type: number
           min: 1
@@ -5667,7 +5668,7 @@ components:
               type: string
               min: 6
               max: 256
-              description: The PayID email value provided (256 max. characters)
+              description: 'The PayID email value provided (Min: 6 - Max: 256)'
             amount:
               type: number
               min: 1

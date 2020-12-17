@@ -3286,7 +3286,7 @@ Use this endpoint when you want to pay somebody.
 |---|---|---|---|
 |201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddAnAnyoneContactResponse](#schemaaddananyonecontactresponse)|
 
-## Add a receivable Contact
+## Add a Receivable Contact
 
 <a id="opIdAddAReceivableContact"></a>
 
@@ -3467,7 +3467,7 @@ Receive funds from a Contact by allowing them to pay to a personalised PayID or 
 }
 ```
 
-<h3 id="Add-a-receivable-Contact-parameters" class="parameters">Parameters</h3>
+<h3 id="Add-a-Receivable-Contact-parameters" class="parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -3518,7 +3518,7 @@ Receive funds from a Contact by allowing them to pay to a personalised PayID or 
 }
 ```
 
-<h3 id="Add a receivable Contact-responses">Responses</h3>
+<h3 id="Add a Receivable Contact-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -8966,7 +8966,7 @@ Get a single Refund by its reference
 
 <h1 id="Split-API-Sandbox-Only">Sandbox Only</h1>
 
-Special testing endpoints that only exist in the Sandbox environment.
+Special testing endpoints that only exist in the sandbox environment.
 
 ## Simulate incoming PayID payment
 
@@ -9125,7 +9125,7 @@ func main() {
 
 `POST /simulate/incoming_payid_payment`
 
-Simulate receiving a real time PayID payment from one of your receivable contacts.
+Simulate receiving a real time PayID payment from one of your Receivable Contacts.
 
 > Body parameter
 
@@ -9141,7 +9141,7 @@ Simulate receiving a real time PayID payment from one of your receivable contact
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |body|body|[SimulateIncomingPayIDPaymentRequest](#schemasimulateincomingpayidpaymentrequest)|true|No description|
-|» payid_email|body|string|true|Receivable contact PayID email (256 max. characters)|
+|» payid_email|body|string|true|Receivable Contact PayID email (Min: 6 - Max: 256)|
 |» amount|body|number|true|Amount in cents (Min: 1 - Max: 99999999999)|
 
 > Example responses
@@ -11208,7 +11208,7 @@ func main() {
 
 ### Properties
 
-*Add a receivable Contact (request)*
+*Add a Receivable Contact (request)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
@@ -11260,7 +11260,7 @@ func main() {
 
 ### Properties
 
-*Add a receivable Contact (response)*
+*Add a Receivable Contact (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
@@ -12953,7 +12953,7 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|payid_email|string|true|Receivable contact PayID email (256 max. characters)|
+|payid_email|string|true|Receivable Contact PayID email (Min: 6 - Max: 256)|
 |amount|number|true|Amount in cents (Min: 1 - Max: 99999999999)|
 
 ## SimulateIncomingPayIDPaymentResponse
@@ -12976,6 +12976,6 @@ func main() {
 |---|---|---|---|
 |data|object|true|No description|
 |» id|string(uuid)|true|A unique ID which can be provided to Split for debugging purposes|
-|» payid_email|string|true|The PayID email value provided (256 max. characters)|
+|» payid_email|string|true|The PayID email value provided (Min: 6 - Max: 256)|
 |» amount|number|true|The amount value provided (Min: 1 - Max: 99999999999)|
 
