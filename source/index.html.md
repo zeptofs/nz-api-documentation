@@ -5780,7 +5780,7 @@ func main() {
 |» description|body|string|true|Description visible to the initiator (payee) & authoriser (payer)|
 |» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
 |» amount|body|integer|true|Amount in cents to pay the initiator (Min: 1 - Max: 99999999999)|
-|» authoriser_contact_id|body|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
+|» authoriser_contact_id|body|string|true|The Contact the payment will be requested from (`Contact.data.id`)|
 |» precheck_funds|body|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
 |» your_bank_account_id|body|string|false|Specify where we should settle the funds for this transaction. If omitted, your primary bank account will be used.|
 |» metadata|body|object|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
@@ -12126,7 +12126,7 @@ func main() {
 |description|string|true|Description visible to the initiator (payee) & authoriser (payer)|
 |matures_at|string(date-time)|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
 |amount|integer|true|Amount in cents to pay the initiator (Min: 1 - Max: 99999999999)|
-|authoriser_contact_id|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
+|authoriser_contact_id|string|true|The Contact the payment will be requested from (`Contact.data.id`)|
 |precheck_funds|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
 |your_bank_account_id|string|false|Specify where we should settle the funds for this transaction. If omitted, your primary bank account will be used.|
 |metadata|object|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|

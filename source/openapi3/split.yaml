@@ -4874,7 +4874,7 @@ components:
           example: 99000
         authoriser_contact_id:
           type: string
-          description: The Contact the payment will be requested from (`Contact.data.id`)'
+          description: The Contact the payment will be requested from (`Contact.data.id`)
           example: de86472c-c027-4735-a6a7-234366a27fc7
         precheck_funds:
           type: boolean
