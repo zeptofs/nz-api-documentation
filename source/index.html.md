@@ -5782,7 +5782,7 @@ func main() {
 |» amount|body|integer|true|Amount in cents to pay the initiator (Min: 1 - Max: 99999999999)|
 |» authoriser_contact_id|body|string|true|The Contact the payment will be requested from (`Contact.data.id`)|
 |» precheck_funds|body|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
-|» your_bank_account_id|body|string|false|Specify where we should settle the funds for this transaction. If omitted, your primary bank account will be used.|
+|» your_bank_account_id|body|string(uuid)|false|Specify where we should settle the funds for this transaction. If omitted, your primary bank account will be used.|
 |» metadata|body|object|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
 > Example responses
@@ -8442,7 +8442,7 @@ Certain rules apply to the issuance of a refund:
 |body|body|[IssueARefundRequest](#schemaissuearefundrequest)|true|No description|
 |» amount|body|integer|true|Amount in cents refund (Min: 1 - Max: 99999999999)|
 |» reason|body|string|false|Reason for the refund. Visible to both parties.|
-|» your_bank_account_id|body|string|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
+|» your_bank_account_id|body|string(uuid)|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
 > Example responses
@@ -12128,7 +12128,7 @@ func main() {
 |amount|integer|true|Amount in cents to pay the initiator (Min: 1 - Max: 99999999999)|
 |authoriser_contact_id|string|true|The Contact the payment will be requested from (`Contact.data.id`)|
 |precheck_funds|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
-|your_bank_account_id|string|false|Specify where we should settle the funds for this transaction. If omitted, your primary bank account will be used.|
+|your_bank_account_id|string(uuid)|false|Specify where we should settle the funds for this transaction. If omitted, your primary bank account will be used.|
 |metadata|object|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
 ## MakeAPaymentRequestResponse
@@ -12604,7 +12604,7 @@ func main() {
 |---|---|---|---|
 |amount|integer|true|Amount in cents refund (Min: 1 - Max: 99999999999)|
 |reason|string|false|Reason for the refund. Visible to both parties.|
-|your_bank_account_id|string|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
+|your_bank_account_id|string(uuid)|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
 ## IssueARefundResponse

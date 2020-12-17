@@ -4882,6 +4882,7 @@ components:
           example: "false"
         your_bank_account_id:
           type: string
+          format: uuid
           description: Specify where we should settle the funds for this transaction. If omitted, your primary bank account will be used.
           style: form
           schema:
@@ -5532,11 +5533,8 @@ components:
           example: Because reason
         your_bank_account_id:
           type: string
+          format: uuid
           description: Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.
-          style: form
-          schema:
-            type: string
-          example: 9c70871d-8e36-4c3e-8a9c-c0ee20e7c679
         metadata:
           $ref: '#/components/schemas/Metadata'
       example:
