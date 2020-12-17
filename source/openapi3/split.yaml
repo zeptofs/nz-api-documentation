@@ -1490,6 +1490,9 @@ info:
 
     We take backwards compatibility seriously. The following list contains backwards compatible changes:
 
+
+    - **2020-12-17** - Add Sandbox Only API endpoints
+
     - **2020-12-17** - Enhance response schema for several endpoints
 
     - **2020-12-16** - Add webhook schema table
@@ -3484,11 +3487,11 @@ components:
       type: object
       properties:
         min_amount:
-          type: number
+          type: integer
           description: Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.
           example: 0
         max_amount:
-          type: number
+          type: integer
           description: Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.
           example: 10000
     PerFrequency:
@@ -3499,11 +3502,11 @@ components:
       type: object
       properties:
         days:
-          type: number
+          type: integer
           description: Amount of days to apply against the frequency. Specify <code>null</code> for no limit.
           example: 7
         max_amount:
-          type: number
+          type: integer
           description: >-
             Maximum amount in cents the total of all PRs can be for the duration
             of the frequency. Specify <code>null</code> for no limit.
@@ -4630,7 +4633,7 @@ components:
       type: object
       properties:
         amount:
-          type: number
+          type: integer
           description: Amount in cents to pay the recipient
           example: 30000
         description:
@@ -4865,7 +4868,9 @@ components:
           example: '2016-12-19T02:10:56Z'
         amount:
           type: integer
-          description: Amount in cents to pay the initiator
+          min: 1
+          max: 99999999999
+          description: 'Amount in cents to pay the initiator (Min: 1 - Max: 99999999999)'
           example: 99000
         authoriser_contact_id:
           type: string
@@ -4975,7 +4980,9 @@ components:
               properties:
                 amount:
                   type: integer
-                  description: Amount in cents
+                  min: 1
+                  max: 99999999999
+                  description: 'Amount in cents (Min: 1 - Max: 99999999999)'
                 'description':
                   type: string
                   description: Payment Request description
@@ -5103,7 +5110,9 @@ components:
               properties:
                 amount:
                   type: integer
-                  description: Amount in cents
+                  min: 1
+                  max: 99999999999
+                  description: 'Amount in cents (Min: 1 - Max: 99999999999)
                 'description':
                   type: string
                   description: Payment Request description
@@ -5218,7 +5227,9 @@ components:
               properties:
                 amount:
                   type: integer
-                  description: Amount in cents
+                  min: 1
+                  max: 99999999999
+                  description: 'Amount in cents (Min: 1 - Max: 99999999999)'
                 'description':
                   type: string
                   description: Payment Request description
@@ -5351,7 +5362,9 @@ components:
                 properties:
                   amount:
                     type: integer
-                    description: Amount in cents
+                    min: 1
+                    max: 99999999999
+                    description: 'Amount in cents (Min: 1 - Max: 99999999999)'
                   'description':
                     type: string
                     description: Payment Request description
@@ -5508,8 +5521,10 @@ components:
       type: object
       properties:
         amount:
-          type: number
-          description: Amount in cents refund
+          type: integer
+          min: 1
+          max: 99999999999
+          description: 'Amount in cents refund (Min: 1 - Max: 99999999999)'
           example: 500
         reason:
           type: string
@@ -5721,7 +5736,7 @@ components:
       type: object
       properties:
         expiry_in_seconds:
-          type: number
+          type: integer
           description: >
             The amount of time in seconds before the Unassigned Agreement can no
             longer be accepted.
@@ -5879,7 +5894,7 @@ components:
           max: 256
           description: 'Receivable Contact PayID email (Min: 6 - Max: 256)'
         amount:
-          type: number
+          type: integer
           min: 1
           max: 99999999999
           description: 'Amount in cents (Min: 1 - Max: 99999999999)'
@@ -5908,7 +5923,7 @@ components:
               max: 256
               description: 'The PayID email value provided (Min: 6 - Max: 256)'
             amount:
-              type: number
+              type: integer
               min: 1
               max: 99999999999
               description: 'The amount value provided (Min: 1 - Max: 99999999999)'

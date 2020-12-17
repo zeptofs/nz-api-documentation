@@ -931,6 +931,8 @@ To protect against timing attacks, use a constant-time string comparison to comp
 
 # Changelog
 We take backwards compatibility seriously. The following list contains backwards compatible changes:
+
+- **2020-12-17** - Add Sandbox Only API endpoints
 - **2020-12-17** - Enhance response schema for several endpoints
 - **2020-12-16** - Add webhook schema table
 - **2020-12-15** - Improve webhooks section
@@ -1164,11 +1166,11 @@ Propose an Agreement to another Split Contact
 |» authoriser_contact_id|body|string|true|The Authoriser's contact ID (`Contact.data.id`)|
 |» terms|body|[Terms](#schematerms)|true|Terms|
 |»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
-|»»» min_amount|body|number|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
-|»»» max_amount|body|number|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|»»» min_amount|body|integer|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|»»» max_amount|body|integer|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
 |»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
-|»»» days|body|number|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
-|»»» max_amount|body|number|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
+|»»» days|body|integer|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
+|»»» max_amount|body|integer|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
 |»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
 > Example responses
@@ -4961,11 +4963,11 @@ Create an Open Agreement that can be accepted by anyone.
 |» title|body|string|true|Title of the Open Agreement (Visible to authorisers)|
 |» terms|body|[Terms](#schematerms)|true|Terms|
 |»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
-|»»» min_amount|body|number|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
-|»»» max_amount|body|number|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|»»» min_amount|body|integer|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|»»» max_amount|body|integer|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
 |»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
-|»»» days|body|number|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
-|»»» max_amount|body|number|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
+|»»» days|body|integer|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
+|»»» max_amount|body|integer|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
 |»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
 > Example responses
@@ -5777,7 +5779,7 @@ func main() {
 |body|body|[MakeAPaymentRequestRequest](#schemamakeapaymentrequestrequest)|true|No description|
 |» description|body|string|true|Description visible to the initiator (payee) & authoriser (payer)|
 |» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
-|» amount|body|integer|true|Amount in cents to pay the initiator|
+|» amount|body|integer|true|Amount in cents to pay the initiator (Min: 1 - Max: 99999999999)|
 |» authoriser_contact_id|body|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
 |» precheck_funds|body|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
 |» your_bank_account_id|body|string|false|Specify where we should settle the funds for this transaction. If omitted, your primary bank account will be used.|
@@ -7415,7 +7417,7 @@ func main() {
 |» your_bank_account_id|body|string|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |» payouts|body|[[Payout](#schemapayout)]|true|One or many Payouts|
 |»» Payout|body|[Payout](#schemapayout)|false|The actual Payout|
-|»»» amount|body|number|true|Amount in cents to pay the recipient|
+|»»» amount|body|integer|true|Amount in cents to pay the recipient|
 |»»» description|body|string|true|Description that both the payer an recipient can see|
 |»»» recipient_contact_id|body|string|true|Contact to pay (`Contact.data.id`)|
 |»»» metadata|body|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
@@ -8438,7 +8440,7 @@ Certain rules apply to the issuance of a refund:
 |---|---|---|---|---|
 |credit_ref|path|string|true|No description|
 |body|body|[IssueARefundRequest](#schemaissuearefundrequest)|true|No description|
-|» amount|body|number|true|Amount in cents refund|
+|» amount|body|integer|true|Amount in cents refund (Min: 1 - Max: 99999999999)|
 |» reason|body|string|false|Reason for the refund. Visible to both parties.|
 |» your_bank_account_id|body|string|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
@@ -9167,7 +9169,7 @@ Simulate receiving a real time PayID payment from one of your Receivable Contact
 |---|---|---|---|---|
 |body|body|[SimulateIncomingPayIDPaymentRequest](#schemasimulateincomingpayidpaymentrequest)|true|No description|
 |» payid_email|body|string|true|Receivable Contact PayID email (Min: 6 - Max: 256)|
-|» amount|body|number|true|Amount in cents (Min: 1 - Max: 99999999999)|
+|» amount|body|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
 
 > Example responses
 
@@ -9734,15 +9736,15 @@ Create an Unassigned Agreement
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |body|body|[ProposeUnassignedAgreementRequest](#schemaproposeunassignedagreementrequest)|true|No description|
-|» expiry_in_seconds|body|number|true|The amount of time in seconds before the Unassigned Agreement can no longer be accepted.|
+|» expiry_in_seconds|body|integer|true|The amount of time in seconds before the Unassigned Agreement can no longer be accepted.|
 |» single_use|body|boolean|false|Optionally propose a single use agreement. When the Unassigned Agreement is accepted and a Payment Request is approved according to the Agreement terms, the agreement will automatically become <code>expended</code>.<br><br>The proposed agreement must have equal max/min <code>per_payout</code> amounts and <code>null</code> <code>per_frequency</code> amounts.<br><br>Furthermore, we will automatically check that the authoriser's bank account has sufficient funds to honour the agreement terms.|
 |» terms|body|[Terms](#schematerms)|true|Terms|
 |»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
-|»»» min_amount|body|number|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
-|»»» max_amount|body|number|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|»»» min_amount|body|integer|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|»»» max_amount|body|integer|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
 |»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
-|»»» days|body|number|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
-|»»» max_amount|body|number|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
+|»»» days|body|integer|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
+|»»» max_amount|body|integer|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
 |»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
 > Example responses
@@ -10552,8 +10554,8 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|min_amount|number|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
-|max_amount|number|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|min_amount|integer|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|max_amount|integer|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
 
 ## PerFrequency
 
@@ -10572,8 +10574,8 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|days|number|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
-|max_amount|number|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
+|days|integer|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
+|max_amount|integer|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
 
 ## ProposeAgreementResponse
 
@@ -11803,7 +11805,7 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|amount|number|true|Amount in cents to pay the recipient|
+|amount|integer|true|Amount in cents to pay the recipient|
 |description|string|true|Description that both the payer an recipient can see|
 |recipient_contact_id|string|true|Contact to pay (`Contact.data.id`)|
 |metadata|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
@@ -12123,7 +12125,7 @@ func main() {
 |---|---|---|---|
 |description|string|true|Description visible to the initiator (payee) & authoriser (payer)|
 |matures_at|string(date-time)|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
-|amount|integer|true|Amount in cents to pay the initiator|
+|amount|integer|true|Amount in cents to pay the initiator (Min: 1 - Max: 99999999999)|
 |authoriser_contact_id|string|true|The Contact the payment will be requested from (`Contact.data.id`)'|
 |precheck_funds|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
 |your_bank_account_id|string|false|Specify where we should settle the funds for this transaction. If omitted, your primary bank account will be used.|
@@ -12181,7 +12183,7 @@ func main() {
 |» created_at|string(date-time)|true|The date-time when the Payment Request was created|
 |» credit_ref|string|true|The resulting credit entry reference (available once approved)|
 |» payout|object|true|No description|
-|»» amount|integer|true|Amount in cents|
+|»» amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
 |»» description|string|true|Payment Request description|
 |»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
 |» metadata|object|false|Your custom keyed data|
@@ -12269,8 +12271,8 @@ func main() {
 |» credit_ref|string|false|The resulting credit entry reference (available once approved, if applicable)|
 |» debit_ref|string|false|The resulting debit entry reference (available once approved, if applicable)|
 |» payout|object|true|No description|
-|»» amount|integer|true|Amount in cents|
-|»» description|string|true|Payment Request description|
+|»» amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
+|»» description'|string|false|Payment Request description|
 |»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
 |» metadata|object|false|Your custom keyed data|
 
@@ -12359,7 +12361,7 @@ func main() {
 |» created_at|string(date-time)|true|The date-time when the Payment Request was created|
 |» debit_ref|string|true|The resulting debit entry reference (available once approved)|
 |» payout|object|true|No description|
-|»» amount|integer|true|Amount in cents|
+|»» amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
 |»» description|string|true|Payment Request description|
 |»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
 |» metadata|object|false|Your custom keyed data added to the object|
@@ -12445,7 +12447,7 @@ func main() {
 |» created_at|string(date-time)|true|The date-time when the Payment Request was created|
 |» credit_ref|string|true|The resulting credit entry reference (available once approved)|
 |» payout|object|true|No description|
-|»» amount|integer|true|Amount in cents|
+|»» amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
 |»» description|string|true|Payment Request description|
 |»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
 |» metadata|[object]|false|Your custom keyed data|
@@ -12600,7 +12602,7 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|amount|number|true|Amount in cents refund|
+|amount|integer|true|Amount in cents refund (Min: 1 - Max: 99999999999)|
 |reason|string|false|Reason for the refund. Visible to both parties.|
 |your_bank_account_id|string|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |metadata|[Metadata](#schemametadata)|false|No description|
@@ -12875,7 +12877,7 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|expiry_in_seconds|number|true|The amount of time in seconds before the Unassigned Agreement can no longer be accepted.|
+|expiry_in_seconds|integer|true|The amount of time in seconds before the Unassigned Agreement can no longer be accepted.|
 |single_use|boolean|false|Optionally propose a single use agreement. When the Unassigned Agreement is accepted and a Payment Request is approved according to the Agreement terms, the agreement will automatically become <code>expended</code>.<br><br>The proposed agreement must have equal max/min <code>per_payout</code> amounts and <code>null</code> <code>per_frequency</code> amounts.<br><br>Furthermore, we will automatically check that the authoriser's bank account has sufficient funds to honour the agreement terms.|
 |terms|[Terms](#schematerms)|true|No description|
 |metadata|[Metadata](#schemametadata)|false|No description|
@@ -13062,7 +13064,7 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |payid_email|string|true|Receivable Contact PayID email (Min: 6 - Max: 256)|
-|amount|number|true|Amount in cents (Min: 1 - Max: 99999999999)|
+|amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
 
 ## SimulateIncomingPayIDPaymentResponse
 
@@ -13085,5 +13087,5 @@ func main() {
 |data|object|true|No description|
 |» id|string(uuid)|true|A unique ID which can be provided to Split for debugging purposes|
 |» payid_email|string|true|The PayID email value provided (Min: 6 - Max: 256)|
-|» amount|number|true|The amount value provided (Min: 1 - Max: 99999999999)|
+|» amount|integer|true|The amount value provided (Min: 1 - Max: 99999999999)|
 
