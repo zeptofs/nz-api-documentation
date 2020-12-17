@@ -931,7 +931,7 @@ To protect against timing attacks, use a constant-time string comparison to comp
 
 # Changelog
 We take backwards compatibility seriously. The following list contains backwards compatible changes:
-
+- **2020-12-17** - Enhance response schema for several endpoints
 - **2020-12-16** - Add webhook schema table
 - **2020-12-15** - Improve webhooks section
 - **2020-12-15** - Add changelog
@@ -3480,9 +3480,9 @@ Receive funds from a Contact by allowing them to pay to a personalised PayID or 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |body|body|[AddAReceivableContactRequest](#schemaaddareceivablecontactrequest)|true|No description|
-|» name|body|string|true|Contact name (140 max. characters)|
-|» email|body|string|true|Contact email (256 max. characters)|
-|» payid_email|body|string|true|Contact PayID email (256 max. characters)|
+|» name|body|string|true|Contact name (Min: 3 - Max: 140)|
+|» email|body|string|true|Contact email (Min: 6 - Max: 256)|
+|» payid_email|body|string|true|Contact PayID email (Min: 6 - Max: 256)|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
 > Example responses
@@ -4170,12 +4170,16 @@ Get a single Contact by its ID
 ```json
 {
   "data": {
-    "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
+    "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
     "name": "Outstanding Tours Pty Ltd",
     "email": "accounts@outstandingtours.com.au",
-    "type": "Split account",
+    "type": "anyone",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    },
     "bank_account": {
-      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+      "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
@@ -4187,8 +4191,20 @@ Get a single Contact by its ID
         "credits_blocked": false
       }
     },
+    "anyone_account": {
+      "id": "31a05f81-25a2-4085-92ef-0d16d0263bff"
+    },
+    "bank_connection": {
+      "id": null
+    },
     "links": {
       "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+    },
+    "payid_details": {
+      "alias_value": "otp@pay.travel.com.au",
+      "alias_type": "email",
+      "alias_name": "Outstanding Tours",
+      "state": "active"
     }
   }
 }
@@ -11041,9 +11057,9 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|name|string|true|Contact name (140 max. characters)|
-|email|string|true|Contact email (256 max. characters)|
-|payid_email|string|true|Contact PayID email (256 max. characters)|
+|name|string|true|Contact name (Min: 3 - Max: 140)|
+|email|string|true|Contact email (Min: 6 - Max: 256)|
+|payid_email|string|true|Contact PayID email (Min: 6 - Max: 256)|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
 ## AddAReceivableContactResponse
@@ -11095,26 +11111,26 @@ func main() {
 |---|---|---|---|
 |data|object|false|No description|
 |» id|string(uuid)|false|No description|
-|» name|string|false|Contact name (140 max. characters)|
-|» email|string|false|Contact email (256 max. characters)|
+|» name|string|false|Contact name (Min: 3 - Max: 140)|
+|» email|string|false|Contact email (Min: 6 - Max: 256)|
 |» type|string|false|Fixed to 'anyone'|
 |» metadata|[Metadata](#schemametadata)|false|No description|
 |» bank_account|object|false|No description|
 |»» id|string(uuid)|false|No description|
-|»» account_number|string|false|Split generated account number (9 max. characters)|
-|»» branch_code|string|false|Split branch code (fixed 6 characters)|
+|»» account_number|string|false|Split generated account number (Min: 5 - Max: 9)|
+|»» branch_code|string|false|Split branch code (Min: 6 - Max: 6)|
 |»» bank_name|string|false|Fixed to 'Split Float Acount'|
 |»» state|string|false|Fixed to 'Active'|
 |»» iav_provider|string|false|Always null|
 |»» iav_status|string|false|Always null|
 |»» blocks|object|false|No description|
-|»»» debits_blocked|boolean|false|Used by Split admins in case of fraud|
-|»»» credits_blocked|boolean|false|Used by Split admins in case of fraud|
+|»»» debits_blocked|boolean|false|Used by Split admins. Defines whether the bank account is blocked from being debited|
+|»»» credits_blocked|boolean|false|Used by Split admins. Defined Whether this bank account is blocked from being credited|
 |»» anyone_account|object|false|No description|
 |»»» id|string(uuid)|false|No description|
 |»» payid_details|object|false|No description|
-|»»» alias_value|string|false|The PayID email|
-|»»» alias_type|string|false|Type of PayID. Fixed to 'email'|
+|»»» alias_value|string(email)|false|The PayID email|
+|»»» alias_type|string|false|Type of PayID. Fixed to `email`|
 |»»» alias_name|string|false|The contact name|
 |»»» state|string|false|Pending -> Active or Failed -> Deregistered (Contact removed)|
 
@@ -11352,12 +11368,16 @@ func main() {
 ```json
 {
   "data": {
-    "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
+    "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
     "name": "Outstanding Tours Pty Ltd",
     "email": "accounts@outstandingtours.com.au",
-    "type": "Split account",
+    "type": "anyone",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    },
     "bank_account": {
-      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+      "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
       "account_number": "947434694",
       "branch_code": "304304",
       "bank_name": "National Australia Bank",
@@ -11369,8 +11389,20 @@ func main() {
         "credits_blocked": false
       }
     },
+    "anyone_account": {
+      "id": "31a05f81-25a2-4085-92ef-0d16d0263bff"
+    },
+    "bank_connection": {
+      "id": null
+    },
     "links": {
       "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+    },
+    "payid_details": {
+      "alias_value": "otp@pay.travel.com.au",
+      "alias_type": "email",
+      "alias_name": "Outstanding Tours",
+      "state": "active"
     }
   }
 }
@@ -11383,6 +11415,52 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
+|» id|string(uuid)|true|The Contact ID|
+|» name|string|true|The Contact name (Min: 3 - Max: 140)|
+|» email|string(email)|true|The Contact email (Min: 6 - Max: 256)|
+|» type|string|true|(Deprecated) The Contact account type|
+|» metadata|[Metadata](#schemametadata)|true|No description|
+|» bank_account|object|true|No description|
+|»» id|string(uuid)|false|The Bank Account ID|
+|»» account_number|string|false|The Bank Account number (Min: 5 - Max: 9)|
+|»» branch_code|string|false|The BSB number (Min: 6 - Max: 6)|
+|»» state|string|false|The bank account state|
+|»» iav_provider|string|false|The instant account verification provider|
+|»» iav_status|string|false|The instant account verification bank connection status|
+|»» blocks|object|false|No description|
+|»»» debits_blocked|boolean|false|Used by Split admins. Defines whether the bank account is blocked from being debited|
+|»»» credits_blocked|boolean|false|Used by Split admins. Defined Whether this bank account is blocked from being credited|
+|»» anyone_account|object|true|No description|
+|»»» id|string(uuid)|false|(Deprecated) The Anyone Account ID|
+|»» bank_connection|object|false|No description|
+|»»» id|string(uuid)|false|The bank connection ID|
+|»» links|object|false|No description|
+|»»» add_bank_connection|string(url)|false|A unique URL to share with the Contact in order to establish a new bank connection to their bank account|
+|»» payid_details|object|false|No description|
+|»»» alias_value|string(email)|false|The PayID email|
+|»»» alias_type|string|false|Type of PayID. Fixed to `email`|
+|»»» alias_name|string|false|The contact name|
+|»»» state|string|false|Pending -> Active or Failed -> Deregistered (Contact removed)|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|type|Split account|
+|type|anyone|
+|state|active|
+|state|removed|
+|iav_provider|split|
+|iav_provider|proviso|
+|iav_provider|basiq|
+|iav_provider|credit_sense|
+|iav_status|active|
+|iav_status|removed|
+|iav_status|credentials_invalid|
+|state|pending|
+|state|active|
+|state|failed|
+|state|deregistered|
 
 ## UpdateAContactRequest
 
