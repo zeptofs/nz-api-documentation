@@ -5791,7 +5791,7 @@ func main() {
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |body|body|[MakeAPaymentRequestRequest](#schemamakeapaymentrequestrequest)|true|No description|
-|» description|body|string|true|Description visible to the initiator (payee) & authoriser (payer)|
+|» description|body|string|true|Description visible to the initiator (payee). The first 9 characters supplied will be visible to the authoriser (payer)|
 |» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
 |» amount|body|integer|true|Amount in cents to pay the initiator (Min: 1 - Max: 99999999999)|
 |» authoriser_contact_id|body|string|true|The Contact the payment will be requested from (`Contact.data.id`)|
@@ -7432,7 +7432,7 @@ func main() {
 |» payouts|body|[[Payout](#schemapayout)]|true|One or many Payouts|
 |»» Payout|body|[Payout](#schemapayout)|false|The actual Payout|
 |»»» amount|body|integer|true|Amount in cents to pay the recipient|
-|»»» description|body|string|true|Description that both the payer an recipient can see|
+|»»» description|body|string|true|Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description.|
 |»»» recipient_contact_id|body|string|true|Contact to pay (`Contact.data.id`)|
 |»»» metadata|body|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 |»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
@@ -11820,7 +11820,7 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |amount|integer|true|Amount in cents to pay the recipient|
-|description|string|true|Description that both the payer an recipient can see|
+|description|string|true|Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description.|
 |recipient_contact_id|string|true|Contact to pay (`Contact.data.id`)|
 |metadata|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
@@ -12137,7 +12137,7 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|description|string|true|Description visible to the initiator (payee) & authoriser (payer)|
+|description|string|true|Description visible to the initiator (payee). The first 9 characters supplied will be visible to the authoriser (payer)|
 |matures_at|string(date-time)|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
 |amount|integer|true|Amount in cents to pay the initiator (Min: 1 - Max: 99999999999)|
 |authoriser_contact_id|string|true|The Contact the payment will be requested from (`Contact.data.id`)|
