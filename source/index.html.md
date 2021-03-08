@@ -7439,7 +7439,7 @@ func main() {
 |» payouts|body|[[Payout](#schemapayout)]|true|One or many Payouts|
 |»» Payout|body|[Payout](#schemapayout)|false|The actual Payout|
 |»»» amount|body|integer|true|Amount in cents to pay the recipient|
-|»»» description|body|string|true|Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description. For NPP payments, the payout recipient will see the first 271 characters of this description.|
+|»»» description|body|string|true|Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description. For NPP payments, the payout recipient will see the first 280 characters of this description.|
 |»»» recipient_contact_id|body|string|true|Contact to pay (`Contact.data.id`)|
 |»»» metadata|body|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 |»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
@@ -11827,7 +11827,7 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |amount|integer|true|Amount in cents to pay the recipient|
-|description|string|true|Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description. For NPP payments, the payout recipient will see the first 271 characters of this description.|
+|description|string|true|Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description. For NPP payments, the payout recipient will see the first 280 characters of this description.|
 |recipient_contact_id|string|true|Contact to pay (`Contact.data.id`)|
 |metadata|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
@@ -12191,22 +12191,22 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
-|» ref|string|true|The Payment Request reference (PR.*)|
-|» initiator_id|string(uuid)|true|Your bank account ID where the funds will settle|
-|» your_bank_account_id|string(uuid)|true|Your bank account ID where the funds will settle (alias of `initiator_id`)|
-|» authoriser_id|string(uuid)|true|The debtor's bank account ID|
-|» authoriser_contact_id|string(uuid)|true|The contact ID representing the debtor within Split|
-|» schedule_ref|string|true|The schedule that generated the Payment request if applicable|
+|» ref|string|true|The Payment Request reference (PR.*) (Min: 4 - Max: 8)|
+|» initiator_id|string(uuid)|true|Your bank account ID where the funds will settle (Min: 36 - Max: 36)|
+|» your_bank_account_id|string(uuid)|true|Your bank account ID where the funds will settle (alias of `initiator_id`) (Min: 36 - Max: 36)|
+|» authoriser_id|string(uuid)|true|The debtor's bank account ID (Min: 36 - Max: 36)|
+|» authoriser_contact_id|string(uuid)|true|The contact ID representing the debtor within Split (Min: 36 - Max: 36)|
+|» schedule_ref|string|true|The schedule that generated the Payment request if applicable (Min: 0 - Max: 8)|
 |» status|string|true|The status of the Payment Request|
-|» status_reason|string|true|Only used when the `status` is `declined` due to prechecking.|
-|» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
-|» responded_at|string(date-time)|true|The date-time when the Payment Request status changed|
-|» created_at|string(date-time)|true|The date-time when the Payment Request was created|
-|» credit_ref|string|true|The resulting credit entry reference (available once approved)|
+|» status_reason|string|true|Only used when the `status` is `declined` due to prechecking. (Min: 0 - Max: 280)|
+|» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing (Min: 20 - Max: 20)|
+|» responded_at|string(date-time)|true|The date-time when the Payment Request status changed (Min: 0 - Max: 20)|
+|» created_at|string(date-time)|true|The date-time when the Payment Request was created (Min: 20 - Max: 20)|
+|» credit_ref|string|true|The resulting credit entry reference (available once approved) (Min: 4 - Max: 8)|
 |» payout|object|true|No description|
 |»» amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
-|»» description|string|true|Payment Request description|
-|»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
+|»» description|string|true|Payment Request description (Min: 1 - Max: 280)|
+|»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing (Min: 20 - Max: 20)|
 |» metadata|object|false|Your custom keyed data|
 
 #### Enumerated Values
@@ -12278,23 +12278,22 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
-|» ref|string|true|The Payment Reference reference (PR.*)|
-|» initiator_id|string(uuid)|true|Your bank account ID where the funds will settle|
-|» your_bank_account_id|string(uuid)|true|Your bank account ID where the funds will settle (alias of `initiator_id`)|
-|» authoriser_id|string(uuid)|true|The debtor's bank account ID|
-|» authoriser_contact_id|string(uuid)|true|The contact ID representing the debtor within Split|
-|» schedule_ref|string|true|The schedule that generated the Payment request if applicable|
+|» ref|string|true|The Payment Request reference (PR.*) (Min: 4 - Max: 8)|
+|» initiator_id|string(uuid)|true|Your bank account ID where the funds will settle (Min: 36 - Max: 36)|
+|» your_bank_account_id|string(uuid)|true|Your bank account ID where the funds will settle (alias of `initiator_id`) (Min: 36 - Max: 36)|
+|» authoriser_id|string(uuid)|true|The debtor's bank account ID (Min: 36 - Max: 36)|
+|» authoriser_contact_id|string(uuid)|true|The contact ID representing the debtor within Split (Min: 36 - Max: 36)|
+|» schedule_ref|string|true|The schedule that generated the Payment request if applicable (Min: 0 - Max: 8)|
 |» status|string|true|The status of the Payment Request|
-|» status_reason|string|true|Only used when the `status` is `declined` due to prechecking.|
-|» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
-|» responded_at|string(date-time)|true|The date-time when the Payment Request status changed|
-|» created_at|string(date-time)|true|The date-time when the Payment Request was created|
-|» credit_ref|string|false|The resulting credit entry reference (available once approved, if applicable)|
-|» debit_ref|string|false|The resulting debit entry reference (available once approved, if applicable)|
+|» status_reason|string|true|Only used when the `status` is `declined` due to prechecking. (Min: 0 - Max: 280)|
+|» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing (Min: 20 - Max: 20)|
+|» responded_at|string(date-time)|true|The date-time when the Payment Request status changed (Min: 0 - Max: 20)|
+|» created_at|string(date-time)|true|The date-time when the Payment Request was created (Min: 20 - Max: 20)|
+|» credit_ref|string|false|The resulting credit entry reference (available once approved) (Min: 4 - Max: 8)|
 |» payout|object|true|No description|
 |»» amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
-|»» description'|string|false|Payment Request description|
-|»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
+|»» description|string|true|Payment Request description (Min: 1 - Max: 280)|
+|»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing (Min: 20 - Max: 20)|
 |» metadata|object|false|Your custom keyed data|
 
 #### Enumerated Values
