@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-ruby '>=2.3.1'
+ruby File.read(File.expand_path('.ruby-version', __dir__))
 source 'https://rubygems.org'
 
 gem 'foreman', require: false
