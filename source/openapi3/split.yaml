@@ -4382,6 +4382,7 @@ components:
           type: object
           required:
             - id
+            - ref
             - name
             - email
             - type
@@ -4393,6 +4394,10 @@ components:
               type: string
               format: uuid
               description: The Contact ID
+            ref:
+              type: string
+              format: string
+              description: The Contact ref
             name:
               type: string
               min: 3
@@ -4508,6 +4513,7 @@ components:
       example:
         data:
           id: 55afddde-4296-4daf-8e49-7ba481ef9608
+          ref: oustanding-tours
           name: Outstanding Tours Pty Ltd
           email: accounts@outstandingtours.com.au
           type: anyone
