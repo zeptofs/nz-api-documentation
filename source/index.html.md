@@ -4190,7 +4190,7 @@ Get a single Contact by its ID
 {
   "data": {
     "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-    "ref": "oustanding-tours",
+    "ref": "CNT.123",
     "name": "Outstanding Tours Pty Ltd",
     "email": "accounts@outstandingtours.com.au",
     "type": "anyone",
@@ -11594,7 +11594,7 @@ func main() {
 {
   "data": {
     "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-    "ref": "oustanding-tours",
+    "ref": "CNT.123",
     "name": "Outstanding Tours Pty Ltd",
     "email": "accounts@outstandingtours.com.au",
     "type": "anyone",
