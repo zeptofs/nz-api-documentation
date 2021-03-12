@@ -4190,6 +4190,7 @@ Get a single Contact by its ID
 {
   "data": {
     "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+    "ref": "CNT.123",
     "name": "Outstanding Tours Pty Ltd",
     "email": "accounts@outstandingtours.com.au",
     "type": "anyone",
@@ -11593,6 +11594,7 @@ func main() {
 {
   "data": {
     "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+    "ref": "CNT.123",
     "name": "Outstanding Tours Pty Ltd",
     "email": "accounts@outstandingtours.com.au",
     "type": "anyone",
@@ -11640,6 +11642,7 @@ func main() {
 |---|---|---|---|
 |data|object|true|No description|
 |» id|string(uuid)|true|The Contact ID|
+|» ref|string(string)|true|The Contact ref|
 |» name|string|true|The Contact name (Min: 3 - Max: 140)|
 |» email|string(email)|true|The Contact email (Min: 6 - Max: 256)|
 |» type|string|true|(Deprecated) The Contact account type|
