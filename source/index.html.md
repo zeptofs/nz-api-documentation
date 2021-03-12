@@ -932,6 +932,7 @@ To protect against timing attacks, use a constant-time string comparison to comp
 # Changelog
 We take backwards compatibility seriously. The following list contains backwards compatible changes:
 
+- **2021-03-12** - Add ref to GetAContactResponse
 - **2020-12-17** - Add Sandbox Only API endpoints
 - **2020-12-17** - Enhance response schema for several endpoints
 - **2020-12-16** - Add webhook schema table
