@@ -24,7 +24,7 @@ Get started
 you save your changes.
 7. Changes to the YAML file will be built and output to the `source/`
    directory, so don't edit the build output in there.
-8. Don't forget to update the Changelog section of the docs
+8. Update the Changelog section of `source/openapi3/split.yaml`.
 9. Commit both the YAML and the build output changes.
 
 
