@@ -8465,7 +8465,7 @@ Certain rules apply to the issuance of a refund:
 |credit_ref|path|string|true|No description|
 |body|body|[IssueARefundRequest](#schemaissuearefundrequest)|true|No description|
 |» amount|body|integer|true|Amount in cents refund (Min: 1 - Max: 99999999999)|
-|» reason|body|string|false|Reason for the refund. Visible to both parties.|
+|» reason|body|string|false|Reason for the refund. First 9 characters are visible to both parties.|
 |» your_bank_account_id|body|string(uuid)|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
@@ -12628,7 +12628,7 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |amount|integer|true|Amount in cents refund (Min: 1 - Max: 99999999999)|
-|reason|string|false|Reason for the refund. Visible to both parties.|
+|reason|string|false|Reason for the refund. First 9 characters are visible to both parties.|
 |your_bank_account_id|string(uuid)|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
