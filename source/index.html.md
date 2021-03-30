@@ -301,7 +301,7 @@ want to store the newly generated <code>refresh_token</code> everytime you use i
 ## Making payments
 In order to payout funds, you'll be looking to use the [Payments](/#Split-API-Payments) endpoint. Whether you're paying out another Split account holder or anyone, the process is the same:
 
-1. Add the recipient to your Contacts: [Split Contact](/#add-a-split-contact) or [Anyone Contact](/#add-an-anyone-contact)
+1. Add the recipient to your Contacts: [Split Contact](/#add-a-split-contact) or [Anyone Contact](/#add-a-contact)
 2. [Make the Payment](/#make-a-payment) to your Contact.
 
 Common use cases:
