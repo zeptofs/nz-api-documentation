@@ -934,13 +934,13 @@ We take backwards compatibility seriously. The following list contains backwards
 
 - **2021-03-17** - Remove note indicating single active bank account limitation
 - **2021-03-12** - Add ref to GetAContactResponse
+- **2021-02-24** - Added details on enabling the Receivable Contact feature and amended the POST/contacts/receivable response body
 - **2020-12-17** - Add Sandbox Only API endpoints
 - **2020-12-17** - Enhance response schema for several endpoints
 - **2020-12-16** - Add webhook schema table
 - **2020-12-15** - Improve webhooks section
-- **2020-12-15** - Add changelog
 - **2020-12-15** - Re-word Payment Requests introduction to better cover its use with Receivable Contacts.
-- **2021-02-24** - Added details on enabling the Receivable Contact feature and amended the POST/contacts/receivable response body
+- **2020-12-15** - Add changelog
 
 Looking for more? Our docs are open sourced! [https://github.com/splitpayments/api-documentation](https://github.com/splitpayments/api-documentation)
 
@@ -4757,7 +4757,7 @@ func main() {
 
 `POST /contacts/{id}/refresh_balance`
 
-Request the bank connection for a contact to refresh available funds. This is intended for use in conjunction with the `precheck_funds` option, see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)
+Refresh one of your contact's bank connections to get the latest available balance.
 
 <h3 id="Refresh-contact-bank-connection-parameters" class="parameters">Parameters</h3>
 
@@ -5587,14 +5587,14 @@ A Payment Request (PR) is used to identify incoming funds from another party.
 
 ##Lifecycle
 
-<aside class="notice">Payment Requests generated from a customer sending you funds will always be <code>approved</code> and is not subjet to any prechecking outlined below.</aside>
+<aside class="notice">Payment Requests generated from a customer sending you funds will always be <code>approved</code></aside>
 
 A Payment Request can have the following statuses:
 
 | Status | Description |
 |-------|-------------|
 | `pending_approval` | Waiting for the debtor to approve the Payment Request. |
-| `unverified` | Waiting for available funds response (only applicable when `precheck_funds` enabled). |
+| `unverified` | Waiting for available funds response |
 | `approved` | The debtor has approved the Payment Request. |
 | `declined` | The debtor has declined the Payment Request. |
 | `cancelled` | The creditor has cancelled the Payment Request. |
@@ -5602,17 +5602,6 @@ A Payment Request can have the following statuses:
 <div class="middle-header">Prechecking</div>
 
 Split will automatically check for available funds before **attempting to debit** the debtor. This check is only performed for contacts with an active [bank connection](/#Split-API-Bank-Connections).
-
-**Prechecking as part of a Payment Request approval**
-
-When the `precheck_funds` option is enabled, **approval** of a Payment Request will only be allowed when there are sufficient funds. The debtor contact must have a valid agreement and bank connection to make use of this option.
-
-There are **synchronous** and **asynchronous** lifecycles when the `precheck_funds` option is enabled.
-
-- When the available funds for a contact's bank account are considered out of date, the API response will return the Payment Request with a state of `unverified` while the bank account data is refreshed. Once the precheck has completed, the Payment Request state will transition to either `approved` or `declined`. This process can be followed by subscribing to the relevant webhook events or regularly polling the Payment Request and verifying its status.
-- When the available funds for a contact are current, the API will respond immediately with a final state of either `approved` or an error message if there are insufficient funds.
-
-You can gain some control over this process by preemptively telling Split to refresh a contact's available balance at least 1 minute before making a Payment Request. See [Contact balance refresh](/#refresh-contact-bank-connection) for more.
 
 ## Request Payment
 
@@ -5626,7 +5615,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56.000Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","precheck_funds":false,"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56.000Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -5643,7 +5632,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"precheck_funds\":false,\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -5683,7 +5672,6 @@ req.write(JSON.stringify({
   amount: 99000,
   authoriser_contact_id: 'de86472c-c027-4735-a6a7-234366a27fc7',
   your_bank_account_id: '9c70871d-8e36-4c3e-8a9c-c0ee20e7c679',
-  precheck_funds: false,
   metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
 }));
 req.end();
@@ -5694,7 +5682,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
-payload = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"precheck_funds\":false,\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -5715,7 +5703,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/pay
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"precheck_funds\":false,\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -5726,7 +5714,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56.000Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","precheck_funds":false,"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56.000Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api.sandbox.split.cash/payment_requests');
 $request->setRequestMethod('POST');
@@ -5758,7 +5746,7 @@ func main() {
 
 	url := "https://api.sandbox.split.cash/payment_requests"
 
-	payload := strings.NewReader("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"precheck_funds\":false,\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -5788,7 +5776,6 @@ func main() {
   "amount": 99000,
   "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
   "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
-  "precheck_funds": false,
   "metadata": {
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
@@ -5805,7 +5792,6 @@ func main() {
 |» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
 |» amount|body|integer|true|Amount in cents to pay the initiator (Min: 1 - Max: 99999999999)|
 |» authoriser_contact_id|body|string|true|The Contact the payment will be requested from (`Contact.data.id`)|
-|» precheck_funds|body|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
 |» your_bank_account_id|body|string(uuid)|false|Specify where we should settle the funds for this transaction. If omitted, your primary bank account will be used.|
 |» metadata|body|object|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
@@ -12135,7 +12121,6 @@ func main() {
   "amount": 99000,
   "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
   "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
-  "precheck_funds": false,
   "metadata": {
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
@@ -12153,7 +12138,6 @@ func main() {
 |matures_at|string(date-time)|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
 |amount|integer|true|Amount in cents to pay the initiator (Min: 1 - Max: 99999999999)|
 |authoriser_contact_id|string|true|The Contact the payment will be requested from (`Contact.data.id`)|
-|precheck_funds|boolean|false|Enforce prechecking of available funds before approving the Payment Request. see [Payment Request - Precheck Funds](/#precheck-funds-lifecycle)|
 |your_bank_account_id|string(uuid)|false|Specify where we should settle the funds for this transaction. If omitted, your primary bank account will be used.|
 |metadata|object|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
