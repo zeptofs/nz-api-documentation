@@ -4523,7 +4523,7 @@ Disable the Open Agreement from being viewed or accepted.
 
 <h1 id="Split-API-Payment-Requests">Payment Requests</h1>
 
-A Payment Request (PR) is used to identify incoming funds from another party.
+A Payment Request (PR) is used to collect funds, via direct debit, from another party.
 
 <div class="middle-header">Applicable scenarios</div>
 
@@ -4542,8 +4542,8 @@ A Payment Request can have the following statuses:
 
 | Status | Description |
 |-------|-------------|
-| `pending_approval` | Waiting for the debtor to approve the Payment Request. |
-| `unverified` | Waiting for available funds response |
+| `pending_approval` | Waiting for the debtor to approve the Payment Request. [DEPRECATED] |
+| `unverified` | Waiting for available funds response. |
 | `approved` | The debtor has approved the Payment Request. |
 | `declined` | The debtor has declined the Payment Request. |
 | `cancelled` | The creditor has cancelled the Payment Request. |
@@ -5090,7 +5090,7 @@ func main() {
 
 `DELETE /payment_requests/{payment_request_ref}`
 
-A Payment Request can be cancelled as long as the associated transaction's state is maturing or matured.
+A Payment Request can be cancelled as long as the associated transaction's state is <strong>maturing</strong> or <strong>matured</strong>.
 
 <h3 id="Cancel-a-Payment-Request-parameters" class="parameters">Parameters</h3>
 
@@ -5303,769 +5303,6 @@ Payment Requests where you're the creditor and collecting funds from the debtor.
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingPaymentRequestsResponse](#schemalistoutgoingpaymentrequestsresponse)|
-
-## Get a Payment Request's history
-
-<a id="opIdGetAPaymentRequest'sHistory"></a>
-
-> Code samples
-
-```shell
-curl --request GET \
-  --url https://api.sandbox.split.cash/payment_requests/PR.3/history \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/payment_requests/PR.3/history")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "GET",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/payment_requests/PR.3/history",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("GET", "/payment_requests/PR.3/history", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payment_requests/PR.3/history")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/PR.3/history');
-$request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/payment_requests/PR.3/history"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`GET /payment_requests/{payment_request_ref}/history`
-
-Gives you visibility of the entire Payment Request lifecycle including the generated debit and credit transactions.
-
-<h3 id="Get-a-Payment-Request's-history-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|payment_request_ref|path|string|true|Single value, exact match|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": [
-    {
-      "type": "payout_request",
-      "event": "requested",
-      "at": "2017-01-05T07:47:45Z",
-      "ref": "PR.3",
-      "by": "Fancy Pants (fancy_pants)"
-    },
-    {
-      "type": "payout_request",
-      "event": "approved",
-      "at": "2017-01-07T06:13:52Z",
-      "ref": "PR.3",
-      "by": "Lycra Co (lycra_co)"
-    },
-    {
-      "type": "debit",
-      "event": "scheduled",
-      "at": "2017-01-07T06:13:52Z",
-      "ref": "D.n",
-      "by": "Split Payments"
-    },
-    {
-      "type": "credit",
-      "event": "scheduled",
-      "at": "2017-01-07T06:13:52Z",
-      "ref": "C.e",
-      "by": "Split Payments"
-    },
-    {
-      "type": "debit",
-      "event": "matured",
-      "at": "2017-01-08T04:30:14Z",
-      "ref": "D.n",
-      "by": "Split Payments"
-    },
-    {
-      "type": "debit",
-      "event": "processing",
-      "at": "2017-01-08T04:30:14Z",
-      "ref": "D.n",
-      "by": "Split Payments"
-    },
-    {
-      "type": "debit",
-      "event": "clearing",
-      "at": "2017-01-08T19:02:20Z",
-      "ref": "D.n",
-      "by": "Split Payments"
-    },
-    {
-      "type": "debit",
-      "event": "cleared",
-      "at": "2017-01-11T19:07:52Z",
-      "ref": "D.n",
-      "by": "Split Payments"
-    },
-    {
-      "type": "credit",
-      "event": "matured",
-      "at": "2017-01-11T19:07:52Z",
-      "ref": "C.e",
-      "by": "Split Payments"
-    },
-    {
-      "type": "credit",
-      "event": "processing",
-      "at": "2017-01-12T04:30:25Z",
-      "ref": "C.e",
-      "by": "Split Payments"
-    },
-    {
-      "type": "credit",
-      "event": "clearing",
-      "at": "2017-01-12T05:17:32Z",
-      "ref": "C.e",
-      "by": "Split Payments"
-    },
-    {
-      "type": "credit",
-      "event": "cleared",
-      "at": "2017-01-15T05:27:12Z",
-      "ref": "C.e",
-      "by": "Split Payments"
-    }
-  ]
-}
-```
-
-<h3 id="Get a Payment Request's history-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAPaymentRequestsHistoryResponse](#schemagetapaymentrequestshistoryresponse)|
-
-## List incoming Payment Requests
-
-<a id="opIdListIncomingPaymentRequests"></a>
-
-> Code samples
-
-```shell
-curl --request GET \
-  --url https://api.sandbox.split.cash/payment_requests/incoming \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/payment_requests/incoming")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "GET",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/payment_requests/incoming",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("GET", "/payment_requests/incoming", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payment_requests/incoming")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/incoming');
-$request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/payment_requests/incoming"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`GET /payment_requests/incoming`
-
-Payment Requests where you're the debtor and another Split account is collecting funds from you.
-
-<h3 id="List-incoming-Payment-Requests-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|page|query|string|false|Page of results to return, single value, exact match|
-|per_page|query|string|false|Number of results per page, single value, exact match|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": [
-    {
-      "ref": "PR.2",
-      "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-      "your_bank_account_id": "049528f7-6698-40a6-8221-52ec406e5424",
-      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-      "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-      "schedule_ref": "PRS.1",
-      "status": "approved",
-      "status_reason": null,
-      "matures_at": "2016-12-20T00:00:00Z",
-      "responded_at": "2016-12-19T02:10:18Z",
-      "created_at": "2016-12-19T02:09:09Z",
-      "debit_ref": "D.a",
-      "payout": {
-        "amount": 30000,
-        "description": "The SuperPackage",
-        "matures_at": "2016-12-20T00:00:00Z"
-      }
-    },
-    {
-      "ref": "PR.3",
-      "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-      "your_bank_account_id": "049528f7-6698-40a6-8221-52ec406e5424",
-      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-      "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-      "schedule_ref": null,
-      "status": "pending_approval",
-      "status_reason": null,
-      "matures_at": "2016-12-25T00:00:00Z",
-      "responded_at": null,
-      "created_at": "2016-12-19T02:10:56Z",
-      "debit_ref": null,
-      "payout": {
-        "amount": 99000,
-        "description": "The elite package for 4",
-        "matures_at": "2016-12-25T00:00:00Z"
-      },
-      "metadata": {
-        "custom_key": "Custom string",
-        "another_custom_key": "Maybe a URL"
-      }
-    }
-  ]
-}
-```
-
-<h3 id="List incoming Payment Requests-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListIncomingPaymentRequestsResponse](#schemalistincomingpaymentrequestsresponse)|
-
-## Approve a Payment Request
-
-<a id="opIdApprovePaymentRequest"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://api.sandbox.split.cash/payment_requests/PR.3/approve \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/payment_requests/PR.3/approve")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/payment_requests/PR.3/approve",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/payment_requests/PR.3/approve", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payment_requests/PR.3/approve")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/PR.3/approve');
-$request->setRequestMethod('POST');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/payment_requests/PR.3/approve"
-
-	req, _ := http.NewRequest("POST", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /payment_requests/{payment_request_ref}/approve`
-
-<h3 id="Approve-a-Payment-Request-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|payment_request_ref|path|string|true|Single value, exact match|
-
-> Example responses
-
-<h3 id="Approve a Payment Request-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|None|
-
-<h3 id="Approve a Payment Request-responseschema">Response Schema</h3>
-
-Status Code **200**
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-
-## Decline a Payment Request
-
-<a id="opIdDeclinePaymentRequest"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://api.sandbox.split.cash/payment_requests/PR.3/decline \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/payment_requests/PR.3/decline")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/payment_requests/PR.3/decline",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/payment_requests/PR.3/decline", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payment_requests/PR.3/decline")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/PR.3/decline');
-$request->setRequestMethod('POST');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/payment_requests/PR.3/decline"
-
-	req, _ := http.NewRequest("POST", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /payment_requests/{payment_request_ref}/decline`
-
-<h3 id="Decline-a-Payment-Request-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|payment_request_ref|path|string|true|Single value, exact match|
-
-> Example responses
-
-<h3 id="Decline a Payment Request-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|No description|None|
-
-<h3 id="Decline a Payment Request-responseschema">Response Schema</h3>
-
-Status Code **200**
-
-|Name|Type|Required|Description|
-|---|---|---|---|
 
 <h1 id="Split-API-Payments">Payments</h1>
 
@@ -8116,7 +7353,7 @@ A transaction (debit or credit) can have the following statuses:
 
 | Status | Description |
 |--------|-------------|
-| `maturing` | The maturation date has not yet been reached |
+| `maturing` | The maturation date has not yet been reached. |
 | `matured` | The maturation date has been reached and the transaction is eligible for processing. |
 | `preprocessing` | The transaction is undergoing pre-checks before being sent to the bank. |
 | `processing` | The transaction has been submitted to the bank. |
@@ -8141,12 +7378,12 @@ A transaction (debit or credit) can have the following statuses:
       "parent_ref": null,
       "type": "debit",
       "category": "payout_refund",
-      "created_at": "2016-12-07T23:15:00Z",
-      "matures_at": "2016-12-10T23:15:00Z",
+      "created_at": "2021-04-07T23:15:00Z",
+      "matures_at": "2021-04-10T23:15:00Z",
       "cleared_at": null,
       "bank_ref": null,
       "status": "returned",
-      "status_changed_at": "2016-12-08T23:15:00Z",
+      "status_changed_at": "2021-04-08T23:15:00Z",
       "failure_reason": "user_voided",
       "failure_details": "Wrong amount - approved by Stacey"
       "party_contact_id": "26297f44-c5e1-40a1-9864-3e0b0754c32a",
@@ -8162,6 +7399,8 @@ A transaction (debit or credit) can have the following statuses:
 
 The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompanied by a `failure_reason`:
 
+<aside class="notice">Please note that these failure reasons are passed to us directly from the banks.</aside>      
+
 | Reason | Description |
 |--------|-------------|
 | `refer_to_customer` | Usually due to insufficient funds |
@@ -8176,7 +7415,7 @@ The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompani
 | `admin_voided` | Voided by Split Payments admin |
 
 <aside class="notice">
-  The <code>user_voided</code> and <code>admin_voided</code> <code>failure_reason</code>s can sometimes be accompanied by the <code>failure_details</code> key which includes user submitted comments relating to the <code>failure_reason</code>.
+  The <code>user_voided</code> and <code>admin_voided</code> <strong>failure_reasons</strong> can sometimes be accompanied by the <strong>failure_details</strong> key which includes user submitted comments relating to the <strong>failure_reason</strong>.
 </aside>
 
 ## List all transactions
@@ -8617,7 +7856,7 @@ func main() {
 
 `POST /unassigned_agreements`
 
-Create an Unassigned Agreement
+Create an Unassigned Agreement.
 
 <aside class="notice">You can set any of the term metrics to <code>null</code> if you wish them to not have a limit.</aside>
 
@@ -8834,7 +8073,7 @@ func main() {
 
 `GET /unassigned_agreements`
 
-Will return all Unassigned Agreements that have not yet be accepted.
+Will return all Unassigned Agreements that have not yet been accepted.
 
 <h3 id="List-all-Unassigned-Agreements-parameters" class="parameters">Parameters</h3>
 
@@ -9034,7 +8273,7 @@ func main() {
 
 `GET /unassigned_agreements/{unassigned_agreement_ref}`
 
-Get a single Unassigned Agreement by its reference
+Get a single Unassigned Agreement by its reference.
 
 <h3 id="Get-an-Unassigned-Agreement-parameters" class="parameters">Parameters</h3>
 
