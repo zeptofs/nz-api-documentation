@@ -947,9 +947,9 @@ Please refer to the [What is an Agreement](http://help.split.cash/articles/30945
 
 Agreements are therefore broken up by direction:
 
-1. **Incoming:** Agreement received from another Split account [Deprecated]
+1. **Outgoing:** Agreement sent to one of your Contacts
 2. **Outgoing:** Agreement sent to another Split account [Deprecated]
-3. **Outgoing:** Agreement sent to one of your Contacts
+3. **Incoming:** Agreement received from another Split account [Deprecated]
 
 ##Lifecycle
 
@@ -3719,9 +3719,11 @@ Refresh one of your contact's bank connections to get the latest available balan
 
 <h1 id="Split-API-Open-Agreements">Open Agreements</h1>
 
-An Open Agreement is essentially an Agreement template with no specific authoriser. Each time an Open Agreement is accepted by either a Split account holder or anyone, the authoriser is added to your Contacts list and a new Agreement is automatically created between the Open Agreement initiator and the authoriser.
+An Open Agreement is essentially an Agreement template with no specific authoriser. Each time an Open Agreement is accepted by anyone, the  authoriser is added to your Contacts list and a new Agreement is  automatically created between the Open Agreement initiator and the authoriser.
 
-An Open Agreement can be accepted multiple times by different parties and the result is the same: A new Agreement. Additionally, an Open Agreement can be accepted by anybody, not just other Split users. This is achieved by using our [Instant Account Verification process](http://help.split.cash/bank-accounts/instant-account-verification-iav) as part of accepting an [Open Agreement](https://help.split.cash/agreements/open-agreement).
+An Open Agreement can be accepted multiple times by different parties and the result is always the same: A new Agreement. 
+
+Additionally, an Open Agreement can be accepted by anybody. This is achieved by using our [Instant Account Verification process] (http://help.split.cash/bank-accounts/instant-account-verification-iav) as part of accepting an [Open Agreement](https://help.split.cash/agreements/open-agreement).
 
 ##Lifecycle
 
@@ -4107,6 +4109,8 @@ func main() {
 
 `GET /open_agreements`
 
+By default, all Open Agreements will be returned.
+
 <h3 id="List-all-Open-Agreements-parameters" class="parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
@@ -4301,7 +4305,7 @@ func main() {
 
 `POST /open_agreements/{open_agreement_ref}/activate`
 
-Allow the Open Agreement to viewed and accepted
+Allow the Open Agreement to viewed and accepted.
 
 <h3 id="Activate-a-closed-Open-Agreement-parameters" class="parameters">Parameters</h3>
 
@@ -4477,7 +4481,7 @@ func main() {
 
 `POST /open_agreements/{open_agreement_ref}/close`
 
-Disable the Open Agreement from being viewed or accepted
+Disable the Open Agreement from being viewed or accepted.
 
 <h3 id="Close-an-active-Open-Agreement-parameters" class="parameters">Parameters</h3>
 

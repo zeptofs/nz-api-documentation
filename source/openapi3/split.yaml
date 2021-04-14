@@ -1522,11 +1522,11 @@ tags:
       Agreements are therefore broken up by direction:
 
 
-      1. **Incoming:** Agreement received from another Split account [Deprecated]
-
+      1. **Outgoing:** Agreement sent to one of your Contacts
+      
       2. **Outgoing:** Agreement sent to another Split account [Deprecated]
-
-      3. **Outgoing:** Agreement sent to one of your Contacts
+      
+      3. **Incoming:** Agreement received from another Split account [Deprecated]
 
 
       ##Lifecycle
@@ -1565,19 +1565,19 @@ tags:
   - name: Open Agreements
     description: >
       An Open Agreement is essentially an Agreement template with no specific
-      authoriser. Each time an Open Agreement is accepted by either a Split
-      account holder or anyone, the authoriser is added to your Contacts list
-      and a new Agreement is automatically created between the Open Agreement
-      initiator and the authoriser.
+      authoriser. Each time an Open Agreement is accepted by anyone, the 
+      authoriser is added to your Contacts list and a new Agreement is 
+      automatically created between the Open Agreement initiator and the authoriser.
 
 
       An Open Agreement can be accepted multiple times by different parties and
-      the result is the same: A new Agreement. Additionally, an Open Agreement
-      can be accepted by anybody, not just other Split users. This is achieved
-      by using our [Instant Account Verification
-      process](http://help.split.cash/bank-accounts/instant-account-verification-iav)
-      as part of accepting an [Open
-      Agreement](https://help.split.cash/agreements/open-agreement).
+      the result is always the same: A new Agreement. 
+      
+      
+      Additionally, an Open Agreement can be accepted by anybody. This is achieved
+      by using our [Instant Account Verification process]
+      (http://help.split.cash/bank-accounts/instant-account-verification-iav)
+      as part of accepting an [Open Agreement](https://help.split.cash/agreements/open-agreement).
 
 
       ##Lifecycle
@@ -2393,7 +2393,7 @@ paths:
       tags:
         - Open Agreements
       summary: List all Open Agreements
-      description: ''
+      description: By default, all Open Agreements will be returned.
       operationId: ListAllOpenAgreements
       parameters:
         - name: page
@@ -2422,7 +2422,7 @@ paths:
       tags:
         - Open Agreements
       summary: Activate a closed Open Agreement
-      description: Allow the Open Agreement to viewed and accepted
+      description: Allow the Open Agreement to viewed and accepted.
       operationId: ActivateOpenAgreement
       parameters:
         - name: open_agreement_ref
@@ -2445,7 +2445,7 @@ paths:
       tags:
         - Open Agreements
       summary: Close an active Open Agreement
-      description: Disable the Open Agreement from being viewed or accepted
+      description: Disable the Open Agreement from being viewed or accepted.
       operationId: CloseOpenAgreement
       parameters:
         - name: open_agreement_ref
