@@ -825,24 +825,6 @@ info:
     | decline_agreements | `900001` | `99999` | Always declines agreements |
 
 
-    ### (Deprecated) Payment credit failure bank accounts
-
-    You can send Payments to the following reserved bank accounts to trigger specific failures on the credit side.
-
-
-    | Failure type             | Branch code (BSB) | Account number |
-
-    |--------------------------|-------------------|----------------|
-
-    | `account_closed`           | `300000`          | `99999`        |
-
-    | `customer_deceased`        | `400000`          | `99999`        |
-
-    | `incorrect_account_number` | `500000`          | `99999`        |
-
-    | `refer_to_split`           | `700000`          | `99999`        |
-
-
     ### (Deprecated) Payment Request failure bank accounts
 
     You can send Payment Requests to the following reserved bank accounts to trigger specific failures.
@@ -1004,6 +986,8 @@ info:
 
     - From the same bank account; and
 
+    - Have the same description; and
+
     - Initiated by the same Split account.
 
 
@@ -1012,10 +996,12 @@ info:
 
     - To the same bank account; and
 
+    - Have the same description; and
+
     - Initiated by the same Split account.
 
 
-    Should you prefer aggregation to be disabled, please contact
+    Should you prefer debit aggregation to be disabled, please contact
     [support@splitpayments.com.au](mailto:support@splitpayments.com.au). Note
     that additional charges may apply.
 
@@ -1524,13 +1510,9 @@ tags:
       agree on terms for which future Payment Requests will be auto-approved.
 
 
-      Split Agreements are managed on a per Contact basis and are
-      unidirectional. In other words, if both parties wish for auto-approved
-      Payment Requests, they must each propose an Agreement to the other.
+      Split Agreements are managed on a per Contact basis, and if a Payment Request 
+      is sent for an amount that exceeds the terms of the agreement, it will not be created.
 
-
-      If a Payment Request is sent for an amount that exceeds the terms of the
-      agreement, it will need to be manually approved by the recipient.
 
       Please refer to the [What is an Agreement](http://help.split.cash/articles/3094575-what-is-an-agreement) article in our knowledge base for an overview.
 
@@ -1540,9 +1522,11 @@ tags:
       Agreements are therefore broken up by direction:
 
 
-      1. **Incoming:** Agreement received from another Split account
+      1. **Incoming:** Agreement received from another Split account [Deprecated]
 
-      2. **Outgoing:** Agreement sent to another Split account
+      2. **Outgoing:** Agreement sent to another Split account [Deprecated]
+
+      3. **Outgoing:** Agreement sent to one of your Contacts
 
 
       ##Lifecycle
@@ -1730,8 +1714,6 @@ tags:
 
 
       Split will automatically check for available funds before **attempting to debit** the debtor. This check is only performed for contacts with an active [bank connection](/#Split-API-Bank-Connections).
-
-
   - name: Refunds
     description: >
       Refunds can be issued for any successfully cleared Payout (credit)
@@ -1904,33 +1886,6 @@ tags:
   - name: Sandbox Only
     description: Special testing endpoints that only exist in the sandbox environment.
 paths:
-  /agreements:
-    post:
-      tags:
-        - Agreements
-      summary: Propose an Agreement
-      description: >-
-        Propose an Agreement to another Split Contact
-
-
-        <aside class="notice">You can set any of the term metrics to
-        <code>null</code> if you wish them to not have a limit.</aside>
-      operationId: ProposeAgreement
-      parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProposeAgreementRequest'
-        required: true
-      responses:
-        '200':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProposeAgreementResponse'
   /agreements/outgoing:
     get:
       tags:
@@ -2036,113 +1991,6 @@ paths:
       responses:
         '204':
           description: No Content
-  '/agreements/{agreement_ref}/accept':
-    post:
-      tags:
-        - Agreements
-      summary: Approve an Agreement
-      description: Approve an incoming Agreement
-      operationId: ApproveAgreement
-      parameters:
-        - name: agreement_ref
-          in: path
-          description: 'Single value, exact match'
-          required: true
-          style: simple
-          schema:
-            type: string
-          example: A.2
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApproveAgreementResponse'
-  '/agreements/{agreement_ref}/decline':
-    post:
-      tags:
-        - Agreements
-      summary: Decline an Agreement
-      description: Decline an incoming Agreement
-      operationId: DeclineAgreement
-      parameters:
-        - name: agreement_ref
-          in: path
-          description: 'Single value, exact match'
-          required: true
-          style: simple
-          schema:
-            type: string
-          example: A.2
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DeclineAgreementResponse'
-  /agreements/incoming:
-    get:
-      tags:
-        - Agreements
-      summary: List incoming Agreements
-      description: >
-        By default, all incoming Agreements will be returned. You can apply
-        filters to your query to customise the returned Agreements.
-      operationId: ListIncomingAgreements
-      parameters:
-        - name: page
-          in: query
-          description: 'Page of results to return, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '1'
-        - name: per_page
-          in: query
-          description: 'Number of results per page, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '100'
-        - name: contact_id
-          in: query
-          description: 'Contact ID (`Contact.data.id`), single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: e5edc264-1771-4809-9cf5-b40baaee15f7
-        - name: initiator_id
-          in: query
-          description: 'Initiator ID (`Contact.data.account.id`), single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: 2c4dec90-8a4c-4685-b620-bd1d7ca05a60
-        - name: status
-          in: query
-          description: 'Multiple values, exact match'
-          style: form
-          explode: false
-          schema:
-            type: array
-            items:
-              type: string
-            enum:
-              - proposed
-              - accepted
-              - declined
-              - cancelled
-          example:
-            - proposed
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ListIncomingAgreementsResponse'
   /bank_accounts:
     get:
       tags:
@@ -3447,7 +3295,7 @@ components:
             transactions: Access your transaction history
             open_agreements: Manage your open agreements
   schemas:
-    ProposeAgreementRequest:
+    ProposeAgreementRequest [DEPRECATED]:
       title: Propose an Agreement (request)
       required:
         - authoriser_contact_id
@@ -3518,7 +3366,7 @@ components:
             Maximum amount in cents the total of all PRs can be for the duration
             of the frequency. Specify <code>null</code> for no limit.
           example: 1000000
-    ProposeAgreementResponse:
+    ProposeAgreementResponse [DEPRECATED]:
       title: Propose an Agreement (response)
       required:
         - data
@@ -3544,7 +3392,7 @@ components:
             per_frequency:
               days: 7
               max_amount: 1000000
-    ApproveAgreementResponse:
+    ApproveAgreementResponse [DEPRECATED]:
       title: Approve an Agreement (response)
       required:
         - data
@@ -3570,7 +3418,7 @@ components:
             per_frequency:
               days: 7
               max_amount: 1000000
-    DeclineAgreementResponse:
+    DeclineAgreementResponse [DEPRECATED]:
       title: Decline an Agreement (response)
       required:
         - data
@@ -3848,7 +3696,6 @@ components:
               email: travis@hermanntorp.net
             links:
               update_bank_connection: http://go.split.cash/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0
-
     CreateOpenAgreementRequest:
       title: Create an Open Agreement (request)
       required:
@@ -3984,7 +3831,7 @@ components:
               max_amount: 1000000
           link: >-
             https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation
-    AddASplitContactRequest:
+    AddASplitContactRequest [DEPRECATED]:
       title: Add a Split Contact (request)
       required:
         - nickname
@@ -4000,7 +3847,7 @@ components:
         metadata:
           custom_key: Custom string
           another_custom_key: Maybe a URL
-    AddASplitContactResponse:
+    AddASplitContactResponse [DEPRECATED]:
       title: Add a Split Contact (response)
       required:
         - data
@@ -4357,7 +4204,6 @@ components:
             email: travis@hermanntorp.net
           links:
             update_bank_connection: https://go.sandbox.split.cash/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7
-
     GetAContactResponse:
       title: Get a Contact (response)
       required:
@@ -4717,7 +4563,7 @@ components:
           metadata:
             custom_key: Custom string
             another_custom_key: Maybe a URL
-    ApprovePaymentRequestResponse:
+    ApprovePaymentRequestResponse [DEPRECATED]:
       title: Approve Payment Request (response)
       required:
         - data
@@ -4746,7 +4592,7 @@ components:
           metadata:
             custom_key: Custom string
             another_custom_key: Maybe a URL
-    DeclinePaymentRequestResponse:
+    DeclinePaymentRequestResponse [DEPRECATED]:
       title: Decline a Payment Request (response)
       required:
         - data

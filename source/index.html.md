@@ -532,16 +532,6 @@ There are some accounts with a special behaviour. You can add them to your Conta
 | accept_agreements | `900000` | `99999` | Always accepts agreements |
 | decline_agreements | `900001` | `99999` | Always declines agreements |
 
-### (Deprecated) Payment credit failure bank accounts
-You can send Payments to the following reserved bank accounts to trigger specific failures on the credit side.
-
-| Failure type             | Branch code (BSB) | Account number |
-|--------------------------|-------------------|----------------|
-| `account_closed`           | `300000`          | `99999`        |
-| `customer_deceased`        | `400000`          | `99999`        |
-| `incorrect_account_number` | `500000`          | `99999`        |
-| `refer_to_split`           | `700000`          | `99999`        |
-
 ### (Deprecated) Payment Request failure bank accounts
 You can send Payment Requests to the following reserved bank accounts to trigger specific failures.
 
@@ -628,14 +618,16 @@ You can elect to assign a remitter name on a per-request basis when submitting P
 Split will automatically aggregate debits that are:
 
 - From the same bank account; and
+- Have the same description; and
 - Initiated by the same Split account.
 
 Likewise for credits:
 
 - To the same bank account; and
+- Have the same description; and
 - Initiated by the same Split account.
 
-Should you prefer aggregation to be disabled, please contact [support@splitpayments.com.au](mailto:support@splitpayments.com.au). Note that additional charges may apply.
+Should you prefer debit aggregation to be disabled, please contact [support@splitpayments.com.au](mailto:support@splitpayments.com.au). Note that additional charges may apply.
 
 ## Webhooks
 
@@ -948,16 +940,16 @@ Looking for more? Our docs are open sourced! [https://github.com/splitpayments/a
 
 An Agreement is an arrangement between two parties that allows them to agree on terms for which future Payment Requests will be auto-approved.
 
-Split Agreements are managed on a per Contact basis and are unidirectional. In other words, if both parties wish for auto-approved Payment Requests, they must each propose an Agreement to the other.
+Split Agreements are managed on a per Contact basis, and if a Payment Request  is sent for an amount that exceeds the terms of the agreement, it will not be created.
 
-If a Payment Request is sent for an amount that exceeds the terms of the agreement, it will need to be manually approved by the recipient.
 Please refer to the [What is an Agreement](http://help.split.cash/articles/3094575-what-is-an-agreement) article in our knowledge base for an overview.
 <div class="middle-header">Direction</div>
 
 Agreements are therefore broken up by direction:
 
-1. **Incoming:** Agreement received from another Split account
-2. **Outgoing:** Agreement sent to another Split account
+1. **Incoming:** Agreement received from another Split account [Deprecated]
+2. **Outgoing:** Agreement sent to another Split account [Deprecated]
+3. **Outgoing:** Agreement sent to one of your Contacts
 
 ##Lifecycle
 
@@ -970,247 +962,6 @@ An Agreement can have the following statuses:
 | `cancelled` | The Agreement has been cancelled (The initiator or authoriser can cancel an Agreement). |
 | `declined` | The Agreement has been declined. |
 | `expended` | The Agreement has been expended (Only for [single_use Unassigned Agreements](/#Split-API-Unassigned-Agreements)). |
-
-## Propose an Agreement
-
-<a id="opIdProposeAgreement"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://api.sandbox.split.cash/agreements \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
-  --data '{"authoriser_contact_id":"8df89c16-330f-462b-8891-808d7bdceb7f","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}},"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/agreements")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/agreements",
-  "headers": {
-    "content-type": "application/json",
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.write(JSON.stringify({
-  authoriser_contact_id: '8df89c16-330f-462b-8891-808d7bdceb7f',
-  terms: {
-    per_payout: { min_amount: null, max_amount: 10000 },
-    per_frequency: { days: 7, max_amount: 1000000 }
-  },
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-payload = "{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
-
-headers = {
-    'content-type': "application/json",
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/agreements", payload, headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/agreements")
-  .header("content-type", "application/json")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .body("{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$body = new http\Message\Body;
-$body->append('{"authoriser_contact_id":"8df89c16-330f-462b-8891-808d7bdceb7f","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}},"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
-
-$request->setRequestUrl('https://api.sandbox.split.cash/agreements');
-$request->setRequestMethod('POST');
-$request->setBody($body);
-
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json',
-  'content-type' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"strings"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/agreements"
-
-	payload := strings.NewReader("{\"authoriser_contact_id\":\"8df89c16-330f-462b-8891-808d7bdceb7f\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
-
-	req, _ := http.NewRequest("POST", url, payload)
-
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /agreements`
-
-Propose an Agreement to another Split Contact
-
-<aside class="notice">You can set any of the term metrics to <code>null</code> if you wish them to not have a limit.</aside>
-
-> Body parameter
-
-```json
-{
-  "authoriser_contact_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-  "terms": {
-    "per_payout": {
-      "min_amount": null,
-      "max_amount": 10000
-    },
-    "per_frequency": {
-      "days": 7,
-      "max_amount": 1000000
-    }
-  },
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}
-```
-
-<h3 id="Propose-an-Agreement-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[ProposeAgreementRequest](#schemaproposeagreementrequest)|true|No description|
-|» authoriser_contact_id|body|string|true|The Authoriser's contact ID (`Contact.data.id`)|
-|» terms|body|[Terms](#schematerms)|true|Terms|
-|»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
-|»»» min_amount|body|integer|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
-|»»» max_amount|body|integer|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
-|»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
-|»»» days|body|integer|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
-|»»» max_amount|body|integer|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
-|»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": {
-    "ref": "A.2",
-    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
-    "authoriser_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
-    "contact_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-    "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
-    "status": "proposed",
-    "status_reason": null,
-    "responded_at": null,
-    "created_at": "2017-03-20T00:53:27Z",
-    "terms": {
-      "per_payout": {
-        "max_amount": 10000,
-        "min_amount": null
-      },
-      "per_frequency": {
-        "days": 7,
-        "max_amount": 1000000
-      }
-    }
-  }
-}
-```
-
-<h3 id="Propose an Agreement-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Created|[ProposeAgreementResponse](#schemaproposeagreementresponse)|
 
 ## List Agreements
 
@@ -1748,582 +1499,6 @@ An Agreement can be cancelled by the initiator at any time whilst the authoriser
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
-
-## Approve an Agreement
-
-<a id="opIdApproveAgreement"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://api.sandbox.split.cash/agreements/A.2/accept \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/agreements/A.2/accept")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/agreements/A.2/accept",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/agreements/A.2/accept", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/agreements/A.2/accept")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/agreements/A.2/accept');
-$request->setRequestMethod('POST');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/agreements/A.2/accept"
-
-	req, _ := http.NewRequest("POST", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /agreements/{agreement_ref}/accept`
-
-Approve an incoming Agreement
-
-<h3 id="Approve-an-Agreement-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|agreement_ref|path|string|true|Single value, exact match|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": {
-    "ref": "A.2",
-    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
-    "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-    "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
-    "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
-    "status": "accepted",
-    "status_reason": null,
-    "responded_at": "2017-03-20T02:13:11Z",
-    "created_at": "2017-03-20T00:53:27Z",
-    "terms": {
-      "per_payout": {
-        "max_amount": 10000,
-        "min_amount": 1
-      },
-      "per_frequency": {
-        "days": 7,
-        "max_amount": 1000000
-      }
-    }
-  }
-}
-```
-
-<h3 id="Approve an Agreement-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ApproveAgreementResponse](#schemaapproveagreementresponse)|
-
-## Decline an Agreement
-
-<a id="opIdDeclineAgreement"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://api.sandbox.split.cash/agreements/A.2/decline \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/agreements/A.2/decline")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/agreements/A.2/decline",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/agreements/A.2/decline", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/agreements/A.2/decline")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/agreements/A.2/decline');
-$request->setRequestMethod('POST');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/agreements/A.2/decline"
-
-	req, _ := http.NewRequest("POST", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /agreements/{agreement_ref}/decline`
-
-Decline an incoming Agreement
-
-<h3 id="Decline-an-Agreement-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|agreement_ref|path|string|true|Single value, exact match|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": {
-    "ref": "A.2",
-    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
-    "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-    "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
-    "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
-    "status": "declined",
-    "status_reason": null,
-    "responded_at": "2017-03-20T02:13:11Z",
-    "created_at": "2017-03-20T00:53:27Z",
-    "terms": {
-      "per_payout": {
-        "max_amount": 10000,
-        "min_amount": 1
-      },
-      "per_frequency": {
-        "days": 7,
-        "max_amount": 1000000
-      }
-    }
-  }
-}
-```
-
-<h3 id="Decline an Agreement-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[DeclineAgreementResponse](#schemadeclineagreementresponse)|
-
-## List incoming Agreements
-
-<a id="opIdListIncomingAgreements"></a>
-
-> Code samples
-
-```shell
-curl --request GET \
-  --url https://api.sandbox.split.cash/agreements/incoming \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/agreements/incoming")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "GET",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/agreements/incoming",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("GET", "/agreements/incoming", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/agreements/incoming")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/agreements/incoming');
-$request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/agreements/incoming"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`GET /agreements/incoming`
-
-By default, all incoming Agreements will be returned. You can apply filters to your query to customise the returned Agreements.
-
-<h3 id="List-incoming-Agreements-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|page|query|string|false|Page of results to return, single value, exact match|
-|per_page|query|string|false|Number of results per page, single value, exact match|
-|contact_id|query|string|false|Contact ID (`Contact.data.id`), single value, exact match|
-|initiator_id|query|string|false|Initiator ID (`Contact.data.account.id`), single value, exact match|
-|status|query|array[string]|false|Multiple values, exact match|
-
-#### Enumerated Values
-
-|Parameter|Value|
-|---|---|
-|status|proposed|
-|status|accepted|
-|status|declined|
-|status|cancelled|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": [
-    {
-      "ref": "A.2",
-      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
-      "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-      "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
-      "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
-      "status": "proposed",
-      "status_reason": null,
-      "responded_at": null,
-      "created_at": "2017-03-20T00:53:27Z",
-      "terms": {
-        "per_payout": {
-          "max_amount": 10000,
-          "min_amount": 1
-        },
-        "per_frequency": {
-          "days": 7,
-          "max_amount": 1000000
-        }
-      }
-    },
-    {
-      "ref": "A.1",
-      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
-      "authoriser_id": "56df206a-aaff-471a-b075-11882bc8906a",
-      "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
-      "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
-      "status": "proposed",
-      "status_reason": null,
-      "responded_at": null,
-      "created_at": "2017-03-16T22:51:48Z",
-      "terms": {
-        "per_payout": {
-          "max_amount": 5000,
-          "min_amount": 0
-        },
-        "per_frequency": {
-          "days": "1",
-          "max_amount": 10000
-        }
-      }
-    }
-  ]
-}
-```
-
-<h3 id="List incoming Agreements-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListIncomingAgreementsResponse](#schemalistincomingagreementsresponse)|
 
 <h1 id="Split-API-Bank-Accounts">Bank Accounts</h1>
 
@@ -3566,7 +2741,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"nickname":"outstanding_tours","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data false
 ```
 
 ```ruby
@@ -3583,7 +2758,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"nickname\":\"outstanding_tours\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "false"
 
 response = http.request(request)
 puts response.read_body
@@ -3617,10 +2792,6 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({
-  nickname: 'outstanding_tours',
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
 req.end();
 ```
 
@@ -3629,7 +2800,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
-payload = "{\"nickname\":\"outstanding_tours\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "false"
 
 headers = {
     'content-type': "application/json",
@@ -3650,7 +2821,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/con
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"nickname\":\"outstanding_tours\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("false")
   .asString();
 ```
 
@@ -3661,7 +2832,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"nickname":"outstanding_tours","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('false');
 
 $request->setRequestUrl('https://api.sandbox.split.cash/contacts');
 $request->setRequestMethod('POST');
@@ -3693,7 +2864,7 @@ func main() {
 
 	url := "https://api.sandbox.split.cash/contacts"
 
-	payload := strings.NewReader("{\"nickname\":\"outstanding_tours\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("false")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -3719,70 +2890,24 @@ Add a Split Contact
 > Body parameter
 
 ```json
-{
-  "nickname": "outstanding_tours",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}
+false
 ```
-
-<h3 id="Add-a-Split-Contact-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[AddASplitContactRequest](#schemaaddasplitcontactrequest)|true|No description|
-|» nickname|body|string|true|Split account nickname|
-|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
 
 > Example responses
-
-> 201 Response
-
-```json
-{
-  "data": {
-    "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
-    "name": "Outstanding Tours Pty Ltd",
-    "email": "accounts@outstandingtours.com.au",
-    "type": "Split account",
-    "metadata": {
-      "custom_key": "Custom string",
-      "another_custom_key": "Maybe a URL"
-    },
-    "bank_account": {
-      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-      "account_number": "947434694",
-      "branch_code": "304304",
-      "bank_name": "National Australia Bank",
-      "state": "active",
-      "iav_provider": null,
-      "iav_status": null,
-      "blocks": {
-        "debits_blocked": false,
-        "credits_blocked": false
-      }
-    },
-    "account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
-      "nickname": "outstanding_tours",
-      "abn": "123456789",
-      "name": "Outstanding Tours Pty Ltd"
-    },
-    "links": {
-      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
-    }
-  }
-}
-```
 
 <h3 id="Add a Split Contact-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddASplitContactResponse](#schemaaddasplitcontactresponse)|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|None|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
+
+<h3 id="Add a Split Contact-responseschema">Response Schema</h3>
+
+Status Code **201**
+
+|Name|Type|Required|Description|
+|---|---|---|---|
 
 ## List all Contacts
 
@@ -6948,41 +6073,18 @@ func main() {
 
 > Example responses
 
-> 200 Response
-
-```json
-{
-  "data": {
-    "ref": "PR.3",
-    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
-    "authoriser_id": "d194c54b-9183-410c-966b-50485c5ce3f0",
-    "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-    "schedule_ref": null,
-    "status": "approved",
-    "status_reason": null,
-    "matures_at": "2016-12-25T00:00:00Z",
-    "responded_at": "2016-12-19T02:38:04Z",
-    "created_at": "2016-12-19T02:10:56Z",
-    "debit_ref": "D.b",
-    "payout": {
-      "amount": 99000,
-      "description": "The elite package for 4",
-      "matures_at": "2016-12-25T00:00:00Z"
-    },
-    "metadata": {
-      "custom_key": "Custom string",
-      "another_custom_key": "Maybe a URL"
-    }
-  }
-}
-```
-
 <h3 id="Approve a Payment Request-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ApprovePaymentRequestResponse](#schemaapprovepaymentrequestresponse)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|None|
+
+<h3 id="Approve a Payment Request-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Description|
+|---|---|---|---|
 
 ## Decline a Payment Request
 
@@ -7128,41 +6230,18 @@ func main() {
 
 > Example responses
 
-> 200 Response
-
-```json
-{
-  "data": {
-    "ref": "PR.3",
-    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
-    "authoriser_id": "d194c54b-9183-410c-966b-50485c5ce3f0",
-    "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-    "schedule_ref": null,
-    "status": "declined",
-    "status_reason": null,
-    "matures_at": "2016-12-25T00:00:00Z",
-    "responded_at": "2016-12-19T02:38:04Z",
-    "created_at": "2016-12-19T02:10:56Z",
-    "debit_ref": null,
-    "payout": {
-      "amount": 99000,
-      "description": "The elite package for 4",
-      "matures_at": "2016-12-25T00:00:00Z"
-    },
-    "metadata": {
-      "custom_key": "Custom string",
-      "another_custom_key": "Maybe a URL"
-    }
-  }
-}
-```
-
 <h3 id="Decline a Payment Request-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|No description|[DeclinePaymentRequestResponse](#schemadeclinepaymentrequestresponse)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|No description|None|
+
+<h3 id="Decline a Payment Request-responseschema">Response Schema</h3>
+
+Status Code **200**
+
+|Name|Type|Required|Description|
+|---|---|---|---|
 
 <h1 id="Split-API-Payments">Payments</h1>
 
@@ -10487,9 +9566,9 @@ func main() {
 
 # Schemas
 
-## ProposeAgreementRequest
+## ProposeAgreementRequest [DEPRECATED]
 
-<a id="schemaproposeagreementrequest"></a>
+<a id="schemaproposeagreementrequest [deprecated]"></a>
 
 ```json
 {
@@ -10587,9 +9666,9 @@ func main() {
 |days|integer|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
 |max_amount|integer|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
 
-## ProposeAgreementResponse
+## ProposeAgreementResponse [DEPRECATED]
 
-<a id="schemaproposeagreementresponse"></a>
+<a id="schemaproposeagreementresponse [deprecated]"></a>
 
 ```json
 {
@@ -10625,9 +9704,9 @@ func main() {
 |---|---|---|---|
 |data|object|true|No description|
 
-## ApproveAgreementResponse
+## ApproveAgreementResponse [DEPRECATED]
 
-<a id="schemaapproveagreementresponse"></a>
+<a id="schemaapproveagreementresponse [deprecated]"></a>
 
 ```json
 {
@@ -10663,9 +9742,9 @@ func main() {
 |---|---|---|---|
 |data|object|true|No description|
 
-## DeclineAgreementResponse
+## DeclineAgreementResponse [DEPRECATED]
 
-<a id="schemadeclineagreementresponse"></a>
+<a id="schemadeclineagreementresponse [deprecated]"></a>
 
 ```json
 {
@@ -11176,9 +10255,9 @@ func main() {
 |---|---|---|---|
 |data|object|true|No description|
 
-## AddASplitContactRequest
+## AddASplitContactRequest [DEPRECATED]
 
-<a id="schemaaddasplitcontactrequest"></a>
+<a id="schemaaddasplitcontactrequest [deprecated]"></a>
 
 ```json
 {
@@ -11199,9 +10278,9 @@ func main() {
 |nickname|string|true|Split account nickname|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
-## AddASplitContactResponse
+## AddASplitContactResponse [DEPRECATED]
 
-<a id="schemaaddasplitcontactresponse"></a>
+<a id="schemaaddasplitcontactresponse [deprecated]"></a>
 
 ```json
 {
@@ -11914,9 +10993,9 @@ func main() {
 |---|---|---|---|
 |data|object|true|No description|
 
-## ApprovePaymentRequestResponse
+## ApprovePaymentRequestResponse [DEPRECATED]
 
-<a id="schemaapprovepaymentrequestresponse"></a>
+<a id="schemaapprovepaymentrequestresponse [deprecated]"></a>
 
 ```json
 {
@@ -11954,9 +11033,9 @@ func main() {
 |---|---|---|---|
 |data|object|true|No description|
 
-## DeclinePaymentRequestResponse
+## DeclinePaymentRequestResponse [DEPRECATED]
 
-<a id="schemadeclinepaymentrequestresponse"></a>
+<a id="schemadeclinepaymentrequestresponse [deprecated]"></a>
 
 ```json
 {
