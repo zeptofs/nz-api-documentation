@@ -940,7 +940,7 @@ Looking for more? Our docs are open sourced! [https://github.com/splitpayments/a
 
 An Agreement is an arrangement between two parties that allows them to agree on terms for which future Payment Requests will be auto-approved.
 
-Split Agreements are managed on a per Contact basis, and if a Payment Request  is sent for an amount that exceeds the terms of the agreement, it will not be created.
+Split Agreements are managed on a per Contact basis, and if a Payment Request is sent for an amount that exceeds the terms of the agreement, it will not be created.
 
 Please refer to the [What is an Agreement](http://help.split.cash/articles/3094575-what-is-an-agreement) article in our knowledge base for an overview.
 <div class="middle-header">Direction</div>
@@ -1669,7 +1669,7 @@ By default, all Bank Accounts will be returned.
     },
     {
       "id": "ab3de19b-709b-4a41-82a5-3b43b3dc58c9",
-      "branch_code": "000000",
+      "branch_code": "802919",
       "bank_name": "Split Float Account",
       "account_number": "1748212",
       "status": "active",
@@ -2641,12 +2641,12 @@ Receive funds from a Contact by allowing them to pay to a personalised PayID or 
 
 <aside class="notice">
   To enable this feature, please contact our support team with the following information:
-    <li>Your full legal account name</li>
+    <li>Your full legal business name</li>
     <li>A legally owned domain name: for your PayID email addresses</li>
-    <li><strong>alias_name</strong>: the short business name that will be displayed to your customers</li>
+    <li><strong>alias_name</strong>: a shortened business name that will be displayed to your customers upon PayID resolution</li>
 </aside>
 <aside class="notice">
-  When creating this type of contact, the initial response <code>payid_details.state</code> value will always be <code>pending</code>. After a few seconds, it'll transition to <code>active</code>. We suggest you use webhooks to be informed of this state change
+  When creating this type of contact, the initial response <code>payid_details.state</code> value will always be <code>pending</code>. After a few seconds, it will transition to <code>active</code>. We suggest you use webhooks to be informed of this state change
 </aside>
 <aside class="notice">
   While unlikely, it is possible that we will be unable to register the given PayID. In this case <code>payid_details.state</code> will transition to <code>failed</code>.
@@ -2728,186 +2728,6 @@ Receive funds from a Contact by allowing them to pay to a personalised PayID or 
 |---|---|---|---|
 |201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddAReceivableContactResponse](#schemaaddareceivablecontactresponse)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
-
-## Add a Split Contact
-
-<a id="opIdAddASplitContact"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://api.sandbox.split.cash/contacts \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
-  --data false
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/contacts")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-request.body = "false"
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/contacts",
-  "headers": {
-    "content-type": "application/json",
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-payload = "false"
-
-headers = {
-    'content-type': "application/json",
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/contacts", payload, headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts")
-  .header("content-type", "application/json")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .body("false")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$body = new http\Message\Body;
-$body->append('false');
-
-$request->setRequestUrl('https://api.sandbox.split.cash/contacts');
-$request->setRequestMethod('POST');
-$request->setBody($body);
-
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json',
-  'content-type' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"strings"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/contacts"
-
-	payload := strings.NewReader("false")
-
-	req, _ := http.NewRequest("POST", url, payload)
-
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /contacts`
-
-Add a Split Contact
-
-> Body parameter
-
-```json
-false
-```
-
-> Example responses
-
-<h3 id="Add a Split Contact-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|None|
-|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
-
-<h3 id="Add a Split Contact-responseschema">Response Schema</h3>
-
-Status Code **201**
-
-|Name|Type|Required|Description|
-|---|---|---|---|
 
 ## List all Contacts
 
@@ -9988,7 +9808,7 @@ func main() {
     },
     {
       "id": "ab3de19b-709b-4a41-82a5-3b43b3dc58c9",
-      "branch_code": "000000",
+      "branch_code": "802919",
       "bank_name": "Split Float Account",
       "account_number": "1748212",
       "status": "active",
