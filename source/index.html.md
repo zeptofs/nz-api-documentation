@@ -6001,7 +6001,7 @@ This endpoint gives you some control over a transaction:
   were once referred to as Payouts [Legacy naming].
 </aside>
 
-## Retry a Prefailed Payment Request
+## Retry a Prefailed Payment Request [DEPRECATED]
 
 <a id="opIdRetryAPayout"></a>
 
@@ -6137,20 +6137,16 @@ func main() {
 
 `POST /payouts/{ref}/retry`
 
-Split will prefail a debit and its associated credit transaction before ever sending it to the bank if we detect a high probability of insufficient funds.
-
-This endpoint allows you to retry the payout without having to recreate the parent request. e.g A Payment or Payment Request.
-
-When debitting a Contact with an active bank connection, Split will first ensure that there are sufficient funds available, before submitting the debit to the banks.
+When debitting a Contact with an active bank connection, Split will first ensure that there are sufficient funds available before submitting the debit to the banks.
 If a high probability of insufficient funds is detected, Split will not submit the transaction to the banks and will mark the transaction as <strong>Prefailed</strong>.
 
-This endpoint allows you to retry the Payment Request without having to recreate a brand new transaction.
+This endpoint allows you to retry the Payment Request without having to create a brand new transaction.
 
 <aside class="notice">
-  Rather than using this endpoint, we now recommend creating a brand new transaction as this simplifies and maintains data integrity for the lifecycle of each transaction attempt
+  Rather than using this endpoint, we now recommend creating a brand new transaction as this simplifies and maintains data integrity for the lifecycle of each attempt
 </aside>
 
-<h3 id="Retry-a-Prefailed-Payment-Request-parameters" class="parameters">Parameters</h3>
+<h3 id="Retry-a-Prefailed-Payment-Request-[DEPRECATED]-parameters" class="parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -6183,7 +6179,7 @@ This endpoint allows you to retry the Payment Request without having to recreate
 }
 ```
 
-<h3 id="Retry a Prefailed Payment Request-responses">Responses</h3>
+<h3 id="Retry a Prefailed Payment Request [DEPRECATED]-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -8421,220 +8417,6 @@ func main() {
 
 # Schemas
 
-## ProposeAgreementRequest [DEPRECATED]
-
-<a id="schemaproposeagreementrequest [deprecated]"></a>
-
-```json
-{
-  "authoriser_contact_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-  "terms": {
-    "per_payout": {
-      "min_amount": null,
-      "max_amount": 10000
-    },
-    "per_frequency": {
-      "days": 7,
-      "max_amount": 1000000
-    }
-  },
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}
-```
-
-### Properties
-
-*Propose an Agreement (request)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|authoriser_contact_id|string|true|The Authoriser's contact ID (`Contact.data.id`)|
-|terms|[Terms](#schematerms)|true|No description|
-|metadata|[Metadata](#schemametadata)|false|No description|
-
-## Terms
-
-<a id="schematerms"></a>
-
-```json
-{
-  "per_payout": {
-    "min_amount": 0,
-    "max_amount": 10000
-  },
-  "per_frequency": {
-    "days": 7,
-    "max_amount": 1000000
-  }
-}
-```
-
-### Properties
-
-*Agreement terms*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|per_payout|[PerPayout](#schemaperpayout)|true|No description|
-|per_frequency|[PerFrequency](#schemaperfrequency)|true|No description|
-
-## PerPayout
-
-<a id="schemaperpayout"></a>
-
-```json
-{
-  "min_amount": 0,
-  "max_amount": 10000
-}
-```
-
-### Properties
-
-*Per payout terms*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|min_amount|integer|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
-|max_amount|integer|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
-
-## PerFrequency
-
-<a id="schemaperfrequency"></a>
-
-```json
-{
-  "days": 7,
-  "max_amount": 1000000
-}
-```
-
-### Properties
-
-*Per frequency terms*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|days|integer|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
-|max_amount|integer|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
-
-## ProposeAgreementResponse [DEPRECATED]
-
-<a id="schemaproposeagreementresponse [deprecated]"></a>
-
-```json
-{
-  "data": {
-    "ref": "A.2",
-    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
-    "authoriser_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
-    "contact_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-    "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
-    "status": "proposed",
-    "status_reason": null,
-    "responded_at": null,
-    "created_at": "2017-03-20T00:53:27Z",
-    "terms": {
-      "per_payout": {
-        "max_amount": 10000,
-        "min_amount": null
-      },
-      "per_frequency": {
-        "days": 7,
-        "max_amount": 1000000
-      }
-    }
-  }
-}
-```
-
-### Properties
-
-*Propose an Agreement (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|object|true|No description|
-
-## ApproveAgreementResponse [DEPRECATED]
-
-<a id="schemaapproveagreementresponse [deprecated]"></a>
-
-```json
-{
-  "data": {
-    "ref": "A.2",
-    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
-    "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-    "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
-    "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
-    "status": "accepted",
-    "status_reason": null,
-    "responded_at": "2017-03-20T02:13:11Z",
-    "created_at": "2017-03-20T00:53:27Z",
-    "terms": {
-      "per_payout": {
-        "max_amount": 10000,
-        "min_amount": 1
-      },
-      "per_frequency": {
-        "days": 7,
-        "max_amount": 1000000
-      }
-    }
-  }
-}
-```
-
-### Properties
-
-*Approve an Agreement (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|object|true|No description|
-
-## DeclineAgreementResponse [DEPRECATED]
-
-<a id="schemadeclineagreementresponse [deprecated]"></a>
-
-```json
-{
-  "data": {
-    "ref": "A.2",
-    "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
-    "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-    "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
-    "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
-    "status": "declined",
-    "status_reason": null,
-    "responded_at": "2017-03-20T02:13:11Z",
-    "created_at": "2017-03-20T00:53:27Z",
-    "terms": {
-      "per_payout": {
-        "max_amount": 10000,
-        "min_amount": 1
-      },
-      "per_frequency": {
-        "days": 7,
-        "max_amount": 1000000
-      }
-    }
-  }
-}
-```
-
-### Properties
-
-*Decline an Agreement (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|object|true|No description|
-
 ## GetAgreementResponse
 
 <a id="schemagetagreementresponse"></a>
@@ -8693,67 +8475,6 @@ func main() {
 |status|cancelled|
 |status|declined|
 |status|expended|
-
-## ListIncomingAgreementsResponse
-
-<a id="schemalistincomingagreementsresponse"></a>
-
-```json
-{
-  "data": [
-    {
-      "ref": "A.2",
-      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
-      "authoriser_id": "8df89c16-330f-462b-8891-808d7bdceb7f",
-      "contact_id": "0d290763-bd5a-4b4d-a8ce-06c64c4a697b",
-      "bank_account_id": "fb9381ec-22af-47fd-8998-804f947aaca3",
-      "status": "proposed",
-      "status_reason": null,
-      "responded_at": null,
-      "created_at": "2017-03-20T00:53:27Z",
-      "terms": {
-        "per_payout": {
-          "max_amount": 10000,
-          "min_amount": 1
-        },
-        "per_frequency": {
-          "days": 7,
-          "max_amount": 1000000
-        }
-      }
-    },
-    {
-      "ref": "A.1",
-      "initiator_id": "4e2728cc-b4ba-42c2-a6c3-26a7758de58d",
-      "authoriser_id": "56df206a-aaff-471a-b075-11882bc8906a",
-      "contact_id": "a80ac411-c8fb-45c0-9557-607c54649907",
-      "bank_account_id": "fa80ac411-c8fb-45c0-9557-607c54649907",
-      "status": "proposed",
-      "status_reason": null,
-      "responded_at": null,
-      "created_at": "2017-03-16T22:51:48Z",
-      "terms": {
-        "per_payout": {
-          "max_amount": 5000,
-          "min_amount": 0
-        },
-        "per_frequency": {
-          "days": "1",
-          "max_amount": 10000
-        }
-      }
-    }
-  ]
-}
-```
-
-### Properties
-
-*List incoming Agreements (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|[object]|true|No description|
 
 ## ListOutgoingAgreementsResponse
 
@@ -8955,6 +8676,72 @@ func main() {
 |terms|[Terms](#schematerms)|true|No description|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
+## Terms
+
+<a id="schematerms"></a>
+
+```json
+{
+  "per_payout": {
+    "min_amount": 0,
+    "max_amount": 10000
+  },
+  "per_frequency": {
+    "days": 7,
+    "max_amount": 1000000
+  }
+}
+```
+
+### Properties
+
+*Agreement terms*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|per_payout|[PerPayout](#schemaperpayout)|true|No description|
+|per_frequency|[PerFrequency](#schemaperfrequency)|true|No description|
+
+## PerPayout
+
+<a id="schemaperpayout"></a>
+
+```json
+{
+  "min_amount": 0,
+  "max_amount": 10000
+}
+```
+
+### Properties
+
+*Per payout terms*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|min_amount|integer|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|max_amount|integer|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+
+## PerFrequency
+
+<a id="schemaperfrequency"></a>
+
+```json
+{
+  "days": 7,
+  "max_amount": 1000000
+}
+```
+
+### Properties
+
+*Per frequency terms*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|days|integer|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
+|max_amount|integer|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
+
 ## CreateOpenAgreementResponse
 
 <a id="schemacreateopenagreementresponse"></a>
@@ -9105,78 +8892,6 @@ func main() {
 ### Properties
 
 *Close Open Agreement Request (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|object|true|No description|
-
-## AddASplitContactRequest [DEPRECATED]
-
-<a id="schemaaddasplitcontactrequest [deprecated]"></a>
-
-```json
-{
-  "nickname": "outstanding_tours",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}
-```
-
-### Properties
-
-*Add a Split Contact (request)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|nickname|string|true|Split account nickname|
-|metadata|[Metadata](#schemametadata)|false|No description|
-
-## AddASplitContactResponse [DEPRECATED]
-
-<a id="schemaaddasplitcontactresponse [deprecated]"></a>
-
-```json
-{
-  "data": {
-    "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
-    "name": "Outstanding Tours Pty Ltd",
-    "email": "accounts@outstandingtours.com.au",
-    "type": "Split account",
-    "metadata": {
-      "custom_key": "Custom string",
-      "another_custom_key": "Maybe a URL"
-    },
-    "bank_account": {
-      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-      "account_number": "947434694",
-      "branch_code": "304304",
-      "bank_name": "National Australia Bank",
-      "state": "active",
-      "iav_provider": null,
-      "iav_status": null,
-      "blocks": {
-        "debits_blocked": false,
-        "credits_blocked": false
-      }
-    },
-    "account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d",
-      "nickname": "outstanding_tours",
-      "abn": "123456789",
-      "name": "Outstanding Tours Pty Ltd"
-    },
-    "links": {
-      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
-    }
-  }
-}
-```
-
-### Properties
-
-*Add a Split Contact (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
@@ -9831,86 +9546,6 @@ func main() {
 |---|---|---|---|
 |data|object|true|No description|
 
-## ApprovePaymentRequestResponse [DEPRECATED]
-
-<a id="schemaapprovepaymentrequestresponse [deprecated]"></a>
-
-```json
-{
-  "data": {
-    "ref": "PR.3",
-    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
-    "authoriser_id": "d194c54b-9183-410c-966b-50485c5ce3f0",
-    "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-    "schedule_ref": null,
-    "status": "approved",
-    "status_reason": null,
-    "matures_at": "2016-12-25T00:00:00Z",
-    "responded_at": "2016-12-19T02:38:04Z",
-    "created_at": "2016-12-19T02:10:56Z",
-    "debit_ref": "D.b",
-    "payout": {
-      "amount": 99000,
-      "description": "The elite package for 4",
-      "matures_at": "2016-12-25T00:00:00Z"
-    },
-    "metadata": {
-      "custom_key": "Custom string",
-      "another_custom_key": "Maybe a URL"
-    }
-  }
-}
-```
-
-### Properties
-
-*Approve Payment Request (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|object|true|No description|
-
-## DeclinePaymentRequestResponse [DEPRECATED]
-
-<a id="schemadeclinepaymentrequestresponse [deprecated]"></a>
-
-```json
-{
-  "data": {
-    "ref": "PR.3",
-    "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-    "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
-    "authoriser_id": "d194c54b-9183-410c-966b-50485c5ce3f0",
-    "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-    "schedule_ref": null,
-    "status": "declined",
-    "status_reason": null,
-    "matures_at": "2016-12-25T00:00:00Z",
-    "responded_at": "2016-12-19T02:38:04Z",
-    "created_at": "2016-12-19T02:10:56Z",
-    "debit_ref": null,
-    "payout": {
-      "amount": 99000,
-      "description": "The elite package for 4",
-      "matures_at": "2016-12-25T00:00:00Z"
-    },
-    "metadata": {
-      "custom_key": "Custom string",
-      "another_custom_key": "Maybe a URL"
-    }
-  }
-}
-```
-
-### Properties
-
-*Decline a Payment Request (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|object|true|No description|
-
 ## ListAllPaymentsResponse
 
 <a id="schemalistallpaymentsresponse"></a>
@@ -10202,96 +9837,6 @@ func main() {
 |status_reason|The balance of the nominated bank account for this Payment Request is not available.|
 |status_reason|The nominated bank account for this Payment Request has insufficient funds.|
 
-## ListIncomingPaymentRequestsResponse
-
-<a id="schemalistincomingpaymentrequestsresponse"></a>
-
-```json
-{
-  "data": [
-    {
-      "ref": "PR.2",
-      "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-      "your_bank_account_id": "049528f7-6698-40a6-8221-52ec406e5424",
-      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-      "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-      "schedule_ref": "PRS.1",
-      "status": "approved",
-      "status_reason": null,
-      "matures_at": "2016-12-20T00:00:00Z",
-      "responded_at": "2016-12-19T02:10:18Z",
-      "created_at": "2016-12-19T02:09:09Z",
-      "debit_ref": "D.a",
-      "payout": {
-        "amount": 30000,
-        "description": "The SuperPackage",
-        "matures_at": "2016-12-20T00:00:00Z"
-      }
-    },
-    {
-      "ref": "PR.3",
-      "initiator_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-      "your_bank_account_id": "049528f7-6698-40a6-8221-52ec406e5424",
-      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-      "authoriser_contact_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-      "schedule_ref": null,
-      "status": "pending_approval",
-      "status_reason": null,
-      "matures_at": "2016-12-25T00:00:00Z",
-      "responded_at": null,
-      "created_at": "2016-12-19T02:10:56Z",
-      "debit_ref": null,
-      "payout": {
-        "amount": 99000,
-        "description": "The elite package for 4",
-        "matures_at": "2016-12-25T00:00:00Z"
-      },
-      "metadata": {
-        "custom_key": "Custom string",
-        "another_custom_key": "Maybe a URL"
-      }
-    }
-  ]
-}
-```
-
-### Properties
-
-*List incoming Payment Requests (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|array|true|No description|
-|» ref|string|true|The Payment Reference reference (PR.*)|
-|» initiator_id|string(uuid)|true|Your bank account ID where the funds will settle|
-|» your_bank_account_id|string(uuid)|true|Your bank account ID where the funds will settle (alias of `initiator_id`)|
-|» authoriser_id|string(uuid)|true|The debtor's bank account ID|
-|» authoriser_contact_id|string(uuid)|true|The contact ID representing the debtor within Split|
-|» schedule_ref|string|true|The schedule that generated the Payment request if applicable|
-|» status|string|true|The status of the Payment Request|
-|» status_reason|string|true|Only used when the `status` is `declined` due to prechecking.|
-|» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
-|» responded_at|string(date-time)|true|The date-time when the Payment Request status changed|
-|» created_at|string(date-time)|true|The date-time when the Payment Request was created|
-|» debit_ref|string|true|The resulting debit entry reference (available once approved)|
-|» payout|object|true|No description|
-|»» amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
-|»» description|string|true|Payment Request description|
-|»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
-|» metadata|object|false|Your custom keyed data added to the object|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|status|pending_approval|
-|status|unverified|
-|status|approved|
-|status|declined|
-|status|cancelled|
-|status_reason|The balance of the nominated bank account for this Payment Request is not available.|
-|status_reason|The nominated bank account for this Payment Request has insufficient funds.|
-
 ## ListOutgoingPaymentRequestsResponse
 
 <a id="schemalistoutgoingpaymentrequestsresponse"></a>
@@ -10550,38 +10095,6 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
-
-## ListIncomingRefundsResponse [DEPRECATED]
-
-<a id="schemalistincomingrefundsresponse [deprecated]"></a>
-
-```json
-{
-  "data": [
-    {
-      "ref": "PRF.2",
-      "for_ref": "D.5",
-      "credit_ref": "C.q",
-      "your_bank_account_id": "049528f7-6698-40a6-8221-52ec406e5424",
-      "created_at": "2017-05-09T04:45:26Z",
-      "amount": 5,
-      "reason": "Because reason",
-      "metadata": {
-        "custom_key": "Custom string",
-        "another_custom_key": "Maybe a URL"
-      }
-    }
-  ]
-}
-```
-
-### Properties
-
-*List incoming Refunds (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|[object]|true|No description|
 
 ## ListOutgoingRefundsResponse
 
