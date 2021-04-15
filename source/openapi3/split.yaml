@@ -2,21 +2,12 @@ openapi: 3.0.0
 info:
   title: Split API
   description: >
-    Split allows you to make, get and manage payments using nothing but bank
-    accounts.
+    Split enables your business to make, collect and receive payments all through
+    1 simple API integration using nothing but bank accounts. Payments are hard. 
+    So we do most of the heavy lifting, leaving you to focus on on your business!
 
 
-    It is important to understand that there are 2 main ways Split can be used
-    for maximum flexibility:
-
-
-    1. Between Split accounts.
-
-    2. Between a Split account and anyone.
-
-
-    Due to the above, certain endpoints and techniques will differ slightly
-    depending on who you are interacting with. You can find more on this in the
+    You can find more on this in the
     [Making payments](/#making-payments) and [Getting paid](/#getting-paid)
     guides.
 
@@ -393,14 +384,12 @@ info:
     ## Making payments
 
     In order to payout funds, you'll be looking to use the
-    [Payments](/#Split-API-Payments) endpoint. Whether you're paying out another
-    Split account holder or anyone, the process is the same:
+    [Payments](/#Split-API-Payments) endpoint:
 
 
-    1. Add the recipient to your Contacts: [Split
-    Contact](/#add-a-split-contact) or [Anyone Contact](/#add-a-contact)
+    1. Add the recipient to your [Contact](/#add-a-contact) list.
 
-    2. [Make the Payment](/#make-a-payment) to your Contact.
+    2. [Make a Payment](/#make-a-payment) to your Contact.
 
 
     Common use cases:
@@ -409,49 +398,35 @@ info:
     * Automated payout disbursement (Referal programs, net/commission payouts,
     etc...)
 
+    * Wage payments
+
+    * Gig economy payments
+
+    * Lending
+
 
     ## Getting paid
 
-    There are 2 ways to get paid:
+    In order to collect funds, use our Payment Requests to pull funds from your
+    customers using direct debit.
 
 
     ### POSTing a [Payment Request](/#Split-API-Payment-Requests)
 
 
-    Provides the ability to send a Payment Request (get paid) to any Contact
-    that is either:
+    Provides the ability to send a Payment Request (get paid) to any of 
+    your Contacts as long as there is an accepted Agreement in place.
 
 
-    * A Split Contact (The contact has a Split account); **or**
-
-    * An Anyone Contact (The contact does not have a Split account) with an
-    accepted Agreement in place.
-
-
-    **For a Split Contact**:
-
-
-    * They will receive a request that they must approve via the Split UI or API
-    in order for the funds to flow from their bank account to yours.
-
-
-    * To automate the Payment Request approval, process you must first [enter
-    into an Agreement](/#Split-API-Agreements) with the Split Contact. Once the
-    Agreement is accepted, any future Payment Request will be automatically
-    approved and processed per the Agreement terms.
-
-
-    **For an Anyone Contact**:
-
-
-    * To send a Payment Request using the API to an Anyone Contact, you must
-    first have an accepted Agreement with them . To do so, you can send them an
+    * To send a Payment Request to a Contact using the API, you must
+    first have an accepted [Agreement](/#Split-API-Agreements) with them. To do so, you can send them an
     [Open Agreement link](https://help.split.cash/agreements/open-agreement) or
     [Unassigned Agreement
     link](http://help.split.cash/agreements/unassigned-agreement) for them to
     [elect & verify their bank
     account](https://help.split.cash/bank-accounts/instant-account-verification-iav)
-    and accept the Agreement.
+    and accept the Agreement. Having this in place will allow any future Payment 
+    Requests to be automatically approved and processed as per the Agreement terms.
 
 
     Common use cases:
@@ -1615,13 +1590,15 @@ tags:
       <aside class="notice">Looking to add a new bank connection to a contact? See the <a href="#get-a-contact">get a contact endpoint</a></aside>
   - name: Payments
     description: >
-      **A Payment is made up of two parts:**
+      A Payment is used to disburse funds to your Contacts.
 
 
-      1. General details about the Payment.
+      Supported payment rails:
 
-      2. One or many Payouts with individual recipients, amounts and
-      descriptions.
+
+      * NPP: Real-time payments
+
+      * DE: Slower payments
 
 
       ##Lifecycle
@@ -1664,15 +1641,35 @@ tags:
       updated. For a list of possible Payout statuses check out the
       [Transactions](/#Split-API-Transactions).
 
+        <aside class="notice">
+          Split no longer supports multiple Payouts within a single Payment request. A Payment request must only contain 1 Payout object.
+        </aside>
 
-      When Split is unable to credit funds to a recipient, we will automatically create a payout reversal credit back to the payer. Furthermore, within the payout reversal credit, Split will include details in the `description` and under the `reversal_details` key as to why the original credit to the recipient failed.
+
+      ### Payout Reversal
+
+      When Split is unable to credit funds to a recipient, we will automatically create a payout reversal credit back to the payer. 
+      Furthermore, within the payout reversal credit, Split will include details in the `description` and under the `reversal_details` key
+       as to why the original credit to the recipient failed.
   - name: Payouts
     description: >
-      Payouts are what a Payment or Payment Request are made of and can be either a debit or a credit.
-      One or all Payouts can be voided individually as part of the larger Payment or Payment Request.
+      This endpoint gives you some control over a transaction:
+
+
+      * After it has been created; and
+
+      * Before it has been submitted to the banks; or
+
+      * If it was Prefailed, due to insufficient funds, and was therefore not submitted to the banks.
+
+
+      <aside class="notice">
+        Payments and Payment Requests are made up of individual Debits and Credits. These debits and credits
+        were once referred to as Payouts [Legacy naming].
+      </aside>
   - name: Payment Requests
     description: >
-      A Payment Request (PR) is used to collect funds, via direct debit, from another party.
+      A Payment Request (PR) is used to collect funds, via direct debit, from one of your Contacts (as long as there is an accepted Agreement in place).
 
 
       <div class="middle-header">Applicable scenarios</div>
@@ -1716,34 +1713,9 @@ tags:
       Split will automatically check for available funds before **attempting to debit** the debtor. This check is only performed for contacts with an active [bank connection](/#Split-API-Bank-Connections).
   - name: Refunds
     description: >
-      Refunds can be issued for any successfully cleared Payout (credit)
-      transactions.
 
-
-      <div class="middle-header">Direction</div>
-
-
-      Refunds are broken up by direction:
-
-
-      1. **Incoming:** An incoming Refund (you are the recipient of the refund)
-
-      2. **Outgoing:** An outgoing Refund (you are the issuer of the refund)
-
-
-      There are two response fields that differ depending on the direction:
-
-
-      | Field | Description |
-
-      |-------|-------------|
-
-      | `debit_ref` | Only visible to the Refund issuer (outgoing Refunds). This
-      reference corresponds to the newly created debit to process the Refund. |
-
-      | `credit_ref` | Only visible to the Refund recipient (incoming Refunds).
-      This reference corresponds to the newly created credit to process the
-      Refund. |
+      Refunds can be issued for any successfully completed Payment Request transaction.
+      This allows you to return previously collected funds.
   - name: Transactions
     description: >
       By default, the transactions endpoint provides a detailed look at all past, current
@@ -2542,16 +2514,25 @@ paths:
     post:
       tags:
         - Payouts
-      summary: Retry a credit/debit Payout
+      summary: Retry a Prefailed Payment Request
       description: |
         Split will prefail a debit and its associated credit transaction before ever sending it to the bank if we detect a high probability of insufficient funds.
 
         This endpoint allows you to retry the payout without having to recreate the parent request. e.g A Payment or Payment Request.
+
+        When debitting a Contact with an active bank connection, Split will first ensure that there are sufficient funds available, before submitting the debit to the banks.
+        If a high probability of insufficient funds is detected, Split will not submit the transaction to the banks and will mark the transaction as <strong>Prefailed</strong>.
+
+        This endpoint allows you to retry the Payment Request without having to recreate a brand new transaction.
+
+        <aside class="notice">
+          Rather than using this endpoint, we now recommend creating a brand new transaction as this simplifies and maintains data integrity for the lifecycle of each transaction attempt
+        </aside>
       operationId: RetryAPayout
       parameters:
         - name: ref
           in: path
-          description: Payout debit or credit reference
+          description: Payment Request debit or credit reference number e.g C.2 / D.72
           required: true
           style: simple
           explode: false
@@ -2700,14 +2681,14 @@ paths:
         Certain rules apply to the issuance of a refund:
 
         <ul>
-          <li>Must be applied against a successfully cleared payout (credit)</li>
-          <li>The refund amount must not exceed the original amount of the credit</li>
+          <li>Must be applied against a successfully cleared Payment Request (credit)</li>
+          <li>Many refunds may be created against the original Payment Request. The total refunded amount must not exceed the original value</li>
         </ul>
       operationId: IssueARefund
       parameters:
         - name: credit_ref
           in: path
-          description: ''
+          description: 'The credit reference number e.g C.625v'
           required: true
           style: simple
           schema:
@@ -2726,40 +2707,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/IssueARefundResponse'
-  /refunds/incoming:
-    get:
-      tags:
-        - Refunds
-      summary: List incoming Refunds
-      description: ''
-      operationId: ListIncomingRefunds|Get
-      parameters:
-        - name: page
-          in: query
-          description: 'Page of results to return, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '1'
-        - name: per_page
-          in: query
-          description: 'Number of results per page, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '100'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ListIncomingRefundsResponse'
   /refunds/outgoing:
     get:
       tags:
         - Refunds
-      summary: List outgoing Refunds
+      summary: List Refunds
       description: ''
       operationId: ListOutgoingRefunds
       parameters:
@@ -4340,7 +4292,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Payout'
-          description: One or many Payouts
+          description: One Payout object only
         metadata:
           $ref: '#/components/schemas/Metadata'
       example:
@@ -4356,9 +4308,6 @@ components:
               invoice_id: c80a9958-e805-47c0-ac2a-c947d7fd778d
               custom_key: Custom string
               another_custom_key: Maybe a URL
-          - amount: 30000
-            description: A scuba dive SDS5464
-            recipient_contact_id: dc6f1e60-3803-43ca-a200-7d641816f57f
         metadata:
           custom_key: Custom string
           another_custom_key: Maybe a URL
@@ -4430,16 +4379,6 @@ components:
                 invoice_id: c80a9958-e805-47c0-ac2a-c947d7fd778d
                 custom_key: Custom string
                 another_custom_key: Maybe a URL
-            - ref: D.2
-              recipient_contact_id: 48b89364-1577-4c81-ba02-96705895d457
-              batch_description: The SuperPackage
-              matures_at: '2016-09-13T23:50:44Z'
-              created_at: '2016-09-10T23:50:44Z'
-              status: maturing
-              amount: 30000
-              description: A scuba dive SDS5464
-              from_id: 83623359-e86e-440c-9780-432a3bc3626f
-              to_id: 21066764-c103-4e7f-b436-4cee7db5f400
           metadata:
             custom_key: Custom string
             another_custom_key: Maybe a URL
@@ -4573,16 +4512,6 @@ components:
                 invoice_id: c80a9958-e805-47c0-ac2a-c947d7fd778d
                 custom_key: Custom string
                 another_custom_key: Maybe a URL
-            - ref: D.2
-              recipient_contact_id: dc6f1e60-3803-43ca-a200-7d641816f57f
-              batch_description: The SuperPackage
-              matures_at: '2016-09-13T23:50:44Z'
-              created_at: '2016-09-10T23:50:44Z'
-              status: maturing
-              amount: 30000
-              description: A scuba dive SDS5464
-              from_id: 48b89364-1577-4c81-ba02-96705895d457
-              to_id: f989d9cd-87fc-4c73-b0a4-1eb0e8768d3b
           metadata:
             custom_key: Custom string
             another_custom_key: Maybe a URL
@@ -5295,7 +5224,7 @@ components:
           metadata:
             custom_key: Custom string
             another_custom_key: Maybe a URL
-    ListIncomingRefundsResponse:
+    ListIncomingRefundsResponse [DEPRECATED]:
       title: List incoming Refunds (response)
       required:
         - data

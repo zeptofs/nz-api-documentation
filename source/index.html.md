@@ -20,14 +20,9 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-Split allows you to make, get and manage payments using nothing but bank accounts.
+Split enables your business to make, collect and receive payments all through 1 simple API integration using nothing but bank accounts. Payments are hard.  So we do most of the heavy lifting, leaving you to focus on on your business!
 
-It is important to understand that there are 2 main ways Split can be used for maximum flexibility:
-
-1. Between Split accounts.
-2. Between a Split account and anyone.
-
-Due to the above, certain endpoints and techniques will differ slightly depending on who you are interacting with. You can find more on this in the [Making payments](/#making-payments) and [Getting paid](/#getting-paid) guides.
+You can find more on this in the [Making payments](/#making-payments) and [Getting paid](/#getting-paid) guides.
 
 <div class="middle-header">Conventions</div>
 
@@ -299,7 +294,7 @@ When the access token expires, instead of sending the user back through the auth
 want to store the newly generated <code>refresh_token</code> everytime you use it to get a new <code>access_token</code>
 </aside>
 ## Making payments
-In order to payout funds, you'll be looking to use the [Payments](/#Split-API-Payments) endpoint. Whether you're paying out another Split account holder or anyone, the process is the same:
+In order to payout funds, you'll be looking to use the [Payments](/#Split-API-Payments) endpoint:
 
 1. Add the recipient to your Contacts: [Split Contact](/#add-a-split-contact) or [Anyone Contact](/#add-a-contact)
 2. [Make the Payment](/#make-a-payment) to your Contact.
@@ -307,26 +302,18 @@ In order to payout funds, you'll be looking to use the [Payments](/#Split-API-Pa
 Common use cases:
 
 * Automated payout disbursement (Referal programs, net/commission payouts, etc...)
+* Wage payments
+* Gig economy payments
+* Lending
 
 ## Getting paid
-There are 2 ways to get paid:
+In order to collect funds, use our Payment Requests to pull funds from your customers using direct debit.
 
 ### POSTing a [Payment Request](/#Split-API-Payment-Requests)
 
-Provides the ability to send a Payment Request (get paid) to any Contact that is either:
+Provides the ability to send a Payment Request (get paid) to any of  your Contacts as long as there is an accepted Agreement in place.
 
-* A Split Contact (The contact has a Split account); **or**
-* An Anyone Contact (The contact does not have a Split account) with an accepted Agreement in place.
-
-**For a Split Contact**:
-
-* They will receive a request that they must approve via the Split UI or API in order for the funds to flow from their bank account to yours.
-
-* To automate the Payment Request approval, process you must first [enter into an Agreement](/#Split-API-Agreements) with the Split Contact. Once the Agreement is accepted, any future Payment Request will be automatically approved and processed per the Agreement terms.
-
-**For an Anyone Contact**:
-
-* To send a Payment Request using the API to an Anyone Contact, you must first have an accepted Agreement with them . To do so, you can send them an [Open Agreement link](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreement link](http://help.split.cash/agreements/unassigned-agreement) for them to [elect & verify their bank account](https://help.split.cash/bank-accounts/instant-account-verification-iav) and accept the Agreement.
+* To send a Payment Request to a Contact using the API, you must first have an accepted [Agreement](/#Split-API-Agreements) with them. To do so, you can send them an [Open Agreement link](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreement link](http://help.split.cash/agreements/unassigned-agreement) for them to [elect & verify their bank account](https://help.split.cash/bank-accounts/instant-account-verification-iav) and accept the Agreement. Having this in place will allow any future Payment  Requests to be automatically approved and processed as per the Agreement terms.
 
 Common use cases:
 
@@ -4523,7 +4510,7 @@ Disable the Open Agreement from being viewed or accepted.
 
 <h1 id="Split-API-Payment-Requests">Payment Requests</h1>
 
-A Payment Request (PR) is used to collect funds, via direct debit, from another party.
+A Payment Request (PR) is used to collect funds, via direct debit, from one of your Contacts (as long as there is an accepted Agreement in place).
 
 <div class="middle-header">Applicable scenarios</div>
 
@@ -5306,10 +5293,12 @@ Payment Requests where you're the creditor and collecting funds from the debtor.
 
 <h1 id="Split-API-Payments">Payments</h1>
 
-**A Payment is made up of two parts:**
+A Payment is used to disburse funds to your Contacts.
 
-1. General details about the Payment.
-2. One or many Payouts with individual recipients, amounts and descriptions.
+Supported payment rails:
+
+* NPP: Real-time payments
+* DE: Slower payments
 
 ##Lifecycle
 > Example payout reversal response
@@ -5343,7 +5332,13 @@ Payment Requests where you're the creditor and collecting funds from the debtor.
 ```
 A Payment is simply a group of Payouts, therefore it does not have a particular status. Its Payouts however have their status regularly updated. For a list of possible Payout statuses check out the [Transactions](/#Split-API-Transactions).
 
-When Split is unable to credit funds to a recipient, we will automatically create a payout reversal credit back to the payer. Furthermore, within the payout reversal credit, Split will include details in the `description` and under the `reversal_details` key as to why the original credit to the recipient failed.
+  <aside class="notice">
+    Split no longer supports multiple Payouts within a single Payment request. A Payment request must only contain 1 Payout object.
+  </aside>
+
+### Payout Reversal
+When Split is unable to credit funds to a recipient, we will automatically create a payout reversal credit back to the payer.  Furthermore, within the payout reversal credit, Split will include details in the `description` and under the `reversal_details` key
+ as to why the original credit to the recipient failed.
 
 ## Make a Payment
 
@@ -5357,7 +5352,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"description":"The SuperPackage","matures_at":"2016-09-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}},{"amount":30000,"description":"A scuba dive SDS5464","recipient_contact_id":"dc6f1e60-3803-43ca-a200-7d641816f57f"}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"description":"The SuperPackage","matures_at":"2016-09-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -5374,7 +5369,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_contact_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -5423,11 +5418,6 @@ req.write(JSON.stringify({
         custom_key: 'Custom string',
         another_custom_key: 'Maybe a URL'
       }
-    },
-    {
-      amount: 30000,
-      description: 'A scuba dive SDS5464',
-      recipient_contact_id: 'dc6f1e60-3803-43ca-a200-7d641816f57f'
     }
   ],
   metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
@@ -5440,7 +5430,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
-payload = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_contact_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -5461,7 +5451,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/pay
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_contact_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -5472,7 +5462,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"description":"The SuperPackage","matures_at":"2016-09-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}},{"amount":30000,"description":"A scuba dive SDS5464","recipient_contact_id":"dc6f1e60-3803-43ca-a200-7d641816f57f"}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"description":"The SuperPackage","matures_at":"2016-09-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api.sandbox.split.cash/payments');
 $request->setRequestMethod('POST');
@@ -5504,7 +5494,7 @@ func main() {
 
 	url := "https://api.sandbox.split.cash/payments"
 
-	payload := strings.NewReader("{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}},{\"amount\":30000,\"description\":\"A scuba dive SDS5464\",\"recipient_contact_id\":\"dc6f1e60-3803-43ca-a200-7d641816f57f\"}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"description\":\"The SuperPackage\",\"matures_at\":\"2016-09-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -5543,11 +5533,6 @@ func main() {
         "custom_key": "Custom string",
         "another_custom_key": "Maybe a URL"
       }
-    },
-    {
-      "amount": 30000,
-      "description": "A scuba dive SDS5464",
-      "recipient_contact_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
     }
   ],
   "metadata": {
@@ -5565,7 +5550,7 @@ func main() {
 |» description|body|string|true|User description. Only visible to the payer|
 |» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
 |» your_bank_account_id|body|string|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
-|» payouts|body|[[Payout](#schemapayout)]|true|One or many Payouts|
+|» payouts|body|[[Payout](#schemapayout)]|true|One Payout object only|
 |»» Payout|body|[Payout](#schemapayout)|false|The actual Payout|
 |»»» amount|body|integer|true|Amount in cents to pay the recipient|
 |»»» description|body|string|true|Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description. For NPP payments, the payout recipient will see the first 280 characters of this description.|
@@ -5600,18 +5585,6 @@ func main() {
           "custom_key": "Custom string",
           "another_custom_key": "Maybe a URL"
         }
-      },
-      {
-        "ref": "D.2",
-        "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
-        "batch_description": "The SuperPackage",
-        "matures_at": "2016-09-13T23:50:44Z",
-        "created_at": "2016-09-10T23:50:44Z",
-        "status": "maturing",
-        "amount": 30000,
-        "description": "A scuba dive SDS5464",
-        "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
-        "to_id": "21066764-c103-4e7f-b436-4cee7db5f400"
       }
     ],
     "metadata": {
@@ -5999,18 +5972,6 @@ Get a single payment by its reference
           "custom_key": "Custom string",
           "another_custom_key": "Maybe a URL"
         }
-      },
-      {
-        "ref": "D.2",
-        "recipient_contact_id": "dc6f1e60-3803-43ca-a200-7d641816f57f",
-        "batch_description": "The SuperPackage",
-        "matures_at": "2016-09-13T23:50:44Z",
-        "created_at": "2016-09-10T23:50:44Z",
-        "status": "maturing",
-        "amount": 30000,
-        "description": "A scuba dive SDS5464",
-        "from_id": "48b89364-1577-4c81-ba02-96705895d457",
-        "to_id": "f989d9cd-87fc-4c73-b0a4-1eb0e8768d3b"
       }
     ],
     "metadata": {
@@ -6029,9 +5990,18 @@ Get a single payment by its reference
 
 <h1 id="Split-API-Payouts">Payouts</h1>
 
-Payouts are what a Payment or Payment Request are made of and can be either a debit or a credit. One or all Payouts can be voided individually as part of the larger Payment or Payment Request.
+This endpoint gives you some control over a transaction:
 
-## Retry a credit/debit Payout
+* After it has been created; and
+* Before it has been submitted to the banks; or
+* If it was Prefailed, due to insufficient funds, and was therefore not submitted to the banks.
+
+<aside class="notice">
+  Payments and Payment Requests are made up of individual Debits and Credits. These debits and credits
+  were once referred to as Payouts [Legacy naming].
+</aside>
+
+## Retry a Prefailed Payment Request
 
 <a id="opIdRetryAPayout"></a>
 
@@ -6171,11 +6141,20 @@ Split will prefail a debit and its associated credit transaction before ever sen
 
 This endpoint allows you to retry the payout without having to recreate the parent request. e.g A Payment or Payment Request.
 
-<h3 id="Retry-a-credit/debit-Payout-parameters" class="parameters">Parameters</h3>
+When debitting a Contact with an active bank connection, Split will first ensure that there are sufficient funds available, before submitting the debit to the banks.
+If a high probability of insufficient funds is detected, Split will not submit the transaction to the banks and will mark the transaction as <strong>Prefailed</strong>.
+
+This endpoint allows you to retry the Payment Request without having to recreate a brand new transaction.
+
+<aside class="notice">
+  Rather than using this endpoint, we now recommend creating a brand new transaction as this simplifies and maintains data integrity for the lifecycle of each transaction attempt
+</aside>
+
+<h3 id="Retry-a-Prefailed-Payment-Request-parameters" class="parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|ref|path|string|true|Payout debit or credit reference|
+|ref|path|string|true|Payment Request debit or credit reference number e.g C.2 / D.72|
 
 > Example responses
 
@@ -6204,7 +6183,7 @@ This endpoint allows you to retry the payout without having to recreate the pare
 }
 ```
 
-<h3 id="Retry a credit/debit Payout-responses">Responses</h3>
+<h3 id="Retry a Prefailed Payment Request-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -6386,21 +6365,7 @@ You can void any Payout debit from your account that has not yet matured.
 
 <h1 id="Split-API-Refunds">Refunds</h1>
 
-Refunds can be issued for any successfully cleared Payout (credit) transactions.
-
-<div class="middle-header">Direction</div>
-
-Refunds are broken up by direction:
-
-1. **Incoming:** An incoming Refund (you are the recipient of the refund)
-2. **Outgoing:** An outgoing Refund (you are the issuer of the refund)
-
-There are two response fields that differ depending on the direction:
-
-| Field | Description |
-|-------|-------------|
-| `debit_ref` | Only visible to the Refund issuer (outgoing Refunds). This reference corresponds to the newly created debit to process the Refund. |
-| `credit_ref` | Only visible to the Refund recipient (incoming Refunds). This reference corresponds to the newly created credit to process the Refund. |
+Refunds can be issued for any successfully completed Payment Request transaction. This allows you to return previously collected funds.
 
 ## Issue a Refund
 
@@ -6566,8 +6531,8 @@ func main() {
 
 Certain rules apply to the issuance of a refund:
 <ul>
-  <li>Must be applied against a successfully cleared payout (credit)</li>
-  <li>The refund amount must not exceed the original amount of the credit</li>
+  <li>Must be applied against a successfully cleared Payment Request (credit)</li>
+  <li>Many refunds may be created against the original Payment Request. The total refunded amount must not exceed the original value</li>
 </ul>
 
 > Body parameter
@@ -6588,7 +6553,7 @@ Certain rules apply to the issuance of a refund:
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|credit_ref|path|string|true|No description|
+|credit_ref|path|string|true|The credit reference number e.g C.625v|
 |body|body|[IssueARefundRequest](#schemaissuearefundrequest)|true|No description|
 |» amount|body|integer|true|Amount in cents refund (Min: 1 - Max: 99999999999)|
 |» reason|body|string|false|Reason for the refund. First 9 characters are visible to both parties.|
@@ -6623,180 +6588,7 @@ Certain rules apply to the issuance of a refund:
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Created|[IssueARefundResponse](#schemaissuearefundresponse)|
 
-## List incoming Refunds
-
-<a id="opIdListIncomingRefunds|Get"></a>
-
-> Code samples
-
-```shell
-curl --request GET \
-  --url https://api.sandbox.split.cash/refunds/incoming \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/refunds/incoming")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "GET",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/refunds/incoming",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("GET", "/refunds/incoming", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/refunds/incoming")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/refunds/incoming');
-$request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/refunds/incoming"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`GET /refunds/incoming`
-
-<h3 id="List-incoming-Refunds-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|page|query|string|false|Page of results to return, single value, exact match|
-|per_page|query|string|false|Number of results per page, single value, exact match|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": [
-    {
-      "ref": "PRF.2",
-      "for_ref": "D.5",
-      "credit_ref": "C.q",
-      "your_bank_account_id": "049528f7-6698-40a6-8221-52ec406e5424",
-      "created_at": "2017-05-09T04:45:26Z",
-      "amount": 5,
-      "reason": "Because reason",
-      "metadata": {
-        "custom_key": "Custom string",
-        "another_custom_key": "Maybe a URL"
-      }
-    }
-  ]
-}
-```
-
-<h3 id="List incoming Refunds-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListIncomingRefundsResponse](#schemalistincomingrefundsresponse)|
-
-## List outgoing Refunds
+## List Refunds
 
 <a id="opIdListOutgoingRefunds"></a>
 
@@ -6932,7 +6724,7 @@ func main() {
 
 `GET /refunds/outgoing`
 
-<h3 id="List-outgoing-Refunds-parameters" class="parameters">Parameters</h3>
+<h3 id="List-Refunds-parameters" class="parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -6963,7 +6755,7 @@ func main() {
 }
 ```
 
-<h3 id="List outgoing Refunds-responses">Responses</h3>
+<h3 id="List Refunds-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -9914,11 +9706,6 @@ func main() {
         "custom_key": "Custom string",
         "another_custom_key": "Maybe a URL"
       }
-    },
-    {
-      "amount": 30000,
-      "description": "A scuba dive SDS5464",
-      "recipient_contact_id": "dc6f1e60-3803-43ca-a200-7d641816f57f"
     }
   ],
   "metadata": {
@@ -9937,7 +9724,7 @@ func main() {
 |description|string|true|User description. Only visible to the payer|
 |matures_at|string(date-time)|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
 |your_bank_account_id|string|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
-|payouts|[[Payout](#schemapayout)]|true|One or many Payouts|
+|payouts|[[Payout](#schemapayout)]|true|One Payout object only|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
 ## Payout
@@ -10026,18 +9813,6 @@ func main() {
           "custom_key": "Custom string",
           "another_custom_key": "Maybe a URL"
         }
-      },
-      {
-        "ref": "D.2",
-        "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
-        "batch_description": "The SuperPackage",
-        "matures_at": "2016-09-13T23:50:44Z",
-        "created_at": "2016-09-10T23:50:44Z",
-        "status": "maturing",
-        "amount": 30000,
-        "description": "A scuba dive SDS5464",
-        "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
-        "to_id": "21066764-c103-4e7f-b436-4cee7db5f400"
       }
     ],
     "metadata": {
@@ -10222,18 +9997,6 @@ func main() {
           "custom_key": "Custom string",
           "another_custom_key": "Maybe a URL"
         }
-      },
-      {
-        "ref": "D.2",
-        "recipient_contact_id": "dc6f1e60-3803-43ca-a200-7d641816f57f",
-        "batch_description": "The SuperPackage",
-        "matures_at": "2016-09-13T23:50:44Z",
-        "created_at": "2016-09-10T23:50:44Z",
-        "status": "maturing",
-        "amount": 30000,
-        "description": "A scuba dive SDS5464",
-        "from_id": "48b89364-1577-4c81-ba02-96705895d457",
-        "to_id": "f989d9cd-87fc-4c73-b0a4-1eb0e8768d3b"
       }
     ],
     "metadata": {
@@ -10788,9 +10551,9 @@ func main() {
 |---|---|---|---|
 |data|object|true|No description|
 
-## ListIncomingRefundsResponse
+## ListIncomingRefundsResponse [DEPRECATED]
 
-<a id="schemalistincomingrefundsresponse"></a>
+<a id="schemalistincomingrefundsresponse [deprecated]"></a>
 
 ```json
 {
