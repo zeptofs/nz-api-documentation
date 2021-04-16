@@ -1455,6 +1455,8 @@ info:
     We take backwards compatibility seriously. The following list contains backwards compatible changes:
 
 
+    - **2021-04-16** - Removed deprecated API references and refreshed Refunds and Payout descriptions 
+
     - **2021-03-17** - Remove note indicating single active bank account limitation
 
     - **2021-03-12** - Add ref to GetAContactResponse
@@ -2531,7 +2533,7 @@ paths:
       parameters:
         - name: ref
           in: path
-          description: Payment Request debit or credit reference number e.g C.2 / D.72
+          description: Payment Request credit reference number e.g C.2 
           required: true
           style: simple
           explode: false
