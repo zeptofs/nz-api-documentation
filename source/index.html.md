@@ -20,10 +20,11 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-Split enables your business to make, collect and receive payments all through 1 simple API integration using nothing but bank accounts. Payments are hard.  So we do most of the heavy lifting, leaving you to focus on on your business!
+Split enables your business to make, collect and receive payments using nothing but bank accounts. We've overlayed a simple REST-ful API on top of the legacy (and newer) Australian payment rails,  enabling all of your account to account payment flows through 1 simple integration. 
 
 You can find more on this in the [Making payments](/#making-payments) and [Getting paid](/#getting-paid) guides.
 
+And for all kinds of How To's and Recipes, head on over to our  [Help Guide](https://help.split.cash/en/).
 <div class="middle-header">Conventions</div>
 
 * Authentication is performed using OAuth2. See the [Get started](/#get-started) and [Authentication & Authorisation](/#authentication-and-authorisation) guides for more.
@@ -545,7 +546,7 @@ When using any of our hosted solutions ([Payment Requests](https://help.split.ca
 ## Available balances in the Sandbox
 If your integration includes allowing us to pre-fail transactions prior to being processed, you may want to test that your system is handling these events correctly. A transaction will pre-fail when the available balance of the customers account is less than the amount of the payment being requested. This is checked during pre-processing just before your debit is sent for processing if there is an active bank connection.
 
-In the Sandbox environment, if the contact you are attempting to debit has a bank connection that was created through our Instant Account Verification feature, the available balance of their bank account will always be `$123.45`. Any payment requests above this amount will pre-fail and any amount less than or equal to this amount will succeed.
+In the Sandbox environment, if the contact you are attempting to debit has a bank connection that was created through our Instant Account Verification feature, the available balance of any <strong>Transactional</strong> bank account will always be `$123.45`. Any payment requests above this amount will pre-fail and any amount less than or equal to this amount will succeed.
 # Configuration
 ## Scopes
 Scopes define the level of access granted via the OAuth2 authorisation process. As a best practice, only use the scopes your application will require.
@@ -6185,15 +6186,15 @@ This endpoint allows you to retry the Payment Request without having to create a
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[RetryPayoutResponse](#schemaretrypayoutresponse)|
 
-## Void a Payout
+## Void a Payment
 
-<a id="opIdVoidAPayout"></a>
+<a id="opIdVoidAPayment"></a>
 
 > Code samples
 
 ```shell
 curl --request DELETE \
-  --url https://api.sandbox.split.cash/payouts/D.1 \
+  --url https://api.sandbox.split.cash/payouts/D.48 \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
   --data '{"details":"Incorrect recipient"}'
@@ -6203,7 +6204,7 @@ curl --request DELETE \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/payouts/D.1")
+url = URI("https://api.sandbox.split.cash/payouts/D.48")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -6225,7 +6226,7 @@ var options = {
   "method": "DELETE",
   "hostname": "api.sandbox.split.cash",
   "port": null,
-  "path": "/payouts/D.1",
+  "path": "/payouts/D.48",
   "headers": {
     "content-type": "application/json",
     "authorization": "Bearer {access-token}"
@@ -6261,7 +6262,7 @@ headers = {
     'authorization': "Bearer {access-token}"
     }
 
-conn.request("DELETE", "/payouts/D.1", payload, headers)
+conn.request("DELETE", "/payouts/D.48", payload, headers)
 
 res = conn.getresponse()
 data = res.read()
@@ -6270,7 +6271,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/payouts/D.1")
+HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/payouts/D.48")
   .header("content-type", "application/json")
   .header("authorization", "Bearer {access-token}")
   .body("{\"details\":\"Incorrect recipient\"}")
@@ -6286,7 +6287,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"details":"Incorrect recipient"}');
 
-$request->setRequestUrl('https://api.sandbox.split.cash/payouts/D.1');
+$request->setRequestUrl('https://api.sandbox.split.cash/payouts/D.48');
 $request->setRequestMethod('DELETE');
 $request->setBody($body);
 
@@ -6313,7 +6314,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/payouts/D.1"
+	url := "https://api.sandbox.split.cash/payouts/D.48"
 
 	payload := strings.NewReader("{\"details\":\"Incorrect recipient\"}")
 
@@ -6335,7 +6336,7 @@ func main() {
 
 `DELETE /payouts/{ref}`
 
-You can void any Payout debit from your account that has not yet matured.
+You can void any Payment from your account that has not yet matured.
 
 > Body parameter
 
@@ -6345,15 +6346,15 @@ You can void any Payout debit from your account that has not yet matured.
 }
 ```
 
-<h3 id="Void-a-Payout-parameters" class="parameters">Parameters</h3>
+<h3 id="Void-a-Payment-parameters" class="parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|ref|path|string|true|Payout debit reference|
-|body|body|[VoidAPayoutRequest](#schemavoidapayoutrequest)|false|No description|
+|ref|path|string|true|Payment debit reference number e.g D.48|
+|body|body|[VoidAPaymentRequest](#schemavoidapaymentrequest)|false|No description|
 |» details|body|string|false|Optional details about why the payout has been voided|
 
-<h3 id="Void a Payout-responses">Responses</h3>
+<h3 id="Void a Payment-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -9466,9 +9467,9 @@ func main() {
 |recipient_contact_id|string|true|Contact to pay (`Contact.data.id`)|
 |metadata|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
-## VoidAPayoutRequest
+## VoidAPaymentRequest
 
-<a id="schemavoidapayoutrequest"></a>
+<a id="schemavoidapaymentrequest"></a>
 
 ```json
 {
@@ -9478,7 +9479,7 @@ func main() {
 
 ### Properties
 
-*Void a Payout (request)*
+*Void a Payment (request)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|

@@ -2,15 +2,18 @@ openapi: 3.0.0
 info:
   title: Split API
   description: >
-    Split enables your business to make, collect and receive payments all through
-    1 simple API integration using nothing but bank accounts. Payments are hard. 
-    So we do most of the heavy lifting, leaving you to focus on on your business!
+    Split enables your business to make, collect and receive payments using nothing but bank accounts.
+    We've overlayed a simple REST-ful API on top of the legacy (and newer) Australian payment rails, 
+    enabling all of your account to account payment flows through 1 simple integration. 
 
 
     You can find more on this in the
     [Making payments](/#making-payments) and [Getting paid](/#getting-paid)
     guides.
 
+
+    And for all kinds of How To's and Recipes, head on over to our 
+    [Help Guide](https://help.split.cash/en/).
 
     <div class="middle-header">Conventions</div>
 
@@ -855,7 +858,7 @@ info:
     If your integration includes allowing us to pre-fail transactions prior to being processed, you may want to test that your system is handling these events correctly. A transaction will pre-fail when the available balance of the customers account is less than the amount of the payment being requested. This is checked during pre-processing just before your debit is sent for processing if there is an active bank connection.
 
 
-    In the Sandbox environment, if the contact you are attempting to debit has a bank connection that was created through our Instant Account Verification feature, the available balance of their bank account will always be `$123.45`. Any payment requests above this amount will pre-fail and any amount less than or equal to this amount will succeed.
+    In the Sandbox environment, if the contact you are attempting to debit has a bank connection that was created through our Instant Account Verification feature, the available balance of any <strong>Transactional</strong> bank account will always be `$123.45`. Any payment requests above this amount will pre-fail and any amount less than or equal to this amount will succeed.
 
     # Configuration
 
@@ -2546,27 +2549,26 @@ paths:
     delete:
       tags:
         - Payouts
-      summary: Void a Payout
+      summary: Void a Payment
       description: >
-        You can void any Payout debit from your account that has not yet
-        matured.
-      operationId: VoidAPayout
+        You can void any Payment from your account that has not yet matured.
+      operationId: VoidAPayment
       parameters:
         - name: ref
           in: path
-          description: Payout debit reference
+          description: Payment debit reference number e.g D.48
           required: true
           style: simple
           explode: false
           schema:
             type: string
-          example: D.1
+          example: D.48
       requestBody:
         description: ''
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VoidAPayoutRequest'
+              $ref: '#/components/schemas/VoidAPaymentRequest'
       responses:
         '204':
           description: No Content
@@ -4130,8 +4132,8 @@ components:
         metadata:
           type: Metadata
           description: Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.
-    VoidAPayoutRequest:
-      title: Void a Payout (request)
+    VoidAPaymentRequest:
+      title: Void a Payment (request)
       type: object
       properties:
         details:
