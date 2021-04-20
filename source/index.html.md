@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-Split enables your business to make, collect and receive payments using nothing but bank accounts. We've overlaid a simple REST API on top of the legacy (and newer) Australian payment rails,  enabling all of your account to account payment flows through 1 simple integration. 
+Split enables your business to make, collect and receive payments using nothing but bank accounts. We've overlaid a simple REST API on top of the legacy (and newer) Australian payment rails,  enabling all of your account-to-account payment flows through 1 simple integration. 
 
 You can find more on this in the [Making payments](/#making-payments) and [Getting paid](/#getting-paid) guides.
 
@@ -467,11 +467,11 @@ As an example, the following authorisation URL would display the **personal sign
 You can also pass the values directly to the sign up page outside of the OAuth2 authorisation process. Click on the following link to see the values preloaded: [https://go.sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgeco&first_name=George](https://go.sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgceco&first_name=George).
 
 # Sandbox Testing Details
-Try out your happy paths and not-so happy paths, the sandbox is a great place to get started without transferring actual funds.  All transactions are simulated and no communication with financial institutions is performed.
+Try out your happy paths and not-so happy paths; the sandbox is a great place to get started without transferring actual funds.  All transactions are simulated and no communication with financial institutions is performed.
 
 The sandbox works on a 1 minute cycle to better illustrate how transactions are received and the lifecyle they go through.  In other words, every minute, we simulate communicating with financial institutions and update statuses and events accordingly.
 
-All 6 digits BSBs are valid in the sandbox with the exception of `100000` which is a place keeper for an invalid BSB.  In production, only real BSBs are accepted.
+All 6 digits BSBs are valid in the sandbox with the exception of `100000`. This BSB allows you to simulate the adding of an invalid BSB. In production, only real BSBs are accepted.
 ## Transaction failures
 To simulate [transaction failures](#failure-reasons) create a Payment or Payment Request with a specific amount listed in the table.
 
@@ -546,7 +546,7 @@ When using any of our hosted solutions ([Payment Requests](https://help.split.ca
 ## Available balances in the Sandbox
 If your integration includes allowing us to pre-fail transactions prior to being processed, you may want to test that your system is handling these events correctly.  A transaction will pre-fail when the available balance of the customers account is less than the amount of the payment being requested.  This is checked during pre-processing just before your debit is sent for processing if there is an active bank connection.
 
-In the Sandbox environment, if the contact you are attempting to debit has a bank connection that was created through our Instant Account Verification feature, the  available balance of any <strong>Transactional</strong> bank account will always be `$123.45`. Any payment requests above this amount will pre-fail and any amount  less than or equal to this amount will succeed.
+In the Sandbox environment, if the contact you are attempting to debit has a bank connection that was created through our Instant Account Verification feature, the  available balance of any **Transactional**bank account will always be `$123.45`. Any payment requests above this amount will pre-fail and any amount  less than or equal to this amount will succeed.
 # Configuration
 ## Scopes
 Scopes define the level of access granted via the OAuth2 authorisation process. As a best practice, only use the scopes your application will require.
@@ -912,7 +912,7 @@ To protect against timing attacks, use a constant-time string comparison to comp
 # Changelog
 We take backwards compatibility seriously. The following list contains backwards compatible changes:
 
-- **2021-04-16** - Removed deprecated API references and refreshed Refunds and Payout descriptions 
+- **2021-04-20** - Removed deprecated API references, refreshed Refunds and Payout descriptions
 - **2021-03-17** - Remove note indicating single active bank account limitation
 - **2021-03-12** - Add ref to GetAContactResponse
 - **2021-02-24** - Added details on enabling the Receivable Contact feature and amended the POST/contacts/receivable response body
@@ -6352,7 +6352,7 @@ You can void any Payment from your account that has not yet matured.
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |ref|path|string|true|Payment debit reference number e.g D.48|
-|body|body|[VoidAPaymentRequest](#schemavoidapaymentrequest)|false|No description|
+|body|body|[VoidAPayment](#schemavoidapayment)|false|No description|
 |» details|body|string|false|Optional details about why the payout has been voided|
 
 <h3 id="Void a Payment-responses">Responses</h3>
@@ -7182,6 +7182,8 @@ A transaction (debit or credit) can have the following statuses:
       "description": null,
       "amount": 1,
       "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
+      "channels": ["float_account"]
+      "current_channel": "float_account"
     }
   ]
 }
@@ -7407,19 +7409,23 @@ func main() {
       "parent_ref": null,
       "type": "debit",
       "category": "payout_refund",
-      "created_at": "2016-12-07T23:15:00Z",
-      "matures_at": "2016-12-10T23:15:00Z",
-      "cleared_at": "2016-12-10T23:15:00Z",
+      "created_at": "2021-04-07T23:15:00Z",
+      "matures_at": "2021-04-07T23:15:00Z",
+      "cleared_at": "2021-04-10T23:15:00Z",
       "bank_ref": "DT.9a",
       "status": "cleared",
-      "status_changed_at": "2016-12-10T23:15:00Z",
+      "status_changed_at": "2021-04-10T23:15:00Z",
       "party_contact_id": "31354923-b1e9-4d65-b03c-415ead89cbf3",
       "party_name": "Sanford-Rees",
       "party_nickname": null,
       "party_bank_ref": "CT.11",
       "description": null,
       "amount": 20000,
-      "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
+      "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a",
+      "channels": [
+        "float account"
+      ],
+      "current_channel": "float account"
     },
     {
       "ref": "D.2",
@@ -7438,7 +7444,11 @@ func main() {
       "party_bank_ref": null,
       "description": "Batteries for hire",
       "amount": 2949299,
-      "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
+      "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a",
+      "channels": [
+        "float_account"
+      ],
+      "current_channel": "float_account"
     },
     {
       "ref": "C.2",
@@ -7458,6 +7468,11 @@ func main() {
       "description": "Online purchase",
       "amount": 19999,
       "bank_account_id": "c2e329ae-606f-4311-a9ab-a751baa1915c",
+      "channels": [
+        "new_payments_platform",
+        "direct_entry"
+      ],
+      "current_channel": "direct_entry",
       "metadata": {
         "customer_id": "xur4492",
         "product_ref": "TSXL392110x"
@@ -9468,9 +9483,9 @@ func main() {
 |recipient_contact_id|string|true|Contact to pay (`Contact.data.id`)|
 |metadata|Metadata|false|Use for your custom data and certain Split customisations. Stored against generated transactions and included in associated webhook payloads.|
 
-## VoidAPaymentRequest
+## VoidAPayment
 
-<a id="schemavoidapaymentrequest"></a>
+<a id="schemavoidapayment"></a>
 
 ```json
 {
@@ -10207,19 +10222,23 @@ func main() {
       "parent_ref": null,
       "type": "debit",
       "category": "payout_refund",
-      "created_at": "2016-12-07T23:15:00Z",
-      "matures_at": "2016-12-10T23:15:00Z",
-      "cleared_at": "2016-12-10T23:15:00Z",
+      "created_at": "2021-04-07T23:15:00Z",
+      "matures_at": "2021-04-07T23:15:00Z",
+      "cleared_at": "2021-04-10T23:15:00Z",
       "bank_ref": "DT.9a",
       "status": "cleared",
-      "status_changed_at": "2016-12-10T23:15:00Z",
+      "status_changed_at": "2021-04-10T23:15:00Z",
       "party_contact_id": "31354923-b1e9-4d65-b03c-415ead89cbf3",
       "party_name": "Sanford-Rees",
       "party_nickname": null,
       "party_bank_ref": "CT.11",
       "description": null,
       "amount": 20000,
-      "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
+      "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a",
+      "channels": [
+        "float account"
+      ],
+      "current_channel": "float account"
     },
     {
       "ref": "D.2",
@@ -10238,7 +10257,11 @@ func main() {
       "party_bank_ref": null,
       "description": "Batteries for hire",
       "amount": 2949299,
-      "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
+      "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a",
+      "channels": [
+        "float_account"
+      ],
+      "current_channel": "float_account"
     },
     {
       "ref": "C.2",
@@ -10258,6 +10281,11 @@ func main() {
       "description": "Online purchase",
       "amount": 19999,
       "bank_account_id": "c2e329ae-606f-4311-a9ab-a751baa1915c",
+      "channels": [
+        "new_payments_platform",
+        "direct_entry"
+      ],
+      "current_channel": "direct_entry",
       "metadata": {
         "customer_id": "xur4492",
         "product_ref": "TSXL392110x"
