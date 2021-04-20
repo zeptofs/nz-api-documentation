@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-Split enables your business to make, collect and receive payments using nothing but bank accounts. We've overlayed a simple REST-ful API on top of the legacy (and newer) Australian payment rails,  enabling all of your account to account payment flows through 1 simple integration. 
+Split enables your business to make, collect and receive payments using nothing but bank accounts. We've overlaid a simple REST API on top of the legacy (and newer) Australian payment rails,  enabling all of your account to account payment flows through 1 simple integration. 
 
 You can find more on this in the [Making payments](/#making-payments) and [Getting paid](/#getting-paid) guides.
 
@@ -295,10 +295,10 @@ When the access token expires, instead of sending the user back through the auth
 want to store the newly generated <code>refresh_token</code> everytime you use it to get a new <code>access_token</code>
 </aside>
 ## Making payments
-In order to payout funds, you'll be looking to use the [Payments](/#Split-API-Payments) endpoint:
+To make outbound payments, you'll be looking to use the [Payments](/#Split-API-Payments) endpoint:
 
-1. Add the recipient to your Contacts: [Split Contact](/#add-a-split-contact) or [Anyone Contact](/#add-a-contact)
-2. [Make the Payment](/#make-a-payment) to your Contact.
+1. Add the recipient to your [Contact](/#add-a-contact) list.
+2. [Make a Payment](/#make-a-payment) to your Contact.
 
 Common use cases:
 
@@ -467,11 +467,11 @@ As an example, the following authorisation URL would display the **personal sign
 You can also pass the values directly to the sign up page outside of the OAuth2 authorisation process. Click on the following link to see the values preloaded: [https://go.sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgeco&first_name=George](https://go.sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgceco&first_name=George).
 
 # Sandbox Testing Details
-Try out your happy paths and not-so happy paths, the sandbox is a great place to get started without transferring actual funds. All transactions are simulated and no communication with financial institutions is performed.
+Try out your happy paths and not-so happy paths, the sandbox is a great place to get started without transferring actual funds.  All transactions are simulated and no communication with financial institutions is performed.
 
-The sandbox works on a 1 minute cycle to better illustrate how transactions are received and the lifecyle they go through. In other words, every minute, we simulate communicating with financial institutions and update statuses and events accordingly.
+The sandbox works on a 1 minute cycle to better illustrate how transactions are received and the lifecyle they go through.  In other words, every minute, we simulate communicating with financial institutions and update statuses and events accordingly.
 
-All 6 digits BSBs are valid in the sandbox with the exception of `100000` which is a place keeper for an invalid BSB. In production, only real BSBs are accepted.
+All 6 digits BSBs are valid in the sandbox with the exception of `100000` which is a place keeper for an invalid BSB.  In production, only real BSBs are accepted.
 ## Transaction failures
 To simulate [transaction failures](#failure-reasons) create a Payment or Payment Request with a specific amount listed in the table.
 
@@ -544,9 +544,9 @@ When using any of our hosted solutions ([Payment Requests](https://help.split.ca
 
 <aside class="notice">The credentials will work with any of the available financial institutions.</aside>
 ## Available balances in the Sandbox
-If your integration includes allowing us to pre-fail transactions prior to being processed, you may want to test that your system is handling these events correctly. A transaction will pre-fail when the available balance of the customers account is less than the amount of the payment being requested. This is checked during pre-processing just before your debit is sent for processing if there is an active bank connection.
+If your integration includes allowing us to pre-fail transactions prior to being processed, you may want to test that your system is handling these events correctly.  A transaction will pre-fail when the available balance of the customers account is less than the amount of the payment being requested.  This is checked during pre-processing just before your debit is sent for processing if there is an active bank connection.
 
-In the Sandbox environment, if the contact you are attempting to debit has a bank connection that was created through our Instant Account Verification feature, the available balance of any <strong>Transactional</strong> bank account will always be `$123.45`. Any payment requests above this amount will pre-fail and any amount less than or equal to this amount will succeed.
+In the Sandbox environment, if the contact you are attempting to debit has a bank connection that was created through our Instant Account Verification feature, the  available balance of any <strong>Transactional</strong> bank account will always be `$123.45`. Any payment requests above this amount will pre-fail and any amount  less than or equal to this amount will succeed.
 # Configuration
 ## Scopes
 Scopes define the level of access granted via the OAuth2 authorisation process. As a best practice, only use the scopes your application will require.
@@ -912,6 +912,7 @@ To protect against timing attacks, use a constant-time string comparison to comp
 # Changelog
 We take backwards compatibility seriously. The following list contains backwards compatible changes:
 
+- **2021-04-16** - Removed deprecated API references and refreshed Refunds and Payout descriptions 
 - **2021-03-17** - Remove note indicating single active bank account limitation
 - **2021-03-12** - Add ref to GetAContactResponse
 - **2021-02-24** - Added details on enabling the Receivable Contact feature and amended the POST/contacts/receivable response body
@@ -2631,10 +2632,10 @@ Receive funds from a Contact by allowing them to pay to a personalised PayID or 
   To enable this feature, please contact our support team with the following information:
     <li>Your full legal business name</li>
     <li>A legally owned domain name: for your PayID email addresses</li>
-    <li><strong>alias_name</strong>: a shortened business name that will be displayed to your customers upon PayID resolution</li>
+    <li><strong>alias_name</strong>: the business name that will be displayed to your customers upon PayID resolution. We suggest using a shortened name appropriate for mobile displays</li>
 </aside>
 <aside class="notice">
-  When creating this type of contact, the initial response <code>payid_details.state</code> value will always be <code>pending</code>. After a few seconds, it will transition to <code>active</code>. We suggest you use webhooks to be informed of this state change
+  When creating this type of Contact, the initial response <code>payid_details.state</code> value will always be <code>pending</code>. After a few seconds, it will transition to <code>active</code>. We suggest you use webhooks to be informed of this state change
 </aside>
 <aside class="notice">
   While unlikely, it is possible that we will be unable to register the given PayID. In this case <code>payid_details.state</code> will transition to <code>failed</code>.
@@ -3690,7 +3691,7 @@ func main() {
 
 `POST /contacts/{id}/refresh_balance`
 
-Refresh one of your contact's bank connections to get the latest available balance.
+Refresh one of your Contact's bank connections to get the latest available balance.
 
 <h3 id="Refresh-contact-bank-connection-parameters" class="parameters">Parameters</h3>
 
@@ -3922,8 +3923,8 @@ Create an Open Agreement that can be accepted by anyone.
 |» title|body|string|true|Title of the Open Agreement (Visible to authorisers)|
 |» terms|body|[Terms](#schematerms)|true|Terms|
 |»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
-|»»» min_amount|body|integer|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
-|»»» max_amount|body|integer|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|»»» min_amount|body|integer|true|Minimum amount in cents a Payment Request can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|»»» max_amount|body|integer|true|Maximum amount in cents a Payment Request can be in order to be auto-approved. Specify <code>null</code> for no limit.|
 |»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
 |»»» days|body|integer|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
 |»»» max_amount|body|integer|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
@@ -5298,8 +5299,8 @@ A Payment is used to disburse funds to your Contacts.
 
 Supported payment rails:
 
-* NPP: Real-time payments
-* DE: Slower payments
+* NPP: New Payments Platform (Real-time)
+* DE / BECS: Direct Entry / Bulk Electronic Clearing System (Slower)
 
 ##Lifecycle
 > Example payout reversal response
@@ -5312,8 +5313,8 @@ Supported payment rails:
     "parent_ref": "PB.1",
     "type": "credit",
     "category": "payout_reversal",
-    "created_at": "2016-12-07T23:15:00Z",
-    "matures_at": "2016-12-10T23:15:00Z",
+    "created_at": "2021-04-07T23:15:00Z",
+    "matures_at": "2021-04-07T23:15:00Z",
     "cleared_at": null,
     "bank_ref": null,
     "status": "maturing",
@@ -6151,7 +6152,7 @@ This endpoint allows you to retry the Payment Request without having to create a
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
-|ref|path|string|true|Payment Request debit or credit reference number e.g C.2 / D.72|
+|ref|path|string|true|Payment Request credit reference number e.g C.2|
 
 > Example responses
 
@@ -7204,7 +7205,7 @@ The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompani
 | `admin_voided` | Voided by Split Payments admin |
 
 <aside class="notice">
-  The <code>user_voided</code> and <code>admin_voided</code> <strong>failure_reasons</strong> can sometimes be accompanied by the <strong>failure_details</strong> key which includes user submitted comments relating to the <strong>failure_reason</strong>.
+  The <code>user_voided</code> and <code>admin_voided</code> <code>failure_reasons</code> can sometimes be accompanied by the <code>failure_details</code> key which includes user submitted comments relating to the <code>failure_reason</code>.
 </aside>
 
 ## List all transactions
@@ -7681,8 +7682,8 @@ Create an Unassigned Agreement.
 |» single_use|body|boolean|false|Optionally propose a single use agreement. When the Unassigned Agreement is accepted and a Payment Request is approved according to the Agreement terms, the agreement will automatically become <code>expended</code>.<br><br>The proposed agreement must have equal max/min <code>per_payout</code> amounts and <code>null</code> <code>per_frequency</code> amounts.<br><br>Furthermore, we will automatically check that the authoriser's bank account has sufficient funds to honour the agreement terms.|
 |» terms|body|[Terms](#schematerms)|true|Terms|
 |»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
-|»»» min_amount|body|integer|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
-|»»» max_amount|body|integer|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|»»» min_amount|body|integer|true|Minimum amount in cents a Payment Request can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|»»» max_amount|body|integer|true|Maximum amount in cents a Payment Request can be in order to be auto-approved. Specify <code>null</code> for no limit.|
 |»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
 |»»» days|body|integer|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
 |»»» max_amount|body|integer|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
@@ -8720,8 +8721,8 @@ func main() {
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|min_amount|integer|true|Minimum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
-|max_amount|integer|true|Maximum amount in cents a PR can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|min_amount|integer|true|Minimum amount in cents a Payment Request can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|max_amount|integer|true|Maximum amount in cents a Payment Request can be in order to be auto-approved. Specify <code>null</code> for no limit.|
 
 ## PerFrequency
 
