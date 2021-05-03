@@ -912,6 +912,7 @@ To protect against timing attacks, use a constant-time string comparison to comp
 # Changelog
 We take backwards compatibility seriously. The following list contains backwards compatible changes:
 
+- **2021-05-03** - Deprecated */payments_requests/outgoing* endpoint
 - **2021-04-20** - Removed deprecated API references, refreshed Refunds and Payout descriptions
 - **2021-03-17** - Remove note indicating single active bank account limitation
 - **2021-03-12** - Add ref to GetAContactResponse
@@ -5093,7 +5094,7 @@ A Payment Request can be cancelled as long as the associated transaction's state
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
 
-## List Payment Requests
+## List Payment Requests [DEPRECATED]
 
 <a id="opIdListOutgoingPaymentRequests"></a>
 
@@ -5229,9 +5230,9 @@ func main() {
 
 `GET /payment_requests/outgoing`
 
-Payment Requests where you're the creditor and collecting funds from the debtor. Alternatively the debtor is sending you funds ([Receivable Contacts](/#add-a-receivable-contact))
+Payment Requests where you're the creditor and collecting funds from the debtor. Alternatively the debtor is sending you funds ([Receivable Contacts](/#add-a-receivable-contact)) <aside class="notice"> The **/payment_requests/outgoing** endpoint will continue to be supported. </aside>
 
-<h3 id="List-Payment-Requests-parameters" class="parameters">Parameters</h3>
+<h3 id="List-Payment-Requests-[DEPRECATED]-parameters" class="parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -5287,7 +5288,7 @@ Payment Requests where you're the creditor and collecting funds from the debtor.
 }
 ```
 
-<h3 id="List Payment Requests-responses">Responses</h3>
+<h3 id="List Payment Requests [DEPRECATED]-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
