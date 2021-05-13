@@ -2660,7 +2660,7 @@ paths:
       tags:
         - Payment Requests
       summary: List Payment Requests [DEPRECATED]
-      description: Payment Requests where you're the creditor and collecting funds from the debtor.
+      description: Payment Requests where you're the creditor and are _collecting_ funds from the debtor.
           <aside class="notice">
             The **/payment_requests/outgoing** endpoint will be supported until 31 June 2021. Any integrations to this 
             endpoint should be pointed at the new **/payment_requests/collections** endpoint which returns the same information.
