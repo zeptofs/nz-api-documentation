@@ -70,7 +70,7 @@ info:
     Before you start, load up our API collection:
 
 
-    [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.postman.co/run-collection/46835ea325243f7bcb26#?env%5BSplit%20Payments%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL2dvLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoib2F1dGgyX2FwcGxpY2F0aW9uX2lkIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoic2NvcGUiLCJ2YWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMgb2ZmbGluZV9hY2Nlc3MiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Imlzbzg2MDFfbm93IiwidmFsdWUiOiIyMDIwLTExLTExVDIzOjU1OjE5WiIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYWNjZXNzX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6InJlZnJlc2hfdG9rZW4iLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9XQ==)
+    [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.postman.co/run-collection/a35b4949557b0f18189a?action=collection%2Fimport#?env%5BSplit%20Payments%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL2dvLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoib2F1dGgyX2FwcGxpY2F0aW9uX2lkIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoic2NvcGUiLCJ2YWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMgb2ZmbGluZV9hY2Nlc3MiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Imlzbzg2MDFfbm93IiwidmFsdWUiOiIyMDIxLTA1LTExVDIzOjU1OjE5WiIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYWNjZXNzX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6InJlZnJlc2hfdG9rZW4iLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9XQ==)
 
 
     Okay, lets get things setup!
@@ -1461,6 +1461,8 @@ info:
 
     We take backwards compatibility seriously. The following list contains backwards compatible changes:
 
+
+    - **2021-05-21** - Added new Payment Request endpoints, updated Postman collection
 
     - **2021-05-03** - Deprecated */payments_requests/outgoing* endpoint
     
@@ -5042,105 +5044,6 @@ components:
               amount: 5000
               description: Punting account top-up
               matures_at: '2021-06-01T04:34:56Z'
-    GetAPaymentRequestsHistoryResponse:
-      title: Get a Payment Request's history (response)
-      required:
-        - data
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            required:
-              - type
-              - description
-              - event
-              - at
-              - ref
-              - by
-            properties:
-              'type':
-                type: string
-                description: The type of object affected
-                enum:
-                  - payout_request
-                  - debit
-                  - credit
-              event:
-                type: string
-                description: The event that occurred
-              at:
-                type: string
-                format: date-time
-                description: When the event occurred
-              ref:
-                type: string
-                description: The reference of the affected object
-              by:
-                type: string
-                description: Who triggered the change/event
-      example:
-        data:
-          - type: payout_request
-            event: requested
-            at: '2017-01-05T07:47:45Z'
-            ref: PR.3
-            by: Fancy Pants (fancy_pants)
-          - type: payout_request
-            event: approved
-            at: '2017-01-07T06:13:52Z'
-            ref: PR.3
-            by: Lycra Co (lycra_co)
-          - type: debit
-            event: scheduled
-            at: '2017-01-07T06:13:52Z'
-            ref: D.n
-            by: Split Payments
-          - type: credit
-            event: scheduled
-            at: '2017-01-07T06:13:52Z'
-            ref: C.e
-            by: Split Payments
-          - type: debit
-            event: matured
-            at: '2017-01-08T04:30:14Z'
-            ref: D.n
-            by: Split Payments
-          - type: debit
-            event: processing
-            at: '2017-01-08T04:30:14Z'
-            ref: D.n
-            by: Split Payments
-          - type: debit
-            event: clearing
-            at: '2017-01-08T19:02:20Z'
-            ref: D.n
-            by: Split Payments
-          - type: debit
-            event: cleared
-            at: '2017-01-11T19:07:52Z'
-            ref: D.n
-            by: Split Payments
-          - type: credit
-            event: matured
-            at: '2017-01-11T19:07:52Z'
-            ref: C.e
-            by: Split Payments
-          - type: credit
-            event: processing
-            at: '2017-01-12T04:30:25Z'
-            ref: C.e
-            by: Split Payments
-          - type: credit
-            event: clearing
-            at: '2017-01-12T05:17:32Z'
-            ref: C.e
-            by: Split Payments
-          - type: credit
-            event: cleared
-            at: '2017-01-15T05:27:12Z'
-            ref: C.e
-            by: Split Payments
     IssueARefundRequest:
       title: Issue a Refund (request)
       required:

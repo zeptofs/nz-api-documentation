@@ -53,7 +53,7 @@ The best way to familiarise yourself with our API is by interacting with it.
 
 We've preloaded a collection of all our endpoints for you to use in Postman. Before you start, load up our API collection:
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.postman.co/run-collection/46835ea325243f7bcb26#?env%5BSplit%20Payments%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL2dvLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoib2F1dGgyX2FwcGxpY2F0aW9uX2lkIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoic2NvcGUiLCJ2YWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMgb2ZmbGluZV9hY2Nlc3MiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Imlzbzg2MDFfbm93IiwidmFsdWUiOiIyMDIwLTExLTExVDIzOjU1OjE5WiIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYWNjZXNzX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6InJlZnJlc2hfdG9rZW4iLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9XQ==)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.postman.co/run-collection/a35b4949557b0f18189a?action=collection%2Fimport#?env%5BSplit%20Payments%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL2dvLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoib2F1dGgyX2FwcGxpY2F0aW9uX2lkIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoic2NvcGUiLCJ2YWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMgb2ZmbGluZV9hY2Nlc3MiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Imlzbzg2MDFfbm93IiwidmFsdWUiOiIyMDIxLTA1LTExVDIzOjU1OjE5WiIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYWNjZXNzX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6InJlZnJlc2hfdG9rZW4iLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9XQ==)
 
 Okay, lets get things setup!
 
@@ -912,6 +912,7 @@ To protect against timing attacks, use a constant-time string comparison to comp
 # Changelog
 We take backwards compatibility seriously. The following list contains backwards compatible changes:
 
+- **2021-05-21** - Added new Payment Request endpoints, updated Postman collection
 - **2021-05-03** - Deprecated */payments_requests/outgoing* endpoint
 - **2021-04-20** - Removed deprecated API references, refreshed Refunds and Payout descriptions
 - **2021-03-17** - Remove note indicating single active bank account limitation
@@ -5232,7 +5233,7 @@ func main() {
 
 `GET /payment_requests/outgoing`
 
-Payment Requests where you're the creditor and collecting funds from the debtor. <aside class="notice"> The **/payment_requests/outgoing** endpoint will be supported until 31 June 2021. Any integrations to this endpoint should be pointed at the new **/payment_requests/collections** endpoint which returns the same information. </aside>
+Payment Requests where you're the creditor and are _collecting_ funds from the debtor. <aside class="notice"> The **/payment_requests/outgoing** endpoint will be supported until 31 June 2021. Any integrations to this endpoint should be pointed at the new **/payment_requests/collections** endpoint which returns the same information. </aside>
 
 <h3 id="List-Payment-Requests-[DEPRECATED]-parameters" class="parameters">Parameters</h3>
 
@@ -10520,122 +10521,6 @@ func main() {
 |»» description|string|true|Payment Request description|
 |»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
 |» metadata|[object]|false|Your custom keyed data|
-
-## GetAPaymentRequestsHistoryResponse
-
-<a id="schemagetapaymentrequestshistoryresponse"></a>
-
-```json
-{
-  "data": [
-    {
-      "type": "payout_request",
-      "event": "requested",
-      "at": "2017-01-05T07:47:45Z",
-      "ref": "PR.3",
-      "by": "Fancy Pants (fancy_pants)"
-    },
-    {
-      "type": "payout_request",
-      "event": "approved",
-      "at": "2017-01-07T06:13:52Z",
-      "ref": "PR.3",
-      "by": "Lycra Co (lycra_co)"
-    },
-    {
-      "type": "debit",
-      "event": "scheduled",
-      "at": "2017-01-07T06:13:52Z",
-      "ref": "D.n",
-      "by": "Split Payments"
-    },
-    {
-      "type": "credit",
-      "event": "scheduled",
-      "at": "2017-01-07T06:13:52Z",
-      "ref": "C.e",
-      "by": "Split Payments"
-    },
-    {
-      "type": "debit",
-      "event": "matured",
-      "at": "2017-01-08T04:30:14Z",
-      "ref": "D.n",
-      "by": "Split Payments"
-    },
-    {
-      "type": "debit",
-      "event": "processing",
-      "at": "2017-01-08T04:30:14Z",
-      "ref": "D.n",
-      "by": "Split Payments"
-    },
-    {
-      "type": "debit",
-      "event": "clearing",
-      "at": "2017-01-08T19:02:20Z",
-      "ref": "D.n",
-      "by": "Split Payments"
-    },
-    {
-      "type": "debit",
-      "event": "cleared",
-      "at": "2017-01-11T19:07:52Z",
-      "ref": "D.n",
-      "by": "Split Payments"
-    },
-    {
-      "type": "credit",
-      "event": "matured",
-      "at": "2017-01-11T19:07:52Z",
-      "ref": "C.e",
-      "by": "Split Payments"
-    },
-    {
-      "type": "credit",
-      "event": "processing",
-      "at": "2017-01-12T04:30:25Z",
-      "ref": "C.e",
-      "by": "Split Payments"
-    },
-    {
-      "type": "credit",
-      "event": "clearing",
-      "at": "2017-01-12T05:17:32Z",
-      "ref": "C.e",
-      "by": "Split Payments"
-    },
-    {
-      "type": "credit",
-      "event": "cleared",
-      "at": "2017-01-15T05:27:12Z",
-      "ref": "C.e",
-      "by": "Split Payments"
-    }
-  ]
-}
-```
-
-### Properties
-
-*Get a Payment Request's history (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|[object]|true|No description|
-|» type|string|true|The type of object affected|
-|» event|string|true|The event that occurred|
-|» at|string(date-time)|true|When the event occurred|
-|» ref|string|true|The reference of the affected object|
-|» by|string|true|Who triggered the change/event|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|type|payout_request|
-|type|debit|
-|type|credit|
 
 ## IssueARefundRequest
 
