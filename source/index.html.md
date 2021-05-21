@@ -53,7 +53,7 @@ The best way to familiarise yourself with our API is by interacting with it.
 
 We've preloaded a collection of all our endpoints for you to use in Postman. Before you start, load up our API collection:
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.postman.co/run-collection/46835ea325243f7bcb26#?env%5BSplit%20Payments%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL2dvLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoib2F1dGgyX2FwcGxpY2F0aW9uX2lkIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoic2NvcGUiLCJ2YWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMgb2ZmbGluZV9hY2Nlc3MiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Imlzbzg2MDFfbm93IiwidmFsdWUiOiIyMDIwLTExLTExVDIzOjU1OjE5WiIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYWNjZXNzX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6InJlZnJlc2hfdG9rZW4iLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9XQ==)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.postman.co/run-collection/a35b4949557b0f18189a?action=collection%2Fimport#?env%5BSplit%20Payments%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL2dvLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoib2F1dGgyX2FwcGxpY2F0aW9uX2lkIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoic2NvcGUiLCJ2YWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMgb2ZmbGluZV9hY2Nlc3MiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Imlzbzg2MDFfbm93IiwidmFsdWUiOiIyMDIxLTA1LTExVDIzOjU1OjE5WiIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYWNjZXNzX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6InJlZnJlc2hfdG9rZW4iLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9XQ==)
 
 Okay, lets get things setup!
 
@@ -912,6 +912,7 @@ To protect against timing attacks, use a constant-time string comparison to comp
 # Changelog
 We take backwards compatibility seriously. The following list contains backwards compatible changes:
 
+- **2021-05-21** - Added new Payment Request endpoints, updated Postman collection
 - **2021-05-03** - Deprecated */payments_requests/outgoing* endpoint
 - **2021-04-20** - Removed deprecated API references, refreshed Refunds and Payout descriptions
 - **2021-03-17** - Remove note indicating single active bank account limitation
@@ -4540,7 +4541,7 @@ A Payment Request can have the following statuses:
 
 <div class="middle-header">Prechecking</div>
 
-Split will automatically check for available funds before **attempting to debit** the debtor. This check is only performed for contacts with an active [bank connection](/#Split-API-Bank-Connections).
+When using Payment Requests to collect payments from your customer, Split will automatically check for available funds before **attempting to debit** the debtor.  This check is only performed for contacts with an active [bank connection](/#Split-API-Bank-Connections).
 
 ## Request Payment
 
@@ -4741,22 +4742,23 @@ func main() {
 ```json
 {
   "data": {
-    "ref": "PR.3",
+    "ref": "PR.39p1",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
     "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "authoriser_id": "970e4526-67d9-4ed9-b554-f5cf390ab775",
     "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+    "contact_initiated": false,
     "schedule_ref": null,
     "status": "pending_approval",
     "status_reason": null,
-    "matures_at": "2016-12-25T00:00:00Z",
+    "matures_at": "2021-12-25T00:00:00Z",
     "responded_at": null,
-    "created_at": "2016-12-19T02:10:56Z",
+    "created_at": "2021-12-19T02:10:56Z",
     "credit_ref": null,
     "payout": {
       "amount": 99000,
-      "description": "The elite package for 4",
-      "matures_at": "2016-12-25T00:00:00Z"
+      "description": "Premium Package for 4",
+      "matures_at": "2021-12-25T00:00:00Z"
     },
     "metadata": {
       "custom_key": "Custom string",
@@ -4922,22 +4924,23 @@ func main() {
 ```json
 {
   "data": {
-    "ref": "PR.3",
+    "ref": "PR.88me",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
     "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "authoriser_id": "970e4526-67d9-4ed9-b554-f5cf390ab775",
     "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+    "contact_initiated": false,
     "schedule_ref": null,
     "status": "approved",
     "status_reason": null,
-    "matures_at": "2016-12-25T00:00:00Z",
-    "responded_at": "2016-12-19T02:38:04Z",
-    "created_at": "2016-12-19T02:10:56Z",
-    "credit_ref": "C.b",
+    "matures_at": "2021-11-25T00:00:00Z",
+    "responded_at": "2021-11-19T02:38:04Z",
+    "created_at": "2021-11-19T02:10:56Z",
+    "credit_ref": "C.b6tf",
     "payout": {
-      "amount": 99000,
-      "description": "The elite package for 4",
-      "matures_at": "2016-12-25T00:00:00Z"
+      "amount": 1200,
+      "description": "Xbox Live subscription",
+      "matures_at": "2021-11-25T00:00:00Z"
     },
     "metadata": {
       "custom_key": "Custom string",
@@ -5230,7 +5233,7 @@ func main() {
 
 `GET /payment_requests/outgoing`
 
-Payment Requests where you're the creditor and collecting funds from the debtor. Alternatively the debtor is sending you funds ([Receivable Contacts](/#add-a-receivable-contact)) <aside class="notice"> The **/payment_requests/outgoing** endpoint will continue to be supported. </aside>
+Payment Requests where you're the creditor and are _collecting_ funds from the debtor. <aside class="notice"> The **/payment_requests/outgoing** endpoint will be supported until 31 June 2021. Any integrations to this endpoint should be pointed at the new **/payment_requests/collections** endpoint which returns the same information. </aside>
 
 <h3 id="List-Payment-Requests-[DEPRECATED]-parameters" class="parameters">Parameters</h3>
 
@@ -5252,6 +5255,7 @@ Payment Requests where you're the creditor and collecting funds from the debtor.
       "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
       "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
       "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "contact_initiated": true,
       "schedule_ref": "PRS.2",
       "status": "approved",
       "status_reason": null,
@@ -5271,6 +5275,7 @@ Payment Requests where you're the creditor and collecting funds from the debtor.
       "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
       "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
       "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "contact_initiated": true,
       "schedule_ref": null,
       "status": "pending_approval",
       "status_reason": null,
@@ -5293,6 +5298,410 @@ Payment Requests where you're the creditor and collecting funds from the debtor.
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingPaymentRequestsResponse](#schemalistoutgoingpaymentrequestsresponse)|
+
+## List Payment Requests: Collections
+
+<a id="opIdListOutgoingPaymentRequestCollections"></a>
+
+> Code samples
+
+```shell
+curl --request GET \
+  --url https://api.sandbox.split.cash/payment_requests/collections \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/payment_requests/collections")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/payment_requests/collections",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = {
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("GET", "/payment_requests/collections", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payment_requests/collections")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/collections');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/payment_requests/collections"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`GET /payment_requests/collections`
+
+Payment Requests where you are the creditor and are collecting funds from your debtor using traditional direct-debit.
+
+<h3 id="List-Payment-Requests:-Collections-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "data": [
+    {
+      "ref": "PR.84t6",
+      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "contact_initiated": false,
+      "schedule_ref": "PRS.89t3",
+      "status": "approved",
+      "status_reason": null,
+      "matures_at": "2021-07-18T02:10:00Z",
+      "responded_at": "2021-07-18T02:10:00Z",
+      "created_at": "2021-07-18T02:10:00Z",
+      "credit_ref": "C.6gr7",
+      "payout": {
+        "amount": 4999,
+        "description": "Subscription Payment",
+        "matures_at": "2021-07-18T02:10:00Z"
+      }
+    },
+    {
+      "ref": "PR.45h7",
+      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "contact_initiated": false,
+      "schedule_ref": null,
+      "status": "pending_approval",
+      "status_reason": null,
+      "matures_at": "2021-03-09T16:58:00Z",
+      "responded_at": null,
+      "created_at": "2021-03-09T16:58:00Z",
+      "credit_ref": null,
+      "payout": {
+        "amount": 3000,
+        "description": "Membership fees",
+        "matures_at": "2021-03-09T16:58:00Z"
+      }
+    }
+  ]
+}
+```
+
+<h3 id="List Payment Requests: Collections-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingPaymentRequestCollectionsResponse](#schemalistoutgoingpaymentrequestcollectionsresponse)|
+
+## List Payment Requests: Receivables
+
+<a id="opIdListOutgoingPaymentRequestReceivables"></a>
+
+> Code samples
+
+```shell
+curl --request GET \
+  --url https://api.sandbox.split.cash/payment_requests/receivables \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/payment_requests/receivables")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/payment_requests/receivables",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = {
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("GET", "/payment_requests/receivables", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payment_requests/receivables")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/receivables');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/payment_requests/receivables"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`GET /payment_requests/receivables`
+
+Payment Requests where the debtor is sending you funds ([Receivable Contacts](/#add-a-receivable-contact)). This endpoint exposes all received payments.
+
+<h3 id="List-Payment-Requests:-Receivables-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "data": [
+    {
+      "ref": "PR.2t65",
+      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "contact_initiated": true,
+      "schedule_ref": null,
+      "status": "approved",
+      "status_reason": null,
+      "matures_at": "2021-05-12T13:43:12Z",
+      "responded_at": "2021-05-12T13:43:12Z",
+      "created_at": "2021-05-12T13:43:12Z",
+      "credit_ref": "C.77b1",
+      "payout": {
+        "amount": 50000,
+        "description": "Deposit to my Trading account",
+        "matures_at": "2021-05-12T13:43:12Z"
+      }
+    },
+    {
+      "ref": "PR.1n644",
+      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "contact_initiated": true,
+      "schedule_ref": null,
+      "status": "approved",
+      "status_reason": null,
+      "matures_at": "2021-06-01T04:34:50Z",
+      "responded_at": null,
+      "created_at": "2021-06-01T04:34:56Z",
+      "credit_ref": "c.54r3",
+      "payout": {
+        "amount": 5000,
+        "description": "Punting account top-up",
+        "matures_at": "2021-06-01T04:34:56Z"
+      }
+    }
+  ]
+}
+```
+
+<h3 id="List Payment Requests: Receivables-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingPaymentRequestReceivablesResponse](#schemalistoutgoingpaymentrequestreceivablesresponse)|
 
 <h1 id="Split-API-Payments">Payments</h1>
 
@@ -9706,22 +10115,23 @@ func main() {
 ```json
 {
   "data": {
-    "ref": "PR.3",
+    "ref": "PR.39p1",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
     "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "authoriser_id": "970e4526-67d9-4ed9-b554-f5cf390ab775",
     "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+    "contact_initiated": false,
     "schedule_ref": null,
     "status": "pending_approval",
     "status_reason": null,
-    "matures_at": "2016-12-25T00:00:00Z",
+    "matures_at": "2021-12-25T00:00:00Z",
     "responded_at": null,
-    "created_at": "2016-12-19T02:10:56Z",
+    "created_at": "2021-12-19T02:10:56Z",
     "credit_ref": null,
     "payout": {
       "amount": 99000,
-      "description": "The elite package for 4",
-      "matures_at": "2016-12-25T00:00:00Z"
+      "description": "Premium Package for 4",
+      "matures_at": "2021-12-25T00:00:00Z"
     },
     "metadata": {
       "custom_key": "Custom string",
@@ -9743,6 +10153,7 @@ func main() {
 |» your_bank_account_id|string(uuid)|true|Your bank account ID where the funds will settle (alias of `initiator_id`) (Min: 36 - Max: 36)|
 |» authoriser_id|string(uuid)|true|The debtor's bank account ID (Min: 36 - Max: 36)|
 |» authoriser_contact_id|string(uuid)|true|The contact ID representing the debtor within Split (Min: 36 - Max: 36)|
+|» contact_initiated|boolean|true|Initiated by Contact or Merchant|
 |» schedule_ref|string|true|The schedule that generated the Payment request if applicable (Min: 0 - Max: 8)|
 |» status|string|true|The status of the Payment Request|
 |» status_reason|string|true|Only used when the `status` is `declined` due to prechecking. (Min: 0 - Max: 280)|
@@ -9793,22 +10204,23 @@ func main() {
 ```json
 {
   "data": {
-    "ref": "PR.3",
+    "ref": "PR.88me",
     "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
     "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "authoriser_id": "970e4526-67d9-4ed9-b554-f5cf390ab775",
     "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+    "contact_initiated": false,
     "schedule_ref": null,
     "status": "approved",
     "status_reason": null,
-    "matures_at": "2016-12-25T00:00:00Z",
-    "responded_at": "2016-12-19T02:38:04Z",
-    "created_at": "2016-12-19T02:10:56Z",
-    "credit_ref": "C.b",
+    "matures_at": "2021-11-25T00:00:00Z",
+    "responded_at": "2021-11-19T02:38:04Z",
+    "created_at": "2021-11-19T02:10:56Z",
+    "credit_ref": "C.b6tf",
     "payout": {
-      "amount": 99000,
-      "description": "The elite package for 4",
-      "matures_at": "2016-12-25T00:00:00Z"
+      "amount": 1200,
+      "description": "Xbox Live subscription",
+      "matures_at": "2021-11-25T00:00:00Z"
     },
     "metadata": {
       "custom_key": "Custom string",
@@ -9868,6 +10280,7 @@ func main() {
       "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
       "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
       "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "contact_initiated": true,
       "schedule_ref": "PRS.2",
       "status": "approved",
       "status_reason": null,
@@ -9887,6 +10300,7 @@ func main() {
       "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
       "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
       "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "contact_initiated": true,
       "schedule_ref": null,
       "status": "pending_approval",
       "status_reason": null,
@@ -9916,6 +10330,7 @@ func main() {
 |» your_bank_account_id|string(uuid)|true|Your bank account ID where the funds will settle (alias of `initiator_id`)|
 |» authoriser_id|string(uuid)|true|The debtor's bank account ID|
 |» authoriser_contact_id|string(uuid)|true|The contact ID representing the debtor within Split|
+|» contact_initiated|boolean|true|Initiated by Contact or Merchant|
 |» schedule_ref|string|true|The schedule that generated the Payment request if applicable|
 |» status|string|true|The status of the Payment Request|
 |» status_reason|string|true|Only used when the `status` is `declined` due to prechecking.|
@@ -9941,96 +10356,52 @@ func main() {
 |status_reason|The balance of the nominated bank account for this Payment Request is not available.|
 |status_reason|The nominated bank account for this Payment Request has insufficient funds.|
 
-## GetAPaymentRequestsHistoryResponse
+## ListOutgoingPaymentRequestCollectionsResponse
 
-<a id="schemagetapaymentrequestshistoryresponse"></a>
+<a id="schemalistoutgoingpaymentrequestcollectionsresponse"></a>
 
 ```json
 {
   "data": [
     {
-      "type": "payout_request",
-      "event": "requested",
-      "at": "2017-01-05T07:47:45Z",
-      "ref": "PR.3",
-      "by": "Fancy Pants (fancy_pants)"
+      "ref": "PR.84t6",
+      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "contact_initiated": false,
+      "schedule_ref": "PRS.89t3",
+      "status": "approved",
+      "status_reason": null,
+      "matures_at": "2021-07-18T02:10:00Z",
+      "responded_at": "2021-07-18T02:10:00Z",
+      "created_at": "2021-07-18T02:10:00Z",
+      "credit_ref": "C.6gr7",
+      "payout": {
+        "amount": 4999,
+        "description": "Subscription Payment",
+        "matures_at": "2021-07-18T02:10:00Z"
+      }
     },
     {
-      "type": "payout_request",
-      "event": "approved",
-      "at": "2017-01-07T06:13:52Z",
-      "ref": "PR.3",
-      "by": "Lycra Co (lycra_co)"
-    },
-    {
-      "type": "debit",
-      "event": "scheduled",
-      "at": "2017-01-07T06:13:52Z",
-      "ref": "D.n",
-      "by": "Split Payments"
-    },
-    {
-      "type": "credit",
-      "event": "scheduled",
-      "at": "2017-01-07T06:13:52Z",
-      "ref": "C.e",
-      "by": "Split Payments"
-    },
-    {
-      "type": "debit",
-      "event": "matured",
-      "at": "2017-01-08T04:30:14Z",
-      "ref": "D.n",
-      "by": "Split Payments"
-    },
-    {
-      "type": "debit",
-      "event": "processing",
-      "at": "2017-01-08T04:30:14Z",
-      "ref": "D.n",
-      "by": "Split Payments"
-    },
-    {
-      "type": "debit",
-      "event": "clearing",
-      "at": "2017-01-08T19:02:20Z",
-      "ref": "D.n",
-      "by": "Split Payments"
-    },
-    {
-      "type": "debit",
-      "event": "cleared",
-      "at": "2017-01-11T19:07:52Z",
-      "ref": "D.n",
-      "by": "Split Payments"
-    },
-    {
-      "type": "credit",
-      "event": "matured",
-      "at": "2017-01-11T19:07:52Z",
-      "ref": "C.e",
-      "by": "Split Payments"
-    },
-    {
-      "type": "credit",
-      "event": "processing",
-      "at": "2017-01-12T04:30:25Z",
-      "ref": "C.e",
-      "by": "Split Payments"
-    },
-    {
-      "type": "credit",
-      "event": "clearing",
-      "at": "2017-01-12T05:17:32Z",
-      "ref": "C.e",
-      "by": "Split Payments"
-    },
-    {
-      "type": "credit",
-      "event": "cleared",
-      "at": "2017-01-15T05:27:12Z",
-      "ref": "C.e",
-      "by": "Split Payments"
+      "ref": "PR.45h7",
+      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "contact_initiated": false,
+      "schedule_ref": null,
+      "status": "pending_approval",
+      "status_reason": null,
+      "matures_at": "2021-03-09T16:58:00Z",
+      "responded_at": null,
+      "created_at": "2021-03-09T16:58:00Z",
+      "credit_ref": null,
+      "payout": {
+        "amount": 3000,
+        "description": "Membership fees",
+        "matures_at": "2021-03-09T16:58:00Z"
+      }
     }
   ]
 }
@@ -10038,24 +10409,118 @@ func main() {
 
 ### Properties
 
-*Get a Payment Request's history (response)*
+*List Payment Requests: Collections (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
-|» type|string|true|The type of object affected|
-|» event|string|true|The event that occurred|
-|» at|string(date-time)|true|When the event occurred|
-|» ref|string|true|The reference of the affected object|
-|» by|string|true|Who triggered the change/event|
+|» ref|string|true|The Payment Reference reference (PR.*)|
+|» initiator_id|string(uuid)|true|Your bank account ID where the funds will settle|
+|» your_bank_account_id|string(uuid)|true|Your bank account ID where the funds will settle (alias of `initiator_id`)|
+|» authoriser_id|string(uuid)|true|The debtor's bank account ID|
+|» authoriser_contact_id|string(uuid)|true|The contact ID representing the debtor within Split|
+|» contact_initiated|boolean|true|Initiated by Contact or Merchant|
+|» schedule_ref|string|true|The schedule that generated the Payment request if applicable|
+|» status|string|true|The status of the Payment Request|
+|» status_reason|string|true|Only used when the `status` is `declined` due to prechecking.|
+|» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
+|» responded_at|string(date-time)|true|The date-time when the Payment Request status changed|
+|» created_at|string(date-time)|true|The date-time when the Payment Request was created|
+|» credit_ref|string|true|The resulting credit entry reference (available once approved)|
+|» payout|object|true|No description|
+|»» amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
+|»» description|string|true|Payment Request description|
+|»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
+|» metadata|[object]|false|Your custom keyed data|
 
 #### Enumerated Values
 
 |Property|Value|
 |---|---|
-|type|payout_request|
-|type|debit|
-|type|credit|
+|status|pending_approval|
+|status|unverified|
+|status|approved|
+|status|declined|
+|status|cancelled|
+|status_reason|The balance of the nominated bank account for this Payment Request is not available.|
+|status_reason|The nominated bank account for this Payment Request has insufficient funds.|
+
+## ListOutgoingPaymentRequestReceivablesResponse
+
+<a id="schemalistoutgoingpaymentrequestreceivablesresponse"></a>
+
+```json
+{
+  "data": [
+    {
+      "ref": "PR.2t65",
+      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "contact_initiated": true,
+      "schedule_ref": null,
+      "status": "approved",
+      "status_reason": null,
+      "matures_at": "2021-05-12T13:43:12Z",
+      "responded_at": "2021-05-12T13:43:12Z",
+      "created_at": "2021-05-12T13:43:12Z",
+      "credit_ref": "C.77b1",
+      "payout": {
+        "amount": 50000,
+        "description": "Deposit to my Trading account",
+        "matures_at": "2021-05-12T13:43:12Z"
+      }
+    },
+    {
+      "ref": "PR.1n644",
+      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
+      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
+      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
+      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
+      "contact_initiated": true,
+      "schedule_ref": null,
+      "status": "approved",
+      "status_reason": null,
+      "matures_at": "2021-06-01T04:34:50Z",
+      "responded_at": null,
+      "created_at": "2021-06-01T04:34:56Z",
+      "credit_ref": "c.54r3",
+      "payout": {
+        "amount": 5000,
+        "description": "Punting account top-up",
+        "matures_at": "2021-06-01T04:34:56Z"
+      }
+    }
+  ]
+}
+```
+
+### Properties
+
+*List Payment Requests: Receivables (response)*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+|» ref|string|true|The Payment Reference reference (PR.*)|
+|» initiator_id|string(uuid)|true|Your bank account ID where the funds will settle|
+|» your_bank_account_id|string(uuid)|true|Your bank account ID where the funds will settle (alias of `initiator_id`)|
+|» authoriser_id|string(uuid)|true|The debtor's bank account ID|
+|» authoriser_contact_id|string(uuid)|true|The contact ID representing the debtor within Split|
+|» contact_initiated|boolean|true|Initiated by Contact or Merchant|
+|» schedule_ref|string|true|The schedule that generated the Payment request if applicable|
+|» status|string|true|The status of the Payment Request. For Receivables, this will always be *approved*|
+|» status_reason|string|true|Only used when the `status` is `declined` due to prechecking.|
+|» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
+|» responded_at|string(date-time)|true|The date-time when the Payment Request status changed|
+|» created_at|string(date-time)|true|The date-time when the Payment Request was created|
+|» credit_ref|string|true|The resulting credit entry reference (available once approved)|
+|» payout|object|true|No description|
+|»» amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
+|»» description|string|true|Payment Request description|
+|»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
+|» metadata|[object]|false|Your custom keyed data|
 
 ## IssueARefundRequest
 
