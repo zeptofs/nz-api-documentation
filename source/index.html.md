@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-Split enables your business to make, collect and receive payments using nothing but bank accounts. We've overlaid a simple REST API on top of the legacy (and newer) Australian payment rails,  enabling all of your account-to-account payment flows through 1 simple integration. 
+Split enables your business to make, collect and receive payments using nothing but bank accounts. We've overlaid a simple REST API on top of the legacy (and newer) Australian payment rails,  enabling all of your account-to-account payment flows through 1 simple integration.
 
 You can find more on this in the [Making payments](/#making-payments) and [Getting paid](/#getting-paid) guides.
 
@@ -3712,7 +3712,7 @@ Refresh one of your Contact's bank connections to get the latest available balan
 
 An Open Agreement is essentially an Agreement template with no specific authoriser. Each time an Open Agreement is accepted by anyone, the  authoriser is added to your Contacts list and a new Agreement is  automatically created between the Open Agreement initiator and the authoriser.
 
-An Open Agreement can be accepted multiple times by different parties and the result is always the same: A new Agreement. 
+An Open Agreement can be accepted multiple times by different parties and the result is always the same: A new Agreement.
 
 Additionally, an Open Agreement can be accepted by anybody. This is achieved by using our [Instant Account Verification process] (http://help.split.cash/bank-accounts/instant-account-verification-iav) as part of accepting an [Open Agreement](https://help.split.cash/agreements/open-agreement).
 
@@ -7601,7 +7601,7 @@ A transaction (debit or credit) can have the following statuses:
 
 The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompanied by a `failure_reason`:
 
-<aside class="notice">Please note that these failure reasons are passed to us directly from the banks.</aside>      
+<aside class="notice">Please note that these failure reasons are passed to us directly from the banks.</aside>
 
 | Reason | Description |
 |--------|-------------|
