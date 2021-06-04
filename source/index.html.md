@@ -2445,7 +2445,7 @@ Use this endpoint when you want to pay somebody.
       "account_number": "13048322",
       "branch_code": "123456",
       "bank_name": "National Australia Bank",
-      "state": "pending_verification",
+      "state": "active",
       "iav_provider": null,
       "iav_status": null,
       "blocks": {
@@ -9590,7 +9590,7 @@ func main() {
       "account_number": "13048322",
       "branch_code": "123456",
       "bank_name": "National Australia Bank",
-      "state": "pending_verification",
+      "state": "active",
       "iav_provider": null,
       "iav_status": null,
       "blocks": {
