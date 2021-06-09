@@ -546,7 +546,7 @@ When using any of our hosted solutions ([Payment Requests](https://help.split.ca
 ## Available balances in the Sandbox
 If your integration includes allowing us to pre-fail transactions prior to being processed, you may want to test that your system is handling these events correctly.  A transaction will pre-fail when the available balance of the customers account is less than the amount of the payment being requested.  This is checked during pre-processing just before your debit is sent for processing if there is an active bank connection.
 
-In the Sandbox environment, if the contact you are attempting to debit has a bank connection that was created through our Instant Account Verification feature, the  available balance of any **Transactional**bank account will always be `$123.45`. Any payment requests above this amount will pre-fail and any amount  less than or equal to this amount will succeed.
+In the Sandbox environment, if the contact you are attempting to debit has a bank connection that was created through our Instant Account Verification feature, the  available balance of any **Transactional** bank account will always be `$123.45`. Any payment requests above this amount will pre-fail and any amount  less than or equal to this amount will succeed.
 # Configuration
 ## Scopes
 Scopes define the level of access granted via the OAuth2 authorisation process. As a best practice, only use the scopes your application will require.
@@ -562,6 +562,7 @@ Scopes define the level of access granted via the OAuth2 authorisation process. 
 | `payments` | Manage user's Payments |
 | `payment_requests` | Manage user's Payment Requests |
 | `refunds` | Manage user's Refunds |
+| `transfers` | Manage user's Transfers |
 | `transactions` | Access user's Transactions |
 | `offline_access` | Create non-expiring access tokens for user |
 
@@ -5098,9 +5099,9 @@ A Payment Request can be cancelled as long as the associated transaction's state
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
 
-## List Payment Requests: Collections
+## List Collections
 
-<a id="opIdListOutgoingPaymentRequestCollections"></a>
+<a id="opIdListPaymentRequestCollections"></a>
 
 > Code samples
 
@@ -5236,7 +5237,7 @@ func main() {
 
 Payment Requests where you are the creditor and are collecting funds from your debtor using traditional direct-debit.
 
-<h3 id="List-Payment-Requests:-Collections-parameters" class="parameters">Parameters</h3>
+<h3 id="List-Collections-parameters" class="parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -5294,15 +5295,15 @@ Payment Requests where you are the creditor and are collecting funds from your d
 }
 ```
 
-<h3 id="List Payment Requests: Collections-responses">Responses</h3>
+<h3 id="List Collections-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingPaymentRequestCollectionsResponse](#schemalistoutgoingpaymentrequestcollectionsresponse)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListPaymentRequestCollectionsResponse](#schemalistpaymentrequestcollectionsresponse)|
 
-## List Payment Requests: Receivables
+## List Receivables
 
-<a id="opIdListOutgoingPaymentRequestReceivables"></a>
+<a id="opIdListPaymentRequestReceivables"></a>
 
 > Code samples
 
@@ -5438,7 +5439,7 @@ func main() {
 
 Payment Requests where the debtor is sending you funds ([Receivable Contacts](/#add-a-receivable-contact)). This endpoint exposes all received payments.
 
-<h3 id="List-Payment-Requests:-Receivables-parameters" class="parameters">Parameters</h3>
+<h3 id="List-Receivables-parameters" class="parameters">Parameters</h3>
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -5496,11 +5497,11 @@ Payment Requests where the debtor is sending you funds ([Receivable Contacts](/#
 }
 ```
 
-<h3 id="List Payment Requests: Receivables-responses">Responses</h3>
+<h3 id="List Receivables-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListOutgoingPaymentRequestReceivablesResponse](#schemalistoutgoingpaymentrequestreceivablesresponse)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListPaymentRequestReceivablesResponse](#schemalistpaymentrequestreceivablesresponse)|
 
 <h1 id="Split-API-Payments">Payments</h1>
 
@@ -6593,13 +6594,8 @@ You can void any Payment from your account that has not yet matured.
 
 Refunds can be issued for any successfully completed Payment Request transaction. This includes:
 
-1. **Payment Requests for direct debit payments (Collections)**:
-  * Contact to refund already exists (original Payment Request to collect funds will have used this Contact)
-  * Refund will be initiated to this _existing_ Contact
-2. **Payment Requests for funds received via DE/NPP (Receivables)**:
-  * Contact to refund does not exist (Funds were received from an external source)
-  * Split will create a new contact representing the original Payer
-  * Refund will be initiated to this _new_ Contact
+1. Payment Requests for direct debit payments **(Collections)**:
+2. Payment Requests for funds received via DE/NPP **(Receivables)**:
 
 This allows you to return any funds that were previously collected or received into one of your bank/float accounts.
 
@@ -10688,9 +10684,9 @@ func main() {
 |status_reason|The balance of the nominated bank account for this Payment Request is not available.|
 |status_reason|The nominated bank account for this Payment Request has insufficient funds.|
 
-## ListOutgoingPaymentRequestCollectionsResponse
+## ListPaymentRequestCollectionsResponse
 
-<a id="schemalistoutgoingpaymentrequestcollectionsresponse"></a>
+<a id="schemalistpaymentrequestcollectionsresponse"></a>
 
 ```json
 {
@@ -10741,7 +10737,7 @@ func main() {
 
 ### Properties
 
-*List Payment Requests: Collections (response)*
+*List Collections (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
@@ -10777,9 +10773,9 @@ func main() {
 |status_reason|The balance of the nominated bank account for this Payment Request is not available.|
 |status_reason|The nominated bank account for this Payment Request has insufficient funds.|
 
-## ListOutgoingPaymentRequestReceivablesResponse
+## ListPaymentRequestReceivablesResponse
 
-<a id="schemalistoutgoingpaymentrequestreceivablesresponse"></a>
+<a id="schemalistpaymentrequestreceivablesresponse"></a>
 
 ```json
 {
@@ -10830,7 +10826,7 @@ func main() {
 
 ### Properties
 
-*List Payment Requests: Receivables (response)*
+*List Receivables (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
