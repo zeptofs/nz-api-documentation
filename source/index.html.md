@@ -10913,7 +10913,7 @@ func main() {
 |ref|string(uuid)|true|The Refund request reference (PRF.*) (Min: 5 - Max: 9)|
 |for_ref|string|true|The associated credit reference (C.*)|
 |debit_ref|string|true|The associated debit reference (C.*)|
-|your_bank_Account_id|string|false|The source bank/float account (UUID)|
+|your_bank_account_id|string|false|The source bank/float account (UUID)|
 |created_at|string(date-time)|true|The date-time when the Payment Request was created|
 |amount|integer|true|The amount value provided (Min: 1 - Max: 99999999999)|
 |reason|string|true|Reason for the refund|
