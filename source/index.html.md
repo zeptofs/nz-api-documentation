@@ -51,7 +51,7 @@ Check the platform status, or subscribe to receive notifications at [status.spli
 ## Try it out
 The best way to familiarise yourself with our API is by interacting with it.
 
-We've preloaded a collection with all our endpoints for you to use in Postman. Before you start, import a copy of our API collection:
+We've preloaded a collection with all our endpoints for you to use in Postman. Before you start, **import a copy** of our API collection:
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/3168734-baa5ff70-4bc2-44d5-9ba6-fcb61839ff41?action=collection%2Ffork&collection-url=entityId%3D3168734-baa5ff70-4bc2-44d5-9ba6-fcb61839ff41%26entityType%3Dcollection%26workspaceId%3D6400ea2b-bb46-421e-a88c-a8625653c35a#?env%5BSplit%20Payments%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL2dvLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoib2F1dGgyX2FwcGxpY2F0aW9uX2lkIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoic2NvcGUiLCJ2YWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMgb2ZmbGluZV9hY2Nlc3MiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Imlzbzg2MDFfbm93IiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6ImFjY2Vzc190b2tlbiIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJyZWZyZXNoX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfV0=)
 
@@ -185,7 +185,7 @@ The OAuth grant flow process is demonstrated using Postman in the steps below.
 
 Before you start, load up our API collection:
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.postman.co/run-collection/46835ea325243f7bcb26#?env%5BSplit%20Payments%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL2dvLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoib2F1dGgyX2FwcGxpY2F0aW9uX2lkIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoic2NvcGUiLCJ2YWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMgb2ZmbGluZV9hY2Nlc3MiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Imlzbzg2MDFfbm93IiwidmFsdWUiOiIyMDIwLTExLTExVDIzOjU1OjE5WiIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYWNjZXNzX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6InJlZnJlc2hfdG9rZW4iLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9XQ==)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/3168734-baa5ff70-4bc2-44d5-9ba6-fcb61839ff41?action=collection%2Ffork&collection-url=entityId%3D3168734-baa5ff70-4bc2-44d5-9ba6-fcb61839ff41%26entityType%3Dcollection%26workspaceId%3D6400ea2b-bb46-421e-a88c-a8625653c35a#?env%5BSplit%20Payments%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL2dvLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoib2F1dGgyX2FwcGxpY2F0aW9uX2lkIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoic2NvcGUiLCJ2YWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMgb2ZmbGluZV9hY2Nlc3MiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Imlzbzg2MDFfbm93IiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6ImFjY2Vzc190b2tlbiIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJyZWZyZXNoX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfV0=)
 
 **A screencast of this process is also available: [https://vimeo.com/246203244](https://vimeo.com/246203244).**
 
@@ -472,7 +472,7 @@ Try out your happy paths and not-so happy paths; the sandbox is a great place to
 The sandbox works on a 1 minute cycle to better illustrate how transactions are received and the lifecyle they go through.  In other words, every minute, we simulate communicating with financial institutions and update statuses and events accordingly.
 
 All 6 digits BSBs are valid in the sandbox with the exception of `100000`. This BSB allows you to simulate the adding of an invalid BSB. In production, only real BSBs are accepted.
-## Transaction failures
+## DE Transaction failures
 To simulate [transaction failures](#failure-reasons) create a Payment or Payment Request with a specific amount listed in the table.
 
 | Transaction failure reason | Debit | Credit |
@@ -5510,8 +5510,8 @@ A Payment is used to disburse funds to your Contacts.
 
 Supported payment rails:
 
-* NPP: New Payments Platform (Real-time)
-* DE / BECS: Direct Entry / Bulk Electronic Clearing System (Slower)
+* **NPP**: New Payments Platform (Real-time)
+* **DE / BECS**: Direct Entry / Bulk Electronic Clearing System (Slower)
 
 ##Lifecycle
 > Example payout reversal response
@@ -7383,10 +7383,10 @@ A transaction (debit or credit) can have the following statuses:
 
 | Status | Description |
 |--------|-------------|
-| `maturing` | The maturation date has not yet been reached. |
-| `matured` | The maturation date has been reached and the transaction is eligible for processing. |
 | `preprocessing` | The transaction is undergoing pre-checks before being sent to the bank. |
 | `processing` | The transaction has been submitted to the bank. |
+| `maturing` | The maturation date has not yet been reached. |
+| `matured` | The maturation date has been reached and the transaction is eligible for processing. |
 | `clearing` | Waiting for confirmation from the bank that the transaction has succeeded. |
 | `cleared` | The transaction is complete. |
 | `rejected` | The bank has rejected the transaction due to incorrect bank account details. |
@@ -7395,6 +7395,7 @@ A transaction (debit or credit) can have the following statuses:
 | `pending_verification` | The bank account must be verified before the transaction can proceed. |
 | `paused` | The transaction has temporary been paused by Split pending internal review. |
 | `prefailed` | The transaction was never submitted to the bank because we detected that there were insufficient funds. The transaction can be retried. |
+| `channel_switched` | The initial payment channel has failed and the credit has automatically switched to use the next available channel. |
 
 ##Failure reasons
 
@@ -10914,7 +10915,7 @@ func main() {
 |ref|string(uuid)|true|The Refund request reference (PRF.*) (Min: 5 - Max: 9)|
 |for_ref|string|true|The associated credit reference (C.*)|
 |debit_ref|string|true|The associated debit reference (C.*)|
-|your_bank_account_id|string|false|The source bank/float account (UUID)|
+|your_bank_account_id|string|true|The source bank/float account (UUID)|
 |created_at|string(date-time)|true|The date-time when the Payment Request was created|
 |amount|integer|true|The amount value provided (Min: 1 - Max: 99999999999)|
 |reason|string|true|Reason for the refund|
