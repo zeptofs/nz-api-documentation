@@ -7383,10 +7383,10 @@ A transaction (debit or credit) can have the following statuses:
 
 | Status | Description |
 |--------|-------------|
-| `preprocessing` | The transaction is undergoing pre-checks before being sent to the bank. |
-| `processing` | The transaction has been submitted to the bank. |
 | `maturing` | The maturation date has not yet been reached. |
 | `matured` | The maturation date has been reached and the transaction is eligible for processing. |
+| `preprocessing` | The transaction is undergoing pre-checks before being sent to the bank. |
+| `processing` | The transaction has been submitted to the bank. |
 | `clearing` | Waiting for confirmation from the bank that the transaction has succeeded. |
 | `cleared` | The transaction is complete. |
 | `rejected` | The bank has rejected the transaction due to incorrect bank account details. |
@@ -7395,7 +7395,7 @@ A transaction (debit or credit) can have the following statuses:
 | `pending_verification` | The bank account must be verified before the transaction can proceed. |
 | `paused` | The transaction has temporary been paused by Split pending internal review. |
 | `prefailed` | The transaction was never submitted to the bank because we detected that there were insufficient funds. The transaction can be retried. |
-| `channel_switched` | The initial payment channel has failed and the credit has automatically switched to use the next available channel. |
+| `channel_switched` | The initial payment channel has failed and the credit has automatically switched to attempt the payment using the next available channel. |
 
 ##Failure reasons
 
