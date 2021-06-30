@@ -1765,14 +1765,14 @@ tags:
 
       |--------|-------------|
 
-      | `preprocessing` | The transaction is undergoing pre-checks before being sent to the bank. |
-
-      | `processing` | The transaction has been submitted to the bank. |
-
       | `maturing` | The maturation date has not yet been reached. |
 
       | `matured` | The maturation date has been reached and the transaction is
       eligible for processing. |
+
+      | `preprocessing` | The transaction is undergoing pre-checks before being sent to the bank. |
+
+      | `processing` | The transaction has been submitted to the bank. |
 
       | `clearing` | Waiting for confirmation from the bank that the transaction
       has succeeded. |
@@ -1798,7 +1798,7 @@ tags:
       retried. |
 
       | `channel_switched` | The initial payment channel has failed and the credit has automatically
-      switched to use the next available channel. |
+      switched to attempt the payment using the next available channel. |
 
 
 
