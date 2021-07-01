@@ -20,11 +20,11 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-Split enables your business to make, collect and receive payments using nothing but bank accounts. We've overlaid a simple REST API on top of the legacy (and newer) Australian payment rails,  enabling all of your account-to-account payment flows through 1 simple integration. 
+Split enables your business to make, collect and receive payments using nothing but bank accounts. We've overlaid a simple REST API on top of the legacy (and newer) Australian payment rails, enabling all of your account-to-account payment flows through 1 simple integration.
 
 You can find more on this in the [Making payments](/#making-payments) and [Getting paid](/#getting-paid) guides.
 
-And for all kinds of How To's and Recipes, head on over to our  [Help Guide](https://help.split.cash/en/).
+And for all kinds of How To's and Recipes, head on over to our [Help Guide](https://help.split.cash/en/).
 <div class="middle-header">Conventions</div>
 
 * Authentication is performed using OAuth2. See the [Get started](/#get-started) and [Authentication & Authorisation](/#authentication-and-authorisation) guides for more.
@@ -312,9 +312,9 @@ In order to collect funds, use our Payment Requests to pull funds from your cust
 
 ### POSTing a [Payment Request](/#Split-API-Payment-Requests)
 
-Provides the ability to send a Payment Request (get paid) to any of  your Contacts as long as there is an accepted Agreement in place.
+Provides the ability to send a Payment Request (get paid) to any of your Contacts as long as there is an accepted Agreement in place.
 
-* To send a Payment Request to a Contact using the API, you must first have an accepted [Agreement](/#Split-API-Agreements) with them. To do so, you can send them an [Open Agreement link](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreement link](http://help.split.cash/agreements/unassigned-agreement) for them to [elect & verify their bank account](https://help.split.cash/bank-accounts/instant-account-verification-iav) and accept the Agreement. Having this in place will allow any future Payment  Requests to be automatically approved and processed as per the Agreement terms.
+* To send a Payment Request to a Contact using the API, you must first have an accepted [Agreement](/#Split-API-Agreements) with them. To do so, you can send them an [Open Agreement link](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreement link](http://help.split.cash/agreements/unassigned-agreement) for them to [elect & verify their bank account](https://help.split.cash/bank-accounts/instant-account-verification-iav) and accept the Agreement. Having this in place will allow any future Payment Requests to be automatically approved and processed as per the Agreement terms.
 
 Common use cases:
 
@@ -467,9 +467,9 @@ As an example, the following authorisation URL would display the **personal sign
 You can also pass the values directly to the sign up page outside of the OAuth2 authorisation process. Click on the following link to see the values preloaded: [https://go.sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgeco&first_name=George](https://go.sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgceco&first_name=George).
 
 # Sandbox Testing Details
-Try out your happy paths and not-so happy paths; the sandbox is a great place to get started without transferring actual funds.  All transactions are simulated and no communication with financial institutions is performed.
+Try out your happy paths and not-so happy paths; the sandbox is a great place to get started without transferring actual funds. All transactions are simulated and no communication with financial institutions is performed.
 
-The sandbox works on a 1 minute cycle to better illustrate how transactions are received and the lifecyle they go through.  In other words, every minute, we simulate communicating with financial institutions and update statuses and events accordingly.
+The sandbox works on a 1 minute cycle to better illustrate how transactions are received and the lifecyle they go through. In other words, every minute, we simulate communicating with financial institutions and update statuses and events accordingly.
 
 All 6 digits BSBs are valid in the sandbox with the exception of `100000`. This BSB allows you to simulate the adding of an invalid BSB. In production, only real BSBs are accepted.
 ## DE Transaction failures
@@ -505,14 +505,14 @@ To simulate [transaction failures](#failure-reasons) create a Payment or Payment
     * Split will mimic a failure to debit the contact's bank account.
 
 ## NPP Payment failures
-If you are utilising an [Account Float](https://help.split.cash/en/articles/4275280-utilising-an-account-float)  to create NPP payments, you can simulate a transaction that fails to process through the NPP channel by [creating a Payment from your account float](https://help.split.cash/en/articles/4275293-transacting-from-your-account-float) for one of the following amounts.
+If you are utilising an [Account Float](https://help.split.cash/en/articles/4275280-utilising-an-account-float) to create NPP payments, you can simulate a transaction that fails to process through the NPP channel by [creating a Payment from your account float](https://help.split.cash/en/articles/4275293-transacting-from-your-account-float) for one of the following amounts.
 
 | Transaction failure reason | Failure details | Amount |
 |----------------------------|-----------------|---------|
 | `refer_to_split`           | Real-time payment service currently unavailable |  $1.55  |
 | `refer_to_customer`        | Real-time payment rejected by recipient |  $1.60  |
 | `refer_to_customer`        | Real-time payments not available for recipient |  $1.65  |
-You will receive all the same notifications as if this happened in our live environment. We recommend you check out our article on [what happens when an NPP Payment fails](https://help.split.cash/en/articles/4405560-what-happens-when-an-npp-payment-fails)  to learn more about what happens when an NPP Payment is unable to process.
+You will receive all the same notifications as if this happened in our live environment. We recommend you check out our article on [what happens when an NPP Payment fails](https://help.split.cash/en/articles/4405560-what-happens-when-an-npp-payment-fails) to learn more about what happens when an NPP Payment is unable to process.
 ## Special accounts
 There are some accounts with a special behaviour. You can add them to your Contacts by nickname or bank details.
 
@@ -545,9 +545,9 @@ When using any of our hosted solutions ([Payment Requests](https://help.split.ca
 
 <aside class="notice">The credentials will work with any of the available financial institutions.</aside>
 ## Available balances in the Sandbox
-If your integration includes allowing us to pre-fail transactions prior to being processed, you may want to test that your system is handling these events correctly.  A transaction will pre-fail when the available balance of the customers account is less than the amount of the payment being requested.  This is checked during pre-processing just before your debit is sent for processing if there is an active bank connection.
+If your integration includes allowing us to pre-fail transactions prior to being processed, you may want to test that your system is handling these events correctly. A transaction will pre-fail when the available balance of the customers account is less than the amount of the payment being requested. This is checked during pre-processing just before your debit is sent for processing if there is an active bank connection.
 
-In the Sandbox environment, if the contact you are attempting to debit has a bank connection that was created through our Instant Account Verification feature, the  available balance of any **Transactional** bank account will always be `$123.45`. Any payment requests above this amount will pre-fail and any amount  less than or equal to this amount will succeed.
+In the Sandbox environment, if the contact you are attempting to debit has a bank connection that was created through our Instant Account Verification feature, the available balance of any **Transactional** bank account will always be `$123.45`. Any payment requests above this amount will pre-fail and any amount less than or equal to this amount will succeed.
 # Configuration
 ## Scopes
 Scopes define the level of access granted via the OAuth2 authorisation process. As a best practice, only use the scopes your application will require.
@@ -914,6 +914,7 @@ To protect against timing attacks, use a constant-time string comparison to comp
 # Changelog
 We take backwards compatibility seriously. The following list contains backwards compatible changes:
 
+- **2021-07-01** - Added $1.65 amount for Sandbox simulated failures and minor tweaks
 - **2021-06-08** - Added Transfers, Payment Channel selection, Receivable Refunds
 - **2021-05-21** - Added new Payment Request endpoints, updated Postman collection
 - **2021-05-03** - Deprecated */payments_requests/outgoing* endpoint
@@ -3713,9 +3714,9 @@ Refresh one of your Contact's bank connections to get the latest available balan
 
 <h1 id="Split-API-Open-Agreements">Open Agreements</h1>
 
-An Open Agreement is essentially an Agreement template with no specific authoriser. Each time an Open Agreement is accepted by anyone, the  authoriser is added to your Contacts list and a new Agreement is  automatically created between the Open Agreement initiator and the authoriser.
+An Open Agreement is essentially an Agreement template with no specific authoriser. Each time an Open Agreement is accepted by anyone, the authoriser is added to your Contacts list and a new Agreement is automatically created between the Open Agreement initiator and the authoriser.
 
-An Open Agreement can be accepted multiple times by different parties and the result is always the same: A new Agreement. 
+An Open Agreement can be accepted multiple times by different parties and the result is always the same: A new Agreement.
 
 Additionally, an Open Agreement can be accepted by anybody. This is achieved by using our [Instant Account Verification process] (http://help.split.cash/bank-accounts/instant-account-verification-iav) as part of accepting an [Open Agreement](https://help.split.cash/agreements/open-agreement).
 
@@ -4544,7 +4545,7 @@ A Payment Request can have the following statuses:
 
 <div class="middle-header">Prechecking</div>
 
-When using Payment Requests to collect payments from your customer, Split will automatically check for available funds before **attempting to debit** the debtor.  This check is only performed for contacts with an active [bank connection](/#Split-API-Bank-Connections).
+When using Payment Requests to collect payments from your customer, Split will automatically check for available funds before **attempting to debit** the debtor. This check is only performed for contacts with an active [bank connection](/#Split-API-Bank-Connections).
 
 ## Request Payment
 
@@ -5550,7 +5551,7 @@ A Payment is simply a group of Payouts, therefore it does not have a particular 
   </aside>
 
 ### Payout Reversal
-When Split is unable to credit funds to a recipient, we will automatically create a payout reversal credit back to the payer.  Furthermore, within the payout reversal credit, Split will include details in the `description` and under the `reversal_details` key
+When Split is unable to credit funds to a recipient, we will automatically create a payout reversal credit back to the payer. Furthermore, within the payout reversal credit, Split will include details in the `description` and under the `reversal_details` key
  as to why the original credit to the recipient failed.
 
 ## Make a Payment
@@ -7432,7 +7433,7 @@ A transaction (debit or credit) can have the following statuses:
 
 The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompanied by a `failure_reason`:
 
-<aside class="notice">Please note that these failure reasons are passed to us directly from the banks.</aside>      
+<aside class="notice">Please note that these failure reasons are passed to us directly from the banks.</aside>
 
 | Reason | Description |
 |--------|-------------|
