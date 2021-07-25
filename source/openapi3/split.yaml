@@ -5080,6 +5080,9 @@ components:
         amount:
           type: integer
           description: 'The amount value provided (Min: 1 - Max: 99999999999)'
+        channels:
+          type: array
+          description: The requested payment channel(s) to be used, in order. (new_payments_platform, direct_entry, or both)
         reason:
           type: string
           description: Reason for the refund
@@ -5100,6 +5103,7 @@ components:
           your_bank_account_id: 9c70871d-8e36-4c3e-8a9c-c0ee20e7c679
           created_at: '2021-06-01T07:20:24Z'
           amount: 500
+          channels: ["direct_entry"]
           reason: Subscription refund
           contacts:
             source_contact_id: 194b0237-6c2c-4705-b4fb-308274b14eda

@@ -6817,6 +6817,9 @@ Certain rules apply to the issuance of a refund:
     "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "created_at": "2021-06-01T07:20:24Z",
     "amount": 500,
+    "channels": [
+      "direct_entry"
+    ],
     "reason": "Subscription refund",
     "contacts": {
       "source_contact_id": "194b0237-6c2c-4705-b4fb-308274b14eda",
@@ -10910,6 +10913,9 @@ func main() {
     "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "created_at": "2021-06-01T07:20:24Z",
     "amount": 500,
+    "channels": [
+      "direct_entry"
+    ],
     "reason": "Subscription refund",
     "contacts": {
       "source_contact_id": "194b0237-6c2c-4705-b4fb-308274b14eda",
@@ -10936,6 +10942,7 @@ func main() {
 |your_bank_account_id|string|true|The source bank/float account (UUID)|
 |created_at|string(date-time)|true|The date-time when the Payment Request was created|
 |amount|integer|true|The amount value provided (Min: 1 - Max: 99999999999)|
+|channels|array|false|The requested payment channel(s) to be used, in order. (new_payments_platform, direct_entry, or both)|
 |reason|string|true|Reason for the refund|
 |contacts|object|false|No description|
 |» source_contact_id|string|false|The original 'Receivable Contact' ID (only visible when refunding Receivables)|
