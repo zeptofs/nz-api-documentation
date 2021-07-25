@@ -5038,6 +5038,7 @@ components:
           $ref: '#/components/schemas/Metadata'
       example:
         amount: 500
+        channels: ["direct_entry"]
         reason: Because reason
         your_bank_account_id: 9c70871d-8e36-4c3e-8a9c-c0ee20e7c679
         metadata:
