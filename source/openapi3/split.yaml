@@ -4278,7 +4278,7 @@ components:
         description: The SuperPackage
         matures_at: '2021-06-13T00:00:00Z'
         your_bank_account_id: 83623359-e86e-440c-9780-432a3bc3626f
-        channels: new_payments_platform
+        channels: ["new_payments_platform"]
         payouts:
           - amount: 30000
             description: A tandem skydive jump SB23094
