@@ -4343,7 +4343,7 @@ components:
         data:
           ref: PB.1
           your_bank_account_id: 83623359-e86e-440c-9780-432a3bc3626f
-          channels: new_payments_platform
+          channels: ["new_payments_platform"]
           payouts:
             - ref: D.1
               recipient_contact_id: 48b89364-1577-4c81-ba02-96705895d457

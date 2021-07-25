@@ -5794,7 +5794,9 @@ To enable custom payment flows, the required payment channel can be selected by 
   "data": {
     "ref": "PB.1",
     "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-    "channels": "new_payments_platform",
+    "channels": [
+      "new_payments_platform"
+    ],
     "payouts": [
       {
         "ref": "D.1",
@@ -10354,7 +10356,9 @@ func main() {
   "data": {
     "ref": "PB.1",
     "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-    "channels": "new_payments_platform",
+    "channels": [
+      "new_payments_platform"
+    ],
     "payouts": [
       {
         "ref": "D.1",
