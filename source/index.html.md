@@ -10936,17 +10936,17 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
-|ref|string(uuid)|true|The Refund request reference (PRF.*) (Min: 5 - Max: 9)|
-|for_ref|string|true|The associated credit reference (C.*)|
-|debit_ref|string|true|The associated debit reference (C.*)|
-|your_bank_account_id|string|true|The source bank/float account (UUID)|
-|created_at|string(date-time)|true|The date-time when the Payment Request was created|
-|amount|integer|true|The amount value provided (Min: 1 - Max: 99999999999)|
-|channels|array|false|The requested payment channel(s) to be used, in order. (new_payments_platform, direct_entry, or both)|
-|reason|string|true|Reason for the refund|
-|contacts|object|false|No description|
-|» source_contact_id|string|false|The original 'Receivable Contact' ID (only visible when refunding Receivables)|
-|» target_contact_id|string|false|The new Contact ID receiving the funds (only visible when refunding Receivables)|
+|» ref|string(uuid)|true|The Refund request reference (PRF.*) (Min: 5 - Max: 9)|
+|» for_ref|string|true|The associated credit reference (C.*)|
+|» debit_ref|string|true|The associated debit reference (C.*)|
+|» your_bank_account_id|string|true|The source bank/float account (UUID)|
+|» created_at|string(date-time)|true|The date-time when the Payment Request was created|
+|» amount|integer|true|The amount value provided (Min: 1 - Max: 99999999999)|
+|» channels|array|false|The requested payment channel(s) to be used, in order. (new_payments_platform, direct_entry, or both)|
+|» reason|string|true|Reason for the refund|
+|» contacts|object|false|No description|
+|»» source_contact_id|string|false|The original 'Receivable Contact' ID (only visible when refunding Receivables)|
+|»» target_contact_id|string|false|The new Contact ID receiving the funds (only visible when refunding Receivables)|
 
 ## ListOutgoingRefundsResponse
 
