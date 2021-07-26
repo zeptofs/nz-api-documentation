@@ -5566,7 +5566,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"description":"The SuperPackage","matures_at":"2021-06-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","channels":"new_payments_platform","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"description":"The SuperPackage","matures_at":"2021-06-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","channels":["new_payments_platform"],"payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -5583,7 +5583,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":\"new_payments_platform\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":[\"new_payments_platform\"],\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -5621,7 +5621,7 @@ req.write(JSON.stringify({
   description: 'The SuperPackage',
   matures_at: '2021-06-13T00:00:00Z',
   your_bank_account_id: '83623359-e86e-440c-9780-432a3bc3626f',
-  channels: 'new_payments_platform',
+  channels: [ 'new_payments_platform' ],
   payouts: [
     {
       amount: 30000,
@@ -5645,7 +5645,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
-payload = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":\"new_payments_platform\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":[\"new_payments_platform\"],\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -5666,7 +5666,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/pay
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":\"new_payments_platform\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":[\"new_payments_platform\"],\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -5677,7 +5677,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"description":"The SuperPackage","matures_at":"2021-06-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","channels":"new_payments_platform","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"description":"The SuperPackage","matures_at":"2021-06-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","channels":["new_payments_platform"],"payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api.sandbox.split.cash/payments');
 $request->setRequestMethod('POST');
@@ -5709,7 +5709,7 @@ func main() {
 
 	url := "https://api.sandbox.split.cash/payments"
 
-	payload := strings.NewReader("{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":\"new_payments_platform\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":[\"new_payments_platform\"],\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -5745,7 +5745,9 @@ To enable custom payment flows, the required payment channel can be selected by 
   "description": "The SuperPackage",
   "matures_at": "2021-06-13T00:00:00Z",
   "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-  "channels": "new_payments_platform",
+  "channels": [
+    "new_payments_platform"
+  ],
   "payouts": [
     {
       "amount": 30000,
@@ -5792,7 +5794,9 @@ To enable custom payment flows, the required payment channel can be selected by 
   "data": {
     "ref": "PB.1",
     "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-    "channels": "new_payments_platform",
+    "channels": [
+      "new_payments_platform"
+    ],
     "payouts": [
       {
         "ref": "D.1",
@@ -6613,7 +6617,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"amount":500,"reason":"Because reason","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"amount":500,"channels":["direct_entry"],"reason":"Because reason","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -6630,7 +6634,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"amount\":500,\"channels\":[\"direct_entry\"],\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -6666,6 +6670,7 @@ var req = http.request(options, function (res) {
 
 req.write(JSON.stringify({
   amount: 500,
+  channels: [ 'direct_entry' ],
   reason: 'Because reason',
   your_bank_account_id: '9c70871d-8e36-4c3e-8a9c-c0ee20e7c679',
   metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
@@ -6678,7 +6683,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.sandbox.split.cash")
 
-payload = "{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"amount\":500,\"channels\":[\"direct_entry\"],\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -6699,7 +6704,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/cre
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"amount\":500,\"channels\":[\"direct_entry\"],\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -6710,7 +6715,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"amount":500,"reason":"Because reason","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"amount":500,"channels":["direct_entry"],"reason":"Because reason","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api.sandbox.split.cash/credits/string/refunds');
 $request->setRequestMethod('POST');
@@ -6742,7 +6747,7 @@ func main() {
 
 	url := "https://api.sandbox.split.cash/credits/string/refunds"
 
-	payload := strings.NewReader("{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"amount\":500,\"channels\":[\"direct_entry\"],\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -6775,6 +6780,9 @@ Certain rules apply to the issuance of a refund:
 ```json
 {
   "amount": 500,
+  "channels": [
+    "direct_entry"
+  ],
   "reason": "Because reason",
   "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
   "metadata": {
@@ -6791,6 +6799,7 @@ Certain rules apply to the issuance of a refund:
 |credit_ref|path|string|true|The credit reference number e.g C.625v|
 |body|body|[IssueARefundRequest](#schemaissuearefundrequest)|true|No description|
 |» amount|body|integer|true|Amount in cents refund (Min: 1 - Max: 99999999999)|
+|» channels|body|array|false|Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)|
 |» reason|body|string|false|Reason for the refund. First 9 characters are visible to both parties.|
 |» your_bank_account_id|body|string(uuid)|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Split customisations.|
@@ -6808,6 +6817,9 @@ Certain rules apply to the issuance of a refund:
     "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "created_at": "2021-06-01T07:20:24Z",
     "amount": 500,
+    "channels": [
+      "direct_entry"
+    ],
     "reason": "Subscription refund",
     "contacts": {
       "source_contact_id": "194b0237-6c2c-4705-b4fb-308274b14eda",
@@ -10247,7 +10259,9 @@ func main() {
   "description": "The SuperPackage",
   "matures_at": "2021-06-13T00:00:00Z",
   "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-  "channels": "new_payments_platform",
+  "channels": [
+    "new_payments_platform"
+  ],
   "payouts": [
     {
       "amount": 30000,
@@ -10349,7 +10363,9 @@ func main() {
   "data": {
     "ref": "PB.1",
     "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-    "channels": "new_payments_platform",
+    "channels": [
+      "new_payments_platform"
+    ],
     "payouts": [
       {
         "ref": "D.1",
@@ -10860,6 +10876,9 @@ func main() {
 ```json
 {
   "amount": 500,
+  "channels": [
+    "direct_entry"
+  ],
   "reason": "Because reason",
   "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
   "metadata": {
@@ -10876,6 +10895,7 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |amount|integer|true|Amount in cents refund (Min: 1 - Max: 99999999999)|
+|channels|array|false|Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)|
 |reason|string|false|Reason for the refund. First 9 characters are visible to both parties.|
 |your_bank_account_id|string(uuid)|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |metadata|[Metadata](#schemametadata)|false|No description|
@@ -10893,6 +10913,9 @@ func main() {
     "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "created_at": "2021-06-01T07:20:24Z",
     "amount": 500,
+    "channels": [
+      "direct_entry"
+    ],
     "reason": "Subscription refund",
     "contacts": {
       "source_contact_id": "194b0237-6c2c-4705-b4fb-308274b14eda",
@@ -10913,16 +10936,17 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
-|ref|string(uuid)|true|The Refund request reference (PRF.*) (Min: 5 - Max: 9)|
-|for_ref|string|true|The associated credit reference (C.*)|
-|debit_ref|string|true|The associated debit reference (C.*)|
-|your_bank_account_id|string|true|The source bank/float account (UUID)|
-|created_at|string(date-time)|true|The date-time when the Payment Request was created|
-|amount|integer|true|The amount value provided (Min: 1 - Max: 99999999999)|
-|reason|string|true|Reason for the refund|
-|contacts|object|false|No description|
-|» source_contact_id|string|false|The original 'Receivable Contact' ID (only visible when refunding Receivables)|
-|» target_contact_id|string|false|The new Contact ID receiving the funds (only visible when refunding Receivables)|
+|» ref|string(uuid)|true|The Refund request reference (PRF.*) (Min: 5 - Max: 9)|
+|» for_ref|string|true|The associated credit reference (C.*)|
+|» debit_ref|string|true|The associated debit reference (C.*)|
+|» your_bank_account_id|string|true|The source bank/float account (UUID)|
+|» created_at|string(date-time)|true|The date-time when the Payment Request was created|
+|» amount|integer|true|The amount value provided (Min: 1 - Max: 99999999999)|
+|» channels|array|false|The requested payment channel(s) to be used, in order. (new_payments_platform, direct_entry, or both)|
+|» reason|string|true|Reason for the refund|
+|» contacts|object|false|No description|
+|»» source_contact_id|string|false|The original 'Receivable Contact' ID (only visible when refunding Receivables)|
+|»» target_contact_id|string|false|The new Contact ID receiving the funds (only visible when refunding Receivables)|
 
 ## ListOutgoingRefundsResponse
 
