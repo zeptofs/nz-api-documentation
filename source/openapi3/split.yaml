@@ -3290,6 +3290,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetUserDetailsResponse'
+  /webhooks:
+    get:
+      tags:
+        - Webhooks
+      summary: List webhooks
+      description: ''
+      operationId: GetWebhooks
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWebhooksResponse'
+
   /simulate/incoming_payid_payment:
     post:
       tags:
@@ -5641,5 +5657,20 @@ components:
           amount: 230
           description: Transfer to my other Float account
           matures_at: '2021-05-03T00:00:00Z'
+    GetWebhooksResponse:
+      properties:
+        data:
+          required: true
+          type: array
+          items:
+            type: object
+      example:
+        data:
+        - id: 31918dce-2dc3-405b-8d3c-fd3901b17e9f
+          url: "http://www.example.com"
+          signature_secret: "top-secret"
+          events:
+          - debit.cleared
+          - credit.cleared
 security:
   - bearerAuth: []
