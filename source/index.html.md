@@ -896,7 +896,7 @@ class MainClass {
 
 **Step 1. Extract the timestamp and signatures from the header**
 
-Zepto the header, using the `.` (dot) character as the separator, to get a list of elements.
+Split the header, using the `.` (dot) character as the separator, to get a list of elements.
 
 | Element | Description |
 |---------|-------------|
