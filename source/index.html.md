@@ -9269,7 +9269,7 @@ func main() {
 
 <h1 id="Zepto-API-Webhooks">Webhooks</h1>
 
-## List webhooks
+## List all webhooks
 
 <a id="opIdGetWebhooks"></a>
 
@@ -9425,11 +9425,11 @@ func main() {
 }
 ```
 
-<h3 id="List webhooks-responses">Responses</h3>
+<h3 id="List all webhooks-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetWebhooksResponse](#schemagetwebhooksresponse)|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllWebhooksResponse](#schemalistallwebhooksresponse)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
 
 ## List deliveries for a webhook
@@ -12208,9 +12208,9 @@ Use this endpoint when you want to resend a failed webhook delivery.
 |---|---|---|---|
 |data|[object]|true|No description|
 
-## GetWebhooksResponse
+## ListAllWebhooksResponse
 
-<a id="schemagetwebhooksresponse"></a>
+<a id="schemalistallwebhooksresponse"></a>
 
 ```json
 {
@@ -12230,9 +12230,11 @@ Use this endpoint when you want to resend a failed webhook delivery.
 
 ### Properties
 
+*List all Webhooks (response)*
+
 |Name|Type|Required|Description|
 |---|---|---|---|
-|data|[object]|false|No description|
+|data|[object]|true|No description|
 
 ## GetWebhookDeliveriesResponse
 
@@ -12296,6 +12298,20 @@ Use this endpoint when you want to resend a failed webhook delivery.
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
+|» id|string(uuid)|false|The Webhook Delivery ID|
+|» webhook_id|string(uuid)|false|The Webhook ID|
+|» state|string|false|The state of the webhook delivery.|
+|» payload|object|false|Could be anything|
+|» created_at|string(date-time)|false|When the webhook delivery was created|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|state|pending|
+|state|delivered|
+|state|will_retry|
+|state|gave_up|
 
 ## RedeliverAWebhookDeliveryResponse
 

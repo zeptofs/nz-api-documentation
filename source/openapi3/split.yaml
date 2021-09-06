@@ -3294,7 +3294,7 @@ paths:
     get:
       tags:
         - Webhooks
-      summary: List webhooks
+      summary: List all webhooks
       description: ''
       operationId: GetWebhooks
       parameters: []
@@ -3304,7 +3304,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetWebhooksResponse'
+                $ref: '#/components/schemas/ListAllWebhooksResponse'
         '404':
           description: Not Found
 
@@ -5789,7 +5789,11 @@ components:
           amount: 230
           description: Transfer to my other Float account
           matures_at: '2021-05-03T00:00:00Z'
-    GetWebhooksResponse:
+    ListAllWebhooksResponse:
+      title:  List all Webhooks (response)
+      required:
+        - data
+      type: object
       properties:
         data:
           required: true
@@ -5830,6 +5834,30 @@ components:
       properties:
         data:
           type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              description: The Webhook Delivery ID
+            webhook_id:
+              type: string
+              format: uuid
+              description: The Webhook ID
+            state:
+              type: string
+              description: The state of the webhook delivery.
+              enum:
+                - pending
+                - delivered
+                - will_retry
+                - gave_up
+            payload:
+              type: object
+              description: Could be anything
+            created_at:
+              type: string
+              format: date-time
+              description: When the webhook delivery was created
       example:
         data:
           id: 25b94d84-b4d5-4a45-93da-4a25d8331eab
