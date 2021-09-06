@@ -9574,6 +9574,24 @@ NOTE: There is a historical limit of 30 days for webhook deliveries.
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |webhook_id|path|string|true|Single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
+|starting_after|query|string(uuid)|false|Offset UUID of webhook delivery, single value, exact match|
+|event_type|query|string|false|See ([Data schemas](/#data-schemas)) for a list of possible values, single value, exact match|
+|since|query|string(date-time)|false|Date/time UTC ISO 8601 format, single value, exact match|
+|response_status_code|query|string|false|Single value, exact match|
+|state|query|string|false|Filter deliveries by state. NOTE: Delivered means it arrived in the server, i.e. the response code could be 2xx, 4xx, or, 5xx. Single value, exact match|
+
+#### Enumerated Values
+
+|Parameter|Value|
+|---|---|
+|response_status_code|2xx|
+|response_status_code|4xx|
+|response_status_code|5xx|
+|state|pending|
+|state|delivered|
+|state|will_retry|
+|state|gave_up|
 
 > Example responses
 

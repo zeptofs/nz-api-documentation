@@ -3322,6 +3322,59 @@ paths:
           schema:
             type: string
           example: 31918dce-2dc3-405b-8d3c-fd3901b17e9f
+        - name: per_page
+          in: query
+          description: 'Number of results per page, single value, exact match'
+          required: false
+          style: simple
+          schema:
+            type: string
+          example: 20
+        - name: starting_after
+          in: query
+          description: 'Offset UUID of webhook delivery, single value, exact match'
+          required: false
+          style: simple
+          schema:
+            type: string
+            format: uuid
+          example: 31918dce-2dc3-405b-8d3c-fd3901b17e9f
+        - name: event_type
+          in: query
+          description: 'See ([Data schemas](/#data-schemas)) for a list of possible values, single value, exact match'
+          required: false
+          style: form
+          explode: false
+          schema:
+            type: string
+          example: 'agreement.accepted'
+        - name: since
+          in: query
+          required: false
+          description: 'Date/time UTC ISO 8601 format, single value, exact match'
+          style: form
+          schema:
+            type: string
+            format: date-time
+          example: '2017-05-10T00:00:00Z'
+        - name: response_status_code
+          in: query
+          description: 'Single value, exact match'
+          required: false
+          style: simple
+          schema:
+            type: string
+            enum: [2xx, 4xx, 5xx]
+          example: '418'
+        - name: state
+          in: query
+          description: 'Filter deliveries by state. NOTE: Delivered means it arrived in the server, i.e. the response code could be 2xx, 4xx, or, 5xx. Single value, exact match'
+          required: false
+          style: simple
+          schema:
+            type: string
+            enum: [pending, delivered, will_retry, gave_up]
+          example: 'delivered'
       responses:
         '200':
           description: OK
