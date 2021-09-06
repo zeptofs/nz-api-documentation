@@ -927,6 +927,7 @@ To protect against timing attacks, use a constant-time string comparison to comp
 # Changelog
 We take backwards compatibility seriously. The following list contains backwards compatible changes:
 
+- **2021-08-31** - Added PayID pool references to */contacts/receivable* and */bank_accounts* endpoints
 - **2021-07-01** - Added $1.65 amount for Sandbox simulated failures and minor tweaks
 - **2021-06-08** - Added Transfers, Payment Channel selection, Receivable Refunds
 - **2021-05-21** - Added new Payment Request endpoints, updated Postman collection
@@ -1681,7 +1682,13 @@ By default, all Bank Accounts will be returned.
       "account_number": "1748212",
       "status": "active",
       "title": "Float Account",
-      "available_balance": 10000
+      "available_balance": 10000,
+      "payid_configs": {
+        "email_domain": "pay.zepto.com.au",
+        "pooling_state": "disabled",
+        "max_pool_size": 10,
+        "current_pool_size": 1
+      }
     }
   ]
 }
@@ -2653,7 +2660,9 @@ Receive funds from a Contact by allowing them to pay to a personalised PayID or 
     <li><strong>alias_name</strong>: the business name that will be displayed to your customers upon PayID resolution. We suggest using a shortened name appropriate for mobile displays</li>
 </aside>
 <aside class="notice">
-  When creating this type of Contact, the initial response <code>payid_details.state</code> value will always be <code>pending</code>. After a few seconds, it will transition to <code>active</code>. We suggest you use webhooks to be informed of this state change
+  There are two strategies supported for PayID assignment when creating this type of Contact:
+  <li><strong>On-demand PayID</strong>: provide a <code>payid_email</code> and we'll create a contact and register a PayID with the given email address. The PayID registration process happens when the request is received. The initial response for <code>payid_details.state</code> will always be <code>pending</code>. It will transition to <code>active</code> when the PayID registration process is complete. This can take up to a few seconds. You can use webhooks to be informed of this state change.</li>
+  <li><strong>Pooled PayID</strong>: provide your <code>payid_email_domain</code> and we'll create a contact and assign them a PayID from your pool. Pooled PayIDs are pre-registered. The PayID email value is generated using a random value and the email domain from your PayID pool configuration. Providing both <code>payid_email</code> and <code>payid_email_domain</code> will ignore your pool and use the "On-demand PayID" strategy instead.</li>
 </aside>
 <aside class="notice">
   While unlikely, it is possible that we will be unable to register the given PayID. In this case <code>payid_details.state</code> will transition to <code>failed</code>.
@@ -2685,7 +2694,8 @@ Receive funds from a Contact by allowing them to pay to a personalised PayID or 
 |body|body|[AddAReceivableContactRequest](#schemaaddareceivablecontactrequest)|true|No description|
 |» name|body|string|true|Contact name (Min: 3 - Max: 140)|
 |» email|body|string|true|Contact email (Min: 6 - Max: 256)|
-|» payid_email|body|string|true|Contact PayID email (Min: 6 - Max: 256)|
+|» payid_email|body|string|false|Contact PayID email (Min: 6 - Max: 256)|
+|» payid_email_domain|body|string|false|PayID pool email domain (Min: 3 - Max: 254)|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 
 > Example responses
@@ -9421,7 +9431,13 @@ func main() {
       "account_number": "1748212",
       "status": "active",
       "title": "Float Account",
-      "available_balance": 10000
+      "available_balance": 10000,
+      "payid_configs": {
+        "email_domain": "pay.zepto.com.au",
+        "pooling_state": "disabled",
+        "max_pool_size": 10,
+        "current_pool_size": 1
+      }
     }
   ]
 }
@@ -9773,7 +9789,8 @@ func main() {
 |---|---|---|---|
 |name|string|true|Contact name (Min: 3 - Max: 140)|
 |email|string|true|Contact email (Min: 6 - Max: 256)|
-|payid_email|string|true|Contact PayID email (Min: 6 - Max: 256)|
+|payid_email|string|false|Contact PayID email (Min: 6 - Max: 256)|
+|payid_email_domain|string|false|PayID pool email domain (Min: 3 - Max: 254)|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
 ## AddAReceivableContactResponse
