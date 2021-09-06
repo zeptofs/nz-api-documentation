@@ -3306,6 +3306,30 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetWebhooksResponse'
 
+  '/webhooks/{webhook_id}/deliveries':
+    get:
+      tags:
+        - Webhooks
+      summary: List deliveries for a webhook
+      description: 'NOTE: There is a historical limit of 30 days for webhook deliveries.'
+      operationId: GetWebhookDeliveries
+      parameters:
+        - name: webhook_id
+          in: path
+          description: 'Single value, exact match'
+          required: true
+          style: simple
+          schema:
+            type: string
+          example: 31918dce-2dc3-405b-8d3c-fd3901b17e9f
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWebhookDeliveriesResponse'
+
   /simulate/incoming_payid_payment:
     post:
       tags:
@@ -5672,5 +5696,23 @@ components:
           events:
           - debit.cleared
           - credit.cleared
+    GetWebhookDeliveriesResponse:
+      properties:
+        data:
+          required: true
+          type: array
+          items:
+            type: object
+      example:
+        data:
+        - id: 88025fe0-ba80-4cfc-bcc6-c23147ac69a9
+          state: "completed"
+          created_at: "2021-08-22T02:57:45Z"
+          response_status_code: 200
+          event_type: "payout_request.approved"
+          payload_data_summary:
+          - ref: "D.6st94"
+          - ref: "D.6st95"
+          - ref: "D.6st93"
 security:
   - bearerAuth: []

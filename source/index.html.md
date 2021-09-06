@@ -9431,6 +9431,185 @@ func main() {
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetWebhooksResponse](#schemagetwebhooksresponse)|
 
+## List deliveries for a webhook
+
+<a id="opIdGetWebhookDeliveries"></a>
+
+> Code samples
+
+```shell
+curl --request GET \
+  --url https://api.sandbox.split.cash/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = {
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("GET", "/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`GET /webhooks/{webhook_id}/deliveries`
+
+NOTE: There is a historical limit of 30 days for webhook deliveries.
+
+<h3 id="List-deliveries-for-a-webhook-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|webhook_id|path|string|true|Single value, exact match|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "data": [
+    {
+      "id": "88025fe0-ba80-4cfc-bcc6-c23147ac69a9",
+      "state": "completed",
+      "created_at": "2021-08-22T02:57:45Z",
+      "response_status_code": 200,
+      "event_type": "payout_request.approved",
+      "payload_data_summary": [
+        {
+          "ref": "D.6st94"
+        },
+        {
+          "ref": "D.6st95"
+        },
+        {
+          "ref": "D.6st93"
+        }
+      ]
+    }
+  ]
+}
+```
+
+<h3 id="List deliveries for a webhook-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetWebhookDeliveriesResponse](#schemagetwebhookdeliveriesresponse)|
+
 # Schemas
 
 ## GetAgreementResponse
@@ -11688,6 +11867,41 @@ func main() {
       "events": [
         "debit.cleared",
         "credit.cleared"
+      ]
+    }
+  ]
+}
+```
+
+### Properties
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|false|No description|
+
+## GetWebhookDeliveriesResponse
+
+<a id="schemagetwebhookdeliveriesresponse"></a>
+
+```json
+{
+  "data": [
+    {
+      "id": "88025fe0-ba80-4cfc-bcc6-c23147ac69a9",
+      "state": "completed",
+      "created_at": "2021-08-22T02:57:45Z",
+      "response_status_code": 200,
+      "event_type": "payout_request.approved",
+      "payload_data_summary": [
+        {
+          "ref": "D.6st94"
+        },
+        {
+          "ref": "D.6st95"
+        },
+        {
+          "ref": "D.6st93"
+        }
       ]
     }
   ]
