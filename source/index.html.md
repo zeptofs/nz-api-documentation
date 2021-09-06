@@ -9801,6 +9801,170 @@ Get a single webhook delivery by ID
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAWebhookDeliveryResponse](#schemagetawebhookdeliveryresponse)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
 
+## Resend a Webhook Delivery
+
+<a id="opIdResendAWebhookDelivery"></a>
+
+> Code samples
+
+```shell
+curl --request POST \
+  --url https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = {
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("POST", "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f');
+$request->setRequestMethod('POST');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f"
+
+	req, _ := http.NewRequest("POST", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`POST /webhook_deliveries/{id}`
+
+Use this endpoint when you want to resend a failed webhook delivery.
+
+<h3 id="Resend-a-Webhook-Delivery-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string(UUID)|true|WebhookDelivery ID (`WebhookDelivery.data.id`)|
+
+> Example responses
+
+> 202 Response
+
+```json
+{
+  "data": {
+    "id": "25b94d84-b4d5-4a45-93da-4a25d8331eab",
+    "webhook_id": "31918dce-2dc3-405b-8d3c-fd3901b17e9f",
+    "state": "pending"
+  }
+}
+```
+
+<h3 id="Resend a Webhook Delivery-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|202|[Accepted](https://tools.ietf.org/html/rfc7231#section-6.3.3)|Accepted|[RedeliverAWebhookDeliveryResponse](#schemaredeliverawebhookdeliveryresponse)|
+
 # Schemas
 
 ## GetAgreementResponse
@@ -12128,6 +12292,28 @@ Get a single webhook delivery by ID
 ### Properties
 
 *Get a WebhookDelivery (response)*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+
+## RedeliverAWebhookDeliveryResponse
+
+<a id="schemaredeliverawebhookdeliveryresponse"></a>
+
+```json
+{
+  "data": {
+    "id": "25b94d84-b4d5-4a45-93da-4a25d8331eab",
+    "webhook_id": "31918dce-2dc3-405b-8d3c-fd3901b17e9f",
+    "state": "pending"
+  }
+}
+```
+
+### Properties
+
+*Resend a WebhookDelivery (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
