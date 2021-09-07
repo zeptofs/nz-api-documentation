@@ -690,6 +690,8 @@ Use the following table to discover what type of response schema to expect for f
 3. Delivery order for webhook events is not guaranteed.
 4. We guarantee at least 1 delivery attempt.
 
+**For redelivery of webhooks, check out our [Webhook/WebhookDelivery API endpoints](#Zepto-API-Webhooks)**
+
 ### Request ID
 
 > Example header
@@ -9405,6 +9407,8 @@ func main() {
 
 `GET /webhooks`
 
+List all your application's webhook configurations
+
 > Example responses
 
 > 200 Response
@@ -9413,10 +9417,16 @@ func main() {
 {
   "data": [
     {
-      "id": "31918dce-2dc3-405b-8d3c-fd3901b17e9f",
-      "url": "http://www.example.com",
-      "signature_secret": "top-secret",
+      "id": "13bd760e-447f-4225-b801-0777a15da131",
+      "url": "https://webhook.site/a9a3033b-90eb-44af-9ba3-29972435d10e",
+      "signature_secret": "8fad2f5570e6bf0351728f727c5a8c770dda646adde049b866a7800d59",
       "events": [
+        "agreement.accepted",
+        "agreement.cancelled",
+        "agreement.declined",
+        "agreement.proposed",
+        "agreement.expended",
+        "agreement.unverified",
         "debit.cleared",
         "credit.cleared"
       ]
@@ -9602,17 +9612,26 @@ NOTE: There is a historical limit of 30 days for webhook deliveries.
 {
   "data": [
     {
-      "id": "88025fe0-ba80-4cfc-bcc6-c23147ac69a9",
+      "id": "957d40a4-80f5-4dd2-8ada-8242d5ad66c1",
+      "event_type": "payout_request.added",
       "state": "completed",
-      "created_at": "2021-08-22T02:57:45Z",
       "response_status_code": 200,
-      "event_type": "payout_request.approved",
+      "created_at": "2021-09-02T02:24:50.000Z",
       "payload_data_summary": [
         {
-          "ref": "D.6st94"
-        },
+          "ref": "PR.ct5b"
+        }
+      ]
+    },
+    {
+      "id": "29bb9835-7c69-4ecb-bf96-197d089d0ec3",
+      "event_type": "creditor_debit.scheduled",
+      "state": "completed",
+      "response_status_code": 200,
+      "created_at": "2021-09-02T02:24:50.000Z",
+      "payload_data_summary": [
         {
-          "ref": "D.6st95"
+          "ref": "D.hyy9"
         },
         {
           "ref": "D.6st93"
@@ -9781,16 +9800,49 @@ Get a single webhook delivery by ID
 ```json
 {
   "data": {
-    "id": "25b94d84-b4d5-4a45-93da-4a25d8331eab",
-    "webhook_id": "31918dce-2dc3-405b-8d3c-fd3901b17e9f",
-    "state": "pending",
-    "event_type": "debit.cleared",
-    "response_status_code": 200,
+    "id": "957d40a4-80f5-4dd2-8ada-8242d5ad66c1",
+    "webhook_id": "13bd760e-447f-4225-b801-0777a15da131",
+    "event_type": "payout_request.added",
+    "state": "completed",
     "payload": {
-      "reference": "Some reference"
-    },
-    "created_at": "2021-04-14T12:34:56Z"
-  }
+      "data": [
+        {
+          "ref": "PR.ct5b",
+          "payout": {
+            "amount": 1501,
+            "matures_at": "2021-09-02T02:24:49.000Z",
+            "description": "Payment from Incoming Test Payment Contact 014209 12345678 (Test Payment)"
+          },
+          "status": "approved",
+          "created_at": "2021-09-02T02:24:49.000Z",
+          "credit_ref": "C.p2rt",
+          "matures_at": "2021-09-02T02:24:49.000Z",
+          "initiator_id": "b50a6e92-a5e1-4175-b560-9e4c9a9bb4b9",
+          "responded_at": "2021-09-02T02:24:49.000Z",
+          "schedule_ref": null,
+          "authoriser_id": "780f186c-80fd-42b9-97d5-650d99a0bc99",
+          "status_reason": null,
+          "your_bank_account_id": "b50a6e92-a5e1-4175-b560-9e4c9a9bb4b9",
+          "authoriser_contact_id": "590be205-6bae-4070-a9af-eb50d514cec5",
+          "authoriser_contact_initiated": true
+        },
+        {
+          "event": {
+            "at": "2021-09-02T02:24:49.000Z",
+            "who": {
+              "account_id": "20f4e3f8-2efc-48a9-920b-541515f1c9e3",
+              "account_type": "Account",
+              "bank_account_id": "b50a6e92-a5e1-4175-b560-9e4c9a9bb4b9",
+              "bank_account_type": "BankAccount"
+            },
+            "type": "payment_request.added"
+          }
+        }
+      ]
+    }
+  },
+  "response_status_code": 200,
+  "created_at": "2021-09-02T02:24:50.000Z"
 }
 ```
 
@@ -9952,8 +10004,8 @@ Use this endpoint when you want to resend a failed webhook delivery.
 ```json
 {
   "data": {
-    "id": "25b94d84-b4d5-4a45-93da-4a25d8331eab",
-    "webhook_id": "31918dce-2dc3-405b-8d3c-fd3901b17e9f",
+    "id": "957d40a4-80f5-4dd2-8ada-8242d5ad66c1",
+    "webhook_id": "13bd760e-447f-4225-b801-0777a15da131",
     "state": "pending"
   }
 }
@@ -12216,10 +12268,16 @@ Use this endpoint when you want to resend a failed webhook delivery.
 {
   "data": [
     {
-      "id": "31918dce-2dc3-405b-8d3c-fd3901b17e9f",
-      "url": "http://www.example.com",
-      "signature_secret": "top-secret",
+      "id": "13bd760e-447f-4225-b801-0777a15da131",
+      "url": "https://webhook.site/a9a3033b-90eb-44af-9ba3-29972435d10e",
+      "signature_secret": "8fad2f5570e6bf0351728f727c5a8c770dda646adde049b866a7800d59",
       "events": [
+        "agreement.accepted",
+        "agreement.cancelled",
+        "agreement.declined",
+        "agreement.proposed",
+        "agreement.expended",
+        "agreement.unverified",
         "debit.cleared",
         "credit.cleared"
       ]
@@ -12244,17 +12302,26 @@ Use this endpoint when you want to resend a failed webhook delivery.
 {
   "data": [
     {
-      "id": "88025fe0-ba80-4cfc-bcc6-c23147ac69a9",
+      "id": "957d40a4-80f5-4dd2-8ada-8242d5ad66c1",
+      "event_type": "payout_request.added",
       "state": "completed",
-      "created_at": "2021-08-22T02:57:45Z",
       "response_status_code": 200,
-      "event_type": "payout_request.approved",
+      "created_at": "2021-09-02T02:24:50.000Z",
       "payload_data_summary": [
         {
-          "ref": "D.6st94"
-        },
+          "ref": "PR.ct5b"
+        }
+      ]
+    },
+    {
+      "id": "29bb9835-7c69-4ecb-bf96-197d089d0ec3",
+      "event_type": "creditor_debit.scheduled",
+      "state": "completed",
+      "response_status_code": 200,
+      "created_at": "2021-09-02T02:24:50.000Z",
+      "payload_data_summary": [
         {
-          "ref": "D.6st95"
+          "ref": "D.hyy9"
         },
         {
           "ref": "D.6st93"
@@ -12278,16 +12345,49 @@ Use this endpoint when you want to resend a failed webhook delivery.
 ```json
 {
   "data": {
-    "id": "25b94d84-b4d5-4a45-93da-4a25d8331eab",
-    "webhook_id": "31918dce-2dc3-405b-8d3c-fd3901b17e9f",
-    "state": "pending",
-    "event_type": "debit.cleared",
-    "response_status_code": 200,
+    "id": "957d40a4-80f5-4dd2-8ada-8242d5ad66c1",
+    "webhook_id": "13bd760e-447f-4225-b801-0777a15da131",
+    "event_type": "payout_request.added",
+    "state": "completed",
     "payload": {
-      "reference": "Some reference"
-    },
-    "created_at": "2021-04-14T12:34:56Z"
-  }
+      "data": [
+        {
+          "ref": "PR.ct5b",
+          "payout": {
+            "amount": 1501,
+            "matures_at": "2021-09-02T02:24:49.000Z",
+            "description": "Payment from Incoming Test Payment Contact 014209 12345678 (Test Payment)"
+          },
+          "status": "approved",
+          "created_at": "2021-09-02T02:24:49.000Z",
+          "credit_ref": "C.p2rt",
+          "matures_at": "2021-09-02T02:24:49.000Z",
+          "initiator_id": "b50a6e92-a5e1-4175-b560-9e4c9a9bb4b9",
+          "responded_at": "2021-09-02T02:24:49.000Z",
+          "schedule_ref": null,
+          "authoriser_id": "780f186c-80fd-42b9-97d5-650d99a0bc99",
+          "status_reason": null,
+          "your_bank_account_id": "b50a6e92-a5e1-4175-b560-9e4c9a9bb4b9",
+          "authoriser_contact_id": "590be205-6bae-4070-a9af-eb50d514cec5",
+          "authoriser_contact_initiated": true
+        },
+        {
+          "event": {
+            "at": "2021-09-02T02:24:49.000Z",
+            "who": {
+              "account_id": "20f4e3f8-2efc-48a9-920b-541515f1c9e3",
+              "account_type": "Account",
+              "bank_account_id": "b50a6e92-a5e1-4175-b560-9e4c9a9bb4b9",
+              "bank_account_type": "BankAccount"
+            },
+            "type": "payment_request.added"
+          }
+        }
+      ]
+    }
+  },
+  "response_status_code": 200,
+  "created_at": "2021-09-02T02:24:50.000Z"
 }
 ```
 
@@ -12320,8 +12420,8 @@ Use this endpoint when you want to resend a failed webhook delivery.
 ```json
 {
   "data": {
-    "id": "25b94d84-b4d5-4a45-93da-4a25d8331eab",
-    "webhook_id": "31918dce-2dc3-405b-8d3c-fd3901b17e9f",
+    "id": "957d40a4-80f5-4dd2-8ada-8242d5ad66c1",
+    "webhook_id": "13bd760e-447f-4225-b801-0777a15da131",
     "state": "pending"
   }
 }
