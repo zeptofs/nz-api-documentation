@@ -1122,7 +1122,7 @@ info:
     4. We guarantee at least 1 delivery attempt.
 
 
-    **For redelivery of webhooks, check out our [Webhook/WebhookDelivery API endpoints](#Zepto-API-Webhooks)**
+    **For redelivery of webhooks, check out our [Webhook/WebhookDelivery API endpoints](#Zepto-API-Webhooks).**
 
 
     ### Request ID
@@ -3298,7 +3298,7 @@ paths:
       tags:
         - Webhooks
       summary: List all webhooks
-      description: "List all your application's webhook configurations"
+      description: "List all your application's webhook configurations."
       operationId: GetWebhooks
       parameters: []
       responses:
@@ -3316,7 +3316,7 @@ paths:
       tags:
         - Webhooks
       summary: List deliveries for a webhook
-      description: 'NOTE: There is a historical limit of 30 days for webhook deliveries.'
+      description: 'NOTE: Webhook deliveries are stored for 30 days.'
       operationId: GetWebhookDeliveries
       parameters:
         - name: webhook_id
@@ -3337,7 +3337,7 @@ paths:
           example: 20
         - name: starting_after
           in: query
-          description: 'Offset UUID of webhook delivery, single value, exact match'
+          description: 'Display all webhook deliveries after this webhook delivery offset UUID, single value, exact match'
           required: false
           style: simple
           schema:
@@ -3352,11 +3352,12 @@ paths:
           explode: false
           schema:
             type: string
+            enum: ['See ([Data schemas](/#data-schemas))']
           example: 'agreement.accepted'
         - name: since
           in: query
           required: false
-          description: 'Date/time UTC ISO 8601 format, single value, exact match'
+          description: 'Display all webhook deliveries after this date. Date/time UTC ISO 8601 format, single value, exact match'
           style: form
           schema:
             type: string
@@ -3373,7 +3374,7 @@ paths:
           example: '418'
         - name: state
           in: query
-          description: 'Filter deliveries by state. NOTE: Delivered means it arrived in the server, i.e. the response code could be 2xx, 4xx, or, 5xx. Single value, exact match'
+          description: 'Filter deliveries by state, single value, exact match. See [Our delivery promise](#our-delivery-promises)'
           required: false
           style: simple
           schema:
@@ -3394,7 +3395,7 @@ paths:
       tags:
         - Webhooks
       summary: Get a Webhook Delivery
-      description: Get a single webhook delivery by ID
+      description: Get a single webhook delivery by ID.
       operationId: GetAWebhookDelivery
       parameters:
         - name: id
@@ -3421,7 +3422,7 @@ paths:
         - Webhooks
       summary: Resend a Webhook Delivery
       description: >
-        Use this endpoint when you want to resend a failed webhook delivery.
+        Use this endpoint to resend a failed webhook delivery.
       operationId: ResendAWebhookDelivery
       parameters:
         - name: id
@@ -5809,12 +5810,6 @@ components:
           url: "https://webhook.site/a9a3033b-90eb-44af-9ba3-29972435d10e"
           signature_secret: "8fad2f5570e6bf0351728f727c5a8c770dda646adde049b866a7800d59"
           events:
-          - agreement.accepted
-          - agreement.cancelled
-          - agreement.declined
-          - agreement.proposed
-          - agreement.expended
-          - agreement.unverified
           - debit.cleared
           - credit.cleared
     GetWebhookDeliveriesResponse:

@@ -690,7 +690,7 @@ Use the following table to discover what type of response schema to expect for f
 3. Delivery order for webhook events is not guaranteed.
 4. We guarantee at least 1 delivery attempt.
 
-**For redelivery of webhooks, check out our [Webhook/WebhookDelivery API endpoints](#Zepto-API-Webhooks)**
+**For redelivery of webhooks, check out our [Webhook/WebhookDelivery API endpoints](#Zepto-API-Webhooks).**
 
 ### Request ID
 
@@ -9407,7 +9407,7 @@ func main() {
 
 `GET /webhooks`
 
-List all your application's webhook configurations
+List all your application's webhook configurations.
 
 > Example responses
 
@@ -9421,12 +9421,6 @@ List all your application's webhook configurations
       "url": "https://webhook.site/a9a3033b-90eb-44af-9ba3-29972435d10e",
       "signature_secret": "8fad2f5570e6bf0351728f727c5a8c770dda646adde049b866a7800d59",
       "events": [
-        "agreement.accepted",
-        "agreement.cancelled",
-        "agreement.declined",
-        "agreement.proposed",
-        "agreement.expended",
-        "agreement.unverified",
         "debit.cleared",
         "credit.cleared"
       ]
@@ -9578,7 +9572,7 @@ func main() {
 
 `GET /webhooks/{webhook_id}/deliveries`
 
-NOTE: There is a historical limit of 30 days for webhook deliveries.
+NOTE: Webhook deliveries are stored for 30 days.
 
 <h3 id="List-deliveries-for-a-webhook-parameters" class="parameters">Parameters</h3>
 
@@ -9586,16 +9580,17 @@ NOTE: There is a historical limit of 30 days for webhook deliveries.
 |---|---|---|---|---|
 |webhook_id|path|string|true|Single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
-|starting_after|query|string(uuid)|false|Offset UUID of webhook delivery, single value, exact match|
+|starting_after|query|string(uuid)|false|Display all webhook deliveries after this webhook delivery offset UUID, single value, exact match|
 |event_type|query|string|false|See ([Data schemas](/#data-schemas)) for a list of possible values, single value, exact match|
-|since|query|string(date-time)|false|Date/time UTC ISO 8601 format, single value, exact match|
+|since|query|string(date-time)|false|Display all webhook deliveries after this date. Date/time UTC ISO 8601 format, single value, exact match|
 |response_status_code|query|string|false|Single value, exact match|
-|state|query|string|false|Filter deliveries by state. NOTE: Delivered means it arrived in the server, i.e. the response code could be 2xx, 4xx, or, 5xx. Single value, exact match|
+|state|query|string|false|Filter deliveries by state, single value, exact match. See [Our delivery promise](#our-delivery-promises)|
 
 #### Enumerated Values
 
 |Parameter|Value|
 |---|---|
+|event_type|See ([Data schemas](/#data-schemas))|
 |response_status_code|2xx|
 |response_status_code|4xx|
 |response_status_code|5xx|
@@ -9785,7 +9780,7 @@ func main() {
 
 `GET /webhook_deliveries/{id}`
 
-Get a single webhook delivery by ID
+Get a single webhook delivery by ID.
 
 <h3 id="Get-a-Webhook-Delivery-parameters" class="parameters">Parameters</h3>
 
@@ -9989,7 +9984,7 @@ func main() {
 
 `POST /webhook_deliveries/{id}`
 
-Use this endpoint when you want to resend a failed webhook delivery.
+Use this endpoint to resend a failed webhook delivery.
 
 <h3 id="Resend-a-Webhook-Delivery-parameters" class="parameters">Parameters</h3>
 
@@ -12272,12 +12267,6 @@ Use this endpoint when you want to resend a failed webhook delivery.
       "url": "https://webhook.site/a9a3033b-90eb-44af-9ba3-29972435d10e",
       "signature_secret": "8fad2f5570e6bf0351728f727c5a8c770dda646adde049b866a7800d59",
       "events": [
-        "agreement.accepted",
-        "agreement.cancelled",
-        "agreement.declined",
-        "agreement.proposed",
-        "agreement.expended",
-        "agreement.unverified",
         "debit.cleared",
         "credit.cleared"
       ]
