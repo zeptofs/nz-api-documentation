@@ -6083,8 +6083,8 @@ To enable custom payment flows, the required payment channel can be selected by 
 |body|body|[MakeAPaymentRequest](#schemamakeapaymentrequest)|true|No description|
 |» description|body|string|true|User description. Only visible to the payer|
 |» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
-|» your_bank_account_id|body|string|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
-|» channels|body|array|false|Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)|
+|» your_bank_account_id|body|string|true|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
+|» channels|body|array|true|Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)|
 |» payouts|body|[[Payout](#schemapayout)]|true|One Payout object only|
 |»» Payout|body|[Payout](#schemapayout)|false|The actual Payout|
 |»»» amount|body|integer|true|Amount in cents to pay the recipient|
@@ -11343,8 +11343,8 @@ Use this endpoint to resend a failed webhook delivery.
 |---|---|---|---|
 |description|string|true|User description. Only visible to the payer|
 |matures_at|string(date-time)|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
-|your_bank_account_id|string|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
-|channels|array|false|Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)|
+|your_bank_account_id|string|true|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
+|channels|array|true|Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)|
 |payouts|[[Payout](#schemapayout)]|true|One Payout object only|
 |metadata|[Metadata](#schemametadata)|false|No description|
 

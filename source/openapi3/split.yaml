@@ -4489,6 +4489,8 @@ components:
         - description
         - matures_at
         - payouts
+        - your_bank_account_id
+        - channels
       type: object
       properties:
         description:
