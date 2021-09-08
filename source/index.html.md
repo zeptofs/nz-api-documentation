@@ -2491,263 +2491,6 @@ Use this endpoint when you want to pay somebody.
 |---|---|---|---|
 |201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddAnAnyoneContactResponse](#schemaaddananyonecontactresponse)|
 
-## Add a Receivable Contact
-
-<a id="opIdAddAReceivableContact"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://api.sandbox.split.cash/contacts/receivable \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
-  --data '{"name":"Delphine Jestin","email":"delphine@gmail.com","payid_email":"delphine_123@merchant.com.au","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/contacts/receivable")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/contacts/receivable",
-  "headers": {
-    "content-type": "application/json",
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.write(JSON.stringify({
-  name: 'Delphine Jestin',
-  email: 'delphine@gmail.com',
-  payid_email: 'delphine_123@merchant.com.au',
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-payload = "{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
-
-headers = {
-    'content-type': "application/json",
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/contacts/receivable", payload, headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts/receivable")
-  .header("content-type", "application/json")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .body("{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$body = new http\Message\Body;
-$body->append('{"name":"Delphine Jestin","email":"delphine@gmail.com","payid_email":"delphine_123@merchant.com.au","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
-
-$request->setRequestUrl('https://api.sandbox.split.cash/contacts/receivable');
-$request->setRequestMethod('POST');
-$request->setBody($body);
-
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json',
-  'content-type' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"strings"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/contacts/receivable"
-
-	payload := strings.NewReader("{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
-
-	req, _ := http.NewRequest("POST", url, payload)
-
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /contacts/receivable`
-
-Receive funds from a Contact by allowing them to pay to a personalised PayID or account number. Perfect for reconciling incoming funds to a customer, receiving funds instantly, eliminating human error & improving your customer's experience.
-
-<aside class="notice">
-  To enable this feature, please contact our support team with the following information:
-    <li>Your full legal business name</li>
-    <li>A legally owned domain name: for your PayID email addresses</li>
-    <li><strong>alias_name</strong>: the business name that will be displayed to your customers upon PayID resolution. We suggest using a shortened name appropriate for mobile displays</li>
-</aside>
-<aside class="notice">
-  There are two strategies supported for PayID assignment when creating this type of Contact:
-  <li><strong>On-demand PayID</strong>: provide a <code>payid_email</code> and we'll create a contact and register a PayID with the given email address. The PayID registration process happens when the request is received. The initial response for <code>payid_details.state</code> will always be <code>pending</code>. It will transition to <code>active</code> when the PayID registration process is complete. This can take up to a few seconds. You can use webhooks to be informed of this state change.</li>
-  <li><strong>Pooled PayID</strong>: provide your <code>payid_email_domain</code> and we'll create a contact and assign them a PayID from your pool. Pooled PayIDs are pre-registered. The PayID email value is generated using a random value and the email domain from your PayID pool configuration. Providing both <code>payid_email</code> and <code>payid_email_domain</code> will ignore your pool and use the "On-demand PayID" strategy instead.</li>
-</aside>
-<aside class="notice">
-  While unlikely, it is possible that we will be unable to register the given PayID. In this case <code>payid_details.state</code> will transition to <code>failed</code>.
-
-  You can simulate this path in sandbox by adding <code>+failure</code> to your <code>payid_email</code> e.g <code>test+failure@split.cash</code>
-</aside>
-<aside class="notice">
-  You can test receiving payments to a Receivable Contact in our sandbox environment using the <a href="#simulate-incoming-payid-payment">PayID simulation endpoint</a>.
-</aside>
-
-> Body parameter
-
-```json
-{
-  "name": "Delphine Jestin",
-  "email": "delphine@gmail.com",
-  "payid_email": "delphine_123@merchant.com.au",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}
-```
-
-<h3 id="Add-a-Receivable-Contact-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[AddAReceivableContactRequest](#schemaaddareceivablecontactrequest)|true|No description|
-|» name|body|string|true|Contact name (Min: 3 - Max: 140)|
-|» email|body|string|true|Contact email (Min: 6 - Max: 256)|
-|» payid_email|body|string|false|Contact PayID email (Min: 6 - Max: 256)|
-|» payid_email_domain|body|string|false|PayID pool email domain (Min: 3 - Max: 254)|
-|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
-
-> Example responses
-
-> 201 Response
-
-```json
-{
-  "data": {
-    "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
-    "name": "Delphine Jestin",
-    "email": "delphine@gmail.com",
-    "type": "anyone",
-    "metadata": {
-      "custom_key": "Custom string",
-      "another_custom_key": "Maybe a URL"
-    },
-    "bank_account": {
-      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-      "account_number": "1408281",
-      "branch_code": "802919",
-      "bank_name": "Zepto Float Account",
-      "state": "active",
-      "iav_provider": null,
-      "iav_status": null,
-      "blocks": {
-        "debits_blocked": false,
-        "credits_blocked": false
-      }
-    },
-    "anyone_account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
-    },
-    "payid_details": {
-      "alias_value": "delphine_123@merchant.com.au",
-      "alias_type": "email",
-      "alias_name": "your merchant's alias_name",
-      "state": "pending"
-    }
-  }
-}
-```
-
-<h3 id="Add a Receivable Contact-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddAReceivableContactResponse](#schemaaddareceivablecontactresponse)|
-|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
-
 ## List all Contacts
 
 <a id="opIdListAllContacts"></a>
@@ -3735,6 +3478,551 @@ Refresh one of your Contact's bank connections to get the latest available balan
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content (success)|None|
 |422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|Unprocessable Entity (errors)|None|
+
+<h1 id="Zepto-API-Contacts--Receivable-">Contacts (Receivable)</h1>
+
+## Add a Receivable Contact
+
+<a id="opIdAddAReceivableContact"></a>
+
+> Code samples
+
+```shell
+curl --request POST \
+  --url https://api.sandbox.split.cash/contacts/receivable \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data '{"name":"Delphine Jestin","email":"delphine@gmail.com","payid_email":"delphine_123@merchant.com.au","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/contacts/receivable")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["content-type"] = 'application/json'
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+request.body = "{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/contacts/receivable",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({
+  name: 'Delphine Jestin',
+  email: 'delphine@gmail.com',
+  payid_email: 'delphine_123@merchant.com.au',
+  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
+}));
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+payload = "{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+
+headers = {
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("POST", "/contacts/receivable", payload, headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts/receivable")
+  .header("content-type", "application/json")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .body("{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('{"name":"Delphine Jestin","email":"delphine@gmail.com","payid_email":"delphine_123@merchant.com.au","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+
+$request->setRequestUrl('https://api.sandbox.split.cash/contacts/receivable');
+$request->setRequestMethod('POST');
+$request->setBody($body);
+
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json',
+  'content-type' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/contacts/receivable"
+
+	payload := strings.NewReader("{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("content-type", "application/json")
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`POST /contacts/receivable`
+
+Receive funds from a Contact by allowing them to pay to a personalised PayID or account number. Perfect for reconciling incoming funds to a customer, receiving funds instantly, eliminating human error & improving your customer's experience.
+
+<aside class="notice">
+  To enable this feature, please contact our support team with the following information:
+    <li>Your full legal business name</li>
+    <li>A legally owned domain name: for your PayID email addresses</li>
+    <li><strong>alias_name</strong>: the business name that will be displayed to your customers upon PayID resolution. We suggest using a shortened name appropriate for mobile displays</li>
+</aside>
+<aside class="notice">
+  There are two strategies supported for PayID assignment when creating this type of Contact:
+  <li><strong>On-demand PayID</strong>: provide a <code>payid_email</code> and we'll create a contact and register a PayID with the given email address. The PayID registration process happens when the request is received. The initial response for <code>payid_details.state</code> will always be <code>pending</code>. It will transition to <code>active</code> when the PayID registration process is complete. This can take up to a few seconds. You can use webhooks to be informed of this state change.</li>
+  <li><strong>Pooled PayID</strong>: provide your <code>payid_email_domain</code> and we'll create a contact and assign them a PayID from your pool. Pooled PayIDs are pre-registered. The PayID email value is generated using a random value and the email domain from your PayID pool configuration. Providing both <code>payid_email</code> and <code>payid_email_domain</code> will ignore your pool and use the "On-demand PayID" strategy instead.</li>
+</aside>
+<aside class="notice">
+  While unlikely, it is possible that we will be unable to register the given PayID. In this case <code>payid_details.state</code> will transition to <code>failed</code>.
+
+  You can simulate this path in sandbox by adding <code>+failure</code> to your <code>payid_email</code> e.g <code>test+failure@split.cash</code>
+</aside>
+<aside class="notice">
+  You can test receiving payments to a Receivable Contact in our sandbox environment using the <a href="#simulate-incoming-payid-payment">PayID simulation endpoint</a>.
+</aside>
+
+> Body parameter
+
+```json
+{
+  "name": "Delphine Jestin",
+  "email": "delphine@gmail.com",
+  "payid_email": "delphine_123@merchant.com.au",
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}
+```
+
+<h3 id="Add-a-Receivable-Contact-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[AddAReceivableContactRequest](#schemaaddareceivablecontactrequest)|true|No description|
+|» name|body|string|true|Contact name (Min: 3 - Max: 140)|
+|» email|body|string|true|Contact email (Min: 6 - Max: 256)|
+|» payid_email|body|string|false|Contact PayID email (Min: 6 - Max: 256)|
+|» payid_email_domain|body|string|false|PayID pool email domain (Min: 3 - Max: 254)|
+|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
+
+> Example responses
+
+> 201 Response
+
+```json
+{
+  "data": {
+    "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
+    "name": "Delphine Jestin",
+    "email": "delphine@gmail.com",
+    "type": "anyone",
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    },
+    "bank_account": {
+      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
+      "account_number": "1408281",
+      "branch_code": "802919",
+      "bank_name": "Zepto Float Account",
+      "state": "active",
+      "iav_provider": null,
+      "iav_status": null,
+      "blocks": {
+        "debits_blocked": false,
+        "credits_blocked": false
+      }
+    },
+    "anyone_account": {
+      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
+    },
+    "payid_details": {
+      "alias_value": "delphine_123@merchant.com.au",
+      "alias_type": "email",
+      "alias_name": "your merchant's alias_name",
+      "state": "pending"
+    }
+  }
+}
+```
+
+<h3 id="Add a Receivable Contact-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddAReceivableContactResponse](#schemaaddareceivablecontactresponse)|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
+
+## Activate a Receivable Contact
+
+<a id="opIdActivateAReceivableContact"></a>
+
+> Code samples
+
+```shell
+curl --request POST \
+  --url https://api.sandbox.split.cash/contacts//receivable/activate \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/contacts//receivable/activate")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/contacts//receivable/activate",
+  "headers": {
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = { 'authorization': "Bearer {access-token}" }
+
+conn.request("POST", "/contacts//receivable/activate", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts//receivable/activate")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/contacts//receivable/activate');
+$request->setRequestMethod('POST');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/contacts//receivable/activate"
+
+	req, _ := http.NewRequest("POST", url, nil)
+
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`POST /contacts/{contact_id}/receivable/activate`
+
+Use this endpoint to activate a Receivable Contact.
+
+<h3 id="Activate-a-Receivable-Contact-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string(UUID)|true|Receivable Contact ID (`ReceivableContact.data.id`)|
+
+<h3 id="Activate a Receivable Contact-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content (success)|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad Request (errors)|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
+
+## Disable a Receivable Contact
+
+<a id="opIdDisableAReceivableContact"></a>
+
+> Code samples
+
+```shell
+curl --request POST \
+  --url https://api.sandbox.split.cash/contacts//receivable/disable \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/contacts//receivable/disable")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/contacts//receivable/disable",
+  "headers": {
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = { 'authorization': "Bearer {access-token}" }
+
+conn.request("POST", "/contacts//receivable/disable", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts//receivable/disable")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/contacts//receivable/disable');
+$request->setRequestMethod('POST');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/contacts//receivable/disable"
+
+	req, _ := http.NewRequest("POST", url, nil)
+
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`POST /contacts/{contact_id}/receivable/disable`
+
+Use this endpoint to disable a Receivable Contact.
+
+<h3 id="Disable-a-Receivable-Contact-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string(UUID)|true|Receivable Contact ID (`ReceivableContact.data.id`)|
+
+<h3 id="Disable a Receivable Contact-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content (success)|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad Request (errors)|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
 
 <h1 id="Zepto-API-Open-Agreements">Open Agreements</h1>
 
