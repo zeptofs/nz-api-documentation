@@ -2235,13 +2235,16 @@ paths:
                 $ref: '#/components/schemas/AddAReceivableContactResponse'
         '404':
           description: Not Found
-  '/contacts/{contact_id}/receivable/activate':
+  '/contacts/{contact_id}/receivable/disable':
     post:
       tags:
         - Contacts (Receivable)
-      summary: Activate a Receivable Contact
-      description: Use this endpoint to activate a Receivable Contact.
-      operationId: ActivateAReceivableContact
+      summary: Disable a Receivable Contact
+      description: |
+        This endpoint should be used to Disable a Receivable Contact.
+
+        This will reject all payments made to the relevant Account number or PayID and return them to your customer. Payments made via DE and NPP will be rejected.
+      operationId: DisableAReceivableContact
       parameters:
         - name: id
           in: path
@@ -2260,13 +2263,16 @@ paths:
           description: Bad Request (errors)
         '404':
           description: Not Found
-  '/contacts/{contact_id}/receivable/disable':
+  '/contacts/{contact_id}/receivable/activate':
     post:
       tags:
         - Contacts (Receivable)
-      summary: Disable a Receivable Contact
-      description: Use this endpoint to disable a Receivable Contact.
-      operationId: DisableAReceivableContact
+      summary: Reactivate a Receivable Contact
+      description: |
+        This endpoint should be used to Reactivate a Receivable Contact that has been previously Disabled.
+
+        This will once again allow you to receive funds from your customer via both DE and NPP channels.
+      operationId: ActivateAReceivableContact
       parameters:
         - name: id
           in: path

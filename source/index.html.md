@@ -3738,149 +3738,6 @@ Receive funds from a Contact by allowing them to pay to a personalised PayID or 
 |201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddAReceivableContactResponse](#schemaaddareceivablecontactresponse)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
 
-## Activate a Receivable Contact
-
-<a id="opIdActivateAReceivableContact"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://api.sandbox.split.cash/contacts//receivable/activate \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/contacts//receivable/activate")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/contacts//receivable/activate",
-  "headers": {
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = { 'authorization': "Bearer {access-token}" }
-
-conn.request("POST", "/contacts//receivable/activate", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts//receivable/activate")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/contacts//receivable/activate');
-$request->setRequestMethod('POST');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/contacts//receivable/activate"
-
-	req, _ := http.NewRequest("POST", url, nil)
-
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /contacts/{contact_id}/receivable/activate`
-
-Use this endpoint to activate a Receivable Contact.
-
-<h3 id="Activate-a-Receivable-Contact-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string(UUID)|true|Receivable Contact ID (`ReceivableContact.data.id`)|
-
-<h3 id="Activate a Receivable Contact-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content (success)|None|
-|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad Request (errors)|None|
-|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
-
 ## Disable a Receivable Contact
 
 <a id="opIdDisableAReceivableContact"></a>
@@ -4008,7 +3865,9 @@ func main() {
 
 `POST /contacts/{contact_id}/receivable/disable`
 
-Use this endpoint to disable a Receivable Contact.
+This endpoint should be used to Disable a Receivable Contact.
+
+This will reject all payments made to the relevant Account number or PayID and return them to your customer. Payments made via DE and NPP will be rejected.
 
 <h3 id="Disable-a-Receivable-Contact-parameters" class="parameters">Parameters</h3>
 
@@ -4017,6 +3876,151 @@ Use this endpoint to disable a Receivable Contact.
 |id|path|string(UUID)|true|Receivable Contact ID (`ReceivableContact.data.id`)|
 
 <h3 id="Disable a Receivable Contact-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content (success)|None|
+|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad Request (errors)|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
+
+## Reactivate a Receivable Contact
+
+<a id="opIdActivateAReceivableContact"></a>
+
+> Code samples
+
+```shell
+curl --request POST \
+  --url https://api.sandbox.split.cash/contacts//receivable/activate \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/contacts//receivable/activate")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/contacts//receivable/activate",
+  "headers": {
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = { 'authorization': "Bearer {access-token}" }
+
+conn.request("POST", "/contacts//receivable/activate", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts//receivable/activate")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/contacts//receivable/activate');
+$request->setRequestMethod('POST');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/contacts//receivable/activate"
+
+	req, _ := http.NewRequest("POST", url, nil)
+
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`POST /contacts/{contact_id}/receivable/activate`
+
+This endpoint should be used to Reactivate a Receivable Contact that has been previously Disabled.
+
+This will once again allow you to receive funds from your customer via both DE and NPP channels.
+
+<h3 id="Reactivate-a-Receivable-Contact-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string(UUID)|true|Receivable Contact ID (`ReceivableContact.data.id`)|
+
+<h3 id="Reactivate a Receivable Contact-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
