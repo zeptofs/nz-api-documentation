@@ -690,6 +690,8 @@ Use the following table to discover what type of response schema to expect for f
 3. Delivery order for webhook events is not guaranteed.
 4. We guarantee at least 1 delivery attempt.
 
+**For redelivery of webhooks, check out our [Webhook/WebhookDelivery API endpoints](#Zepto-API-Webhooks).**
+
 ### Request ID
 
 > Example header
@@ -896,7 +898,7 @@ class MainClass {
 
 **Step 1. Extract the timestamp and signatures from the header**
 
-Zepto the header, using the `.` (dot) character as the separator, to get a list of elements.
+Split the header, using the `.` (dot) character as the separator, to get a list of elements.
 
 | Element | Description |
 |---------|-------------|
@@ -9277,6 +9279,749 @@ func main() {
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetUserDetailsResponse](#schemagetuserdetailsresponse)|
 
+<h1 id="Zepto-API-Webhooks">Webhooks</h1>
+
+## List all webhooks
+
+<a id="opIdGetWebhooks"></a>
+
+> Code samples
+
+```shell
+curl --request GET \
+  --url https://api.sandbox.split.cash/webhooks \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/webhooks")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/webhooks",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = {
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("GET", "/webhooks", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/webhooks")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/webhooks');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/webhooks"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`GET /webhooks`
+
+List all your application's webhook configurations.
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "data": [
+    {
+      "id": "13bd760e-447f-4225-b801-0777a15da131",
+      "url": "https://webhook.site/a9a3033b-90eb-44af-9ba3-29972435d10e",
+      "signature_secret": "8fad2f5570e6bf0351728f727c5a8c770dda646adde049b866a7800d59",
+      "events": [
+        "debit.cleared",
+        "credit.cleared"
+      ]
+    }
+  ]
+}
+```
+
+<h3 id="List all webhooks-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllWebhooksResponse](#schemalistallwebhooksresponse)|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
+
+## List deliveries for a webhook
+
+<a id="opIdGetWebhookDeliveries"></a>
+
+> Code samples
+
+```shell
+curl --request GET \
+  --url https://api.sandbox.split.cash/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = {
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("GET", "/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`GET /webhooks/{webhook_id}/deliveries`
+
+NOTE: Webhook deliveries are stored for 30 days.
+
+<h3 id="List-deliveries-for-a-webhook-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|webhook_id|path|string|true|Single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
+|starting_after|query|string(uuid)|false|Display all webhook deliveries after this webhook delivery offset UUID, single value, exact match|
+|event_type|query|string|false|See ([Data schemas](/#data-schemas)) for a list of possible values, single value, exact match|
+|since|query|string(date-time)|false|Display all webhook deliveries after this date. Date/time UTC ISO 8601 format, single value, exact match|
+|response_status_code|query|string|false|Single value, exact match|
+|state|query|string|false|Filter deliveries by state, single value, exact match. See [Our delivery promise](#our-delivery-promises)|
+
+#### Enumerated Values
+
+|Parameter|Value|
+|---|---|
+|event_type|See ([Data schemas](/#data-schemas))|
+|response_status_code|2xx|
+|response_status_code|4xx|
+|response_status_code|5xx|
+|state|pending|
+|state|completed|
+|state|retrying|
+|state|failed|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "data": [
+    {
+      "id": "957d40a4-80f5-4dd2-8ada-8242d5ad66c1",
+      "event_type": "payout_request.added",
+      "state": "completed",
+      "response_status_code": 200,
+      "created_at": "2021-09-02T02:24:50.000Z",
+      "payload_data_summary": [
+        {
+          "ref": "PR.ct5b"
+        }
+      ]
+    },
+    {
+      "id": "29bb9835-7c69-4ecb-bf96-197d089d0ec3",
+      "event_type": "creditor_debit.scheduled",
+      "state": "completed",
+      "response_status_code": 200,
+      "created_at": "2021-09-02T02:24:50.000Z",
+      "payload_data_summary": [
+        {
+          "ref": "D.hyy9"
+        },
+        {
+          "ref": "D.6st93"
+        }
+      ]
+    }
+  ]
+}
+```
+
+<h3 id="List deliveries for a webhook-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetWebhookDeliveriesResponse](#schemagetwebhookdeliveriesresponse)|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
+
+## Get a Webhook Delivery
+
+<a id="opIdGetAWebhookDelivery"></a>
+
+> Code samples
+
+```shell
+curl --request GET \
+  --url https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Get.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "GET",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = {
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("GET", "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f');
+$request->setRequestMethod('GET');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`GET /webhook_deliveries/{id}`
+
+Get a single webhook delivery by ID.
+
+<h3 id="Get-a-Webhook-Delivery-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string(UUID)|true|WebhookDelivery ID (`WebhookDelivery.data.id`)|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "data": {
+    "id": "957d40a4-80f5-4dd2-8ada-8242d5ad66c1",
+    "webhook_id": "13bd760e-447f-4225-b801-0777a15da131",
+    "event_type": "payout_request.added",
+    "state": "completed",
+    "payload": {
+      "data": [
+        {
+          "ref": "PR.ct5b",
+          "payout": {
+            "amount": 1501,
+            "matures_at": "2021-09-02T02:24:49.000Z",
+            "description": "Payment from Incoming Test Payment Contact 014209 12345678 (Test Payment)"
+          },
+          "status": "approved",
+          "created_at": "2021-09-02T02:24:49.000Z",
+          "credit_ref": "C.p2rt",
+          "matures_at": "2021-09-02T02:24:49.000Z",
+          "initiator_id": "b50a6e92-a5e1-4175-b560-9e4c9a9bb4b9",
+          "responded_at": "2021-09-02T02:24:49.000Z",
+          "schedule_ref": null,
+          "authoriser_id": "780f186c-80fd-42b9-97d5-650d99a0bc99",
+          "status_reason": null,
+          "your_bank_account_id": "b50a6e92-a5e1-4175-b560-9e4c9a9bb4b9",
+          "authoriser_contact_id": "590be205-6bae-4070-a9af-eb50d514cec5",
+          "authoriser_contact_initiated": true
+        },
+        {
+          "event": {
+            "at": "2021-09-02T02:24:49.000Z",
+            "who": {
+              "account_id": "20f4e3f8-2efc-48a9-920b-541515f1c9e3",
+              "account_type": "Account",
+              "bank_account_id": "b50a6e92-a5e1-4175-b560-9e4c9a9bb4b9",
+              "bank_account_type": "BankAccount"
+            },
+            "type": "payment_request.added"
+          }
+        }
+      ]
+    }
+  },
+  "response_status_code": 200,
+  "created_at": "2021-09-02T02:24:50.000Z"
+}
+```
+
+<h3 id="Get a Webhook Delivery-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAWebhookDeliveryResponse](#schemagetawebhookdeliveryresponse)|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
+
+## Resend a Webhook Delivery
+
+<a id="opIdResendAWebhookDelivery"></a>
+
+> Code samples
+
+```shell
+curl --request POST \
+  --url https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api.sandbox.split.cash",
+  "port": null,
+  "path": "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f",
+  "headers": {
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+
+headers = {
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("POST", "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f');
+$request->setRequestMethod('POST');
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f"
+
+	req, _ := http.NewRequest("POST", url, nil)
+
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`POST /webhook_deliveries/{id}`
+
+Use this endpoint to resend a failed webhook delivery.
+
+<h3 id="Resend-a-Webhook-Delivery-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|id|path|string(UUID)|true|WebhookDelivery ID (`WebhookDelivery.data.id`)|
+
+> Example responses
+
+> 202 Response
+
+```json
+{
+  "data": {
+    "id": "957d40a4-80f5-4dd2-8ada-8242d5ad66c1",
+    "webhook_id": "13bd760e-447f-4225-b801-0777a15da131",
+    "state": "pending"
+  }
+}
+```
+
+<h3 id="Resend a Webhook Delivery-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|202|[Accepted](https://tools.ietf.org/html/rfc7231#section-6.3.3)|Accepted|[RedeliverAWebhookDeliveryResponse](#schemaredeliverawebhookdeliveryresponse)|
+
 # Schemas
 
 ## GetAgreementResponse
@@ -11526,4 +12271,173 @@ func main() {
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|[object]|true|No description|
+
+## ListAllWebhooksResponse
+
+<a id="schemalistallwebhooksresponse"></a>
+
+```json
+{
+  "data": [
+    {
+      "id": "13bd760e-447f-4225-b801-0777a15da131",
+      "url": "https://webhook.site/a9a3033b-90eb-44af-9ba3-29972435d10e",
+      "signature_secret": "8fad2f5570e6bf0351728f727c5a8c770dda646adde049b866a7800d59",
+      "events": [
+        "debit.cleared",
+        "credit.cleared"
+      ]
+    }
+  ]
+}
+```
+
+### Properties
+
+*List all Webhooks (response)*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|true|No description|
+
+## GetWebhookDeliveriesResponse
+
+<a id="schemagetwebhookdeliveriesresponse"></a>
+
+```json
+{
+  "data": [
+    {
+      "id": "957d40a4-80f5-4dd2-8ada-8242d5ad66c1",
+      "event_type": "payout_request.added",
+      "state": "completed",
+      "response_status_code": 200,
+      "created_at": "2021-09-02T02:24:50.000Z",
+      "payload_data_summary": [
+        {
+          "ref": "PR.ct5b"
+        }
+      ]
+    },
+    {
+      "id": "29bb9835-7c69-4ecb-bf96-197d089d0ec3",
+      "event_type": "creditor_debit.scheduled",
+      "state": "completed",
+      "response_status_code": 200,
+      "created_at": "2021-09-02T02:24:50.000Z",
+      "payload_data_summary": [
+        {
+          "ref": "D.hyy9"
+        },
+        {
+          "ref": "D.6st93"
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Properties
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|[object]|false|No description|
+
+## GetAWebhookDeliveryResponse
+
+<a id="schemagetawebhookdeliveryresponse"></a>
+
+```json
+{
+  "data": {
+    "id": "957d40a4-80f5-4dd2-8ada-8242d5ad66c1",
+    "webhook_id": "13bd760e-447f-4225-b801-0777a15da131",
+    "event_type": "payout_request.added",
+    "state": "completed",
+    "payload": {
+      "data": [
+        {
+          "ref": "PR.ct5b",
+          "payout": {
+            "amount": 1501,
+            "matures_at": "2021-09-02T02:24:49.000Z",
+            "description": "Payment from Incoming Test Payment Contact 014209 12345678 (Test Payment)"
+          },
+          "status": "approved",
+          "created_at": "2021-09-02T02:24:49.000Z",
+          "credit_ref": "C.p2rt",
+          "matures_at": "2021-09-02T02:24:49.000Z",
+          "initiator_id": "b50a6e92-a5e1-4175-b560-9e4c9a9bb4b9",
+          "responded_at": "2021-09-02T02:24:49.000Z",
+          "schedule_ref": null,
+          "authoriser_id": "780f186c-80fd-42b9-97d5-650d99a0bc99",
+          "status_reason": null,
+          "your_bank_account_id": "b50a6e92-a5e1-4175-b560-9e4c9a9bb4b9",
+          "authoriser_contact_id": "590be205-6bae-4070-a9af-eb50d514cec5",
+          "authoriser_contact_initiated": true
+        },
+        {
+          "event": {
+            "at": "2021-09-02T02:24:49.000Z",
+            "who": {
+              "account_id": "20f4e3f8-2efc-48a9-920b-541515f1c9e3",
+              "account_type": "Account",
+              "bank_account_id": "b50a6e92-a5e1-4175-b560-9e4c9a9bb4b9",
+              "bank_account_type": "BankAccount"
+            },
+            "type": "payment_request.added"
+          }
+        }
+      ]
+    }
+  },
+  "response_status_code": 200,
+  "created_at": "2021-09-02T02:24:50.000Z"
+}
+```
+
+### Properties
+
+*Get a WebhookDelivery (response)*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
+|» id|string(uuid)|false|The Webhook Delivery ID|
+|» webhook_id|string(uuid)|false|The Webhook ID|
+|» state|string|false|The state of the webhook delivery.|
+|» payload|object|false|Could be anything|
+|» created_at|string(date-time)|false|When the webhook delivery was created|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|state|pending|
+|state|completed|
+|state|retrying|
+|state|failed|
+
+## RedeliverAWebhookDeliveryResponse
+
+<a id="schemaredeliverawebhookdeliveryresponse"></a>
+
+```json
+{
+  "data": {
+    "id": "957d40a4-80f5-4dd2-8ada-8242d5ad66c1",
+    "webhook_id": "13bd760e-447f-4225-b801-0777a15da131",
+    "state": "pending"
+  }
+}
+```
+
+### Properties
+
+*Resend a WebhookDelivery (response)*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
 
