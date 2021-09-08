@@ -3379,7 +3379,7 @@ paths:
           style: simple
           schema:
             type: string
-            enum: [pending, delivered, will_retry, gave_up]
+            enum: [pending, completed, retrying, failed]
           example: 'delivered'
       responses:
         '200':
@@ -5858,9 +5858,9 @@ components:
               description: The state of the webhook delivery.
               enum:
                 - pending
-                - delivered
-                - will_retry
-                - gave_up
+                - completed
+                - retrying
+                - failed
             payload:
               type: object
               description: Could be anything

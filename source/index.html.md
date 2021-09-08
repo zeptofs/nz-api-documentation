@@ -9595,9 +9595,9 @@ NOTE: Webhook deliveries are stored for 30 days.
 |response_status_code|4xx|
 |response_status_code|5xx|
 |state|pending|
-|state|delivered|
-|state|will_retry|
-|state|gave_up|
+|state|completed|
+|state|retrying|
+|state|failed|
 
 > Example responses
 
@@ -12398,9 +12398,9 @@ Use this endpoint to resend a failed webhook delivery.
 |Property|Value|
 |---|---|
 |state|pending|
-|state|delivered|
-|state|will_retry|
-|state|gave_up|
+|state|completed|
+|state|retrying|
+|state|failed|
 
 ## RedeliverAWebhookDeliveryResponse
 
