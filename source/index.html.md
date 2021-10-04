@@ -487,6 +487,28 @@ The sandbox works on a 1 minute cycle to better illustrate how transactions are 
 
 All 6 digits BSBs are valid in the sandbox with the exception of `100000`. This BSB allows you to simulate the adding of an invalid BSB. In production, only real BSBs are accepted.
 ## DE Transaction failures
+### (New) Using failure codes
+To simulate transaction failures, create a Payment or Payment Request with an amount corresponding to the desired [failure code](#failure-codes).
+
+For example:
+
+* DE amount `$1.05` will trigger credit failure code `E105` (Account Not Found).
+* DE amount `$2.03` will trigger credit failure code `E203` (Account Closed).
+
+[View all failure codes](#failure-codes)
+
+### Example scenarios
+
+  1. Pay a contact with an invalid account number:
+    * Initiate a Payment for <code>$1.05</code>.
+    * Zepto will mimic a successful debit from your bank account.
+    * Zepto will mimic a failure to credit the contact's bank account.
+    * Zepto will automatically create a <code>payout_reversal</code> credit transaction back to your bank account.
+  2. Request payment from a contact with a closed bank account:
+    * Initiate a Payment Request for <code>$2.03</code>.
+    * Zepto will mimic a failure to debit the contact's bank account.
+
+### (Deprecated) Using failure reasons
 To simulate [transaction failures](#failure-reasons) create a Payment or Payment Request with a specific amount listed in the table.
 
 | Transaction failure reason | Debit | Credit |
@@ -519,6 +541,14 @@ To simulate [transaction failures](#failure-reasons) create a Payment or Payment
     * Zepto will mimic a failure to debit the contact's bank account.
 
 ## NPP Payment failures
+### (New) Using failure codes
+To simulate transaction failures, create a Payment with an amount corresponding to the desired [failure code](#failure-codes).
+For example:
+
+* NPP amount `$3.02` will trigger credit failure code `E302` (BSB Not NPP Enabled).
+* NPP amount `$3.04` will trigger credit failure code `E304` (Account Not Found).
+
+### (Deprecated) Using failure reasons
 If you are utilising an [Account Float](https://help.split.cash/en/articles/4275280-utilising-an-account-float) to create NPP payments, you can simulate a transaction that fails to process through the NPP channel by [creating a Payment from your account float](https://help.split.cash/en/articles/4275293-transacting-from-your-account-float) for one of the following amounts.
 
 | Transaction failure reason | Failure details | Amount |
