@@ -8070,8 +8070,90 @@ A transaction (debit or credit) can have the following statuses:
 | `paused` | The transaction has temporary been paused by Zepto pending internal review. |
 | `prefailed` | The transaction was never submitted to the bank because we detected that there were insufficient funds. The transaction can be retried. |
 | `channel_switched` | The initial payment channel has failed and the credit has automatically switched to attempt the payment using the next available channel. |
+## Failure codes
+> Example response
 
-##Failure reasons
+```json
+{
+  "data": [
+    {
+      "ref": "D.3",
+      "parent_ref": null,
+      "type": "debit",
+      "category": "payout_refund",
+      "created_at": "2021-04-07T23:15:00Z",
+      "matures_at": "2021-04-10T23:15:00Z",
+      "cleared_at": null,
+      "bank_ref": null,
+      "status": "returned",
+      "status_changed_at": "2021-04-08T23:15:00Z",
+      "failure" : {
+        "code": "E251",
+        "title": "Voided By Initiator",
+        "detail": "The transaction was voided by its initiator.",
+      },
+      "failure_reason": "user_voided",
+      "failure_details": "Wrong amount - approved by Stacey"
+      "party_contact_id": "26297f44-c5e1-40a1-9864-3e0b0754c32a",
+      "party_name": "Sanford-Rees",
+      "party_nickname": "sanford-rees-8",
+      "description": null,
+      "amount": 1,
+      "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
+      "channels": ["float_account"]
+      "current_channel": "float_account"
+    }
+  ]
+}
+```
+The rejected, returned, voided & prefailed statuses are always accompanied by a failure code, title and detail as listed below.
+### DE credit failures
+| Code | Title | Detail |
+| ------------ | ------------- | -------------- |
+| E101 | Invalid BSB Number | The BSB is not valid or is no longer active. |
+| E102 | Payment Stopped | The target institution has blocked transactions to this account. Please refer to customer. |
+| E103 | Account Closed | The target account is closed. |
+| E104 | Customer Deceased | The target account's owner has been listed as deceased. |
+| E105 | Account Not Found | The target account number is incorrect. |
+| E106 | Refer to Customer | Usually means insufficient funds or that the target account has breached their transaction limits. |
+| E107 | Account Deleted | The target account is deleted. |
+| E108 | Invalid UserID | Please contact Zepto for further information. |
+| E109 | Technically Invalid | Usually means that the account is not debitable or that the reason for failure can not be categorised within the standard BECS return codes. Please refer to customer. |
+| E150 | Voided By Admin | The transaction was voided by an administrator. |
+| E151 | Voided By Initiator | The transaction was voided by its initiator. |
+| E152 | Insufficient Funds | There were insufficient funds to complete the transaction. |
+| E153 | System Error | The transaction was unable to complete. Please contact Zepto for assistance. |
+| E199 | Unknown DE Error | An unknown DE error occurred. Please contact Zepto for assistance. |
+### DE debit failures
+| Code | Title | Detail |
+| ------------ | ------------- | -------------- |
+| E201 | Invalid BSB Number | The BSB is not valid or is no longer active. |
+| E202 | Payment Stopped | The target institution has blocked transactions to this account. Please refer to customer. |
+| E203 | Account Closed | The target account is closed. |
+| E204 | Customer Deceased | The target account's owner has been listed as deceased. |
+| E205 | Account Not Found | The target account number is incorrect. |
+| E206 | Refer to Customer | Usually means insufficient funds or that the target account has breached their transaction limits. |
+| E207 | Account Deleted | The target account is deleted. |
+| E208 | Invalid UserID | Please contact Zepto for further information. |
+| E209 | Technically Invalid | Usually means that the account is not debitable or that the reason for failure can not be categorised within the standard BECS return codes. Please refer to customer. |
+| E250 | Voided By Admin | The transaction was voided by an administrator. |
+| E251 | Voided By Initiator | The transaction was voided by its initiator. |
+| E252 | Insufficient Funds | There were insufficient funds to complete the transaction. |
+| E253 | System Error | The transaction was unable to complete. Please contact Zepto for assistance. |
+| E299 | Unknown DE Error | An unknown DE error occurred. Please contact Zepto for assistance. |
+### NPP credit failures
+| Code | Title | Detail |
+| ------------ | ------------- | -------------- |
+| E301 | Upstream Network Outage | An upstream network issue occurred. Please try again later. |
+| E302 | BSB Not NPP Enabled | The target BSB is not NPP enabled. Please try another channel. |
+| E303 | Account Not NPP Enabled | The target account is not NPP enabled. Please try another channel. |
+| E304 | Account Not Found | The target account number is incorrect. |
+| E305 | Intermittent Outage At Target Institution | The target financial institution is experiencing technical difficulties. Please try again later. |
+| E306 | Account Closed | The target account is closed. |
+| E307 | Target Institution Offline | The target financial institution is undergoing maintenance or experiencing an outage. Please try again later. |
+| E308 | Account Blocked | The target account is blocked and cannot receive funds. |
+| E399 | Unknown NPP Error | An unknown NPP error occurred. Please contact Zepto for assistance. |
+## Failure reasons (deprecated)
 
 > Example response
 
