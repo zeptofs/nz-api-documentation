@@ -487,7 +487,7 @@ The sandbox works on a 1 minute cycle to better illustrate how transactions are 
 
 All 6 digits BSBs are valid in the sandbox with the exception of `100000`. This BSB allows you to simulate the adding of an invalid BSB. In production, only real BSBs are accepted.
 ## DE Transaction failures
-### (New) Using failure codes
+### [NEW] Using failure codes
 To simulate transaction failures, create a Payment or Payment Request with an amount corresponding to the desired [failure code](#failure-codes).
 
 For example:
@@ -508,7 +508,7 @@ For example:
     * Initiate a Payment Request for <code>$2.03</code>.
     * Zepto will mimic a failure to debit the contact's bank account.
 
-### (Deprecated) Using failure reasons
+### [DEPRECATED] Using failure reasons
 To simulate [transaction failures](#failure-reasons) create a Payment or Payment Request with a specific amount listed in the table.
 
 | Transaction failure reason | Debit | Credit |
@@ -541,14 +541,14 @@ To simulate [transaction failures](#failure-reasons) create a Payment or Payment
     * Zepto will mimic a failure to debit the contact's bank account.
 
 ## NPP Payment failures
-### (New) Using failure codes
+### [NEW] Using failure codes
 To simulate transaction failures, create a Payment with an amount corresponding to the desired [failure code](#failure-codes).
 For example:
 
 * NPP amount `$3.02` will trigger credit failure code `E302` (BSB Not NPP Enabled).
 * NPP amount `$3.04` will trigger credit failure code `E304` (Account Not Found).
 
-### (Deprecated) Using failure reasons
+### [DEPRECATED] Using failure reasons
 If you are utilising an [Account Float](https://help.split.cash/en/articles/4275280-utilising-an-account-float) to create NPP payments, you can simulate a transaction that fails to process through the NPP channel by [creating a Payment from your account float](https://help.split.cash/en/articles/4275293-transacting-from-your-account-float) for one of the following amounts.
 
 | Transaction failure reason | Failure details | Amount |
@@ -565,7 +565,7 @@ There are some accounts with a special behaviour. You can add them to your Conta
 | accept_agreements | `900000` | `99999` | Always accepts agreements |
 | decline_agreements | `900001` | `99999` | Always declines agreements |
 
-### (Deprecated) Payment Request failure bank accounts
+### [DEPRECATED] Payment Request failure bank accounts
 You can send Payment Requests to the following reserved bank accounts to trigger specific failures.
 
 | Failure type             | Branch code (BSB) | Account number |
@@ -8183,7 +8183,8 @@ The rejected, returned, voided & prefailed statuses are always accompanied by a 
 | E307 | Target Institution Offline | The target financial institution is undergoing maintenance or experiencing an outage. Please try again later. |
 | E308 | Account Blocked | The target account is blocked and cannot receive funds. |
 | E399 | Unknown NPP Error | An unknown NPP error occurred. Please contact Zepto for assistance. |
-## Failure reasons (deprecated)
+
+## [DEPRECATED] Failure reasons
 
 > Example response
 

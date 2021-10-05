@@ -758,7 +758,7 @@ info:
 
     ## DE Transaction failures
 
-    ### (New) Using failure codes
+    ### [NEW] Using failure codes
 
     To simulate transaction failures, create a Payment or Payment Request with an amount corresponding to the desired [failure code](#failure-codes).
 
@@ -785,7 +785,7 @@ info:
         * Initiate a Payment Request for <code>$2.03</code>.
         * Zepto will mimic a failure to debit the contact's bank account.
 
-    ### (Deprecated) Using failure reasons
+    ### [DEPRECATED] Using failure reasons
 
     To simulate [transaction failures](#failure-reasons) create a Payment or Payment Request with a specific amount listed in the table.
 
@@ -833,7 +833,7 @@ info:
 
     ## NPP Payment failures
 
-    ### (New) Using failure codes
+    ### [NEW] Using failure codes
 
     To simulate transaction failures, create a Payment with an amount corresponding to the desired [failure code](#failure-codes).
 
@@ -845,7 +845,7 @@ info:
     * NPP amount `$3.04` will trigger credit failure code `E304` (Account Not Found).
 
 
-    ### (Deprecated) Using failure reasons
+    ### [DEPRECATED] Using failure reasons
 
     If you are utilising an [Account Float](https://help.split.cash/en/articles/4275280-utilising-an-account-float)
     to create NPP payments, you can simulate a transaction that fails to process through the NPP channel by
@@ -881,7 +881,7 @@ info:
     | decline_agreements | `900001` | `99999` | Always declines agreements |
 
 
-    ### (Deprecated) Payment Request failure bank accounts
+    ### [DEPRECATED] Payment Request failure bank accounts
 
     You can send Payment Requests to the following reserved bank accounts to trigger specific failures.
 
@@ -2016,7 +2016,8 @@ tags:
 
       | E399 | Unknown NPP Error | An unknown NPP error occurred. Please contact Zepto for assistance. |
 
-      ## Failure reasons (deprecated)
+
+      ## [DEPRECATED] Failure reasons
 
 
       > Example response
