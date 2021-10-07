@@ -67,6 +67,58 @@ info:
     If you would like to check platform status programmatically, please refer to [status.split.cash/api](https://status.split.cash/api).
 
 
+    <div class="middle-header">Breaking Changes</div>
+
+
+    A breaking change can be assumed to be:
+
+
+    * Renaming a parameter (request/response)
+
+    * Removing a parameter (request/response)
+
+    * Changing a parameter type (request/response)
+
+    * Renaming a header (request/response)
+
+    * Removing a header (request/response)
+
+    * Application of stricter validation rules for request parameters
+
+    * Reducing the set of possible enumeration values for a request
+
+    * Changing a HTTP response status code
+
+
+    We take backwards compatibility very seriously, and will make every effort
+    to ensure this never changes. In the unfortunate (and rare) case where a
+    breaking change can not be avoided, these will be announced well in
+    advance, enabling a transition period for API consumers.
+
+
+    The following are not assumed to be a breaking change and must be taken
+    into account by API consumers:
+
+
+    * Addition of optional new parameters in request
+
+    * Addition of new parameters in response
+
+    * Addition of new headers in request
+
+    * Reordering of parameters in response
+
+    * Softening of validation rules for request parameters
+
+    * Increasing the set of possible enumeration values
+
+
+    In the case of non breaking changes, a transition period may not be
+    provided, meaning the possibility of such changes occurring must be
+    considered in consumers' logic so as not to break any integrations with
+    both API and Webhooks.
+
+
     # Guides
 
 
