@@ -1,14 +1,14 @@
-![Split Payments Logo](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/Split_Logo_rgb.png)
+<img src="https://raw.githubusercontent.com/zeptofs/public_assets/master/images/zepto_logo_black.png" width="300" alt="Zepto Logo" title="Zepto Logo">
 
-Split API Documentation
+Zepto API Documentation
 ===
 
-Welcome to the Split API documentation source.
+Welcome to the Zepto API documentation source.
 
 How does it work?
 ---
 
-* The Split API is documented using the [OpenAPI 3.0.0 specification](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md).
+* The Zepto API is documented using the [OpenAPI 3.0.0 specification](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md).
 * The new [Swagger editor](http://editor.swagger.io/) was used to get the boilerplate done.
 * The API spec is then converted to [Slate](https://github.com/lord/slate) friendly markdown with [Widdershins](https://github.com/mermade/widdershins).
 

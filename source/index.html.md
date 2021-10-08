@@ -96,7 +96,7 @@ Okay, let's get things setup!
 
     Sign in and create an OAuth2 application: [https://go.sandbox.split.cash/oauth/applications](https://go.sandbox.split.cash/oauth/applications).
 
-    [![Zepto OAuth2 app create](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_oauth2_app_create.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_oauth2_app_create.png)
+    [![Zepto OAuth2 app create](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_oauth2_app_create.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_oauth2_app_create.png)
 
 3. **Generate personal access tokens**
 
@@ -104,11 +104,11 @@ Okay, let's get things setup!
     personal access tokens. Click on your newly created application from your [application
 list](https://go.sandbox.split.cash/oauth/applications) and click on **+ Personal Access Token**.
 
-    [![Zepto locate personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_tokens_empty.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_tokens_empty.png)
+    [![Zepto locate personal OAuth2 tokens](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_personal_access_tokens_empty.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_personal_access_tokens_empty.png)
 
     _(You'll have the option to give the token a title)_
 
-    [![Zepto personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_token.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_token.png)
+    [![Zepto personal OAuth2 tokens](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_personal_access_token.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_personal_access_token.png)
 
     <aside class="notice">Please note that personal access tokens do not expire.</aside>
 
@@ -118,14 +118,14 @@ list](https://go.sandbox.split.cash/oauth/applications) and click on **+ Persona
     Zepto API in Postman by choosing the **Bearer Token** option under
     the **Authorization** tab.
 
-    [![Postman use personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_use_personal_access_token.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_use_personal_access_token.png)
+    [![Postman use personal OAuth2 tokens](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_use_personal_access_token.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_use_personal_access_token.png)
 
 5. **Make an API request!**
 
     You are now ready to interact with your Zepto account via the
     API! Go ahead and send a request using Postman.
 
-    [![Postman use personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_request_response.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_request_response.png)
+    [![Postman use personal OAuth2 tokens](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_request_response.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_request_response.png)
 
 ## Get started
 This guide will help you setup an OAuth2 app in order to get authenticated & authorised to communicate with the Zepto API.
@@ -152,11 +152,11 @@ If you're looking to only access your own account via the API, you can generate 
 
 * To do this, sign in to your Zepto account and [create an application](https://go.sandbox.split.cash/oauth/applications) if you haven't already. Click on your application from your [application list](https://go.sandbox.split.cash/oauth/applications) and click on **Personal access**.
 
-    [![Zepto locate personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_tokens_empty.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_tokens_empty.png)
+    [![Zepto locate personal OAuth2 tokens](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_personal_access_tokens_empty.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_personal_access_tokens_empty.png)
 
     _(You'll have the option to give the token a title)_
 
-    [![Zepto personal OAuth2 tokens](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_token.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_personal_access_token.png)
+    [![Zepto personal OAuth2 tokens](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_personal_access_token.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_personal_access_token.png)
 
 * Now that you have an `access_token` you can interact with your Zepto account via the API.
 
@@ -190,7 +190,7 @@ If you're looking to only access your own account via the API, you can generate 
 
     When the user visits the above-mentioned URL, they will be presented with a Zepto login screen and then an authorisation screen:
 
-    [![Authorise OAuth2 app](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/oauth2_app_authorise.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/oauth2_app_authorise.png)
+    [![Authorise OAuth2 app](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/oauth2_app_authorise.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/oauth2_app_authorise.png)
 
     After the user has authorised your application, they will be returned to your application at the URL specified in `redirect_uri` along with the `code` query parameter as the authorisation code.
 
@@ -230,31 +230,31 @@ Before you start, load up our API collection:
 
     Use the special Postman callback URL: `https://www.getpostman.com/oauth2/callback`
 
-    [![Zepto OAuth2 app setup](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_oauth2_app_setup.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_oauth2_app_setup.png)
+    [![Zepto OAuth2 app setup](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_oauth2_app_setup.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_oauth2_app_setup.png)
 
 3. **In Postman, setup your environment variables**
 
-    We've included the **Zepto Public Sandbox** environment to get you started. Select it in the top right corner of the window then click the <img class="inline-1" alt="Postman Quick-Look icon" src="https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_quick_look_icon.png" /> icon and click **edit**.
+    We've included the **Zepto Public Sandbox** environment to get you started. Select it in the top right corner of the window then click the <img class="inline-1" alt="Postman Quick-Look icon" src="https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_quick_look_icon.png" /> icon and click **edit**.
 
-    [![Edit Postman environment](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_edit_environment.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_edit_environment.png)
+    [![Edit Postman environment](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_edit_environment.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_edit_environment.png)
 
     Using the details from the OAuth2 app you created earlier, fill in the **oauth2_application_id** & **oauth2_secret** fields.
 
-    [![Fill in environment values](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_environment_values.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_environment_values.png)
+    [![Fill in environment values](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_environment_values.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_environment_values.png)
 
 4. **Setup the authorization**
 
     Click on the **Authorization** tab and select **OAuth 2.0**
 
-    [![Postman Authorization tab](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_authorization_tab.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_authorization_tab.png)
+    [![Postman Authorization tab](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_authorization_tab.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_authorization_tab.png)
 
     Click the **Get New Access Token** button
 
-    [![Postman get new access token](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_get_new_access_token.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_get_new_access_token.png)
+    [![Postman get new access token](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_get_new_access_token.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_get_new_access_token.png)
 
     Fill in the OAuth2 form as below:
 
-    [![Postman OAuth2](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_oauth2_form.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_oauth2_form.png)
+    [![Postman OAuth2](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_oauth2_form.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_oauth2_form.png)
 
 5. **Get authorised**
 
@@ -262,17 +262,17 @@ Before you start, load up our API collection:
 
     Sign in with your Zepto account (or any other Zepto account you want to authorise).
 
-    [![Sign in Zepto to authorise via OAuth2](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_oauth2_signin.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/split_oauth2_signin.png)
+    [![Sign in Zepto to authorise via OAuth2](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_oauth2_signin.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_oauth2_signin.png)
 
     Click **Authorise** to allow the app to access the signed in account. Once complete, Postman will automatically exchange the authorisation code it received from Zepto for the `access_token/refresh_token` pair. It will then store the `access_token/refresh_token` for you to use in subsequent API requests. The `access_token` effectively allows you to send requests via the API as the user who provided you authorisation.
 
-    [![Authorise OAuth2 app](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/oauth2_app_authorise.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/oauth2_app_authorise.png)
+    [![Authorise OAuth2 app](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/oauth2_app_authorise.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/oauth2_app_authorise.png)
 
 6. **You're now ready to use the API**
 
     Select an endpoint from the Zepto collection from the left hand side menu. Before you send an API request ensure you select your access token and Postman will automatically add it to the request header.
 
-    [![Postman use token](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_use_token.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/postman_use_token.png)
+    [![Postman use token](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_use_token.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_use_token.png)
 
 <aside class="notice">Remember to select the access token everytime you try a new endpoint. Have fun!</aside>
 
@@ -326,7 +326,7 @@ When the access token expires, instead of sending the user back through the auth
 want to store the newly generated <code>refresh_token</code> everytime you use it to get a new <code>access_token</code>
 </aside>
 ## Making payments
-In order to payout funds, you'll be looking to use the [Payments](/#Split-API-Payments) endpoint. Whether you're paying out another Zepto account holder or anyone, the process is the same:
+In order to payout funds, you'll be looking to use the [Payments](/#Zepto-API-Payments) endpoint. Whether you're paying out another Zepto account holder or anyone, the process is the same:
 
 1. Add the recipient to your [Contact](/#add-a-contact) list.
 2. [Make a Payment](/#make-a-payment) to your Contact.
@@ -340,11 +340,11 @@ Common use cases:
 
 ## Getting paid
 
-### POSTing a [Payment Request](/#Split-API-Payment-Requests)
+### POSTing a [Payment Request](/#Zepto-API-Payment-Requests)
 
 Provides the ability to send a Payment Request (get paid) to any Contact that has an accepted Agreement in place.
 
-To send a Payment Request to a Contact using the API, you must first have an accepted [Agreement](/#Split-API-Agreements) with them.
+To send a Payment Request to a Contact using the API, you must first have an accepted [Agreement](/#Zepto-API-Agreements) with them.
 
 To do so, you can send them an [Open Agreement link](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreement link](http://help.split.cash/agreements/unassigned-agreement) for them to [elect & verify their bank account](https://help.split.cash/bank-accounts/instant-account-verification-iav) and accept the Agreement.
 
@@ -359,7 +359,7 @@ Common use cases:
 
 Example flow embedding an [Open Agreement link](https://help.split.cash/agreements/open-agreement) using an iFrame in order to automate future Payment Request approvals:
 
-[![Hosted Open Agreement](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/host_oa.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/host_oa.png)
+[![Hosted Open Agreement](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/host_oa.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/host_oa.png)
 
 ## Idempotent requests
 
@@ -383,7 +383,7 @@ Example flow embedding an [Open Agreement link](https://help.split.cash/agreemen
 ```
 
 The Zepto API supports idempotency for safely retrying requests without accidentally performing the same operation twice.
-For example, if a [Payment](#Split-API-Payments) is `POST`ed and a there is a network connection error, you can retry the Payment with the same idempotency key to guarantee that only a single Payment is created.
+For example, if a [Payment](#Zepto-API-Payments) is `POST`ed and a there is a network connection error, you can retry the Payment with the same idempotency key to guarantee that only a single Payment is created.
 
 To perform an idempotent request, provide an additional `Idempotency-Key: <key>` header to the request.
 You can pass any value as the key but we suggest that you use [V4 UUIDs](https://www.uuidtools.com/generate/v4) or another appropriately random string.
@@ -448,7 +448,7 @@ Given the above, in a standard implementation where a customer enables/uses Zept
 2. They get redirected to the Zepto sign in page (possibly via a popup or modal).
 3. Since they don't yet have a Zepto account, they would click on sign up.
 4. They would fill in all their signup details and submit.
-5. They would be presented with the [authorisation page](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/oauth2_app_authorise.png).
+5. They would be presented with the [authorisation page](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/oauth2_app_authorise.png).
 6. They would click the "Authorise" button and be redirected to your app.
 
 Whilst not too bad, we can do better!
@@ -670,7 +670,7 @@ Likewise for credits:
 - Have the same description; and
 - Initiated by the same Zepto account.
 
-Should you prefer debit aggregation to be disabled, please contact [support@splitpayments.com.au](mailto:support@splitpayments.com.au). Note that additional charges may apply.
+Should you prefer debit aggregation to be disabled, please contact [support@zepto.com.au](mailto:support@zepto.com.au). Note that additional charges may apply.
 
 ## Webhooks
 
@@ -988,7 +988,7 @@ We take backwards compatibility seriously. The following list contains backwards
 - **2020-12-15** - Re-word Payment Requests introduction to better cover its use with Receivable Contacts.
 - **2020-12-15** - Add changelog
 
-Looking for more? Our docs are open sourced! [https://github.com/splitpayments/api-documentation](https://github.com/splitpayments/api-documentation)
+Looking for more? Our docs are open sourced! [https://github.com/zeptofs/api-documentation](https://github.com/zeptofs/api-documentation)
 
 <h1 id="Zepto-API-Agreements">Agreements</h1>
 
@@ -1014,7 +1014,7 @@ An Agreement can have the following statuses:
 | `accepted` | The Agreement has been accepted and is active. |
 | `cancelled` | The Agreement has been cancelled (The initiator or authoriser can cancel an Agreement). |
 | `declined` | The Agreement has been declined. |
-| `expended` | The Agreement has been expended (Only for [single_use Unassigned Agreements](/#Split-API-Unassigned-Agreements)). |
+| `expended` | The Agreement has been expended (Only for [single_use Unassigned Agreements](/#Zepto-API-Unassigned-Agreements)). |
 
 ## List Agreements
 
@@ -4736,7 +4736,7 @@ A Payment Request (PR) is used to collect funds, via direct debit, from one of y
 
 <div class="middle-header">Applicable scenarios</div>
 
-1. **You send a Payment Request to a [Contact](/#Split-API-Contacts) in order to collect funds:**
+1. **You send a Payment Request to a [Contact](/#Zepto-API-Contacts) in order to collect funds:**
     1. Given there is an Agreement in place and the Payment Request is within the terms of the Agreement, then it will be automatically approved; **or**
     1. Given the Payment Request is **not** within the terms of the Agreement, then it will not be created; **or**
     1. There is no Agreement in place, then it will not be created.
@@ -4759,7 +4759,7 @@ A Payment Request can have the following statuses:
 
 <div class="middle-header">Prechecking</div>
 
-When using Payment Requests to collect payments from your customer, Zepto will automatically check for available funds before **attempting to debit** the debtor. This check is only performed for contacts with an active [bank connection](/#Split-API-Bank-Connections).
+When using Payment Requests to collect payments from your customer, Zepto will automatically check for available funds before **attempting to debit** the debtor. This check is only performed for contacts with an active [bank connection](/#Zepto-API-Bank-Connections).
 
 ## Request Payment
 
@@ -5758,7 +5758,7 @@ Supported payment rails:
   ]
 }
 ```
-A Payment is simply a group of Payouts, therefore it does not have a particular status. Its Payouts however have their status regularly updated. For a list of possible Payout statuses check out the [Transactions](/#Split-API-Transactions).
+A Payment is simply a group of Payouts, therefore it does not have a particular status. Its Payouts however have their status regularly updated. For a list of possible Payout statuses check out the [Transactions](/#Zepto-API-Transactions).
 
   <aside class="notice">
     Zepto no longer supports multiple Payouts within a single Payment request. A Payment request must only contain 1 Payout object.
