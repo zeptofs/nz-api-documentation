@@ -51,6 +51,32 @@ And for all kinds of How To's and Recipes, head on over to our [Help Guide](http
 
 Check the platform status, or subscribe to receive notifications at [status.split.cash](https://status.split.cash/). If you would like to check platform status programmatically, please refer to [status.split.cash/api](https://status.split.cash/api).
 
+<div class="middle-header">Breaking Changes</div>
+
+A breaking change is assumed to be:
+
+* Renaming a parameter (request/response)
+* Removing a parameter (request/response)
+* Changing a parameter type (request/response)
+* Renaming a header (request/response)
+* Removing a header (request/response)
+* Application of stricter validation rules for request parameters
+* Reducing the set of possible enumeration values for a request
+* Changing a HTTP response status code
+
+We take backwards compatibility very seriously, and will make every effort to ensure this never changes. In the unfortunate (and rare) case where a breaking change can not be avoided, these will be announced well in advance, enabling a transition period for API consumers.
+
+The following are not assumed to be a breaking change and must be taken into account by API consumers:
+
+* Addition of optional new parameters in request
+* Addition of new parameters in response
+* Addition of new headers in request
+* Reordering of parameters in response
+* Softening of validation rules for request parameters
+* Increasing the set of possible enumeration values
+
+In the case of non breaking changes, a transition period may not be provided, meaning the possibility of such changes occurring must be considered in consumers' logic so as not to break any integrations with both API and Webhooks.
+
 # Guides
 
 ## Try it out
@@ -60,7 +86,7 @@ We've preloaded a collection with all our endpoints for you to use in Postman. B
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/3168734-baa5ff70-4bc2-44d5-9ba6-fcb61839ff41?action=collection%2Ffork&collection-url=entityId%3D3168734-baa5ff70-4bc2-44d5-9ba6-fcb61839ff41%26entityType%3Dcollection%26workspaceId%3D6400ea2b-bb46-421e-a88c-a8625653c35a#?env%5BSplit%20Payments%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL2dvLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoib2F1dGgyX2FwcGxpY2F0aW9uX2lkIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoic2NvcGUiLCJ2YWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMgb2ZmbGluZV9hY2Nlc3MiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Imlzbzg2MDFfbm93IiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6ImFjY2Vzc190b2tlbiIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJyZWZyZXNoX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfV0=)
 
-Okay, lets get things setup!
+Okay, let's get things setup!
 
 1. **Create a Zepto account**
 
@@ -311,24 +337,18 @@ Common use cases:
 * Wage payments
 * Gig economy payments
 * Lending
+
 ## Getting paid
-There are 2 ways to get paid:
 
 ### POSTing a [Payment Request](/#Split-API-Payment-Requests)
 
-Provides the ability to send a Payment Request (get paid) to any Contact that is either:
+Provides the ability to send a Payment Request (get paid) to any Contact that has an accepted Agreement in place.
 
-* A Zepto Contact (The contact has a Zepto account); **or**
-* An Anyone Contact (The contact does not have a Zepto account) with an accepted Agreement in place.
+To send a Payment Request to a Contact using the API, you must first have an accepted [Agreement](/#Split-API-Agreements) with them.
 
-**For a Zepto Contact**:
+To do so, you can send them an [Open Agreement link](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreement link](http://help.split.cash/agreements/unassigned-agreement) for them to [elect & verify their bank account](https://help.split.cash/bank-accounts/instant-account-verification-iav) and accept the Agreement.
 
-* They will receive a request that they must approve via the Zepto UI or API in order for the funds to flow from their bank account to yours.
-
-* To automate the Payment Request approval, process you must first [enter into an Agreement](/#Split-API-Agreements) with the Zepto Contact. Once the Agreement is accepted, any future Payment Request will be automatically approved and processed per the Agreement terms.
-Provides the ability to send a Payment Request (get paid) to any of your Contacts as long as there is an accepted Agreement in place.
-
-* To send a Payment Request to a Contact using the API, you must first have an accepted [Agreement](/#Split-API-Agreements) with them. To do so, you can send them an [Open Agreement link](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreement link](http://help.split.cash/agreements/unassigned-agreement) for them to [elect & verify their bank account](https://help.split.cash/bank-accounts/instant-account-verification-iav) and accept the Agreement. Having this in place will allow any future Payment Requests to be automatically approved and processed as per the Agreement terms.
+Having this in place will allow any future Payment Requests to be automatically approved and processed as per the Agreement terms.
 
 Common use cases:
 
@@ -340,26 +360,6 @@ Common use cases:
 Example flow embedding an [Open Agreement link](https://help.split.cash/agreements/open-agreement) using an iFrame in order to automate future Payment Request approvals:
 
 [![Hosted Open Agreement](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/host_oa.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/host_oa.png)
-
-### Sharing an [Open Payment Request](http://help.split.cash/payment-requests/open-payment-requests)
-
-Provides the ability to get paid once-off by a anyone whether they are a Zepto account holder or not.
-
-Usage notes:
-
-* Utilise a [customisable hosted Payment Request form](http://help.split.cash/payment-requests/open-payment-requests) that takes care of everything from confirming the payer's bank account access to the transfer of funds.
-* The Open Payment Request link can be shared and sit as a secure form either outside your app or embeded within via iframe with the ability to whitelabel.
-* The URL for the form contains all the customisation parameters enabling you to generate the form on the fly.
-
-Common use cases:
-
-* Online or offline purchases (eCommerce, fundraiser, etc...)
-* Invoice payment
-* Group funding (paying for a restaurant bill)
-
-Example flow embedding the [Open Payment Request](https://help.split.cash/payment-requests/open-payment-requests) link using an iFrame:
-
-[![Hosted Open Payment Request](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/hosted_opr.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/hosted_opr.png)
 
 ## Idempotent requests
 
@@ -487,6 +487,33 @@ The sandbox works on a 1 minute cycle to better illustrate how transactions are 
 
 All 6 digits BSBs are valid in the sandbox with the exception of `100000`. This BSB allows you to simulate the adding of an invalid BSB. In production, only real BSBs are accepted.
 ## DE Transaction failures
+### [NEW] Using failure codes
+<aside class="notice">
+  <ul>
+      <li><a href="#de-credit-failures">DE credit failure codes</a></li>
+      <li><a href="#de-debit-failures">DE debit failure codes</a></li>
+  </ul>
+</aside>
+
+To simulate a transaction failure, create a Payment or Payment Request with an amount corresponding to the desired [failure code](#failure-codes).
+
+For example:
+
+* DE amount `$1.05` will cause the credit transaction to fail, triggering the credit failure code `E105` (Account Not Found).
+* DE amount `$2.03` will cause the debit transaction to fail, triggering the debit failure code `E203` (Account Closed).
+
+### Example scenarios
+
+  1. Pay a contact with an invalid account number:
+    * Initiate a Payment for <code>$1.05</code>.
+    * Zepto will mimic a successful debit from your bank account.
+    * Zepto will mimic a failure to credit the contact's bank account.
+    * Zepto will automatically create a <code>payout_reversal</code> credit transaction back to your bank account.
+  2. Request payment from a contact with a closed bank account:
+    * Initiate a Payment Request for <code>$2.03</code>.
+    * Zepto will mimic a failure to debit the contact's bank account.
+
+### [DEPRECATED] Using failure reasons
 To simulate [transaction failures](#failure-reasons) create a Payment or Payment Request with a specific amount listed in the table.
 
 | Transaction failure reason | Debit | Credit |
@@ -519,6 +546,19 @@ To simulate [transaction failures](#failure-reasons) create a Payment or Payment
     * Zepto will mimic a failure to debit the contact's bank account.
 
 ## NPP Payment failures
+### [NEW] Using failure codes
+<aside class="notice">
+  <ul>
+      <li><a href="#npp-credit-failures">NPP credit failure codes</a></li>
+  </ul>
+</aside>
+To simulate a transaction failure, create a Payment with an amount corresponding to the desired [failure code](#npp-credit-failures).
+For example:
+
+* NPP amount `$3.02` will cause the transaction to fail, triggering credit failure code `E302` (BSB Not NPP Enabled).
+* NPP amount `$3.04` will cause the transaction to fail, triggering credit failure code `E304` (Account Not Found).
+
+### [DEPRECATED] Using failure reasons
 If you are utilising an [Account Float](https://help.split.cash/en/articles/4275280-utilising-an-account-float) to create NPP payments, you can simulate a transaction that fails to process through the NPP channel by [creating a Payment from your account float](https://help.split.cash/en/articles/4275293-transacting-from-your-account-float) for one of the following amounts.
 
 | Transaction failure reason | Failure details | Amount |
@@ -535,7 +575,7 @@ There are some accounts with a special behaviour. You can add them to your Conta
 | accept_agreements | `900000` | `99999` | Always accepts agreements |
 | decline_agreements | `900001` | `99999` | Always declines agreements |
 
-### (Deprecated) Payment Request failure bank accounts
+### [DEPRECATED] Payment Request failure bank accounts
 You can send Payment Requests to the following reserved bank accounts to trigger specific failures.
 
 | Failure type             | Branch code (BSB) | Account number |
@@ -929,6 +969,7 @@ To protect against timing attacks, use a constant-time string comparison to comp
 # Changelog
 We take backwards compatibility seriously. The following list contains backwards compatible changes:
 
+- **2021-10-08** - Introduced improved transaction failure messaging (code, title and detail)
 - **2021-09-29** - Added/expanded sandbox-only endpoints for simulating incoming payments
 - **2021-09-08** - Added Webhooks and Webhook Delivery endpoints
 - **2021-08-31** - Added PayID pool references to */contacts/receivable* and */bank_accounts* endpoints
@@ -2255,7 +2296,7 @@ func main() {
 
 Your Contacts form an address book of parties with whom you can interact. In order to initiate any type of transaction you must first have the party in your Contact list.
 
-<aside class="notice">In the case of Open Payment Requests & Open Agreements, the authorising party will be automatically added to your Contacts list.</aside>
+<aside class="notice">In the case of Open Agreements, the authorising party will be automatically added to your Contacts list.</aside>
 
 ## Add a Contact
 
@@ -3338,148 +3379,6 @@ You can update the name, email, bank account and metadata of any Contact.
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[UpdateAContactResponse](#schemaupdateacontactresponse)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
-
-## Refresh contact bank connection
-
-<a id="opIdRefreshBalanceContact"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "api.sandbox.split.cash",
-  "port": null,
-  "path": "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance",
-  "headers": {
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
-
-headers = { 'authorization': "Bearer {access-token}" }
-
-conn.request("POST", "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance');
-$request->setRequestMethod('POST');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608/refresh_balance"
-
-	req, _ := http.NewRequest("POST", url, nil)
-
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /contacts/{id}/refresh_balance`
-
-Refresh one of your Contact's bank connections to get the latest available balance.
-
-<h3 id="Refresh-contact-bank-connection-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string(UUID)|true|Contact ID (`Contact.data.id`)|
-
-<h3 id="Refresh contact bank connection-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content (success)|None|
-|422|[Unprocessable Entity](https://tools.ietf.org/html/rfc2518#section-10.3)|Unprocessable Entity (errors)|None|
 
 <h1 id="Zepto-API-Contacts--Receivable-">Contacts (Receivable)</h1>
 
@@ -8070,8 +7969,91 @@ A transaction (debit or credit) can have the following statuses:
 | `paused` | The transaction has temporary been paused by Zepto pending internal review. |
 | `prefailed` | The transaction was never submitted to the bank because we detected that there were insufficient funds. The transaction can be retried. |
 | `channel_switched` | The initial payment channel has failed and the credit has automatically switched to attempt the payment using the next available channel. |
+## Failure codes
+> Example response
 
-##Failure reasons
+```json
+{
+  "data": [
+    {
+      "ref": "D.3",
+      "parent_ref": null,
+      "type": "debit",
+      "category": "payout_refund",
+      "created_at": "2021-04-07T23:15:00Z",
+      "matures_at": "2021-04-10T23:15:00Z",
+      "cleared_at": null,
+      "bank_ref": null,
+      "status": "returned",
+      "status_changed_at": "2021-04-08T23:15:00Z",
+      "failure" : {
+        "code": "E251",
+        "title": "Voided By Initiator",
+        "detail": "The transaction was voided by its initiator.",
+      },
+      "failure_reason": "user_voided",
+      "failure_details": "Wrong amount - approved by Stacey"
+      "party_contact_id": "26297f44-c5e1-40a1-9864-3e0b0754c32a",
+      "party_name": "Sanford-Rees",
+      "party_nickname": "sanford-rees-8",
+      "description": null,
+      "amount": 1,
+      "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
+      "channels": ["float_account"]
+      "current_channel": "float_account"
+    }
+  ]
+}
+```
+The rejected, returned, voided & prefailed statuses are always accompanied by a failure code, title and detail as listed below.
+### DE credit failures
+| Code | Title | Detail |
+| ------------ | ------------- | -------------- |
+| E101 | Invalid BSB Number | The BSB is not valid or is no longer active. |
+| E102 | Payment Stopped | The target institution has blocked transactions to this account. Please refer to customer. |
+| E103 | Account Closed | The target account is closed. |
+| E104 | Customer Deceased | The target account's owner has been listed as deceased. |
+| E105 | Account Not Found | The target account number is incorrect. |
+| E106 | Refer to Customer | Usually means insufficient funds or that the target account has breached their transaction limits. |
+| E107 | Account Deleted | The target account is deleted. |
+| E108 | Invalid UserID | Please contact Zepto for further information. |
+| E109 | Technically Invalid | Usually means that the account is not debitable or that the reason for failure can not be categorised within the standard BECS return codes. Please refer to customer. |
+| E150 | Voided By Admin | The transaction was voided by an administrator. |
+| E151 | Voided By Initiator | The transaction was voided by its initiator. |
+| E152 | Insufficient Funds | There were insufficient funds to complete the transaction. |
+| E153 | System Error | The transaction was unable to complete. Please contact Zepto for assistance. |
+| E199 | Unknown DE Error | An unknown DE error occurred. Please contact Zepto for assistance. |
+### DE debit failures
+| Code | Title | Detail |
+| ------------ | ------------- | -------------- |
+| E201 | Invalid BSB Number | The BSB is not valid or is no longer active. |
+| E202 | Payment Stopped | The target institution has blocked transactions to this account. Please refer to customer. |
+| E203 | Account Closed | The target account is closed. |
+| E204 | Customer Deceased | The target account's owner has been listed as deceased. |
+| E205 | Account Not Found | The target account number is incorrect. |
+| E206 | Refer to Customer | Usually means insufficient funds or that the target account has breached their transaction limits. |
+| E207 | Account Deleted | The target account is deleted. |
+| E208 | Invalid UserID | Please contact Zepto for further information. |
+| E209 | Technically Invalid | Usually means that the account is not debitable or that the reason for failure can not be categorised within the standard BECS return codes. Please refer to customer. |
+| E250 | Voided By Admin | The transaction was voided by an administrator. |
+| E251 | Voided By Initiator | The transaction was voided by its initiator. |
+| E252 | Insufficient Funds | There were insufficient funds to complete the transaction. |
+| E253 | System Error | The transaction was unable to complete. Please contact Zepto for assistance. |
+| E299 | Unknown DE Error | An unknown DE error occurred. Please contact Zepto for assistance. |
+### NPP credit failures
+| Code | Title | Detail |
+| ------------ | ------------- | -------------- |
+| E301 | Upstream Network Outage | An upstream network issue occurred. Please try again later. |
+| E302 | BSB Not NPP Enabled | The target BSB is not NPP enabled. Please try another channel. |
+| E303 | Account Not NPP Enabled | The target account is not NPP enabled. Please try another channel. |
+| E304 | Account Not Found | The target account number is incorrect. |
+| E305 | Intermittent Outage At Target Institution | The target financial institution is experiencing technical difficulties. Please try again later. |
+| E306 | Account Closed | The target account is closed. |
+| E307 | Target Institution Offline | The target financial institution is undergoing maintenance or experiencing an outage. Please try again later. |
+| E308 | Account Blocked | The target account is blocked and cannot receive funds. |
+| E399 | Unknown NPP Error | An unknown NPP error occurred. Please contact Zepto for assistance. |
+
+## [DEPRECATED] Failure reasons
 
 > Example response
 
