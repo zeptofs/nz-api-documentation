@@ -326,7 +326,7 @@ When the access token expires, instead of sending the user back through the auth
 want to store the newly generated <code>refresh_token</code> everytime you use it to get a new <code>access_token</code>
 </aside>
 ## Making payments
-In order to payout funds, you'll be looking to use the [Payments](/#Split-API-Payments) endpoint. Whether you're paying out another Zepto account holder or anyone, the process is the same:
+In order to payout funds, you'll be looking to use the [Payments](/#Zepto-API-Payments) endpoint. Whether you're paying out another Zepto account holder or anyone, the process is the same:
 
 1. Add the recipient to your [Contact](/#add-a-contact) list.
 2. [Make a Payment](/#make-a-payment) to your Contact.
@@ -340,11 +340,11 @@ Common use cases:
 
 ## Getting paid
 
-### POSTing a [Payment Request](/#Split-API-Payment-Requests)
+### POSTing a [Payment Request](/#Zepto-API-Payment-Requests)
 
 Provides the ability to send a Payment Request (get paid) to any Contact that has an accepted Agreement in place.
 
-To send a Payment Request to a Contact using the API, you must first have an accepted [Agreement](/#Split-API-Agreements) with them.
+To send a Payment Request to a Contact using the API, you must first have an accepted [Agreement](/#Zepto-API-Agreements) with them.
 
 To do so, you can send them an [Open Agreement link](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreement link](http://help.split.cash/agreements/unassigned-agreement) for them to [elect & verify their bank account](https://help.split.cash/bank-accounts/instant-account-verification-iav) and accept the Agreement.
 
@@ -383,7 +383,7 @@ Example flow embedding an [Open Agreement link](https://help.split.cash/agreemen
 ```
 
 The Zepto API supports idempotency for safely retrying requests without accidentally performing the same operation twice.
-For example, if a [Payment](#Split-API-Payments) is `POST`ed and a there is a network connection error, you can retry the Payment with the same idempotency key to guarantee that only a single Payment is created.
+For example, if a [Payment](#Zepto-API-Payments) is `POST`ed and a there is a network connection error, you can retry the Payment with the same idempotency key to guarantee that only a single Payment is created.
 
 To perform an idempotent request, provide an additional `Idempotency-Key: <key>` header to the request.
 You can pass any value as the key but we suggest that you use [V4 UUIDs](https://www.uuidtools.com/generate/v4) or another appropriately random string.
@@ -1014,7 +1014,7 @@ An Agreement can have the following statuses:
 | `accepted` | The Agreement has been accepted and is active. |
 | `cancelled` | The Agreement has been cancelled (The initiator or authoriser can cancel an Agreement). |
 | `declined` | The Agreement has been declined. |
-| `expended` | The Agreement has been expended (Only for [single_use Unassigned Agreements](/#Split-API-Unassigned-Agreements)). |
+| `expended` | The Agreement has been expended (Only for [single_use Unassigned Agreements](/#Zepto-API-Unassigned-Agreements)). |
 
 ## List Agreements
 
@@ -4736,7 +4736,7 @@ A Payment Request (PR) is used to collect funds, via direct debit, from one of y
 
 <div class="middle-header">Applicable scenarios</div>
 
-1. **You send a Payment Request to a [Contact](/#Split-API-Contacts) in order to collect funds:**
+1. **You send a Payment Request to a [Contact](/#Zepto-API-Contacts) in order to collect funds:**
     1. Given there is an Agreement in place and the Payment Request is within the terms of the Agreement, then it will be automatically approved; **or**
     1. Given the Payment Request is **not** within the terms of the Agreement, then it will not be created; **or**
     1. There is no Agreement in place, then it will not be created.
@@ -4759,7 +4759,7 @@ A Payment Request can have the following statuses:
 
 <div class="middle-header">Prechecking</div>
 
-When using Payment Requests to collect payments from your customer, Zepto will automatically check for available funds before **attempting to debit** the debtor. This check is only performed for contacts with an active [bank connection](/#Split-API-Bank-Connections).
+When using Payment Requests to collect payments from your customer, Zepto will automatically check for available funds before **attempting to debit** the debtor. This check is only performed for contacts with an active [bank connection](/#Zepto-API-Bank-Connections).
 
 ## Request Payment
 
@@ -5758,7 +5758,7 @@ Supported payment rails:
   ]
 }
 ```
-A Payment is simply a group of Payouts, therefore it does not have a particular status. Its Payouts however have their status regularly updated. For a list of possible Payout statuses check out the [Transactions](/#Split-API-Transactions).
+A Payment is simply a group of Payouts, therefore it does not have a particular status. Its Payouts however have their status regularly updated. For a list of possible Payout statuses check out the [Transactions](/#Zepto-API-Transactions).
 
   <aside class="notice">
     Zepto no longer supports multiple Payouts within a single Payment request. A Payment request must only contain 1 Payout object.
