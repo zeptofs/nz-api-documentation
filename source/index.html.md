@@ -337,24 +337,18 @@ Common use cases:
 * Wage payments
 * Gig economy payments
 * Lending
+
 ## Getting paid
-There are 2 ways to get paid:
 
 ### POSTing a [Payment Request](/#Split-API-Payment-Requests)
 
-Provides the ability to send a Payment Request (get paid) to any Contact that is either:
+Provides the ability to send a Payment Request (get paid) to any Contact that has an accepted Agreement in place.
 
-* A Zepto Contact (The contact has a Zepto account); **or**
-* An Anyone Contact (The contact does not have a Zepto account) with an accepted Agreement in place.
+To send a Payment Request to a Contact using the API, you must first have an accepted [Agreement](/#Split-API-Agreements) with them.
 
-**For a Zepto Contact**:
+To do so, you can send them an [Open Agreement link](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreement link](http://help.split.cash/agreements/unassigned-agreement) for them to [elect & verify their bank account](https://help.split.cash/bank-accounts/instant-account-verification-iav) and accept the Agreement.
 
-* They will receive a request that they must approve via the Zepto UI or API in order for the funds to flow from their bank account to yours.
-
-* To automate the Payment Request approval, process you must first [enter into an Agreement](/#Split-API-Agreements) with the Zepto Contact. Once the Agreement is accepted, any future Payment Request will be automatically approved and processed per the Agreement terms.
-Provides the ability to send a Payment Request (get paid) to any of your Contacts as long as there is an accepted Agreement in place.
-
-* To send a Payment Request to a Contact using the API, you must first have an accepted [Agreement](/#Split-API-Agreements) with them. To do so, you can send them an [Open Agreement link](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreement link](http://help.split.cash/agreements/unassigned-agreement) for them to [elect & verify their bank account](https://help.split.cash/bank-accounts/instant-account-verification-iav) and accept the Agreement. Having this in place will allow any future Payment Requests to be automatically approved and processed as per the Agreement terms.
+Having this in place will allow any future Payment Requests to be automatically approved and processed as per the Agreement terms.
 
 Common use cases:
 
@@ -366,26 +360,6 @@ Common use cases:
 Example flow embedding an [Open Agreement link](https://help.split.cash/agreements/open-agreement) using an iFrame in order to automate future Payment Request approvals:
 
 [![Hosted Open Agreement](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/host_oa.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/host_oa.png)
-
-### Sharing an [Open Payment Request](http://help.split.cash/payment-requests/open-payment-requests)
-
-Provides the ability to get paid once-off by a anyone whether they are a Zepto account holder or not.
-
-Usage notes:
-
-* Utilise a [customisable hosted Payment Request form](http://help.split.cash/payment-requests/open-payment-requests) that takes care of everything from confirming the payer's bank account access to the transfer of funds.
-* The Open Payment Request link can be shared and sit as a secure form either outside your app or embeded within via iframe with the ability to whitelabel.
-* The URL for the form contains all the customisation parameters enabling you to generate the form on the fly.
-
-Common use cases:
-
-* Online or offline purchases (eCommerce, fundraiser, etc...)
-* Invoice payment
-* Group funding (paying for a restaurant bill)
-
-Example flow embedding the [Open Payment Request](https://help.split.cash/payment-requests/open-payment-requests) link using an iFrame:
-
-[![Hosted Open Payment Request](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/hosted_opr.png)](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/hosted_opr.png)
 
 ## Idempotent requests
 
@@ -2322,7 +2296,7 @@ func main() {
 
 Your Contacts form an address book of parties with whom you can interact. In order to initiate any type of transaction you must first have the party in your Contact list.
 
-<aside class="notice">In the case of Open Payment Requests & Open Agreements, the authorising party will be automatically added to your Contacts list.</aside>
+<aside class="notice">In the case of Open Agreements, the authorising party will be automatically added to your Contacts list.</aside>
 
 ## Add a Contact
 
