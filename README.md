@@ -1,4 +1,4 @@
-![Split Payments Logo](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/Split_Logo_rgb.png)
+![Zepto Logo](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/zepto_logo_black.png)
 
 Zepto API Documentation
 ===
