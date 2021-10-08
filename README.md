@@ -1,4 +1,4 @@
-![Split Payments Logo](https://raw.githubusercontent.com/splitpayments/public_assets/master/images/Split_Logo_rgb.png)
+![Split Payments Logo](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/Split_Logo_rgb.png)
 
 Split API Documentation
 ===
