@@ -670,7 +670,7 @@ Likewise for credits:
 - Have the same description; and
 - Initiated by the same Zepto account.
 
-Should you prefer debit aggregation to be disabled, please contact [support@zeptofs.com.au](mailto:support@zeptofs.com.au). Note that additional charges may apply.
+Should you prefer debit aggregation to be disabled, please contact [support@zepto.com.au](mailto:support@zepto.com.au). Note that additional charges may apply.
 
 ## Webhooks
 
