@@ -1,4 +1,4 @@
-![Zepto Logo](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/zepto_logo_black.png)
+<img src="https://raw.githubusercontent.com/zeptofs/public_assets/master/images/zepto_logo_black.png" width="300" alt="Zepto Logo" title="Zepto Logo">
 
 Zepto API Documentation
 ===
