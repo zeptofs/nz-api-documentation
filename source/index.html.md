@@ -481,11 +481,30 @@ As an example, the following authorisation URL would display the **personal sign
 You can also pass the values directly to the sign up page outside of the OAuth2 authorisation process. Click on the following link to see the values preloaded: [https://go.sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgeco&first_name=George](https://go.sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgceco&first_name=George).
 
 # Sandbox Testing Details
+
+> Example failure object
+
+```json
+{
+  "failure": {
+      "code": "E302",
+      "title": "BSB Not NPP Enabled",
+      "detail": "The target BSB is not NPP enabled. Please try another channel."
+  }
+}
+```
 Try out your happy paths and not-so happy paths; the sandbox is a great place to get started without transferring actual funds. All transactions are simulated and no communication with financial institutions is performed.
 
 The sandbox works on a 1 minute cycle to better illustrate how transactions are received and the lifecyle they go through. In other words, every minute, we simulate communicating with financial institutions and update statuses and events accordingly.
 
 All 6 digits BSBs are valid in the sandbox with the exception of `100000`. This BSB allows you to simulate the adding of an invalid BSB. In production, only real BSBs are accepted.
+
+Failed transactions will contain the following information inside the event:
+
+* Failure Code
+* Failure Title
+* Failure Details
+
 ## DE Transaction failures
 ### [NEW] Using failure codes
 <aside class="notice">
@@ -529,7 +548,7 @@ To simulate [transaction failures](#failure-reasons) create a Payment or Payment
 | `insufficient_funds`       |  $0.11  |          |
 | `payment_stopped`          |  $0.12  |          |
 
-### Example scenarios
+### [DEPRECATED] Example scenarios
 
   1. Pay a contact with an invalid account number:
     * Initiate a Payment for <code>$0.54</code>.
@@ -8045,8 +8064,8 @@ The rejected, returned, voided & prefailed statuses are always accompanied by a 
 | ------------ | ------------- | -------------- |
 | E301 | Upstream Network Outage | An upstream network issue occurred. Please try again later. |
 | E302 | BSB Not NPP Enabled | The target BSB is not NPP enabled. Please try another channel. |
-| E303 | Account Not NPP Enabled | The target account is not NPP enabled. Please try another channel. |
-| E304 | Account Not Found | The target account number is incorrect. |
+| E303 | Account Not NPP Enabled | The target account exists but cannot accept funds via the NPP. Please try another channel. |
+| E304 | Account Not Found | The target account number cannot be found. |
 | E305 | Intermittent Outage At Target Institution | The target financial institution is experiencing technical difficulties. Please try again later. |
 | E306 | Account Closed | The target account is closed. |
 | E307 | Target Institution Offline | The target financial institution is undergoing maintenance or experiencing an outage. Please try again later. |
@@ -10290,7 +10309,7 @@ NOTE: Webhook deliveries are stored for 30 days.
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f \
+  --url https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -10299,7 +10318,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
+url = URI("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -10320,7 +10339,7 @@ var options = {
   "method": "GET",
   "hostname": "api.sandbox.split.cash",
   "port": null,
-  "path": "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f",
+  "path": "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver",
   "headers": {
     "accept": "application/json",
     "authorization": "Bearer {access-token}"
@@ -10353,7 +10372,7 @@ headers = {
     'authorization': "Bearer {access-token}"
     }
 
-conn.request("GET", "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f", headers=headers)
+conn.request("GET", "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver", headers=headers)
 
 res = conn.getresponse()
 data = res.read()
@@ -10362,7 +10381,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -10374,7 +10393,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/webh
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f');
+$request->setRequestUrl('https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -10398,7 +10417,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f"
+	url := "https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -10416,7 +10435,7 @@ func main() {
 }
 ```
 
-`GET /webhook_deliveries/{id}`
+`GET /webhook_deliveries/{id}/redeliver`
 
 Get a single webhook delivery by ID.
 
@@ -10494,7 +10513,7 @@ Get a single webhook delivery by ID.
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f \
+  --url https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -10503,7 +10522,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
+url = URI("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -10524,7 +10543,7 @@ var options = {
   "method": "POST",
   "hostname": "api.sandbox.split.cash",
   "port": null,
-  "path": "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f",
+  "path": "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver",
   "headers": {
     "accept": "application/json",
     "authorization": "Bearer {access-token}"
@@ -10557,7 +10576,7 @@ headers = {
     'authorization': "Bearer {access-token}"
     }
 
-conn.request("POST", "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f", headers=headers)
+conn.request("POST", "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver", headers=headers)
 
 res = conn.getresponse()
 data = res.read()
@@ -10566,7 +10585,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
+HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -10578,7 +10597,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/web
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f');
+$request->setRequestUrl('https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -10602,7 +10621,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f"
+	url := "https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -10620,7 +10639,7 @@ func main() {
 }
 ```
 
-`POST /webhook_deliveries/{id}`
+`POST /webhook_deliveries/{id}/redeliver`
 
 Use this endpoint to resend a failed webhook delivery.
 
