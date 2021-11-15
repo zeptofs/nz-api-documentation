@@ -586,28 +586,6 @@ If you are utilising an [Account Float](https://help.split.cash/en/articles/4275
 | `refer_to_customer`        | Real-time payment rejected by recipient |  $1.60  |
 | `refer_to_customer`        | Real-time payments not available for recipient |  $1.65  |
 You will receive all the same notifications as if this happened in our live environment. We recommend you check out our article on [what happens when an NPP Payment fails](https://help.split.cash/en/articles/4405560-what-happens-when-an-npp-payment-fails) to learn more about what happens when an NPP Payment is unable to process.
-## Special accounts
-There are some accounts with a special behaviour. You can add them to your Contacts by nickname or bank details.
-
-| Account nickname | Branch code (BSB) | Account number | Description |
-|---|---|---|---|
-| accept_agreements | `900000` | `99999` | Always accepts agreements |
-| decline_agreements | `900001` | `99999` | Always declines agreements |
-
-### [DEPRECATED] Payment Request failure bank accounts
-You can send Payment Requests to the following reserved bank accounts to trigger specific failures.
-
-| Failure type             | Branch code (BSB) | Account number |
-|--------------------------|-------------------|----------------|
-| `payment_stopped`          | `200000`          | `99999`        |
-| `account_closed`           | `300000`          | `99999`        |
-| `customer_deceased`        | `400000`          | `99999`        |
-| `incorrect_account_number` | `500000`          | `99999`        |
-| `refer_to_customer`        | `600000`          | `99999`        |
-| `refer_to_split`           | `700000`          | `99999`        |
-| `insufficient_funds`       | `800000`          | `99999`        |
-
-By default, all Agreements sent to Contacts with a failure bank account will be automatically accepted.
 
 ## Instant account verification accounts
 When using any of our hosted solutions ([Payment Requests](https://help.split.cash/payment-requests/open-payment-requests), [Open Agreements](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreements](http://help.split.cash/agreements/unassigned-agreement)) you may want to test the [Instant Account Verification (IAV)](http://help.split.cash/bank-accounts/instant-account-verification-iav) process where we accept online banking credentials to validate bank account access. To do so, you can use the following credentials:
