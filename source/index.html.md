@@ -966,6 +966,7 @@ To protect against timing attacks, use a constant-time string comparison to comp
 # Changelog
 We take backwards compatibility seriously. The following list contains backwards compatible changes:
 
+- **2021-12-01** - Add ref to Webhook Delivery endpoint
 - **2021-10-08** - Introduced improved transaction failure messaging (code, title and detail)
 - **2021-09-29** - Added/expanded sandbox-only endpoints for simulating incoming payments
 - **2021-09-08** - Added Webhooks and Webhook Delivery endpoints
