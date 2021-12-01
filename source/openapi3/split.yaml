@@ -3537,6 +3537,13 @@ paths:
           schema:
             type: string
           example: 31918dce-2dc3-405b-8d3c-fd3901b17e9f
+        - name: ref
+          in: query
+          description: 'Single value, exact match'
+          required: false
+          style: simple
+          schema:
+            type: string
         - name: per_page
           in: query
           description: 'Number of results per page, single value, exact match'
