@@ -10215,7 +10215,7 @@ NOTE: Webhook deliveries are stored for 30 days.
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |webhook_id|path|string|true|Single value, exact match|
-|ref|query|string|false|Single value, exact match|
+|ref|query|string|false|Filter deliveries by ref (`WebhookDelivery.data.ref`), single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
 |starting_after|query|string(uuid)|false|Display all webhook deliveries after this webhook delivery offset UUID, single value, exact match|
 |event_type|query|string|false|See ([Data schemas](/#data-schemas)) for a list of possible values, single value, exact match|

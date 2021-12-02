@@ -3541,7 +3541,7 @@ paths:
           example: 31918dce-2dc3-405b-8d3c-fd3901b17e9f
         - name: ref
           in: query
-          description: 'Single value, exact match'
+          description: 'Filter deliveries by ref (`WebhookDelivery.data.ref`), single value, exact match'
           required: false
           style: simple
           schema:
