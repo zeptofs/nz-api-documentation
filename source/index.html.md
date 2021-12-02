@@ -966,6 +966,7 @@ To protect against timing attacks, use a constant-time string comparison to comp
 # Changelog
 We take backwards compatibility seriously. The following list contains backwards compatible changes:
 
+- **2021-12-01** - Add ref to Webhook Delivery endpoint
 - **2021-10-08** - Introduced improved transaction failure messaging (code, title and detail)
 - **2021-09-29** - Added/expanded sandbox-only endpoints for simulating incoming payments
 - **2021-09-08** - Added Webhooks and Webhook Delivery endpoints
@@ -10214,6 +10215,7 @@ NOTE: Webhook deliveries are stored for 30 days.
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
 |webhook_id|path|string|true|Single value, exact match|
+|ref|query|string|false|Filter deliveries by ref (`WebhookDelivery.data.ref`), single value, exact match|
 |per_page|query|string|false|Number of results per page, single value, exact match|
 |starting_after|query|string(uuid)|false|Display all webhook deliveries after this webhook delivery offset UUID, single value, exact match|
 |event_type|query|string|false|See ([Data schemas](/#data-schemas)) for a list of possible values, single value, exact match|
