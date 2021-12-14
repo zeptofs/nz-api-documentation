@@ -10289,7 +10289,7 @@ NOTE: Webhook deliveries are stored for 30 days.
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver \
+  --url https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -10298,7 +10298,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver")
+url = URI("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -10319,7 +10319,7 @@ var options = {
   "method": "GET",
   "hostname": "api.sandbox.split.cash",
   "port": null,
-  "path": "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver",
+  "path": "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f",
   "headers": {
     "accept": "application/json",
     "authorization": "Bearer {access-token}"
@@ -10352,7 +10352,7 @@ headers = {
     'authorization': "Bearer {access-token}"
     }
 
-conn.request("GET", "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver", headers=headers)
+conn.request("GET", "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f", headers=headers)
 
 res = conn.getresponse()
 data = res.read()
@@ -10361,7 +10361,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver")
+HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -10373,7 +10373,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/webh
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver');
+$request->setRequestUrl('https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -10397,7 +10397,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver"
+	url := "https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -10415,7 +10415,7 @@ func main() {
 }
 ```
 
-`GET /webhook_deliveries/{id}/redeliver`
+`GET /webhook_deliveries/{id}`
 
 Get a single webhook delivery by ID.
 
