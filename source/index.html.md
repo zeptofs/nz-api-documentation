@@ -41,7 +41,7 @@ And for all kinds of How To's and Recipes, head on over to our [Help Guide](http
 * Data is sent and received as JSON.
 * Clients should include the `Accepts: application/json` header in their requests.
 * Currencies are represented by 3 characters as defined in [ISO 4217](http://www.xe.com/iso4217.php).
-* Dates & times are returned in UTC using [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format with second accuracy. With requests, when no TZ is supplied, the configured TZ of the authenticated user is used, or `Australia/Sydney` if no TZ is configured.
+* Dates & times are returned in UTC using [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format with second accuracy. With requests, when no TZ is supplied, the configured TZ of the authenticated user is used, or `Pacific/Auckland` if no TZ is configured.
 * Amounts are always in cents with no decimals unless otherwise stated.
 * Zepto provides static public IP addresses for all outbound traffic, including webhooks.
     * Sandbox IP: `13.237.142.60`
