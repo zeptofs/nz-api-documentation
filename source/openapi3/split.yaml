@@ -33,7 +33,7 @@ info:
 
     * All communication is via `https` and supports **only** `TLSv1.2`.
 
-    * Production API: `https://api.split.cash/`.
+    * Production API: `https://nz.api.zepto.money/`.
 
     * Production UI: `https://go.split.cash/`.
 
@@ -1583,7 +1583,7 @@ info:
 servers:
   - url: 'https://api.sandbox.split.cash'
     description: Sandbox API server
-  - url: 'https://api.split.cash'
+  - url: 'https://nz.api.zepto.money'
     description: Production API server
 tags:
   - name: Agreements

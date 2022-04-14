@@ -34,7 +34,7 @@ And for all kinds of How To's and Recipes, head on over to our [Help Guide](http
 
 * Authentication is performed using OAuth2. See the [Get started](/#get-started) and [Authentication & Authorisation](/#authentication-and-authorisation) guides for more.
 * All communication is via `https` and supports **only** `TLSv1.2`.
-* Production API: `https://api.split.cash/`.
+* Production API: `https://nz.api.zepto.money/`.
 * Production UI: `https://go.split.cash/`.
 * Sandbox API: `https://api.sandbox.split.cash/`.
 * Sandbox UI: `https://go.sandbox.split.cash/`.
