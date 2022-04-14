@@ -37,7 +37,7 @@ And for all kinds of How To's and Recipes, head on over to our [Help Guide](http
 * Production API: `https://nz.api.zepto.money/`.
 * Production UI: `https://nz.go.zepto.money/`.
 * Sandbox API: `https://nz.api.sandbox.zepto.money/`.
-* Sandbox UI: `https://go.sandbox.split.cash/`.
+* Sandbox UI: `https://nz.go.sandbox.zepto.money/`.
 * Data is sent and received as JSON.
 * Clients should include the `Accepts: application/json` header in their requests.
 * Currencies are represented by 3 characters as defined in [ISO 4217](http://www.xe.com/iso4217.php).
@@ -90,11 +90,11 @@ Okay, let's get things setup!
 
 1. **Create a Zepto account**
 
-    If you haven't already, you'll want to create a sandbox Zepto account at [https://go.sandbox.split.cash](https://go.sandbox.split.cash)
+    If you haven't already, you'll want to create a sandbox Zepto account at [https://nz.go.sandbox.zepto.money](https://nz.go.sandbox.zepto.money)
 
 2. **Register your application with Zepto**
 
-    Sign in and create an OAuth2 application: [https://go.sandbox.split.cash/oauth/applications](https://go.sandbox.split.cash/oauth/applications).
+    Sign in and create an OAuth2 application: [https://nz.go.sandbox.zepto.money/oauth/applications](https://nz.go.sandbox.zepto.money/oauth/applications).
 
     [![Zepto OAuth2 app create](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_oauth2_app_create.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_oauth2_app_create.png)
 
@@ -102,7 +102,7 @@ Okay, let's get things setup!
 
     The quickest way to access your Zepto account via the API is using
     personal access tokens. Click on your newly created application from your [application
-list](https://go.sandbox.split.cash/oauth/applications) and click on **+ Personal Access Token**.
+list](https://nz.go.sandbox.zepto.money/oauth/applications) and click on **+ Personal Access Token**.
 
     [![Zepto locate personal OAuth2 tokens](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_personal_access_tokens_empty.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_personal_access_tokens_empty.png)
 
@@ -137,7 +137,7 @@ This guide will help you setup an OAuth2 app in order to get authenticated & aut
 
 1. **Create a Zepto account**
 
-    If you haven't already, you'll want to create a sandbox Zepto account at [https://go.sandbox.split.cash](https://go.sandbox.split.cash).
+    If you haven't already, you'll want to create a sandbox Zepto account at [https://nz.go.sandbox.zepto.money](https://nz.go.sandbox.zepto.money).
 
 2. **Choose authentication method**
 
@@ -150,7 +150,7 @@ This guide will help you setup an OAuth2 app in order to get authenticated & aut
 ## Personal access token
 If you're looking to only access your own account via the API, you can generate a personal access token from the UI. These tokens do not expire, but can be deleted.
 
-* To do this, sign in to your Zepto account and [create an application](https://go.sandbox.split.cash/oauth/applications) if you haven't already. Click on your application from your [application list](https://go.sandbox.split.cash/oauth/applications) and click on **Personal access**.
+* To do this, sign in to your Zepto account and [create an application](https://nz.go.sandbox.zepto.money/oauth/applications) if you haven't already. Click on your application from your [application list](https://nz.go.sandbox.zepto.money/oauth/applications) and click on **Personal access**.
 
     [![Zepto locate personal OAuth2 tokens](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_personal_access_tokens_empty.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_personal_access_tokens_empty.png)
 
@@ -165,7 +165,7 @@ If you're looking to only access your own account via the API, you can generate 
 ## OAuth grant flow
 1. **Register your application with Zepto**
 
-    Once you've got your account up and running, sign in and create an OAuth2 profile for your application: [https://go.sandbox.split.cash/oauth/applications](https://go.sandbox.split.cash/oauth/applications)
+    Once you've got your account up and running, sign in and create an OAuth2 profile for your application: [https://nz.go.sandbox.zepto.money/oauth/applications](https://nz.go.sandbox.zepto.money/oauth/applications)
 
     | Parameter | Description |
     |-----------|-------------|
@@ -177,7 +177,7 @@ If you're looking to only access your own account via the API, you can generate 
     Construct the initial URL the user will need to visit in order to grant your application permission to act on his/her behalf. The constructed URL describes the level of permission ([`scope`](/#scopes)), the application requesting permission (`client_id`) and where the user gets redirected once they've granted permission (`redirect_uri`).
 
     The URL should be formatted to look like this:
-    `https://go.sandbox.split.cash/oauth/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&scope={scope}`
+    `https://nz.go.sandbox.zepto.money/oauth/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&scope={scope}`
 
     | Parameter | Description |
     |-----------|-------------|
@@ -194,7 +194,7 @@ If you're looking to only access your own account via the API, you can generate 
 
     After the user has authorised your application, they will be returned to your application at the URL specified in `redirect_uri` along with the `code` query parameter as the authorisation code.
 
-    Finally, the authorisation code can then be exchanged for an access token and refresh token pair by POSTing to: `https://go.sandbox.split.cash/oauth/token`
+    Finally, the authorisation code can then be exchanged for an access token and refresh token pair by POSTing to: `https://nz.go.sandbox.zepto.money/oauth/token`
 
     **Note** The authorisation code is a ONE-TIME use code. It will not work again if you try to POST it a second time.
 
@@ -222,11 +222,11 @@ Before you start, load up our API collection:
 
 1. **Create a Zepto account**
 
-    If you haven't already, you'll want to create a sandbox Zepto account at [https://go.sandbox.split.cash](https://go.sandbox.split.cash)
+    If you haven't already, you'll want to create a sandbox Zepto account at [https://nz.go.sandbox.zepto.money](https://nz.go.sandbox.zepto.money)
 
 2. **Register your application with Zepto**
 
-    Sign in and create an OAuth2 application: [https://go.sandbox.split.cash/oauth/applications](https://go.sandbox.split.cash/oauth/applications).
+    Sign in and create an OAuth2 application: [https://nz.go.sandbox.zepto.money/oauth/applications](https://nz.go.sandbox.zepto.money/oauth/applications).
 
     Use the special Postman callback URL: `https://www.getpostman.com/oauth2/callback`
 
@@ -302,7 +302,7 @@ curl -F "grant_type=refresh_token" \
      -F "client_id={{oauth2_application_id}}" \
      -F "client_secret={{oauth2_application_secret }}" \
      -F "refresh_token={{refresh_token}}" \
-     -X POST https://go.sandbox.split.cash/oauth/token
+     -X POST https://nz.go.sandbox.zepto.money/oauth/token
 ```
 
 > Example response
@@ -434,7 +434,7 @@ All other errors relating to Zepto specific resources(e.g. Contacts) will return
 **403 errors** are generally returned from any of our endpoints if your application does not have the required authorisation. This is usually due to:
 
 * An [invalid/expired `access_token`](/#authentication-and-authorisation); or
-* The required **scopes** not being present when setting up your [OAuth application](https://go.sandbox.split.cash/oauth/applications); or
+* The required **scopes** not being present when setting up your [OAuth application](https://nz.go.sandbox.zepto.money/oauth/applications); or
 * The required **scopes** not being present in the [authorisation code link](/#oauth-grant-flow) used to present your user with an authorisation request.
 
 ## Speeding up onboarding
@@ -476,9 +476,9 @@ In order to speed up the process, we allow query string params to be appended to
 All values should be [URL encoded](https://en.wikipedia.org/wiki/Query_string#URL_encoding).
 
 As an example, the following authorisation URL would display the **personal sign up** & prefill the first name field with **George**:
-`https://go.sandbox.split.cash/oauth/authorize?response_type=code&client_id=xxx&redirect_uri=xxx&scope=xxx&landing=sign_up&first_name=George`
+`https://nz.go.sandbox.zepto.money/oauth/authorize?response_type=code&client_id=xxx&redirect_uri=xxx&scope=xxx&landing=sign_up&first_name=George`
 
-You can also pass the values directly to the sign up page outside of the OAuth2 authorisation process. Click on the following link to see the values preloaded: [https://go.sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgeco&first_name=George](https://go.sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgceco&first_name=George).
+You can also pass the values directly to the sign up page outside of the OAuth2 authorisation process. Click on the following link to see the values preloaded: [https://nz.go.sandbox.zepto.money/business/sign_up?name=GeorgeCo&nickname=georgeco&first_name=George](https://nz.go.sandbox.zepto.money/business/sign_up?name=GeorgeCo&nickname=georgceco&first_name=George).
 
 # Sandbox Testing Details
 
@@ -2141,7 +2141,7 @@ Get a single Bank Connection by its ID
       "email": "travis@hermanntorp.net"
     },
     "links": {
-      "update_bank_connection": "https://go.sandbox.split.cash/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
+      "update_bank_connection": "https://nz.go.sandbox.zepto.money/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
     }
   }
 }
@@ -2525,7 +2525,7 @@ Use this endpoint when you want to pay somebody.
       }
     },
     "links": {
-      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+      "add_bank_connection": "https://nz.go.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -2758,7 +2758,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
         }
       },
       "links": {
-        "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+        "add_bank_connection": "https://nz.go.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     },
     {
@@ -2780,7 +2780,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
         }
       },
       "links": {
-        "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+        "add_bank_connection": "https://nz.go.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     }
   ]
@@ -2973,7 +2973,7 @@ Get a single Contact by its ID
       "id": null
     },
     "links": {
-      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+      "add_bank_connection": "https://nz.go.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     },
     "payid_details": {
       "alias_value": "otp@pay.travel.com.au",
@@ -3370,7 +3370,7 @@ You can update the name, email, bank account and metadata of any Contact.
       "id": "63232c0a-a783-4ae9-ae73-f0974fe1e345"
     },
     "links": {
-      "add_bank_connection": "http://go.sandbox.split.cash/invite_contact/dog-bones-inc/fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb"
+      "add_bank_connection": "http://nz.go.sandbox.zepto.money/invite_contact/dog-bones-inc/fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb"
     }
   }
 }
@@ -4174,7 +4174,7 @@ Create an Open Agreement that can be accepted by anyone.
         "max_amount": 1000000
       }
     },
-    "link": "https://go.sandbox.split.cash/open_agreements/aecff76d-13e0-4e17-b7c5-844ae07fa675/agreements/invitation"
+    "link": "https://nz.go.sandbox.zepto.money/open_agreements/aecff76d-13e0-4e17-b7c5-844ae07fa675/agreements/invitation"
   }
 }
 ```
@@ -4352,7 +4352,7 @@ By default, all Open Agreements will be returned.
           "max_amount": 1000000
         }
       },
-      "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+      "link": "https://nz.go.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
     },
     {
       "ref": "OA.2",
@@ -4369,7 +4369,7 @@ By default, all Open Agreements will be returned.
           "max_amount": null
         }
       },
-      "link": "https://go.sandbox.split.cash/open_agreements/948e3662-154d-42d1-bdc9-a05c251d3981/agreements/invitation"
+      "link": "https://nz.go.sandbox.zepto.money/open_agreements/948e3662-154d-42d1-bdc9-a05c251d3981/agreements/invitation"
     }
   ]
 }
@@ -4546,7 +4546,7 @@ Allow the Open Agreement to viewed and accepted.
         "max_amount": 1000000
       }
     },
-    "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+    "link": "https://nz.go.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
   }
 }
 ```
@@ -4722,7 +4722,7 @@ Disable the Open Agreement from being viewed or accepted.
         "max_amount": 1000000
       }
     },
-    "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+    "link": "https://nz.go.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
   }
 }
 ```
@@ -9205,7 +9205,7 @@ Create an Unassigned Agreement.
       }
     },
     "assignment_expires_at": "2017-03-20T00:54:27Z",
-    "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation",
+    "link": "https://nz.go.sandbox.zepto.money/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation",
     "metadata": {
       "custom_key": "Custom string",
       "another_custom_key": "Maybe a URL"
@@ -9389,7 +9389,7 @@ Will return all Unassigned Agreements that have not yet been accepted.
         }
       },
       "assignment_expires_at": "2017-03-20T00:54:27Z",
-      "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+      "link": "https://nz.go.sandbox.zepto.money/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
     },
     {
       "ref": "A.7ea",
@@ -9408,7 +9408,7 @@ Will return all Unassigned Agreements that have not yet been accepted.
         }
       },
       "assignment_expires_at": "2017-03-21T00:54:27Z",
-      "link": "https://go.sandbox.split.cash/unassigned_agreements/4e2728cc-b4ba-42c2-a6c3-26a7758de58d/invitation"
+      "link": "https://nz.go.sandbox.zepto.money/unassigned_agreements/4e2728cc-b4ba-42c2-a6c3-26a7758de58d/invitation"
     }
   ]
 }
@@ -9587,7 +9587,7 @@ Get a single Unassigned Agreement by its reference.
       }
     },
     "assignment_expires_at": "2017-03-20T00:54:27Z",
-    "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+    "link": "https://nz.go.sandbox.zepto.money/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
   }
 }
 ```
@@ -11008,7 +11008,7 @@ Use this endpoint to resend a failed webhook delivery.
         "max_amount": 1000000
       }
     },
-    "link": "https://go.sandbox.split.cash/open_agreements/aecff76d-13e0-4e17-b7c5-844ae07fa675/agreements/invitation"
+    "link": "https://nz.go.sandbox.zepto.money/open_agreements/aecff76d-13e0-4e17-b7c5-844ae07fa675/agreements/invitation"
   }
 }
 ```
@@ -11043,7 +11043,7 @@ Use this endpoint to resend a failed webhook delivery.
           "max_amount": 1000000
         }
       },
-      "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+      "link": "https://nz.go.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
     },
     {
       "ref": "OA.2",
@@ -11060,7 +11060,7 @@ Use this endpoint to resend a failed webhook delivery.
           "max_amount": null
         }
       },
-      "link": "https://go.sandbox.split.cash/open_agreements/948e3662-154d-42d1-bdc9-a05c251d3981/agreements/invitation"
+      "link": "https://nz.go.sandbox.zepto.money/open_agreements/948e3662-154d-42d1-bdc9-a05c251d3981/agreements/invitation"
     }
   ]
 }
@@ -11095,7 +11095,7 @@ Use this endpoint to resend a failed webhook delivery.
         "max_amount": 1000000
       }
     },
-    "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+    "link": "https://nz.go.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
   }
 }
 ```
@@ -11129,7 +11129,7 @@ Use this endpoint to resend a failed webhook delivery.
         "max_amount": 1000000
       }
     },
-    "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+    "link": "https://nz.go.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
   }
 }
 ```
@@ -11323,7 +11323,7 @@ Use this endpoint to resend a failed webhook delivery.
         }
       },
       "links": {
-        "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+        "add_bank_connection": "https://nz.go.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     },
     {
@@ -11345,7 +11345,7 @@ Use this endpoint to resend a failed webhook delivery.
         }
       },
       "links": {
-        "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+        "add_bank_connection": "https://nz.go.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     }
   ]
@@ -11418,7 +11418,7 @@ Use this endpoint to resend a failed webhook delivery.
       }
     },
     "links": {
-      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+      "add_bank_connection": "https://nz.go.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -11455,7 +11455,7 @@ Use this endpoint to resend a failed webhook delivery.
       "email": "travis@hermanntorp.net"
     },
     "links": {
-      "update_bank_connection": "https://go.sandbox.split.cash/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
+      "update_bank_connection": "https://nz.go.sandbox.zepto.money/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
     }
   }
 }
@@ -11505,7 +11505,7 @@ Use this endpoint to resend a failed webhook delivery.
       "id": null
     },
     "links": {
-      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+      "add_bank_connection": "https://nz.go.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     },
     "payid_details": {
       "alias_value": "otp@pay.travel.com.au",
@@ -11633,7 +11633,7 @@ Use this endpoint to resend a failed webhook delivery.
       "id": "63232c0a-a783-4ae9-ae73-f0974fe1e345"
     },
     "links": {
-      "add_bank_connection": "http://go.sandbox.split.cash/invite_contact/dog-bones-inc/fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb"
+      "add_bank_connection": "http://nz.go.sandbox.zepto.money/invite_contact/dog-bones-inc/fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb"
     }
   }
 }
@@ -12594,7 +12594,7 @@ Use this endpoint to resend a failed webhook delivery.
       }
     },
     "assignment_expires_at": "2017-03-20T00:54:27Z",
-    "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation",
+    "link": "https://nz.go.sandbox.zepto.money/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation",
     "metadata": {
       "custom_key": "Custom string",
       "another_custom_key": "Maybe a URL"
@@ -12635,7 +12635,7 @@ Use this endpoint to resend a failed webhook delivery.
         }
       },
       "assignment_expires_at": "2017-03-20T00:54:27Z",
-      "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+      "link": "https://nz.go.sandbox.zepto.money/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
     },
     {
       "ref": "A.7ea",
@@ -12654,7 +12654,7 @@ Use this endpoint to resend a failed webhook delivery.
         }
       },
       "assignment_expires_at": "2017-03-21T00:54:27Z",
-      "link": "https://go.sandbox.split.cash/unassigned_agreements/4e2728cc-b4ba-42c2-a6c3-26a7758de58d/invitation"
+      "link": "https://nz.go.sandbox.zepto.money/unassigned_agreements/4e2728cc-b4ba-42c2-a6c3-26a7758de58d/invitation"
     }
   ]
 }
@@ -12691,7 +12691,7 @@ Use this endpoint to resend a failed webhook delivery.
       }
     },
     "assignment_expires_at": "2017-03-20T00:54:27Z",
-    "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+    "link": "https://nz.go.sandbox.zepto.money/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
   }
 }
 ```
