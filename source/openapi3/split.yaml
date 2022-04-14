@@ -37,7 +37,7 @@ info:
 
     * Production UI: `https://nz.go.zepto.money/`.
 
-    * Sandbox API: `https://api.sandbox.split.cash/`.
+    * Sandbox API: `https://nz.api.sandbox.zepto.money/`.
 
     * Sandbox UI: `https://go.sandbox.split.cash/`.
 
@@ -980,8 +980,8 @@ info:
 
     ```
 
-    Link: <http://api.sandbox.split.cash/contacts?page=5>; rel="last",
-    <http://api.sandbox.split.cash/contacts?page=2>; rel="next"
+    Link: <http://nz.api.sandbox.zepto.money/contacts?page=5>; rel="last",
+    <http://nz.api.sandbox.zepto.money/contacts?page=2>; rel="next"
 
     Per-Page: 25
 
@@ -1581,7 +1581,7 @@ info:
     Looking for more? Our docs are open sourced! [https://github.com/zeptofs/api-documentation](https://github.com/zeptofs/api-documentation)
   version: '1.0'
 servers:
-  - url: 'https://api.sandbox.split.cash'
+  - url: 'https://nz.api.sandbox.zepto.money'
     description: Sandbox API server
   - url: 'https://nz.api.zepto.money'
     description: Production API server
