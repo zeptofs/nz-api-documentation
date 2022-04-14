@@ -35,7 +35,7 @@ info:
 
     * Production API: `https://nz.api.zepto.money/`.
 
-    * Production UI: `https://go.split.cash/`.
+    * Production UI: `https://nz.go.zepto.money/`.
 
     * Sandbox API: `https://api.sandbox.split.cash/`.
 
@@ -3947,7 +3947,7 @@ components:
               name: George Morissette
               email: randy@windler.net
             links:
-              update_bank_connection: http://go.split.cash/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4
+              update_bank_connection: http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4
           - id: ddbee875-7344-4d74-9503-6233149fe1a0
             provider_name: split
             state: credentials_invalid
@@ -3962,7 +3962,7 @@ components:
               name: Joel Boyle
               email: travis@hermanntorp.net
             links:
-              update_bank_connection: http://go.split.cash/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0
+              update_bank_connection: http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0
     CreateOpenAgreementRequest:
       title: Create an Open Agreement (request)
       required:

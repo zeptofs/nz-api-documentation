@@ -35,7 +35,7 @@ And for all kinds of How To's and Recipes, head on over to our [Help Guide](http
 * Authentication is performed using OAuth2. See the [Get started](/#get-started) and [Authentication & Authorisation](/#authentication-and-authorisation) guides for more.
 * All communication is via `https` and supports **only** `TLSv1.2`.
 * Production API: `https://nz.api.zepto.money/`.
-* Production UI: `https://go.split.cash/`.
+* Production UI: `https://nz.go.zepto.money/`.
 * Sandbox API: `https://api.sandbox.split.cash/`.
 * Sandbox UI: `https://go.sandbox.split.cash/`.
 * Data is sent and received as JSON.
@@ -1941,7 +1941,7 @@ By default, all Bank Connections will be returned. You can apply filters to your
         "email": "randy@windler.net"
       },
       "links": {
-        "update_bank_connection": "http://go.split.cash/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4"
+        "update_bank_connection": "http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4"
       }
     },
     {
@@ -1961,7 +1961,7 @@ By default, all Bank Connections will be returned. You can apply filters to your
         "email": "travis@hermanntorp.net"
       },
       "links": {
-        "update_bank_connection": "http://go.split.cash/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0"
+        "update_bank_connection": "http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0"
       }
     }
   ]
@@ -10852,7 +10852,7 @@ Use this endpoint to resend a failed webhook delivery.
         "email": "randy@windler.net"
       },
       "links": {
-        "update_bank_connection": "http://go.split.cash/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4"
+        "update_bank_connection": "http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4"
       }
     },
     {
@@ -10872,7 +10872,7 @@ Use this endpoint to resend a failed webhook delivery.
         "email": "travis@hermanntorp.net"
       },
       "links": {
-        "update_bank_connection": "http://go.split.cash/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0"
+        "update_bank_connection": "http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0"
       }
     }
   ]
