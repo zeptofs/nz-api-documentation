@@ -41,7 +41,7 @@ And for all kinds of How To's and Recipes, head on over to our [Help Guide](http
 * Data is sent and received as JSON.
 * Clients should include the `Accepts: application/json` header in their requests.
 * Currencies are represented by 3 characters as defined in [ISO 4217](http://www.xe.com/iso4217.php).
-* Dates & times are returned in UTC using [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format with second accuracy. With requests, when no TZ is supplied, the configured TZ of the authenticated user is used, or `Australia/Sydney` if no TZ is configured.
+* Dates & times are returned in UTC using [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format with second accuracy. With requests, when no TZ is supplied, the configured TZ of the authenticated user is used, or `Pacific/Auckland` if no TZ is configured.
 * Amounts are always in cents with no decimals unless otherwise stated.
 * Zepto provides static public IP addresses for all outbound traffic, including webhooks.
     * Sandbox IP: `13.237.142.60`
@@ -1708,7 +1708,7 @@ By default, all Bank Accounts will be returned.
     {
       "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
       "branch_code": "493192",
-      "bank_name": "National Australia Bank",
+      "bank_name": "Bank of New Zealand",
       "account_number": "3993013",
       "status": "active",
       "title": "AU.493192.3993013",
@@ -1717,7 +1717,7 @@ By default, all Bank Accounts will be returned.
     {
       "id": "56df206a-aaff-471a-b075-11882bc8906a",
       "branch_code": "302193",
-      "bank_name": "National Australia Bank",
+      "bank_name": "Bank of New Zealand",
       "account_number": "119302",
       "status": "active",
       "title": "Trust Account",
@@ -2515,7 +2515,7 @@ Use this endpoint when you want to pay somebody.
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
       "account_number": "13048322",
       "branch_code": "123456",
-      "bank_name": "National Australia Bank",
+      "bank_name": "Bank of New Zealand",
       "state": "active",
       "iav_provider": null,
       "iav_status": null,
@@ -2704,7 +2704,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "id": "095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc",
         "account_number": "494307",
         "branch_code": "435434",
-        "bank_name": "National Australia Bank",
+        "bank_name": "Bank of New Zealand",
         "state": "active",
         "iav_provider": "split",
         "iav_status": "active",
@@ -2726,7 +2726,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "id": "861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0",
         "account_number": "4395959",
         "branch_code": "068231",
-        "bank_name": "National Australia Bank",
+        "bank_name": "Bank of New Zealand",
         "state": "active",
         "iav_provider": "split",
         "iav_status": "credentials_invalid",
@@ -2770,7 +2770,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
         "account_number": "13048322",
         "branch_code": "123456",
-        "bank_name": "National Australia Bank",
+        "bank_name": "Bank of New Zealand",
         "state": "pending_verification",
         "iav_provider": null,
         "iav_status": null,
@@ -2957,7 +2957,7 @@ Get a single Contact by its ID
       "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
       "account_number": "947434694",
       "branch_code": "304304",
-      "bank_name": "National Australia Bank",
+      "bank_name": "Bank of New Zealand",
       "state": "active",
       "iav_provider": null,
       "iav_status": null,
@@ -10786,7 +10786,7 @@ Use this endpoint to resend a failed webhook delivery.
     {
       "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
       "branch_code": "493192",
-      "bank_name": "National Australia Bank",
+      "bank_name": "Bank of New Zealand",
       "account_number": "3993013",
       "status": "active",
       "title": "AU.493192.3993013",
@@ -10795,7 +10795,7 @@ Use this endpoint to resend a failed webhook delivery.
     {
       "id": "56df206a-aaff-471a-b075-11882bc8906a",
       "branch_code": "302193",
-      "bank_name": "National Australia Bank",
+      "bank_name": "Bank of New Zealand",
       "account_number": "119302",
       "status": "active",
       "title": "Trust Account",
@@ -11269,7 +11269,7 @@ Use this endpoint to resend a failed webhook delivery.
         "id": "095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc",
         "account_number": "494307",
         "branch_code": "435434",
-        "bank_name": "National Australia Bank",
+        "bank_name": "Bank of New Zealand",
         "state": "active",
         "iav_provider": "split",
         "iav_status": "active",
@@ -11291,7 +11291,7 @@ Use this endpoint to resend a failed webhook delivery.
         "id": "861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0",
         "account_number": "4395959",
         "branch_code": "068231",
-        "bank_name": "National Australia Bank",
+        "bank_name": "Bank of New Zealand",
         "state": "active",
         "iav_provider": "split",
         "iav_status": "credentials_invalid",
@@ -11335,7 +11335,7 @@ Use this endpoint to resend a failed webhook delivery.
         "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
         "account_number": "13048322",
         "branch_code": "123456",
-        "bank_name": "National Australia Bank",
+        "bank_name": "Bank of New Zealand",
         "state": "pending_verification",
         "iav_provider": null,
         "iav_status": null,
@@ -11408,7 +11408,7 @@ Use this endpoint to resend a failed webhook delivery.
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
       "account_number": "13048322",
       "branch_code": "123456",
-      "bank_name": "National Australia Bank",
+      "bank_name": "Bank of New Zealand",
       "state": "active",
       "iav_provider": null,
       "iav_status": null,
@@ -11489,7 +11489,7 @@ Use this endpoint to resend a failed webhook delivery.
       "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
       "account_number": "947434694",
       "branch_code": "304304",
-      "bank_name": "National Australia Bank",
+      "bank_name": "Bank of New Zealand",
       "state": "active",
       "iav_provider": null,
       "iav_status": null,
