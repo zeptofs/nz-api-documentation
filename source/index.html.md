@@ -1711,7 +1711,7 @@ By default, all Bank Accounts will be returned.
       "bank_name": "Bank of New Zealand",
       "account_number": "3993013",
       "status": "active",
-      "title": "AU.493192.3993013",
+      "title": "NZ.493192.3993013",
       "available_balance": null
     },
     {
@@ -10789,7 +10789,7 @@ Use this endpoint to resend a failed webhook delivery.
       "bank_name": "Bank of New Zealand",
       "account_number": "3993013",
       "status": "active",
-      "title": "AU.493192.3993013",
+      "title": "NZ.493192.3993013",
       "available_balance": null
     },
     {
