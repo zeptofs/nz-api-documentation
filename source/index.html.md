@@ -34,10 +34,10 @@ And for all kinds of How To's and Recipes, head on over to our [Help Guide](http
 
 * Authentication is performed using OAuth2. See the [Get started](/#get-started) and [Authentication & Authorisation](/#authentication-and-authorisation) guides for more.
 * All communication is via `https` and supports **only** `TLSv1.2`.
-* Production API: `https://api.split.cash/`.
-* Production UI: `https://go.split.cash/`.
-* Sandbox API: `https://api.sandbox.split.cash/`.
-* Sandbox UI: `https://go.sandbox.split.cash/`.
+* Production API: `https://nz.api.zepto.money/`.
+* Production UI: `https://nz.go.zepto.money/`.
+* Sandbox API: `https://nz.api.sandbox.zepto.money/`.
+* Sandbox UI: `https://nz.go.sandbox.zepto.money/`.
 * Data is sent and received as JSON.
 * Clients should include the `Accepts: application/json` header in their requests.
 * Currencies are represented by 3 characters as defined in [ISO 4217](http://www.xe.com/iso4217.php).
@@ -90,11 +90,11 @@ Okay, let's get things setup!
 
 1. **Create a Zepto account**
 
-    If you haven't already, you'll want to create a sandbox Zepto account at [https://go.sandbox.split.cash](https://go.sandbox.split.cash)
+    If you haven't already, you'll want to create a sandbox Zepto account at [https://nz.go.sandbox.zepto.money](https://nz.go.sandbox.zepto.money)
 
 2. **Register your application with Zepto**
 
-    Sign in and create an OAuth2 application: [https://go.sandbox.split.cash/oauth/applications](https://go.sandbox.split.cash/oauth/applications).
+    Sign in and create an OAuth2 application: [https://nz.go.sandbox.zepto.money/oauth/applications](https://nz.go.sandbox.zepto.money/oauth/applications).
 
     [![Zepto OAuth2 app create](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_oauth2_app_create.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_oauth2_app_create.png)
 
@@ -102,7 +102,7 @@ Okay, let's get things setup!
 
     The quickest way to access your Zepto account via the API is using
     personal access tokens. Click on your newly created application from your [application
-list](https://go.sandbox.split.cash/oauth/applications) and click on **+ Personal Access Token**.
+list](https://nz.go.sandbox.zepto.money/oauth/applications) and click on **+ Personal Access Token**.
 
     [![Zepto locate personal OAuth2 tokens](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_personal_access_tokens_empty.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_personal_access_tokens_empty.png)
 
@@ -137,7 +137,7 @@ This guide will help you setup an OAuth2 app in order to get authenticated & aut
 
 1. **Create a Zepto account**
 
-    If you haven't already, you'll want to create a sandbox Zepto account at [https://go.sandbox.split.cash](https://go.sandbox.split.cash).
+    If you haven't already, you'll want to create a sandbox Zepto account at [https://nz.go.sandbox.zepto.money](https://nz.go.sandbox.zepto.money).
 
 2. **Choose authentication method**
 
@@ -150,7 +150,7 @@ This guide will help you setup an OAuth2 app in order to get authenticated & aut
 ## Personal access token
 If you're looking to only access your own account via the API, you can generate a personal access token from the UI. These tokens do not expire, but can be deleted.
 
-* To do this, sign in to your Zepto account and [create an application](https://go.sandbox.split.cash/oauth/applications) if you haven't already. Click on your application from your [application list](https://go.sandbox.split.cash/oauth/applications) and click on **Personal access**.
+* To do this, sign in to your Zepto account and [create an application](https://nz.go.sandbox.zepto.money/oauth/applications) if you haven't already. Click on your application from your [application list](https://nz.go.sandbox.zepto.money/oauth/applications) and click on **Personal access**.
 
     [![Zepto locate personal OAuth2 tokens](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_personal_access_tokens_empty.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/split_personal_access_tokens_empty.png)
 
@@ -165,7 +165,7 @@ If you're looking to only access your own account via the API, you can generate 
 ## OAuth grant flow
 1. **Register your application with Zepto**
 
-    Once you've got your account up and running, sign in and create an OAuth2 profile for your application: [https://go.sandbox.split.cash/oauth/applications](https://go.sandbox.split.cash/oauth/applications)
+    Once you've got your account up and running, sign in and create an OAuth2 profile for your application: [https://nz.go.sandbox.zepto.money/oauth/applications](https://nz.go.sandbox.zepto.money/oauth/applications)
 
     | Parameter | Description |
     |-----------|-------------|
@@ -177,7 +177,7 @@ If you're looking to only access your own account via the API, you can generate 
     Construct the initial URL the user will need to visit in order to grant your application permission to act on his/her behalf. The constructed URL describes the level of permission ([`scope`](/#scopes)), the application requesting permission (`client_id`) and where the user gets redirected once they've granted permission (`redirect_uri`).
 
     The URL should be formatted to look like this:
-    `https://go.sandbox.split.cash/oauth/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&scope={scope}`
+    `https://nz.go.sandbox.zepto.money/oauth/authorize?response_type=code&client_id={client_id}&redirect_uri={redirect_uri}&scope={scope}`
 
     | Parameter | Description |
     |-----------|-------------|
@@ -194,7 +194,7 @@ If you're looking to only access your own account via the API, you can generate 
 
     After the user has authorised your application, they will be returned to your application at the URL specified in `redirect_uri` along with the `code` query parameter as the authorisation code.
 
-    Finally, the authorisation code can then be exchanged for an access token and refresh token pair by POSTing to: `https://go.sandbox.split.cash/oauth/token`
+    Finally, the authorisation code can then be exchanged for an access token and refresh token pair by POSTing to: `https://nz.go.sandbox.zepto.money/oauth/token`
 
     **Note** The authorisation code is a ONE-TIME use code. It will not work again if you try to POST it a second time.
 
@@ -222,11 +222,11 @@ Before you start, load up our API collection:
 
 1. **Create a Zepto account**
 
-    If you haven't already, you'll want to create a sandbox Zepto account at [https://go.sandbox.split.cash](https://go.sandbox.split.cash)
+    If you haven't already, you'll want to create a sandbox Zepto account at [https://nz.go.sandbox.zepto.money](https://nz.go.sandbox.zepto.money)
 
 2. **Register your application with Zepto**
 
-    Sign in and create an OAuth2 application: [https://go.sandbox.split.cash/oauth/applications](https://go.sandbox.split.cash/oauth/applications).
+    Sign in and create an OAuth2 application: [https://nz.go.sandbox.zepto.money/oauth/applications](https://nz.go.sandbox.zepto.money/oauth/applications).
 
     Use the special Postman callback URL: `https://www.getpostman.com/oauth2/callback`
 
@@ -302,7 +302,7 @@ curl -F "grant_type=refresh_token" \
      -F "client_id={{oauth2_application_id}}" \
      -F "client_secret={{oauth2_application_secret }}" \
      -F "refresh_token={{refresh_token}}" \
-     -X POST https://go.sandbox.split.cash/oauth/token
+     -X POST https://nz.go.sandbox.zepto.money/oauth/token
 ```
 
 > Example response
@@ -434,7 +434,7 @@ All other errors relating to Zepto specific resources(e.g. Contacts) will return
 **403 errors** are generally returned from any of our endpoints if your application does not have the required authorisation. This is usually due to:
 
 * An [invalid/expired `access_token`](/#authentication-and-authorisation); or
-* The required **scopes** not being present when setting up your [OAuth application](https://go.sandbox.split.cash/oauth/applications); or
+* The required **scopes** not being present when setting up your [OAuth application](https://nz.go.sandbox.zepto.money/oauth/applications); or
 * The required **scopes** not being present in the [authorisation code link](/#oauth-grant-flow) used to present your user with an authorisation request.
 
 ## Speeding up onboarding
@@ -476,9 +476,9 @@ In order to speed up the process, we allow query string params to be appended to
 All values should be [URL encoded](https://en.wikipedia.org/wiki/Query_string#URL_encoding).
 
 As an example, the following authorisation URL would display the **personal sign up** & prefill the first name field with **George**:
-`https://go.sandbox.split.cash/oauth/authorize?response_type=code&client_id=xxx&redirect_uri=xxx&scope=xxx&landing=sign_up&first_name=George`
+`https://nz.go.sandbox.zepto.money/oauth/authorize?response_type=code&client_id=xxx&redirect_uri=xxx&scope=xxx&landing=sign_up&first_name=George`
 
-You can also pass the values directly to the sign up page outside of the OAuth2 authorisation process. Click on the following link to see the values preloaded: [https://go.sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgeco&first_name=George](https://go.sandbox.split.cash/business/sign_up?name=GeorgeCo&nickname=georgceco&first_name=George).
+You can also pass the values directly to the sign up page outside of the OAuth2 authorisation process. Click on the following link to see the values preloaded: [https://nz.go.sandbox.zepto.money/business/sign_up?name=GeorgeCo&nickname=georgeco&first_name=George](https://nz.go.sandbox.zepto.money/business/sign_up?name=GeorgeCo&nickname=georgceco&first_name=George).
 
 # Sandbox Testing Details
 
@@ -625,7 +625,7 @@ Scopes define the level of access granted via the OAuth2 authorisation process. 
 > Example response header
 
 ```
-Link: <http://api.sandbox.split.cash/contacts?page=5>; rel="last", <http://api.sandbox.split.cash/contacts?page=2>; rel="next"
+Link: <http://nz.api.sandbox.zepto.money/contacts?page=5>; rel="last", <http://nz.api.sandbox.zepto.money/contacts?page=2>; rel="next"
 Per-Page: 25
 Total: 5
 ```
@@ -1027,7 +1027,7 @@ An Agreement can have the following statuses:
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/agreements/outgoing \
+  --url https://nz.api.sandbox.zepto.money/agreements/outgoing \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -1036,7 +1036,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/agreements/outgoing")
+url = URI("https://nz.api.sandbox.zepto.money/agreements/outgoing")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -1055,7 +1055,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/agreements/outgoing",
   "headers": {
@@ -1083,7 +1083,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -1099,7 +1099,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/agreements/outgoing")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/agreements/outgoing")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -1111,7 +1111,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/agre
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/agreements/outgoing');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/agreements/outgoing');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -1135,7 +1135,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/agreements/outgoing"
+	url := "https://nz.api.sandbox.zepto.money/agreements/outgoing"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -1243,7 +1243,7 @@ By default, all outgoing Agreements will be returned. You can apply filters to y
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/agreements/A.2 \
+  --url https://nz.api.sandbox.zepto.money/agreements/A.2 \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -1252,7 +1252,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/agreements/A.2")
+url = URI("https://nz.api.sandbox.zepto.money/agreements/A.2")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -1271,7 +1271,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/agreements/A.2",
   "headers": {
@@ -1299,7 +1299,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -1315,7 +1315,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/agreements/A.2")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/agreements/A.2")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -1327,7 +1327,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/agre
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/agreements/A.2');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/agreements/A.2');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -1351,7 +1351,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/agreements/A.2"
+	url := "https://nz.api.sandbox.zepto.money/agreements/A.2"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -1423,7 +1423,7 @@ Get a single Agreement by its reference
 
 ```shell
 curl --request DELETE \
-  --url https://api.sandbox.split.cash/agreements/A.2 \
+  --url https://nz.api.sandbox.zepto.money/agreements/A.2 \
   --header 'authorization: Bearer {access-token}'
 ```
 
@@ -1431,7 +1431,7 @@ curl --request DELETE \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/agreements/A.2")
+url = URI("https://nz.api.sandbox.zepto.money/agreements/A.2")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -1449,7 +1449,7 @@ var http = require("https");
 
 var options = {
   "method": "DELETE",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/agreements/A.2",
   "headers": {
@@ -1476,7 +1476,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = { 'authorization': "Bearer {access-token}" }
 
@@ -1489,7 +1489,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/agreements/A.2")
+HttpResponse<String> response = Unirest.delete("https://nz.api.sandbox.zepto.money/agreements/A.2")
   .header("authorization", "Bearer {access-token}")
   .asString();
 ```
@@ -1500,7 +1500,7 @@ HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/a
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/agreements/A.2');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/agreements/A.2');
 $request->setRequestMethod('DELETE');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}'
@@ -1523,7 +1523,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/agreements/A.2"
+	url := "https://nz.api.sandbox.zepto.money/agreements/A.2"
 
 	req, _ := http.NewRequest("DELETE", url, nil)
 
@@ -1568,7 +1568,7 @@ Your currently linked up bank accounts.
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/bank_accounts \
+  --url https://nz.api.sandbox.zepto.money/bank_accounts \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -1577,7 +1577,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/bank_accounts")
+url = URI("https://nz.api.sandbox.zepto.money/bank_accounts")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -1596,7 +1596,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/bank_accounts",
   "headers": {
@@ -1624,7 +1624,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -1640,7 +1640,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/bank_accounts")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/bank_accounts")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -1652,7 +1652,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/bank
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/bank_accounts');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/bank_accounts');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -1676,7 +1676,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/bank_accounts"
+	url := "https://nz.api.sandbox.zepto.money/bank_accounts"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -1768,7 +1768,7 @@ Use these endpoints to:
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/bank_connections \
+  --url https://nz.api.sandbox.zepto.money/bank_connections \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -1777,7 +1777,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/bank_connections")
+url = URI("https://nz.api.sandbox.zepto.money/bank_connections")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -1796,7 +1796,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/bank_connections",
   "headers": {
@@ -1824,7 +1824,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -1840,7 +1840,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/bank_connections")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/bank_connections")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -1852,7 +1852,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/bank
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/bank_connections');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/bank_connections');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -1876,7 +1876,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/bank_connections"
+	url := "https://nz.api.sandbox.zepto.money/bank_connections"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -1941,7 +1941,7 @@ By default, all Bank Connections will be returned. You can apply filters to your
         "email": "randy@windler.net"
       },
       "links": {
-        "update_bank_connection": "http://go.split.cash/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4"
+        "update_bank_connection": "http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4"
       }
     },
     {
@@ -1961,7 +1961,7 @@ By default, all Bank Connections will be returned. You can apply filters to your
         "email": "travis@hermanntorp.net"
       },
       "links": {
-        "update_bank_connection": "http://go.split.cash/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0"
+        "update_bank_connection": "http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0"
       }
     }
   ]
@@ -1982,7 +1982,7 @@ By default, all Bank Connections will be returned. You can apply filters to your
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7 \
+  --url https://nz.api.sandbox.zepto.money/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7 \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -1991,7 +1991,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7")
+url = URI("https://nz.api.sandbox.zepto.money/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -2010,7 +2010,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7",
   "headers": {
@@ -2038,7 +2038,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -2054,7 +2054,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -2066,7 +2066,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/bank
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -2090,7 +2090,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
+	url := "https://nz.api.sandbox.zepto.money/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -2141,7 +2141,7 @@ Get a single Bank Connection by its ID
       "email": "travis@hermanntorp.net"
     },
     "links": {
-      "update_bank_connection": "https://go.sandbox.split.cash/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
+      "update_bank_connection": "https://nz.go.sandbox.zepto.money/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
     }
   }
 }
@@ -2162,7 +2162,7 @@ Get a single Bank Connection by its ID
 
 ```shell
 curl --request DELETE \
-  --url https://api.sandbox.split.cash/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de \
+  --url https://nz.api.sandbox.zepto.money/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de \
   --header 'authorization: Bearer {access-token}'
 ```
 
@@ -2170,7 +2170,7 @@ curl --request DELETE \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de")
+url = URI("https://nz.api.sandbox.zepto.money/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -2188,7 +2188,7 @@ var http = require("https");
 
 var options = {
   "method": "DELETE",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de",
   "headers": {
@@ -2215,7 +2215,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = { 'authorization': "Bearer {access-token}" }
 
@@ -2228,7 +2228,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de")
+HttpResponse<String> response = Unirest.delete("https://nz.api.sandbox.zepto.money/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de")
   .header("authorization", "Bearer {access-token}")
   .asString();
 ```
@@ -2239,7 +2239,7 @@ HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/b
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de');
 $request->setRequestMethod('DELETE');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}'
@@ -2262,7 +2262,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de"
+	url := "https://nz.api.sandbox.zepto.money/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de"
 
 	req, _ := http.NewRequest("DELETE", url, nil)
 
@@ -2309,7 +2309,7 @@ Your Contacts form an address book of parties with whom you can interact. In ord
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/contacts/anyone \
+  --url https://nz.api.sandbox.zepto.money/contacts/anyone \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -2320,7 +2320,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/contacts/anyone")
+url = URI("https://nz.api.sandbox.zepto.money/contacts/anyone")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -2341,7 +2341,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/contacts/anyone",
   "headers": {
@@ -2377,7 +2377,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 payload = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
@@ -2396,7 +2396,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts/anyone")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/contacts/anyone")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -2413,7 +2413,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"name":"Hunter Thompson","email":"hunter@batcountry.com","branch_code":"123456","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
-$request->setRequestUrl('https://api.sandbox.split.cash/contacts/anyone');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/contacts/anyone');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -2441,7 +2441,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/contacts/anyone"
+	url := "https://nz.api.sandbox.zepto.money/contacts/anyone"
 
 	payload := strings.NewReader("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
@@ -2525,7 +2525,7 @@ Use this endpoint when you want to pay somebody.
       }
     },
     "links": {
-      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+      "add_bank_connection": "https://nz.go.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -2545,7 +2545,7 @@ Use this endpoint when you want to pay somebody.
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/contacts \
+  --url https://nz.api.sandbox.zepto.money/contacts \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -2554,7 +2554,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/contacts")
+url = URI("https://nz.api.sandbox.zepto.money/contacts")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -2573,7 +2573,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/contacts",
   "headers": {
@@ -2601,7 +2601,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -2617,7 +2617,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/contacts")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/contacts")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -2629,7 +2629,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/cont
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/contacts');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/contacts');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -2653,7 +2653,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/contacts"
+	url := "https://nz.api.sandbox.zepto.money/contacts"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -2758,7 +2758,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
         }
       },
       "links": {
-        "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+        "add_bank_connection": "https://nz.go.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     },
     {
@@ -2780,7 +2780,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
         }
       },
       "links": {
-        "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+        "add_bank_connection": "https://nz.go.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     }
   ]
@@ -2801,7 +2801,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
+  --url https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -2810,7 +2810,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
+url = URI("https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -2829,7 +2829,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608",
   "headers": {
@@ -2857,7 +2857,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -2873,7 +2873,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -2885,7 +2885,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/cont
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -2909,7 +2909,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
+	url := "https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -2973,7 +2973,7 @@ Get a single Contact by its ID
       "id": null
     },
     "links": {
-      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+      "add_bank_connection": "https://nz.go.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     },
     "payid_details": {
       "alias_value": "otp@pay.travel.com.au",
@@ -3000,7 +3000,7 @@ Get a single Contact by its ID
 
 ```shell
 curl --request DELETE \
-  --url https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
+  --url https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
   --header 'authorization: Bearer {access-token}'
 ```
 
@@ -3008,7 +3008,7 @@ curl --request DELETE \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
+url = URI("https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -3026,7 +3026,7 @@ var http = require("https");
 
 var options = {
   "method": "DELETE",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608",
   "headers": {
@@ -3053,7 +3053,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = { 'authorization': "Bearer {access-token}" }
 
@@ -3066,7 +3066,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
+HttpResponse<String> response = Unirest.delete("https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
   .header("authorization", "Bearer {access-token}")
   .asString();
 ```
@@ -3077,7 +3077,7 @@ HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/c
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
 $request->setRequestMethod('DELETE');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}'
@@ -3100,7 +3100,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
+	url := "https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
 
 	req, _ := http.NewRequest("DELETE", url, nil)
 
@@ -3146,7 +3146,7 @@ func main() {
 
 ```shell
 curl --request PATCH \
-  --url https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
+  --url https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -3157,7 +3157,7 @@ curl --request PATCH \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
+url = URI("https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -3178,7 +3178,7 @@ var http = require("https");
 
 var options = {
   "method": "PATCH",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608",
   "headers": {
@@ -3214,7 +3214,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 payload = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"branch_code\":\"123456\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
@@ -3233,7 +3233,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.patch("https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
+HttpResponse<String> response = Unirest.patch("https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -3250,7 +3250,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"name":"My very own alias","email":"updated@email.com","branch_code":"123456","account_number":"99887766","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
-$request->setRequestUrl('https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
 $request->setRequestMethod('PATCH');
 $request->setBody($body);
 
@@ -3278,7 +3278,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
+	url := "https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
 
 	payload := strings.NewReader("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"branch_code\":\"123456\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
@@ -3370,7 +3370,7 @@ You can update the name, email, bank account and metadata of any Contact.
       "id": "63232c0a-a783-4ae9-ae73-f0974fe1e345"
     },
     "links": {
-      "add_bank_connection": "http://go.sandbox.split.cash/invite_contact/dog-bones-inc/fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb"
+      "add_bank_connection": "http://nz.go.sandbox.zepto.money/invite_contact/dog-bones-inc/fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb"
     }
   }
 }
@@ -3393,7 +3393,7 @@ You can update the name, email, bank account and metadata of any Contact.
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/contacts/receivable \
+  --url https://nz.api.sandbox.zepto.money/contacts/receivable \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -3404,7 +3404,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/contacts/receivable")
+url = URI("https://nz.api.sandbox.zepto.money/contacts/receivable")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -3425,7 +3425,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/contacts/receivable",
   "headers": {
@@ -3460,7 +3460,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 payload = "{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
@@ -3479,7 +3479,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts/receivable")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/contacts/receivable")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -3496,7 +3496,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"name":"Delphine Jestin","email":"delphine@gmail.com","payid_email":"delphine_123@merchant.com.au","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
-$request->setRequestUrl('https://api.sandbox.split.cash/contacts/receivable');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/contacts/receivable');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -3524,7 +3524,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/contacts/receivable"
+	url := "https://nz.api.sandbox.zepto.money/contacts/receivable"
 
 	payload := strings.NewReader("{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
@@ -3650,7 +3650,7 @@ Receive funds from a Contact by allowing them to pay to a personalised PayID or 
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/contacts//receivable/disable \
+  --url https://nz.api.sandbox.zepto.money/contacts//receivable/disable \
   --header 'authorization: Bearer {access-token}'
 ```
 
@@ -3658,7 +3658,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/contacts//receivable/disable")
+url = URI("https://nz.api.sandbox.zepto.money/contacts//receivable/disable")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -3676,7 +3676,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/contacts//receivable/disable",
   "headers": {
@@ -3703,7 +3703,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = { 'authorization': "Bearer {access-token}" }
 
@@ -3716,7 +3716,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts//receivable/disable")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/contacts//receivable/disable")
   .header("authorization", "Bearer {access-token}")
   .asString();
 ```
@@ -3727,7 +3727,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/con
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/contacts//receivable/disable');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/contacts//receivable/disable');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}'
@@ -3750,7 +3750,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/contacts//receivable/disable"
+	url := "https://nz.api.sandbox.zepto.money/contacts//receivable/disable"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -3795,7 +3795,7 @@ This will reject all payments made to the relevant Account number or PayID and r
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/contacts//receivable/activate \
+  --url https://nz.api.sandbox.zepto.money/contacts//receivable/activate \
   --header 'authorization: Bearer {access-token}'
 ```
 
@@ -3803,7 +3803,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/contacts//receivable/activate")
+url = URI("https://nz.api.sandbox.zepto.money/contacts//receivable/activate")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -3821,7 +3821,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/contacts//receivable/activate",
   "headers": {
@@ -3848,7 +3848,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = { 'authorization': "Bearer {access-token}" }
 
@@ -3861,7 +3861,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/contacts//receivable/activate")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/contacts//receivable/activate")
   .header("authorization", "Bearer {access-token}")
   .asString();
 ```
@@ -3872,7 +3872,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/con
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/contacts//receivable/activate');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/contacts//receivable/activate');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}'
@@ -3895,7 +3895,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/contacts//receivable/activate"
+	url := "https://nz.api.sandbox.zepto.money/contacts//receivable/activate"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -3956,7 +3956,7 @@ An Open Agreement can have the following statuses:
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/open_agreements \
+  --url https://nz.api.sandbox.zepto.money/open_agreements \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -3967,7 +3967,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/open_agreements")
+url = URI("https://nz.api.sandbox.zepto.money/open_agreements")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -3988,7 +3988,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/open_agreements",
   "headers": {
@@ -4025,7 +4025,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 payload = "{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
@@ -4044,7 +4044,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/open_agreements")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/open_agreements")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -4061,7 +4061,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"title":"Subscription Plan A","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}},"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
-$request->setRequestUrl('https://api.sandbox.split.cash/open_agreements');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/open_agreements');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -4089,7 +4089,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/open_agreements"
+	url := "https://nz.api.sandbox.zepto.money/open_agreements"
 
 	payload := strings.NewReader("{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
@@ -4174,7 +4174,7 @@ Create an Open Agreement that can be accepted by anyone.
         "max_amount": 1000000
       }
     },
-    "link": "https://go.sandbox.split.cash/open_agreements/aecff76d-13e0-4e17-b7c5-844ae07fa675/agreements/invitation"
+    "link": "https://nz.go.sandbox.zepto.money/open_agreements/aecff76d-13e0-4e17-b7c5-844ae07fa675/agreements/invitation"
   }
 }
 ```
@@ -4193,7 +4193,7 @@ Create an Open Agreement that can be accepted by anyone.
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/open_agreements \
+  --url https://nz.api.sandbox.zepto.money/open_agreements \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -4202,7 +4202,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/open_agreements")
+url = URI("https://nz.api.sandbox.zepto.money/open_agreements")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -4221,7 +4221,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/open_agreements",
   "headers": {
@@ -4249,7 +4249,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -4265,7 +4265,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/open_agreements")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/open_agreements")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -4277,7 +4277,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/open
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/open_agreements');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/open_agreements');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -4301,7 +4301,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/open_agreements"
+	url := "https://nz.api.sandbox.zepto.money/open_agreements"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -4352,7 +4352,7 @@ By default, all Open Agreements will be returned.
           "max_amount": 1000000
         }
       },
-      "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+      "link": "https://nz.go.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
     },
     {
       "ref": "OA.2",
@@ -4369,7 +4369,7 @@ By default, all Open Agreements will be returned.
           "max_amount": null
         }
       },
-      "link": "https://go.sandbox.split.cash/open_agreements/948e3662-154d-42d1-bdc9-a05c251d3981/agreements/invitation"
+      "link": "https://nz.go.sandbox.zepto.money/open_agreements/948e3662-154d-42d1-bdc9-a05c251d3981/agreements/invitation"
     }
   ]
 }
@@ -4389,7 +4389,7 @@ By default, all Open Agreements will be returned.
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/open_agreements/OA.1/activate \
+  --url https://nz.api.sandbox.zepto.money/open_agreements/OA.1/activate \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -4398,7 +4398,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/open_agreements/OA.1/activate")
+url = URI("https://nz.api.sandbox.zepto.money/open_agreements/OA.1/activate")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -4417,7 +4417,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/open_agreements/OA.1/activate",
   "headers": {
@@ -4445,7 +4445,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -4461,7 +4461,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/open_agreements/OA.1/activate")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/open_agreements/OA.1/activate")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -4473,7 +4473,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/ope
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/open_agreements/OA.1/activate');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/open_agreements/OA.1/activate');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -4497,7 +4497,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/open_agreements/OA.1/activate"
+	url := "https://nz.api.sandbox.zepto.money/open_agreements/OA.1/activate"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -4546,7 +4546,7 @@ Allow the Open Agreement to viewed and accepted.
         "max_amount": 1000000
       }
     },
-    "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+    "link": "https://nz.go.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
   }
 }
 ```
@@ -4565,7 +4565,7 @@ Allow the Open Agreement to viewed and accepted.
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/open_agreements/OA.1/close \
+  --url https://nz.api.sandbox.zepto.money/open_agreements/OA.1/close \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -4574,7 +4574,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/open_agreements/OA.1/close")
+url = URI("https://nz.api.sandbox.zepto.money/open_agreements/OA.1/close")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -4593,7 +4593,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/open_agreements/OA.1/close",
   "headers": {
@@ -4621,7 +4621,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -4637,7 +4637,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/open_agreements/OA.1/close")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/open_agreements/OA.1/close")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -4649,7 +4649,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/ope
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/open_agreements/OA.1/close');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/open_agreements/OA.1/close');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -4673,7 +4673,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/open_agreements/OA.1/close"
+	url := "https://nz.api.sandbox.zepto.money/open_agreements/OA.1/close"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -4722,7 +4722,7 @@ Disable the Open Agreement from being viewed or accepted.
         "max_amount": 1000000
       }
     },
-    "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+    "link": "https://nz.go.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
   }
 }
 ```
@@ -4772,7 +4772,7 @@ When using Payment Requests to collect payments from your customer, Zepto will a
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/payment_requests \
+  --url https://nz.api.sandbox.zepto.money/payment_requests \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -4783,7 +4783,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/payment_requests")
+url = URI("https://nz.api.sandbox.zepto.money/payment_requests")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -4804,7 +4804,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/payment_requests",
   "headers": {
@@ -4841,7 +4841,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 payload = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
@@ -4860,7 +4860,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payment_requests")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/payment_requests")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -4877,7 +4877,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56.000Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
-$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payment_requests');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -4905,7 +4905,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/payment_requests"
+	url := "https://nz.api.sandbox.zepto.money/payment_requests"
 
 	payload := strings.NewReader("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
@@ -5004,7 +5004,7 @@ func main() {
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/payment_requests/PR.3 \
+  --url https://nz.api.sandbox.zepto.money/payment_requests/PR.3 \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -5013,7 +5013,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/payment_requests/PR.3")
+url = URI("https://nz.api.sandbox.zepto.money/payment_requests/PR.3")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -5032,7 +5032,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/payment_requests/PR.3",
   "headers": {
@@ -5060,7 +5060,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -5076,7 +5076,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payment_requests/PR.3")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/payment_requests/PR.3")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -5088,7 +5088,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/paym
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/PR.3');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payment_requests/PR.3');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -5112,7 +5112,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/payment_requests/PR.3"
+	url := "https://nz.api.sandbox.zepto.money/payment_requests/PR.3"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -5185,7 +5185,7 @@ func main() {
 
 ```shell
 curl --request DELETE \
-  --url https://api.sandbox.split.cash/payment_requests/PR.3 \
+  --url https://nz.api.sandbox.zepto.money/payment_requests/PR.3 \
   --header 'authorization: Bearer {access-token}'
 ```
 
@@ -5193,7 +5193,7 @@ curl --request DELETE \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/payment_requests/PR.3")
+url = URI("https://nz.api.sandbox.zepto.money/payment_requests/PR.3")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -5211,7 +5211,7 @@ var http = require("https");
 
 var options = {
   "method": "DELETE",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/payment_requests/PR.3",
   "headers": {
@@ -5238,7 +5238,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = { 'authorization': "Bearer {access-token}" }
 
@@ -5251,7 +5251,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/payment_requests/PR.3")
+HttpResponse<String> response = Unirest.delete("https://nz.api.sandbox.zepto.money/payment_requests/PR.3")
   .header("authorization", "Bearer {access-token}")
   .asString();
 ```
@@ -5262,7 +5262,7 @@ HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/p
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/PR.3');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payment_requests/PR.3');
 $request->setRequestMethod('DELETE');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}'
@@ -5285,7 +5285,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/payment_requests/PR.3"
+	url := "https://nz.api.sandbox.zepto.money/payment_requests/PR.3"
 
 	req, _ := http.NewRequest("DELETE", url, nil)
 
@@ -5326,7 +5326,7 @@ A Payment Request can be cancelled as long as the associated transaction's state
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/payment_requests/collections \
+  --url https://nz.api.sandbox.zepto.money/payment_requests/collections \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -5335,7 +5335,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/payment_requests/collections")
+url = URI("https://nz.api.sandbox.zepto.money/payment_requests/collections")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -5354,7 +5354,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/payment_requests/collections",
   "headers": {
@@ -5382,7 +5382,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -5398,7 +5398,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payment_requests/collections")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/payment_requests/collections")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -5410,7 +5410,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/paym
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/collections');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payment_requests/collections');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -5434,7 +5434,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/payment_requests/collections"
+	url := "https://nz.api.sandbox.zepto.money/payment_requests/collections"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -5528,7 +5528,7 @@ Payment Requests where you are the creditor and are collecting funds from your d
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/payment_requests/receivables \
+  --url https://nz.api.sandbox.zepto.money/payment_requests/receivables \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -5537,7 +5537,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/payment_requests/receivables")
+url = URI("https://nz.api.sandbox.zepto.money/payment_requests/receivables")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -5556,7 +5556,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/payment_requests/receivables",
   "headers": {
@@ -5584,7 +5584,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -5600,7 +5600,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payment_requests/receivables")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/payment_requests/receivables")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -5612,7 +5612,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/paym
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/payment_requests/receivables');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payment_requests/receivables');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -5636,7 +5636,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/payment_requests/receivables"
+	url := "https://nz.api.sandbox.zepto.money/payment_requests/receivables"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -5778,7 +5778,7 @@ When Zepto is unable to credit funds to a recipient, we will automatically creat
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/payments \
+  --url https://nz.api.sandbox.zepto.money/payments \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -5789,7 +5789,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/payments")
+url = URI("https://nz.api.sandbox.zepto.money/payments")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -5810,7 +5810,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/payments",
   "headers": {
@@ -5859,7 +5859,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 payload = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":[\"new_payments_platform\"],\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
@@ -5878,7 +5878,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payments")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/payments")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -5895,7 +5895,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"description":"The SuperPackage","matures_at":"2021-06-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","channels":["new_payments_platform"],"payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
-$request->setRequestUrl('https://api.sandbox.split.cash/payments');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payments');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -5923,7 +5923,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/payments"
+	url := "https://nz.api.sandbox.zepto.money/payments"
 
 	payload := strings.NewReader("{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":[\"new_payments_platform\"],\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
@@ -6055,7 +6055,7 @@ To enable custom payment flows, the required payment channel can be selected by 
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/payments \
+  --url https://nz.api.sandbox.zepto.money/payments \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -6064,7 +6064,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/payments")
+url = URI("https://nz.api.sandbox.zepto.money/payments")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -6083,7 +6083,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/payments",
   "headers": {
@@ -6111,7 +6111,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -6127,7 +6127,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payments")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/payments")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -6139,7 +6139,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/paym
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/payments');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payments');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -6163,7 +6163,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/payments"
+	url := "https://nz.api.sandbox.zepto.money/payments"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -6259,7 +6259,7 @@ func main() {
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/payments/PB.1 \
+  --url https://nz.api.sandbox.zepto.money/payments/PB.1 \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -6268,7 +6268,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/payments/PB.1")
+url = URI("https://nz.api.sandbox.zepto.money/payments/PB.1")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -6287,7 +6287,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/payments/PB.1",
   "headers": {
@@ -6315,7 +6315,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -6331,7 +6331,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/payments/PB.1")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/payments/PB.1")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -6343,7 +6343,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/paym
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/payments/PB.1');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payments/PB.1');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -6367,7 +6367,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/payments/PB.1"
+	url := "https://nz.api.sandbox.zepto.money/payments/PB.1"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -6462,7 +6462,7 @@ This endpoint gives you some control over a transaction:
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/payouts/C.2/retry \
+  --url https://nz.api.sandbox.zepto.money/payouts/C.2/retry \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -6471,7 +6471,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/payouts/C.2/retry")
+url = URI("https://nz.api.sandbox.zepto.money/payouts/C.2/retry")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -6490,7 +6490,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/payouts/C.2/retry",
   "headers": {
@@ -6518,7 +6518,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -6534,7 +6534,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/payouts/C.2/retry")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/payouts/C.2/retry")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -6546,7 +6546,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/pay
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/payouts/C.2/retry');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payouts/C.2/retry');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -6570,7 +6570,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/payouts/C.2/retry"
+	url := "https://nz.api.sandbox.zepto.money/payouts/C.2/retry"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -6646,7 +6646,7 @@ This endpoint allows you to retry the Payment Request without having to create a
 
 ```shell
 curl --request DELETE \
-  --url https://api.sandbox.split.cash/payouts/D.48 \
+  --url https://nz.api.sandbox.zepto.money/payouts/D.48 \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
   --data false
@@ -6656,7 +6656,7 @@ curl --request DELETE \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/payouts/D.48")
+url = URI("https://nz.api.sandbox.zepto.money/payouts/D.48")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -6676,7 +6676,7 @@ var http = require("https");
 
 var options = {
   "method": "DELETE",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/payouts/D.48",
   "headers": {
@@ -6704,7 +6704,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 payload = "false"
 
@@ -6722,7 +6722,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/payouts/D.48")
+HttpResponse<String> response = Unirest.delete("https://nz.api.sandbox.zepto.money/payouts/D.48")
   .header("content-type", "application/json")
   .header("authorization", "Bearer {access-token}")
   .body("false")
@@ -6738,7 +6738,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('false');
 
-$request->setRequestUrl('https://api.sandbox.split.cash/payouts/D.48');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payouts/D.48');
 $request->setRequestMethod('DELETE');
 $request->setBody($body);
 
@@ -6765,7 +6765,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/payouts/D.48"
+	url := "https://nz.api.sandbox.zepto.money/payouts/D.48"
 
 	payload := strings.NewReader("false")
 
@@ -6824,7 +6824,7 @@ This allows you to return any funds that were previously collected or received i
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/credits/string/refunds \
+  --url https://nz.api.sandbox.zepto.money/credits/string/refunds \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -6835,7 +6835,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/credits/string/refunds")
+url = URI("https://nz.api.sandbox.zepto.money/credits/string/refunds")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -6856,7 +6856,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/credits/string/refunds",
   "headers": {
@@ -6892,7 +6892,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 payload = "{\"amount\":500,\"channels\":[\"direct_entry\"],\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
@@ -6911,7 +6911,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/credits/string/refunds")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/credits/string/refunds")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -6928,7 +6928,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"amount":500,"channels":["direct_entry"],"reason":"Because reason","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
-$request->setRequestUrl('https://api.sandbox.split.cash/credits/string/refunds');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/credits/string/refunds');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -6956,7 +6956,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/credits/string/refunds"
+	url := "https://nz.api.sandbox.zepto.money/credits/string/refunds"
 
 	payload := strings.NewReader("{\"amount\":500,\"channels\":[\"direct_entry\"],\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
@@ -7058,7 +7058,7 @@ Certain rules apply to the issuance of a refund:
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/refunds/outgoing \
+  --url https://nz.api.sandbox.zepto.money/refunds/outgoing \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -7067,7 +7067,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/refunds/outgoing")
+url = URI("https://nz.api.sandbox.zepto.money/refunds/outgoing")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -7086,7 +7086,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/refunds/outgoing",
   "headers": {
@@ -7114,7 +7114,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -7130,7 +7130,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/refunds/outgoing")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/refunds/outgoing")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -7142,7 +7142,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/refu
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/refunds/outgoing');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/refunds/outgoing');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -7166,7 +7166,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/refunds/outgoing"
+	url := "https://nz.api.sandbox.zepto.money/refunds/outgoing"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -7231,7 +7231,7 @@ func main() {
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/refunds/PRF.75f \
+  --url https://nz.api.sandbox.zepto.money/refunds/PRF.75f \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -7240,7 +7240,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/refunds/PRF.75f")
+url = URI("https://nz.api.sandbox.zepto.money/refunds/PRF.75f")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -7259,7 +7259,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/refunds/PRF.75f",
   "headers": {
@@ -7287,7 +7287,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -7303,7 +7303,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/refunds/PRF.75f")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/refunds/PRF.75f")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -7315,7 +7315,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/refu
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/refunds/PRF.75f');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/refunds/PRF.75f');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -7339,7 +7339,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/refunds/PRF.75f"
+	url := "https://nz.api.sandbox.zepto.money/refunds/PRF.75f"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -7407,7 +7407,7 @@ Special testing endpoints that only exist in the sandbox environment.
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/simulate/incoming_npp_payid_payment \
+  --url https://nz.api.sandbox.zepto.money/simulate/incoming_npp_payid_payment \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
   --data '{"payid_email":"incoming@split.cash","amount":10000}'
@@ -7417,7 +7417,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/simulate/incoming_npp_payid_payment")
+url = URI("https://nz.api.sandbox.zepto.money/simulate/incoming_npp_payid_payment")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -7437,7 +7437,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/simulate/incoming_npp_payid_payment",
   "headers": {
@@ -7466,7 +7466,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 payload = "{\"payid_email\":\"incoming@split.cash\",\"amount\":10000}"
 
@@ -7484,7 +7484,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/simulate/incoming_npp_payid_payment")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/simulate/incoming_npp_payid_payment")
   .header("content-type", "application/json")
   .header("authorization", "Bearer {access-token}")
   .body("{\"payid_email\":\"incoming@split.cash\",\"amount\":10000}")
@@ -7500,7 +7500,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"payid_email":"incoming@split.cash","amount":10000}');
 
-$request->setRequestUrl('https://api.sandbox.split.cash/simulate/incoming_npp_payid_payment');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/simulate/incoming_npp_payid_payment');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -7527,7 +7527,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/simulate/incoming_npp_payid_payment"
+	url := "https://nz.api.sandbox.zepto.money/simulate/incoming_npp_payid_payment"
 
 	payload := strings.NewReader("{\"payid_email\":\"incoming@split.cash\",\"amount\":10000}")
 
@@ -7589,7 +7589,7 @@ Simulate receiving a real-time PayID payment from one of your Receivable Contact
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/simulate/incoming_npp_bban_payment \
+  --url https://nz.api.sandbox.zepto.money/simulate/incoming_npp_bban_payment \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
   --data '{"to_bsb":"802919","to_account_number":"88888888","amount":10000}'
@@ -7599,7 +7599,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/simulate/incoming_npp_bban_payment")
+url = URI("https://nz.api.sandbox.zepto.money/simulate/incoming_npp_bban_payment")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -7619,7 +7619,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/simulate/incoming_npp_bban_payment",
   "headers": {
@@ -7648,7 +7648,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 payload = "{\"to_bsb\":\"802919\",\"to_account_number\":\"88888888\",\"amount\":10000}"
 
@@ -7666,7 +7666,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/simulate/incoming_npp_bban_payment")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/simulate/incoming_npp_bban_payment")
   .header("content-type", "application/json")
   .header("authorization", "Bearer {access-token}")
   .body("{\"to_bsb\":\"802919\",\"to_account_number\":\"88888888\",\"amount\":10000}")
@@ -7682,7 +7682,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"to_bsb":"802919","to_account_number":"88888888","amount":10000}');
 
-$request->setRequestUrl('https://api.sandbox.split.cash/simulate/incoming_npp_bban_payment');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/simulate/incoming_npp_bban_payment');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -7709,7 +7709,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/simulate/incoming_npp_bban_payment"
+	url := "https://nz.api.sandbox.zepto.money/simulate/incoming_npp_bban_payment"
 
 	payload := strings.NewReader("{\"to_bsb\":\"802919\",\"to_account_number\":\"88888888\",\"amount\":10000}")
 
@@ -7773,7 +7773,7 @@ Simulate receiving a real-time payment to either a Receivable Contact or one of 
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/simulate/incoming_de_payment \
+  --url https://nz.api.sandbox.zepto.money/simulate/incoming_de_payment \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
   --data '{"to_bsb":"802919","to_account_number":"88888888","amount":10000}'
@@ -7783,7 +7783,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/simulate/incoming_de_payment")
+url = URI("https://nz.api.sandbox.zepto.money/simulate/incoming_de_payment")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -7803,7 +7803,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/simulate/incoming_de_payment",
   "headers": {
@@ -7832,7 +7832,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 payload = "{\"to_bsb\":\"802919\",\"to_account_number\":\"88888888\",\"amount\":10000}"
 
@@ -7850,7 +7850,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/simulate/incoming_de_payment")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/simulate/incoming_de_payment")
   .header("content-type", "application/json")
   .header("authorization", "Bearer {access-token}")
   .body("{\"to_bsb\":\"802919\",\"to_account_number\":\"88888888\",\"amount\":10000}")
@@ -7866,7 +7866,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"to_bsb":"802919","to_account_number":"88888888","amount":10000}');
 
-$request->setRequestUrl('https://api.sandbox.split.cash/simulate/incoming_de_payment');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/simulate/incoming_de_payment');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -7893,7 +7893,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/simulate/incoming_de_payment"
+	url := "https://nz.api.sandbox.zepto.money/simulate/incoming_de_payment"
 
 	payload := strings.NewReader("{\"to_bsb\":\"802919\",\"to_account_number\":\"88888888\",\"amount\":10000}")
 
@@ -8118,7 +8118,7 @@ The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompani
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/transactions \
+  --url https://nz.api.sandbox.zepto.money/transactions \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -8127,7 +8127,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/transactions")
+url = URI("https://nz.api.sandbox.zepto.money/transactions")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -8146,7 +8146,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/transactions",
   "headers": {
@@ -8174,7 +8174,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -8190,7 +8190,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/transactions")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/transactions")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -8202,7 +8202,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/tran
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/transactions');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/transactions');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -8226,7 +8226,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/transactions"
+	url := "https://nz.api.sandbox.zepto.money/transactions"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -8410,7 +8410,7 @@ This endpoint lets you Transfer funds between any bank & float accounts register
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/transfers \
+  --url https://nz.api.sandbox.zepto.money/transfers \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -8421,7 +8421,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/transfers")
+url = URI("https://nz.api.sandbox.zepto.money/transfers")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -8442,7 +8442,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/transfers",
   "headers": {
@@ -8478,7 +8478,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 payload = "{\"from_bank_account_id\":\"a79423b2-3827-4cf5-9eda-dc02a298d005\",\"to_bank_account_id\":\"0921a719-c79d-4ffb-91b6-1b30ab77d14d\",\"amount\":100000,\"description\":\"Float account balance adjustment\",\"matures_at\":\"2021-06-06T00:00:00Z\"}"
 
@@ -8497,7 +8497,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/transfers")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/transfers")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -8514,7 +8514,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"from_bank_account_id":"a79423b2-3827-4cf5-9eda-dc02a298d005","to_bank_account_id":"0921a719-c79d-4ffb-91b6-1b30ab77d14d","amount":100000,"description":"Float account balance adjustment","matures_at":"2021-06-06T00:00:00Z"}');
 
-$request->setRequestUrl('https://api.sandbox.split.cash/transfers');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/transfers');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -8542,7 +8542,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/transfers"
+	url := "https://nz.api.sandbox.zepto.money/transfers"
 
 	payload := strings.NewReader("{\"from_bank_account_id\":\"a79423b2-3827-4cf5-9eda-dc02a298d005\",\"to_bank_account_id\":\"0921a719-c79d-4ffb-91b6-1b30ab77d14d\",\"amount\":100000,\"description\":\"Float account balance adjustment\",\"matures_at\":\"2021-06-06T00:00:00Z\"}")
 
@@ -8621,7 +8621,7 @@ Use this endpoint when you want to create a Transfer between any 2 of your float
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/transfers \
+  --url https://nz.api.sandbox.zepto.money/transfers \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -8630,7 +8630,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/transfers")
+url = URI("https://nz.api.sandbox.zepto.money/transfers")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -8649,7 +8649,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/transfers",
   "headers": {
@@ -8677,7 +8677,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -8693,7 +8693,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/transfers")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/transfers")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -8705,7 +8705,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/tran
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/transfers');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/transfers');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -8729,7 +8729,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/transfers"
+	url := "https://nz.api.sandbox.zepto.money/transfers"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -8807,7 +8807,7 @@ func main() {
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/transfers/T.11ub \
+  --url https://nz.api.sandbox.zepto.money/transfers/T.11ub \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -8816,7 +8816,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/transfers/T.11ub")
+url = URI("https://nz.api.sandbox.zepto.money/transfers/T.11ub")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -8835,7 +8835,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/transfers/T.11ub",
   "headers": {
@@ -8863,7 +8863,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -8879,7 +8879,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/transfers/T.11ub")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/transfers/T.11ub")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -8891,7 +8891,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/tran
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/transfers/T.11ub');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/transfers/T.11ub');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -8915,7 +8915,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/transfers/T.11ub"
+	url := "https://nz.api.sandbox.zepto.money/transfers/T.11ub"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -8982,7 +8982,7 @@ Please refer to the [Unassigned Agreement](http://help.split.cash/agreements/una
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/unassigned_agreements \
+  --url https://nz.api.sandbox.zepto.money/unassigned_agreements \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
@@ -8993,7 +8993,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/unassigned_agreements")
+url = URI("https://nz.api.sandbox.zepto.money/unassigned_agreements")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -9014,7 +9014,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/unassigned_agreements",
   "headers": {
@@ -9052,7 +9052,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 payload = "{\"expiry_in_seconds\":60,\"single_use\":false,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
@@ -9071,7 +9071,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/unassigned_agreements")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/unassigned_agreements")
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
@@ -9088,7 +9088,7 @@ $request = new http\Client\Request;
 $body = new http\Message\Body;
 $body->append('{"expiry_in_seconds":60,"single_use":false,"terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}},"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
-$request->setRequestUrl('https://api.sandbox.split.cash/unassigned_agreements');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/unassigned_agreements');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
@@ -9116,7 +9116,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/unassigned_agreements"
+	url := "https://nz.api.sandbox.zepto.money/unassigned_agreements"
 
 	payload := strings.NewReader("{\"expiry_in_seconds\":60,\"single_use\":false,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
@@ -9205,7 +9205,7 @@ Create an Unassigned Agreement.
       }
     },
     "assignment_expires_at": "2017-03-20T00:54:27Z",
-    "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation",
+    "link": "https://nz.go.sandbox.zepto.money/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation",
     "metadata": {
       "custom_key": "Custom string",
       "another_custom_key": "Maybe a URL"
@@ -9228,7 +9228,7 @@ Create an Unassigned Agreement.
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/unassigned_agreements \
+  --url https://nz.api.sandbox.zepto.money/unassigned_agreements \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -9237,7 +9237,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/unassigned_agreements")
+url = URI("https://nz.api.sandbox.zepto.money/unassigned_agreements")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -9256,7 +9256,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/unassigned_agreements",
   "headers": {
@@ -9284,7 +9284,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -9300,7 +9300,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/unassigned_agreements")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/unassigned_agreements")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -9312,7 +9312,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/unas
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/unassigned_agreements');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/unassigned_agreements');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -9336,7 +9336,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/unassigned_agreements"
+	url := "https://nz.api.sandbox.zepto.money/unassigned_agreements"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -9389,7 +9389,7 @@ Will return all Unassigned Agreements that have not yet been accepted.
         }
       },
       "assignment_expires_at": "2017-03-20T00:54:27Z",
-      "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+      "link": "https://nz.go.sandbox.zepto.money/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
     },
     {
       "ref": "A.7ea",
@@ -9408,7 +9408,7 @@ Will return all Unassigned Agreements that have not yet been accepted.
         }
       },
       "assignment_expires_at": "2017-03-21T00:54:27Z",
-      "link": "https://go.sandbox.split.cash/unassigned_agreements/4e2728cc-b4ba-42c2-a6c3-26a7758de58d/invitation"
+      "link": "https://nz.go.sandbox.zepto.money/unassigned_agreements/4e2728cc-b4ba-42c2-a6c3-26a7758de58d/invitation"
     }
   ]
 }
@@ -9428,7 +9428,7 @@ Will return all Unassigned Agreements that have not yet been accepted.
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/unassigned_agreements/A.4k \
+  --url https://nz.api.sandbox.zepto.money/unassigned_agreements/A.4k \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -9437,7 +9437,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/unassigned_agreements/A.4k")
+url = URI("https://nz.api.sandbox.zepto.money/unassigned_agreements/A.4k")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -9456,7 +9456,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/unassigned_agreements/A.4k",
   "headers": {
@@ -9484,7 +9484,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -9500,7 +9500,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/unassigned_agreements/A.4k")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/unassigned_agreements/A.4k")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -9512,7 +9512,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/unas
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/unassigned_agreements/A.4k');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/unassigned_agreements/A.4k');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -9536,7 +9536,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/unassigned_agreements/A.4k"
+	url := "https://nz.api.sandbox.zepto.money/unassigned_agreements/A.4k"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -9587,7 +9587,7 @@ Get a single Unassigned Agreement by its reference.
       }
     },
     "assignment_expires_at": "2017-03-20T00:54:27Z",
-    "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+    "link": "https://nz.go.sandbox.zepto.money/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
   }
 }
 ```
@@ -9606,7 +9606,7 @@ Get a single Unassigned Agreement by its reference.
 
 ```shell
 curl --request DELETE \
-  --url https://api.sandbox.split.cash/unassigned_agreements/A.2 \
+  --url https://nz.api.sandbox.zepto.money/unassigned_agreements/A.2 \
   --header 'authorization: Bearer {access-token}'
 ```
 
@@ -9614,7 +9614,7 @@ curl --request DELETE \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/unassigned_agreements/A.2")
+url = URI("https://nz.api.sandbox.zepto.money/unassigned_agreements/A.2")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -9632,7 +9632,7 @@ var http = require("https");
 
 var options = {
   "method": "DELETE",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/unassigned_agreements/A.2",
   "headers": {
@@ -9659,7 +9659,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = { 'authorization': "Bearer {access-token}" }
 
@@ -9672,7 +9672,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/unassigned_agreements/A.2")
+HttpResponse<String> response = Unirest.delete("https://nz.api.sandbox.zepto.money/unassigned_agreements/A.2")
   .header("authorization", "Bearer {access-token}")
   .asString();
 ```
@@ -9683,7 +9683,7 @@ HttpResponse<String> response = Unirest.delete("https://api.sandbox.split.cash/u
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/unassigned_agreements/A.2');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/unassigned_agreements/A.2');
 $request->setRequestMethod('DELETE');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}'
@@ -9706,7 +9706,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/unassigned_agreements/A.2"
+	url := "https://nz.api.sandbox.zepto.money/unassigned_agreements/A.2"
 
 	req, _ := http.NewRequest("DELETE", url, nil)
 
@@ -9751,7 +9751,7 @@ All about the currently authenticated user.
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/user \
+  --url https://nz.api.sandbox.zepto.money/user \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -9760,7 +9760,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/user")
+url = URI("https://nz.api.sandbox.zepto.money/user")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -9779,7 +9779,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/user",
   "headers": {
@@ -9807,7 +9807,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -9823,7 +9823,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/user")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/user")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -9835,7 +9835,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/user
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/user');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/user');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -9859,7 +9859,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/user"
+	url := "https://nz.api.sandbox.zepto.money/user"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -9920,7 +9920,7 @@ func main() {
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/webhooks \
+  --url https://nz.api.sandbox.zepto.money/webhooks \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -9929,7 +9929,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/webhooks")
+url = URI("https://nz.api.sandbox.zepto.money/webhooks")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -9948,7 +9948,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/webhooks",
   "headers": {
@@ -9976,7 +9976,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -9992,7 +9992,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/webhooks")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/webhooks")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -10004,7 +10004,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/webh
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/webhooks');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/webhooks');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -10028,7 +10028,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/webhooks"
+	url := "https://nz.api.sandbox.zepto.money/webhooks"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -10085,7 +10085,7 @@ List all your application's webhook configurations.
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries \
+  --url https://nz.api.sandbox.zepto.money/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -10094,7 +10094,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries")
+url = URI("https://nz.api.sandbox.zepto.money/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -10113,7 +10113,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries",
   "headers": {
@@ -10141,7 +10141,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -10157,7 +10157,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -10169,7 +10169,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/webh
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -10193,7 +10193,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries"
+	url := "https://nz.api.sandbox.zepto.money/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -10294,7 +10294,7 @@ NOTE: Webhook deliveries are stored for 30 days.
 
 ```shell
 curl --request GET \
-  --url https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f \
+  --url https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -10303,7 +10303,7 @@ curl --request GET \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
+url = URI("https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -10322,7 +10322,7 @@ var http = require("https");
 
 var options = {
   "method": "GET",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f",
   "headers": {
@@ -10350,7 +10350,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -10366,7 +10366,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -10378,7 +10378,7 @@ HttpResponse<String> response = Unirest.get("https://api.sandbox.split.cash/webh
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f');
 $request->setRequestMethod('GET');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -10402,7 +10402,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f"
+	url := "https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -10498,7 +10498,7 @@ Get a single webhook delivery by ID.
 
 ```shell
 curl --request POST \
-  --url https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver \
+  --url https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}'
 ```
@@ -10507,7 +10507,7 @@ curl --request POST \
 require 'uri'
 require 'net/http'
 
-url = URI("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver")
+url = URI("https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -10526,7 +10526,7 @@ var http = require("https");
 
 var options = {
   "method": "POST",
-  "hostname": "api.sandbox.split.cash",
+  "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver",
   "headers": {
@@ -10554,7 +10554,7 @@ req.end();
 ```python
 import http.client
 
-conn = http.client.HTTPSConnection("api.sandbox.split.cash")
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
     'accept': "application/json",
@@ -10570,7 +10570,7 @@ print(data.decode("utf-8"))
 ```
 
 ```java
-HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver")
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
   .asString();
@@ -10582,7 +10582,7 @@ HttpResponse<String> response = Unirest.post("https://api.sandbox.split.cash/web
 $client = new http\Client;
 $request = new http\Client\Request;
 
-$request->setRequestUrl('https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver');
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver');
 $request->setRequestMethod('POST');
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
@@ -10606,7 +10606,7 @@ import (
 
 func main() {
 
-	url := "https://api.sandbox.split.cash/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver"
+	url := "https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver"
 
 	req, _ := http.NewRequest("POST", url, nil)
 
@@ -10852,7 +10852,7 @@ Use this endpoint to resend a failed webhook delivery.
         "email": "randy@windler.net"
       },
       "links": {
-        "update_bank_connection": "http://go.split.cash/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4"
+        "update_bank_connection": "http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4"
       }
     },
     {
@@ -10872,7 +10872,7 @@ Use this endpoint to resend a failed webhook delivery.
         "email": "travis@hermanntorp.net"
       },
       "links": {
-        "update_bank_connection": "http://go.split.cash/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0"
+        "update_bank_connection": "http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0"
       }
     }
   ]
@@ -11008,7 +11008,7 @@ Use this endpoint to resend a failed webhook delivery.
         "max_amount": 1000000
       }
     },
-    "link": "https://go.sandbox.split.cash/open_agreements/aecff76d-13e0-4e17-b7c5-844ae07fa675/agreements/invitation"
+    "link": "https://nz.go.sandbox.zepto.money/open_agreements/aecff76d-13e0-4e17-b7c5-844ae07fa675/agreements/invitation"
   }
 }
 ```
@@ -11043,7 +11043,7 @@ Use this endpoint to resend a failed webhook delivery.
           "max_amount": 1000000
         }
       },
-      "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+      "link": "https://nz.go.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
     },
     {
       "ref": "OA.2",
@@ -11060,7 +11060,7 @@ Use this endpoint to resend a failed webhook delivery.
           "max_amount": null
         }
       },
-      "link": "https://go.sandbox.split.cash/open_agreements/948e3662-154d-42d1-bdc9-a05c251d3981/agreements/invitation"
+      "link": "https://nz.go.sandbox.zepto.money/open_agreements/948e3662-154d-42d1-bdc9-a05c251d3981/agreements/invitation"
     }
   ]
 }
@@ -11095,7 +11095,7 @@ Use this endpoint to resend a failed webhook delivery.
         "max_amount": 1000000
       }
     },
-    "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+    "link": "https://nz.go.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
   }
 }
 ```
@@ -11129,7 +11129,7 @@ Use this endpoint to resend a failed webhook delivery.
         "max_amount": 1000000
       }
     },
-    "link": "https://go.sandbox.split.cash/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
+    "link": "https://nz.go.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation"
   }
 }
 ```
@@ -11323,7 +11323,7 @@ Use this endpoint to resend a failed webhook delivery.
         }
       },
       "links": {
-        "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+        "add_bank_connection": "https://nz.go.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     },
     {
@@ -11345,7 +11345,7 @@ Use this endpoint to resend a failed webhook delivery.
         }
       },
       "links": {
-        "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+        "add_bank_connection": "https://nz.go.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     }
   ]
@@ -11418,7 +11418,7 @@ Use this endpoint to resend a failed webhook delivery.
       }
     },
     "links": {
-      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+      "add_bank_connection": "https://nz.go.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -11455,7 +11455,7 @@ Use this endpoint to resend a failed webhook delivery.
       "email": "travis@hermanntorp.net"
     },
     "links": {
-      "update_bank_connection": "https://go.sandbox.split.cash/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
+      "update_bank_connection": "https://nz.go.sandbox.zepto.money/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
     }
   }
 }
@@ -11505,7 +11505,7 @@ Use this endpoint to resend a failed webhook delivery.
       "id": null
     },
     "links": {
-      "add_bank_connection": "https://go.sandbox.split.cash/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
+      "add_bank_connection": "https://nz.go.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     },
     "payid_details": {
       "alias_value": "otp@pay.travel.com.au",
@@ -11633,7 +11633,7 @@ Use this endpoint to resend a failed webhook delivery.
       "id": "63232c0a-a783-4ae9-ae73-f0974fe1e345"
     },
     "links": {
-      "add_bank_connection": "http://go.sandbox.split.cash/invite_contact/dog-bones-inc/fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb"
+      "add_bank_connection": "http://nz.go.sandbox.zepto.money/invite_contact/dog-bones-inc/fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb"
     }
   }
 }
@@ -12594,7 +12594,7 @@ Use this endpoint to resend a failed webhook delivery.
       }
     },
     "assignment_expires_at": "2017-03-20T00:54:27Z",
-    "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation",
+    "link": "https://nz.go.sandbox.zepto.money/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation",
     "metadata": {
       "custom_key": "Custom string",
       "another_custom_key": "Maybe a URL"
@@ -12635,7 +12635,7 @@ Use this endpoint to resend a failed webhook delivery.
         }
       },
       "assignment_expires_at": "2017-03-20T00:54:27Z",
-      "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+      "link": "https://nz.go.sandbox.zepto.money/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
     },
     {
       "ref": "A.7ea",
@@ -12654,7 +12654,7 @@ Use this endpoint to resend a failed webhook delivery.
         }
       },
       "assignment_expires_at": "2017-03-21T00:54:27Z",
-      "link": "https://go.sandbox.split.cash/unassigned_agreements/4e2728cc-b4ba-42c2-a6c3-26a7758de58d/invitation"
+      "link": "https://nz.go.sandbox.zepto.money/unassigned_agreements/4e2728cc-b4ba-42c2-a6c3-26a7758de58d/invitation"
     }
   ]
 }
@@ -12691,7 +12691,7 @@ Use this endpoint to resend a failed webhook delivery.
       }
     },
     "assignment_expires_at": "2017-03-20T00:54:27Z",
-    "link": "https://go.sandbox.split.cash/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
+    "link": "https://nz.go.sandbox.zepto.money/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"
   }
 }
 ```
