@@ -748,7 +748,7 @@ Zepto provides a `Split-Request-ID` header in the form of a `UUID` which uniquel
 > Example header
 
 ```
-Split-Signature: 1514772000.93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635
+Split-Signature: 1514772000.93eee90206280b25e82b38001e23961ASB4c007f4d925ba71ecc2d9804978635
 ```
 
 Zepto signs the webhook events it sends to your endpoints. We do so by including a signature in each event’s `Split-Signature` header. This allows you to validate that the events were indeed sent by Zepto.
@@ -1932,8 +1932,8 @@ By default, all Bank Connections will be returned. You can apply filters to your
       "removed_at": null,
       "failure_reason": null,
       "institution": {
-        "short_name": "CBA",
-        "full_name": "Commonwealth Bank of Australia"
+        "short_name": "ASB",
+        "full_name": "Auckland Savings Bank"
       },
       "contact": {
         "id": "626e15b1-aa4a-496e-b5d6-3f8c1a6d2189",
@@ -1952,8 +1952,8 @@ By default, all Bank Connections will be returned. You can apply filters to your
       "removed_at": null,
       "failure_reason": null,
       "institution": {
-        "short_name": "CBA",
-        "full_name": "Commonwealth Bank of Australia"
+        "short_name": "ASB",
+        "full_name": "Auckland Savings Bank"
       },
       "contact": {
         "id": "72e37667-6364-440f-b1bd-56df5654e258",
@@ -2132,8 +2132,8 @@ Get a single Bank Connection by its ID
     "removed_at": null,
     "failure_reason": null,
     "institution": {
-      "short_name": "CBA",
-      "full_name": "Commonwealth Bank of Australia"
+      "short_name": "ASB",
+      "full_name": "Auckland Savings Bank"
     },
     "contact": {
       "id": "72e37667-6364-440f-b1bd-56df5654e258",
@@ -10843,8 +10843,8 @@ Use this endpoint to resend a failed webhook delivery.
       "removed_at": null,
       "failure_reason": null,
       "institution": {
-        "short_name": "CBA",
-        "full_name": "Commonwealth Bank of Australia"
+        "short_name": "ASB",
+        "full_name": "Auckland Savings Bank"
       },
       "contact": {
         "id": "626e15b1-aa4a-496e-b5d6-3f8c1a6d2189",
@@ -10863,8 +10863,8 @@ Use this endpoint to resend a failed webhook delivery.
       "removed_at": null,
       "failure_reason": null,
       "institution": {
-        "short_name": "CBA",
-        "full_name": "Commonwealth Bank of Australia"
+        "short_name": "ASB",
+        "full_name": "Auckland Savings Bank"
       },
       "contact": {
         "id": "72e37667-6364-440f-b1bd-56df5654e258",
@@ -11446,8 +11446,8 @@ Use this endpoint to resend a failed webhook delivery.
     "removed_at": null,
     "failure_reason": null,
     "institution": {
-      "short_name": "CBA",
-      "full_name": "Commonwealth Bank of Australia"
+      "short_name": "ASB",
+      "full_name": "Auckland Savings Bank"
     },
     "contact": {
       "id": "72e37667-6364-440f-b1bd-56df5654e258",

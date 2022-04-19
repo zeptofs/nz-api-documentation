@@ -1192,7 +1192,7 @@ info:
     ```
 
     Split-Signature:
-    1514772000.93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635
+    1514772000.93eee90206280b25e82b38001e23961ASB4c007f4d925ba71ecc2d9804978635
 
     ```
 
@@ -3940,8 +3940,8 @@ components:
             removed_at:
             failure_reason:
             institution:
-              short_name: CBA
-              full_name: Commonwealth Bank of Australia
+              short_name: ASB
+              full_name: Auckland Savings Bank
             contact:
               id: 626e15b1-aa4a-496e-b5d6-3f8c1a6d2189
               name: George Morissette
@@ -3955,8 +3955,8 @@ components:
             removed_at:
             failure_reason:
             institution:
-              short_name: CBA
-              full_name: Commonwealth Bank of Australia
+              short_name: ASB
+              full_name: Auckland Savings Bank
             contact:
               id: 72e37667-6364-440f-b1bd-56df5654e258
               name: Joel Boyle
@@ -4460,8 +4460,8 @@ components:
           removed_at:
           failure_reason:
           institution:
-            short_name: CBA
-            full_name: Commonwealth Bank of Australia
+            short_name: ASB
+            full_name: Auckland Savings Bank
           contact:
             id: 72e37667-6364-440f-b1bd-56df5654e258
             name: Joel Boyle
