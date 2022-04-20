@@ -9897,7 +9897,6 @@ func main() {
       "phone": "0418495033",
       "street_address": "98 Acme Avenue",
       "suburb": "Lead",
-      "state": "NSW",
       "postcode": "2478"
     }
   }
@@ -12722,7 +12721,6 @@ Use this endpoint to resend a failed webhook delivery.
       "phone": "0418495033",
       "street_address": "98 Acme Avenue",
       "suburb": "Lead",
-      "state": "NSW",
       "postcode": "2478"
     }
   }
