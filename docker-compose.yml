@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  apidocsnz: &apidocsnz
+    image: apidocsnz:1.0.0
+    volumes:
+      - .:/srv/slate
+
+  web:
+    <<: *apidocsnz
+    build: .
+    ports:
+      - "4567:4567"
+    command: bundle exec middleman server
+
+  guard:
+    <<: *apidocsnz
+    command: bundle exec guard --no-bundler-warning --no-interactions

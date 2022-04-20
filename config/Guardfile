@@ -9,6 +9,6 @@ end
 
 guard :shell, all_on_start: true do
   watch(%r{split.yaml}) do
-    `yarn run widdershins -e options.yml ./source/openapi3/split.yaml -o ./source/index.html.md`
+    `npx widdershins -e options.yml ./source/openapi3/split.yaml -o ./source/index.html.md`
   end
 end
