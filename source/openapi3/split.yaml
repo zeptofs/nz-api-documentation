@@ -1783,8 +1783,6 @@ tags:
           1. Given there is an Agreement in place and the Payment Request is within the terms of the Agreement, then it will be automatically approved; **or**
           1. Given the Payment Request is **not** within the terms of the Agreement, then it will not be created; **or**
           1. There is no Agreement in place, then it will not be created.
-      1. **Your customer sends funds to you as a [Receivable Contact](/#add-a-receivable-contact):**
-          1. A *receivable* Payment Request will be automatically created and approved to identify the movement of funds from your customer to your chosen Zepto float account.
 
 
       ##Lifecycle
@@ -2370,108 +2368,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AddAnAnyoneContactResponse'
-  /contacts/receivable:
-    post:
-      tags:
-        - Contacts (Receivable)
-      summary: Add a Receivable Contact
-      description: |
-        Receive funds from a Contact by allowing them to pay to a personalised PayID or account number. Perfect for reconciling incoming funds to a customer, receiving funds instantly, eliminating human error & improving your customer's experience.
-
-
-        <aside class="notice">
-          To enable this feature, please contact our support team with the following information:
-            <li>Your full legal business name</li>
-            <li>A legally owned domain name: for your PayID email addresses</li>
-            <li><strong>alias_name</strong>: the business name that will be displayed to your customers upon PayID resolution. We suggest using a shortened name appropriate for mobile displays</li>
-        </aside>
-        <aside class="notice">
-          There are two strategies supported for PayID assignment when creating this type of Contact:
-          <li><strong>On-demand PayID</strong>: provide a <code>payid_email</code> and we'll create a contact and register a PayID with the given email address. The PayID registration process happens when the request is received. The initial response for <code>payid_details.state</code> will always be <code>pending</code>. It will transition to <code>active</code> when the PayID registration process is complete. This can take up to a few seconds. You can use webhooks to be informed of this state change.</li>
-          <li><strong>Pooled PayID</strong>: provide your <code>payid_email_domain</code> and we'll create a contact and assign them a PayID from your pool. Pooled PayIDs are pre-registered. The PayID email value is generated using a random value and the email domain from your PayID pool configuration. Providing both <code>payid_email</code> and <code>payid_email_domain</code> will ignore your pool and use the "On-demand PayID" strategy instead.</li>
-        </aside>
-        <aside class="notice">
-          While unlikely, it is possible that we will be unable to register the given PayID. In this case <code>payid_details.state</code> will transition to <code>failed</code>.
-
-          You can simulate this path in sandbox by adding <code>+failure</code> to your <code>payid_email</code> e.g <code>test+failure@split.cash</code>
-        </aside>
-        <aside class="notice">
-          You can test receiving payments to a Receivable Contact in our sandbox environment using the <a href="#simulate-incoming-payid-payment">PayID simulation endpoint</a>.
-        </aside>
-      operationId: AddAReceivableContact
-      parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AddAReceivableContactRequest'
-        required: true
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AddAReceivableContactResponse'
-        '404':
-          description: Not Found
-  '/contacts/{contact_id}/receivable/disable':
-    post:
-      tags:
-        - Contacts (Receivable)
-      summary: Disable a Receivable Contact
-      description: |
-        This endpoint should be used to Disable a Receivable Contact.
-
-        This will reject all payments made to the relevant Account number or PayID and return them to your customer. Payments made via DE and NPP will be rejected.
-      operationId: DisableAReceivableContact
-      parameters:
-        - name: id
-          in: path
-          description: Receivable Contact ID (`ReceivableContact.data.id`)
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: UUID
-          example: 2d2429c2-b868-455e-80ef-915df7c115a7
-      responses:
-        '204':
-          description: No Content (success)
-        '400':
-          description: Bad Request (errors)
-        '404':
-          description: Not Found
-  '/contacts/{contact_id}/receivable/activate':
-    post:
-      tags:
-        - Contacts (Receivable)
-      summary: Reactivate a Receivable Contact
-      description: |
-        This endpoint should be used to Reactivate a Receivable Contact that has been previously Disabled.
-
-        This will once again allow you to receive funds from your customer via both DE and NPP channels.
-      operationId: ActivateAReceivableContact
-      parameters:
-        - name: id
-          in: path
-          description: Receivable Contact ID (`ReceivableContact.data.id`)
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: UUID
-          example: 2d2429c2-b868-455e-80ef-915df7c115a7
-      responses:
-        '204':
-          description: No Content (success)
-        '400':
-          description: Bad Request (errors)
-        '404':
-          description: Not Found
   /contacts:
     get:
       tags:
@@ -2580,7 +2476,6 @@ paths:
         <aside class="notice">
           <ul>
             <li>Removing a Contact will not affect your transaction history.</li>
-            <li>Removing a Receivable Contact will deactivate any associated PayIDs.</li>
           </ul>
         </aside>
       operationId: RemoveAContact
@@ -2977,36 +2872,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListPaymentRequestCollectionsResponse'
-  /payment_requests/receivables:
-    get:
-      tags:
-        - Payment Requests
-      summary: 'List Receivables'
-      description: Payment Requests where the debtor is sending you funds ([Receivable Contacts](/#add-a-receivable-contact)).
-                  This endpoint exposes all received payments.
-      operationId: ListPaymentRequestReceivables
-      parameters:
-        - name: page
-          in: query
-          description: 'Page of results to return, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '1'
-        - name: per_page
-          in: query
-          description: 'Number of results per page, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '100'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ListPaymentRequestReceivablesResponse'
   '/credits/{credit_ref}/refunds':
     post:
       tags:
@@ -4142,165 +4007,6 @@ components:
               max_amount: 1000000
           link: >-
             https://nz.go.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation
-    AddAReceivableContactRequest:
-      title: Add a Receivable Contact (request)
-      required:
-        - name
-        - email
-      type: object
-      properties:
-        name:
-          type: string
-          min: 3
-          max: 140
-          description: 'Contact name (Min: 3 - Max: 140)'
-        email:
-          type: string
-          min: 6
-          max: 256
-          description: 'Contact email (Min: 6 - Max: 256)'
-        payid_email:
-          type: string
-          min: 6
-          max: 256
-          description: 'Contact PayID email (Min: 6 - Max: 256)'
-        payid_email_domain:
-          type: string
-          min: 3
-          max: 254
-          description: 'PayID pool email domain (Min: 3 - Max: 254)'
-        metadata:
-          $ref: '#/components/schemas/Metadata'
-      example:
-        name: Delphine Jestin
-        email: delphine@gmail.com
-        payid_email: delphine_123@merchant.com.au
-        metadata:
-          custom_key: Custom string
-          another_custom_key: Maybe a URL
-    AddAReceivableContactResponse:
-      title: Add a Receivable Contact (response)
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-            name:
-              type: string
-              min: 3
-              max: 140
-              description: 'Contact name (Min: 3 - Max: 140)'
-            email:
-              type: string
-              min: 6
-              max: 256
-              description: 'Contact email (Min: 6 - Max: 256)'
-            'type':
-              type: string
-              description: Fixed to 'anyone'
-            metadata:
-              $ref: '#/components/schemas/Metadata'
-            bank_account:
-              type: object
-              properties:
-                id:
-                  type: string
-                  format: uuid
-                account_number:
-                  type: string
-                  min: 5
-                  max: 9
-                  description: 'Zepto generated account number (Min: 5 - Max: 9)'
-                branch_code:
-                  type: string
-                  min: 6
-                  max: 6
-                  description: 'Zepto branch code (Min: 6 - Max: 6)'
-                bank_name:
-                  type: string
-                  description: Fixed to 'Zepto Float Acount'
-                state:
-                  type: string
-                  description: Fixed to 'Active'
-                  enum:
-                    - active
-                    - removed
-                iav_provider:
-                  type: string
-                  description: Always null
-                iav_status:
-                  type: string
-                  description: Always null
-                blocks:
-                  type: object
-                  properties:
-                    debits_blocked:
-                      type: boolean
-                      description: Used by Zepto admins. Defines whether the bank account is blocked from being debited
-                    credits_blocked:
-                      type: boolean
-                      description: Used by Zepto admins. Defined Whether this bank account is blocked from being credited
-            anyone_account:
-              type: object
-              properties:
-                id:
-                  type: string
-                  format:  uuid
-            payid_details:
-              type: object
-              properties:
-                alias_value:
-                  type: string
-                  format: email
-                  min: 6
-                  max: 256
-                  description: The PayID email
-                alias_type:
-                  type: string
-                  description: Type of PayID. Fixed to `email`
-                alias_name:
-                  type: string
-                  min: 3
-                  max: 140
-                  description: Your merchant's alias_name
-                state:
-                  type: string
-                  description: Pending -> Active or Failed -> Deregistered (Contact removed)
-                  enum:
-                    - pending
-                    - active
-                    - failed
-                    - deregistered
-      example:
-        data:
-          id: 6a7ed958-f1e8-42dc-8c02-3901d7057357
-          name: Delphine Jestin
-          email: delphine@gmail.com
-          type: anyone
-          metadata:
-            custom_key: Custom string
-            another_custom_key: Maybe a URL
-          bank_account:
-            id: 55afddde-4296-4daf-8e49-7ba481ef9608
-            account_number: '1408281'
-            branch_code: '802919'
-            bank_name: Zepto Float Account
-            state: active
-            iav_provider: null
-            iav_status: null
-            blocks:
-              debits_blocked: false
-              credits_blocked: false
-          anyone_account:
-            id: 77be6ecc-5fa7-454b-86d6-02a5f147878d
-          payid_details:
-            alias_value: delphine_123@merchant.com.au
-            alias_type: email
-            alias_name: your merchant's alias_name
-            state: pending
     ListAllContactsResponse:
       title: List all Contacts (response)
       required:
@@ -5338,137 +5044,6 @@ components:
               amount: 3000
               description: Membership fees
               matures_at: '2021-03-09T16:58:00Z'
-    ListPaymentRequestReceivablesResponse:
-      title: 'List Receivables (response)'
-      required:
-        - data
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            required:
-              - ref
-              - initiator_id
-              - your_bank_account_id
-              - authoriser_id
-              - authoriser_contact_id
-              - contact_initiated
-              - schedule_ref
-              - status
-              - status_reason
-              - matures_at
-              - responded_at
-              - created_at
-              - credit_ref
-              - payout
-            properties:
-              ref:
-                type: string
-                description: The Payment Reference reference (PR.*)
-              initiator_id:
-                type: string
-                format: uuid
-                description: Your bank account ID where the funds will settle
-              your_bank_account_id:
-                type: string
-                format: uuid
-                description: Your bank account ID where the funds will settle (alias of `initiator_id`)
-              authoriser_id:
-                type: string
-                format: uuid
-                description: The debtor's bank account ID
-              authoriser_contact_id:
-                type: string
-                format: uuid
-                description: The contact ID representing the debtor within Zepto
-              contact_initiated:
-                type: boolean
-                description: Initiated by Contact or Merchant
-              schedule_ref:
-                type: string
-                description: The schedule that generated the Payment request if applicable
-              status:
-                type: string
-                description: The status of the Payment Request. For Receivables, this will always be *approved*
-              status_reason:
-                type: string
-                description: Only used when the `status` is `declined` due to prechecking.
-              matures_at:
-                type: string
-                format: date-time
-                description: The date-time when the Payment Request is up for processing
-              responded_at:
-                type: string
-                format: date-time
-                description: The date-time when the Payment Request status changed
-              created_at:
-                type: string
-                format: date-time
-                description: The date-time when the Payment Request was created
-              credit_ref:
-                type: string
-                description: The resulting credit entry reference (available once approved)
-              payout:
-                type: object
-                properties:
-                  amount:
-                    type: integer
-                    min: 1
-                    max: 99999999999
-                    description: 'Amount in cents (Min: 1 - Max: 99999999999)'
-                  'description':
-                    type: string
-                    description: Payment Request description
-                  matures_at:
-                    type: string
-                    format: date-time
-                    description: The date-time when the Payment Request is up for processing
-                required:
-                  - amount
-                  - description
-                  - matures_at
-              metadata:
-                type: array
-                description: Your custom keyed data
-                items:
-                  type: object
-      example:
-        data:
-          - ref: PR.2t65
-            initiator_id: ca7bc5b3-e47f-4153-96fb-bbe326b42772
-            your_bank_account_id: 9c70871d-8e36-4c3e-8a9c-c0ee20e7c679
-            authoriser_id: de86472c-c027-4735-a6a7-234366a27fc7
-            authoriser_contact_id: fb6a9252-3818-44dc-b5aa-2195391a746f
-            contact_initiated: true
-            schedule_ref: null
-            status: approved
-            status_reason: null
-            matures_at: '2021-05-12T13:43:12Z'
-            responded_at: '2021-05-12T13:43:12Z'
-            created_at: '2021-05-12T13:43:12Z'
-            credit_ref: C.77b1
-            payout:
-              amount: 50000
-              description: Deposit to my Trading account
-              matures_at: '2021-05-12T13:43:12Z'
-          - ref: PR.1n644
-            initiator_id: ca7bc5b3-e47f-4153-96fb-bbe326b42772
-            your_bank_account_id: 9c70871d-8e36-4c3e-8a9c-c0ee20e7c679
-            authoriser_id: de86472c-c027-4735-a6a7-234366a27fc7
-            authoriser_contact_id: fb6a9252-3818-44dc-b5aa-2195391a746f
-            contact_initiated: true
-            schedule_ref: null
-            status: approved
-            status_reason: null
-            matures_at: '2021-06-01T04:34:50Z'
-            responded_at: null
-            created_at: '2021-06-01T04:34:56Z'
-            credit_ref: c.54r3
-            payout:
-              amount: 5000
-              description: Punting account top-up
-              matures_at: '2021-06-01T04:34:56Z'
     IssueARefundRequest:
       title: Issue a Refund (request)
       required:
@@ -5546,15 +5121,6 @@ components:
             reason:
               type: string
               description: Reason for the refund
-            contacts:
-              type: object
-              properties:
-                source_contact_id:
-                  type: string
-                  description: The original 'Receivable Contact' ID (only visible when refunding Receivables)
-                target_contact_id:
-                  type: string
-                  description: The new Contact ID receiving the funds (only visible when refunding Receivables)
       example:
         data:
           ref: PRF.7f4
