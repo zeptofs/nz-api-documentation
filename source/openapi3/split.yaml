@@ -706,8 +706,6 @@ info:
 
     | `suburb` | |
 
-    | `state` | See the sign up page for accepted values |
-
     | `postcode` | |
 
     | `first_name` | |
@@ -1192,7 +1190,7 @@ info:
     ```
 
     Split-Signature:
-    1514772000.93eee90206280b25e82b38001e23961ASB4c007f4d925ba71ecc2d9804978635
+    1514772000.93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635
 
     ```
 
