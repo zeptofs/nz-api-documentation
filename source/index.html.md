@@ -483,9 +483,9 @@ You can also pass the values directly to the sign up page outside of the OAuth2 
 ```json
 {
   "failure": {
-      "code": "E302",
-      "title": "BSB Not NPP Enabled",
-      "detail": "The target BSB is not NPP enabled. Please try another channel."
+      "code": "E105",
+      "title": "Account Not Found",
+      "detail": "The target account number is incorrect."
   }
 }
 ```
@@ -559,29 +559,6 @@ To simulate [transaction failures](#failure-reasons) create a Payment or Payment
   3. Request payment from a contact with a closed bank account:
     * Initiate a Payment Request for <code>$0.02</code>.
     * Zepto will mimic a failure to debit the contact's bank account.
-
-## NPP Payment failures
-### [NEW] Using failure codes
-<aside class="notice">
-  <ul>
-      <li><a href="#npp-credit-failures">NPP credit failure codes</a></li>
-  </ul>
-</aside>
-To simulate a transaction failure, create a Payment with an amount corresponding to the desired [failure code](#npp-credit-failures).
-For example:
-
-* NPP amount `$3.02` will cause the transaction to fail, triggering credit failure code `E302` (BSB Not NPP Enabled).
-* NPP amount `$3.04` will cause the transaction to fail, triggering credit failure code `E304` (Account Not Found).
-
-### [DEPRECATED] Using failure reasons
-If you are utilising an [Account Float](https://help.split.cash/en/articles/4275280-utilising-an-account-float) to create NPP payments, you can simulate a transaction that fails to process through the NPP channel by [creating a Payment from your account float](https://help.split.cash/en/articles/4275293-transacting-from-your-account-float) for one of the following amounts.
-
-| Transaction failure reason | Failure details | Amount |
-|----------------------------|-----------------|---------|
-| `refer_to_split`           | Real-time payment service currently unavailable |  $1.55  |
-| `refer_to_customer`        | Real-time payment rejected by recipient |  $1.60  |
-| `refer_to_customer`        | Real-time payments not available for recipient |  $1.65  |
-You will receive all the same notifications as if this happened in our live environment. We recommend you check out our article on [what happens when an NPP Payment fails](https://help.split.cash/en/articles/4405560-what-happens-when-an-npp-payment-fails) to learn more about what happens when an NPP Payment is unable to process.
 
 ## Instant account verification accounts
 When using any of our hosted solutions ([Payment Requests](https://help.split.cash/payment-requests/open-payment-requests), [Open Agreements](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreements](http://help.split.cash/agreements/unassigned-agreement)) you may want to test the [Instant Account Verification (IAV)](http://help.split.cash/bank-accounts/instant-account-verification-iav) process where we accept online banking credentials to validate bank account access. To do so, you can use the following credentials:
@@ -4665,7 +4642,7 @@ func main() {
 |» payouts|body|[[Payout](#schemapayout)]|true|One Payout object only|
 |»» Payout|body|[Payout](#schemapayout)|false|The actual Payout|
 |»»» amount|body|integer|true|Amount in cents to pay the recipient|
-|»»» description|body|string|true|Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description. For NPP payments, the payout recipient will see the first 280 characters of this description.|
+|»»» description|body|string|true|Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description.|
 |»»» recipient_contact_id|body|string|true|Contact to pay (`Contact.data.id`)|
 |»»» metadata|body|Metadata|false|Use for your custom data and certain Zepto customisations. Stored against generated transactions and included in associated webhook payloads.|
 |»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
@@ -5105,7 +5082,7 @@ Get a single payment by its reference
 Refunds can be issued for any successfully completed Payment Request transaction. This includes:
 
 1. Payment Requests for direct debit payments **(Collections)**:
-2. Payment Requests for funds received via DE/NPP **(Receivables)**:
+2. Payment Requests for funds received via DE **(Receivables)**:
 
 This allows you to return any funds that were previously collected or received into one of your bank/float accounts.
 
@@ -5303,7 +5280,7 @@ Certain rules apply to the issuance of a refund:
 |credit_ref|path|string|true|The credit reference number e.g C.625v|
 |body|body|[IssueARefundRequest](#schemaissuearefundrequest)|true|No description|
 |» amount|body|integer|true|Amount in cents refund (Min: 1 - Max: 99999999999)|
-|» channels|body|array|false|Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)|
+|» channels|body|array|false|Specify the payment channel to be used, in order. (direct_entry)|
 |» reason|body|string|false|Reason for the refund. First 9 characters are visible to both parties.|
 |» your_bank_account_id|body|string(uuid)|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
@@ -5784,18 +5761,6 @@ The rejected, returned, voided & prefailed statuses are always accompanied by a 
 | E252 | Insufficient Funds | There were insufficient funds to complete the transaction. |
 | E253 | System Error | The transaction was unable to complete. Please contact Zepto for assistance. |
 | E299 | Unknown DE Error | An unknown DE error occurred. Please contact Zepto for assistance. |
-### NPP credit failures
-| Code | Title | Detail |
-| ------------ | ------------- | -------------- |
-| E301 | Upstream Network Outage | An upstream network issue occurred. Please try again later. |
-| E302 | BSB Not NPP Enabled | The target BSB is not NPP enabled. Please try another channel. |
-| E303 | Account Not NPP Enabled | The target account exists but cannot accept funds via the NPP. Please try another channel. |
-| E304 | Account Not Found | The target account number cannot be found. |
-| E305 | Intermittent Outage At Target Institution | The target financial institution is experiencing technical difficulties. Please try again later. |
-| E306 | Account Closed | The target account is closed. |
-| E307 | Target Institution Offline | The target financial institution is undergoing maintenance or experiencing an outage. Please try again later. |
-| E308 | Account Blocked | The target account is blocked and cannot receive funds. |
-| E399 | Unknown NPP Error | An unknown NPP error occurred. Please contact Zepto for assistance. |
 
 ## [DEPRECATED] Failure reasons
 
@@ -6110,7 +6075,6 @@ func main() {
       "amount": 19999,
       "bank_account_id": "c2e329ae-606f-4311-a9ab-a751baa1915c",
       "channels": [
-        "new_payments_platform",
         "direct_entry"
       ],
       "current_channel": "direct_entry",
@@ -8700,7 +8664,7 @@ Use this endpoint to resend a failed webhook delivery.
 |Name|Type|Required|Description|
 |---|---|---|---|
 |amount|integer|true|Amount in cents to pay the recipient|
-|description|string|true|Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description. For NPP payments, the payout recipient will see the first 280 characters of this description.|
+|description|string|true|Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description.|
 |recipient_contact_id|string|true|Contact to pay (`Contact.data.id`)|
 |metadata|Metadata|false|Use for your custom data and certain Zepto customisations. Stored against generated transactions and included in associated webhook payloads.|
 
@@ -9193,7 +9157,7 @@ Use this endpoint to resend a failed webhook delivery.
 |Name|Type|Required|Description|
 |---|---|---|---|
 |amount|integer|true|Amount in cents refund (Min: 1 - Max: 99999999999)|
-|channels|array|false|Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)|
+|channels|array|false|Specify the payment channel to be used, in order. (direct_entry)|
 |reason|string|false|Reason for the refund. First 9 characters are visible to both parties.|
 |your_bank_account_id|string(uuid)|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |metadata|[Metadata](#schemametadata)|false|No description|
@@ -9240,7 +9204,7 @@ Use this endpoint to resend a failed webhook delivery.
 |» your_bank_account_id|string|true|The source bank/float account (UUID)|
 |» created_at|string(date-time)|true|The date-time when the Payment Request was created|
 |» amount|integer|true|The amount value provided (Min: 1 - Max: 99999999999)|
-|» channels|array|false|The requested payment channel(s) to be used, in order. (new_payments_platform, direct_entry, or both)|
+|» channels|array|false|The requested payment channel(s) to be used, in order. (direct_entry)|
 |» reason|string|true|Reason for the refund|
 
 ## ListOutgoingRefundsResponse
@@ -9412,7 +9376,6 @@ Use this endpoint to resend a failed webhook delivery.
       "amount": 19999,
       "bank_account_id": "c2e329ae-606f-4311-a9ab-a751baa1915c",
       "channels": [
-        "new_payments_platform",
         "direct_entry"
       ],
       "current_channel": "direct_entry",
