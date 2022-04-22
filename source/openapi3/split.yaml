@@ -1697,14 +1697,6 @@ tags:
       A Payment is used to disburse funds to your Contacts.
 
 
-      Supported payment rails:
-
-
-      * **NPP**: New Payments Platform (Real-time)
-
-      * **DE / BECS**: Direct Entry / Bulk Electronic Clearing System (Slower)
-
-
       ##Lifecycle
 
       > Example payout reversal response
@@ -2744,15 +2736,6 @@ paths:
       tags:
         - Payments
       summary: Make a Payment
-      description: >
-        To enable custom payment flows, the required payment channel can be selected by setting the _channel_ attribute to one of the following combinations:
-
-
-        <ul>
-          <li>["new_payments_platform"] - for faster payments 24/7/365</li>
-          <li>["direct_entry"] - for slower traditional payments</li>
-          <li>["new_payments_platform", "direct_entry"] - enables automatic channel switching if a payment fails on the NPP</li>
-        </ul>
 
       operationId: MakeAPayment
       requestBody:
@@ -4703,7 +4686,6 @@ components:
         - matures_at
         - payouts
         - your_bank_account_id
-        - channels
       type: object
       properties:
         description:
@@ -4722,9 +4704,6 @@ components:
           schema:
             type: string
           example: 83623359-e86e-440c-9780-432a3bc3626f
-        channels:
-          type: array
-          description: Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)
         payouts:
           type: array
           items:
@@ -4736,7 +4715,6 @@ components:
         description: The SuperPackage
         matures_at: '2021-06-13T00:00:00Z'
         your_bank_account_id: 83623359-e86e-440c-9780-432a3bc3626f
-        channels: ["new_payments_platform"]
         payouts:
           - amount: 30000
             description: A tandem skydive jump SB23094
@@ -4801,7 +4779,6 @@ components:
         data:
           ref: PB.1
           your_bank_account_id: 83623359-e86e-440c-9780-432a3bc3626f
-          channels: ["new_payments_platform"]
           payouts:
             - ref: D.1
               recipient_contact_id: 48b89364-1577-4c81-ba02-96705895d457
@@ -4836,7 +4813,6 @@ components:
         data:
           - ref: PB.1
             your_bank_account_id: 83623359-e86e-440c-9780-432a3bc3626f
-            channels: ["new_payments_platform", "direct_entry"]
             payouts:
               - ref: D.1
                 recipient_contact_id: 48b89364-1577-4c81-ba02-96705895d457
@@ -4878,7 +4854,6 @@ components:
         data:
           ref: PB.1
           your_bank_account_id: 83623359-e86e-440c-9780-432a3bc3626f
-          channels: ["direct_entry"]
           payouts:
             - ref: D.1
               recipient_contact_id: 48b89364-1577-4c81-ba02-96705895d457
