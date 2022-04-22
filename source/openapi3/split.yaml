@@ -944,8 +944,6 @@ info:
 
     | `bank_accounts` | Manage user's Bank Accounts |
 
-    | `bank_connections` | Manage user's Bank Connections |
-
     | `contacts` | Manage user's Contacts |
 
     | `open_agreements` | Manage user's Open Agreements |
@@ -1667,21 +1665,6 @@ tags:
       <aside class="notice">When you close an Open Agreement, no new Agreements
       can be created from it and all past Agreement resulting from the
       acceptance of the Open Agreement are unaffected.</aside>
-  - name: Bank Connections
-    description: >
-      Bank connections are read-only connections to your contacts' banking data. This
-      allows Zepto (and yourself) to make intelligent transactional decisions leading
-      to better outcomes.
-
-
-      Use these endpoints to:
-
-        * List your bank connections and check their status
-        * Retrieve a link that you can share with your contact to update their invalidated bank connection (e.g Their online banking credentials have changed)
-
-      <aside class="notice">To access these endpoints on behalf of another account via OAuth2, your application must request (and the user must authorise) <a href="#configuration">the bank_connections scope</a>.</aside>
-
-      <aside class="notice">Looking to add a new bank connection to a contact? See the <a href="#get-a-contact">get a contact endpoint</a></aside>
   - name: Payments
     description: >
       A Payment is used to disburse funds to your Contacts.
@@ -2194,101 +2177,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListAllBankAccountsResponse'
-  /bank_connections:
-    get:
-      tags:
-        - Bank Connections
-      summary: List all Bank Connections
-      description: >
-        By default, all Bank Connections will be returned. You can apply filters to your
-        query to customise the returned Bank Connection list.
-      operationId: ListAllBankConnections
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ListAllBankConnectionsResponse'
-      parameters:
-        - name: page
-          in: query
-          description: 'Page of results to return, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '1'
-        - name: per_page
-          in: query
-          description: 'Number of results per page, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '100'
-        - name: provider_name
-          in: query
-          description: 'Single value, exact match'
-          style: simple
-          schema:
-            type: string
-            enum: [basiq, proviso, split]
-          example: basiq
-        - name: state
-          in: query
-          description: 'Single value, exact match'
-          style: simple
-          schema:
-            type: string
-            enum: [active, credentials_invalid]
-          example: credentials_invalid
-  /bank_connections/{id}:
-    get:
-      tags:
-        - Bank Connections
-      summary: Get a Bank Connection
-      description: Get a single Bank Connection by its ID
-      operationId: GetABankConnection
-      parameters:
-        - name: id
-          in: path
-          description: BankConnection ID (`BankConnection.data.id`)
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: UUID
-          example: c397645b-bd4f-4fc6-b1fe-4993fef6c3c7
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetABankConnectionResponse'
-        '404':
-          description: Not Found
-    delete:
-      tags:
-        - Bank Connections
-      summary: Remove a Bank Connection
-      description: >
-        <aside class="notice">Removing a Bank Connection will not affect your
-        transaction history.</aside>
-      operationId: RemoveABankConnection
-      parameters:
-        - name: id
-          in: path
-          description: BankConnection ID (`BankConnection.data.id`)
-          required: true
-          style: simple
-          schema:
-            type: string
-            format: UUID
-          example: 01586a3f-f25b-404f-b135-c42a1b7ef4de
-      responses:
-        '204':
-          description: ''
   /contacts/anyone:
     post:
       tags:
@@ -2452,7 +2340,6 @@ paths:
           <ul>
             <li>Previous transactions to this Contact will retain the name and bank account that was used at the time.</li>
             <li>You cannot update a Contact's bank account details if they currently have an accepted agreement.</li>
-            <li>Any active Bank Connections will be lost if you change the Contact's bank account.</li>
             <li>See our [Help Article](https://help.split.cash/en/articles/3829211-how-do-i-change-my-customers-bank-account-details) for more information about the nuances and implications of changing a contacts Bank Account.</li>
           </ul>
         </aside>
@@ -3515,49 +3402,6 @@ components:
               pooling_state: disabled
               max_pool_size: 10
               current_pool_size: 1
-    ListAllBankConnectionsResponse:
-      title: List all Bank Connections (response)
-      required:
-        - data
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-          description: ''
-      example:
-        data:
-          - id: fb497754-87e2-407d-871f-32aec39d09d4
-            provider_name: split
-            state: active
-            refreshed_at: '2020-02-13T09:05:00Z'
-            removed_at:
-            failure_reason:
-            institution:
-              short_name: CBA
-              full_name: Commonwealth Bank of Australia
-            contact:
-              id: 626e15b1-aa4a-496e-b5d6-3f8c1a6d2189
-              name: George Morissette
-              email: randy@windler.net
-            links:
-              update_bank_connection: http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4
-          - id: ddbee875-7344-4d74-9503-6233149fe1a0
-            provider_name: split
-            state: credentials_invalid
-            refreshed_at: '2020-02-13T09:05:00Z'
-            removed_at:
-            failure_reason:
-            institution:
-              short_name: CBA
-              full_name: Commonwealth Bank of Australia
-            contact:
-              id: 72e37667-6364-440f-b1bd-56df5654e258
-              name: Joel Boyle
-              email: travis@hermanntorp.net
-            links:
-              update_bank_connection: http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0
     CreateOpenAgreementRequest:
       title: Create an Open Agreement (request)
       required:
