@@ -47,10 +47,6 @@ And for all kinds of How To's and Recipes, head on over to our [Help Guide](http
     * Sandbox IP: `13.237.142.60`
     * Production IPs: `52.64.11.67` and `13.238.78.114`
 
-<div class="middle-header">System Status</div>
-
-Check the platform status, or subscribe to receive notifications at [status.split.cash](https://status.split.cash/). If you would like to check platform status programmatically, please refer to [status.split.cash/api](https://status.split.cash/api).
-
 <div class="middle-header">Breaking Changes</div>
 
 A breaking change is assumed to be:
@@ -614,7 +610,6 @@ Scopes define the level of access granted via the OAuth2 authorisation process. 
 | `payments` | Manage user's Payments |
 | `payment_requests` | Manage user's Payment Requests |
 | `refunds` | Manage user's Refunds |
-| `transfers` | Manage user's Transfers |
 | `transactions` | Access user's Transactions |
 | `offline_access` | Create non-expiring access tokens for user |
 
@@ -2364,13 +2359,13 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({
-  name: 'Hunter Thompson',
+req.write(JSON.stringify({ name: 'Hunter Thompson',
   email: 'hunter@batcountry.com',
   branch_code: '123456',
   account_number: '13048322',
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
 req.end();
 ```
 
@@ -3200,13 +3195,13 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({
-  name: 'My very own alias',
+req.write(JSON.stringify({ name: 'My very own alias',
   email: 'updated@email.com',
   branch_code: '123456',
   account_number: '99887766',
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
 req.end();
 ```
 
@@ -3461,14 +3456,13 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({
-  title: 'Subscription Plan A',
-  terms: {
-    per_payout: { min_amount: null, max_amount: 10000 },
-    per_frequency: { days: 7, max_amount: 1000000 }
-  },
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
+req.write(JSON.stringify({ title: 'Subscription Plan A',
+  terms:
+   { per_payout: { min_amount: null, max_amount: 10000 },
+     per_frequency: { days: 7, max_amount: 1000000 } },
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
 req.end();
 ```
 
@@ -4275,14 +4269,14 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({
-  description: 'Visible to both initiator and authoriser',
+req.write(JSON.stringify({ description: 'Visible to both initiator and authoriser',
   matures_at: '2016-12-19T02:10:56.000Z',
   amount: 99000,
   authoriser_contact_id: 'de86472c-c027-4735-a6a7-234366a27fc7',
   your_bank_account_id: '9c70871d-8e36-4c3e-8a9c-c0ee20e7c679',
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
 req.end();
 ```
 
@@ -5074,25 +5068,21 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({
-  description: 'The SuperPackage',
+req.write(JSON.stringify({ description: 'The SuperPackage',
   matures_at: '2021-06-13T00:00:00Z',
   your_bank_account_id: '83623359-e86e-440c-9780-432a3bc3626f',
-  payouts: [
-    {
-      amount: 30000,
-      description: 'A tandem skydive jump SB23094',
-      recipient_contact_id: '48b89364-1577-4c81-ba02-96705895d457',
-      metadata: {
-        invoice_ref: 'BILL-0001',
-        invoice_id: 'c80a9958-e805-47c0-ac2a-c947d7fd778d',
-        custom_key: 'Custom string',
-        another_custom_key: 'Maybe a URL'
-      }
-    }
-  ],
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
+  payouts:
+   [ { amount: 30000,
+       description: 'A tandem skydive jump SB23094',
+       recipient_contact_id: '48b89364-1577-4c81-ba02-96705895d457',
+       metadata:
+        { invoice_ref: 'BILL-0001',
+          invoice_id: 'c80a9958-e805-47c0-ac2a-c947d7fd778d',
+          custom_key: 'Custom string',
+          another_custom_key: 'Maybe a URL' } } ],
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
 req.end();
 ```
 
@@ -5731,13 +5721,13 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({
-  amount: 500,
+req.write(JSON.stringify({ amount: 500,
   channels: [ 'direct_entry' ],
   reason: 'Because reason',
   your_bank_account_id: '9c70871d-8e36-4c3e-8a9c-c0ee20e7c679',
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
 req.end();
 ```
 
@@ -6688,584 +6678,6 @@ func main() {
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllTransactionsResponse](#schemalistalltransactionsresponse)|
 
-<h1 id="Zepto-API-Transfers">Transfers</h1>
-
-This endpoint lets you Transfer funds between any bank & float accounts registered under your Zepto account:
-
-1. **From**: Bank Account **To**: Float Account:
-  * Topping up a float account via Direct Debit
-  * Up to 2 days
-2. **From**: Float Account **To**: Bank Account:
-  * Withdrawing from a float account
-  * Will attempt NPP first and channel switch to DE if required
-3. **From**: Float Account **To**: Float Account:
-  * Transfer between two float accounts
-  * Within seconds
-
-## Add a Transfer
-
-<a id="opIdAddATransfer"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://nz.api.sandbox.zepto.money/transfers \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
-  --data '{"from_bank_account_id":"a79423b2-3827-4cf5-9eda-dc02a298d005","to_bank_account_id":"0921a719-c79d-4ffb-91b6-1b30ab77d14d","amount":100000,"description":"Float account balance adjustment","matures_at":"2021-06-06T00:00:00Z"}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/transfers")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"from_bank_account_id\":\"a79423b2-3827-4cf5-9eda-dc02a298d005\",\"to_bank_account_id\":\"0921a719-c79d-4ffb-91b6-1b30ab77d14d\",\"amount\":100000,\"description\":\"Float account balance adjustment\",\"matures_at\":\"2021-06-06T00:00:00Z\"}"
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/transfers",
-  "headers": {
-    "content-type": "application/json",
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.write(JSON.stringify({
-  from_bank_account_id: 'a79423b2-3827-4cf5-9eda-dc02a298d005',
-  to_bank_account_id: '0921a719-c79d-4ffb-91b6-1b30ab77d14d',
-  amount: 100000,
-  description: 'Float account balance adjustment',
-  matures_at: '2021-06-06T00:00:00Z'
-}));
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-payload = "{\"from_bank_account_id\":\"a79423b2-3827-4cf5-9eda-dc02a298d005\",\"to_bank_account_id\":\"0921a719-c79d-4ffb-91b6-1b30ab77d14d\",\"amount\":100000,\"description\":\"Float account balance adjustment\",\"matures_at\":\"2021-06-06T00:00:00Z\"}"
-
-headers = {
-    'content-type': "application/json",
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/transfers", payload, headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/transfers")
-  .header("content-type", "application/json")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .body("{\"from_bank_account_id\":\"a79423b2-3827-4cf5-9eda-dc02a298d005\",\"to_bank_account_id\":\"0921a719-c79d-4ffb-91b6-1b30ab77d14d\",\"amount\":100000,\"description\":\"Float account balance adjustment\",\"matures_at\":\"2021-06-06T00:00:00Z\"}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$body = new http\Message\Body;
-$body->append('{"from_bank_account_id":"a79423b2-3827-4cf5-9eda-dc02a298d005","to_bank_account_id":"0921a719-c79d-4ffb-91b6-1b30ab77d14d","amount":100000,"description":"Float account balance adjustment","matures_at":"2021-06-06T00:00:00Z"}');
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/transfers');
-$request->setRequestMethod('POST');
-$request->setBody($body);
-
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json',
-  'content-type' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"strings"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/transfers"
-
-	payload := strings.NewReader("{\"from_bank_account_id\":\"a79423b2-3827-4cf5-9eda-dc02a298d005\",\"to_bank_account_id\":\"0921a719-c79d-4ffb-91b6-1b30ab77d14d\",\"amount\":100000,\"description\":\"Float account balance adjustment\",\"matures_at\":\"2021-06-06T00:00:00Z\"}")
-
-	req, _ := http.NewRequest("POST", url, payload)
-
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /transfers`
-
-Use this endpoint when you want to create a Transfer between any 2 of your float/bank accounts.
-
-> Body parameter
-
-```json
-{
-  "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-  "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-  "amount": 100000,
-  "description": "Float account balance adjustment",
-  "matures_at": "2021-06-06T00:00:00Z"
-}
-```
-
-<h3 id="Add-a-Transfer-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[AddATransferRequest](#schemaaddatransferrequest)|true|No description|
-|» from_bank_account_id|body|string|true|The source float/bank account (UUID)|
-|» to_bank_account_id|body|string|true|The destination float/bank account (UUID)|
-|» amount|body|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
-|» description|body|string|true|Description for the Transfer|
-|» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 the Transfer should be processed. (Can not be earlier than the start of current day)|
-
-> Example responses
-
-> 201 Response
-
-```json
-{
-  "data": {
-    "ref": "T.11ub",
-    "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-    "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-    "amount": 100000,
-    "description": "Float account balance adjustment",
-    "matures_at": "2021-06-06T00:00:00Z"
-  }
-}
-```
-
-<h3 id="Add a Transfer-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddATransferResponse](#schemaaddatransferresponse)|
-
-## List all Transfers (Available soon)
-
-<a id="opIdListAllTransfers"></a>
-
-> Code samples
-
-```shell
-curl --request GET \
-  --url https://nz.api.sandbox.zepto.money/transfers \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/transfers")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "GET",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/transfers",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("GET", "/transfers", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/transfers")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/transfers');
-$request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/transfers"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`GET /transfers`
-
-<h3 id="List-all-Transfers-(Available-soon)-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|page|query|string|false|Page of results to return, single value, exact match|
-|per_page|query|string|false|Number of results per page, single value, exact match|
-|from_bank_account_id|query|string|false|Source bank/float account UUID, single value, exact match|
-|to_bank_account_id|query|string|false|Target bank/float account UUID, single value, exact match|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": [
-    {
-      "ref": "T.62xl",
-      "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-      "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-      "amount": 47000,
-      "description": "Deposit from my bank account",
-      "matures_at": "2021-06-03T00:00:00Z"
-    },
-    {
-      "ref": "T.87xp",
-      "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-      "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-      "amount": 9700,
-      "description": "Withdrawal June 2021",
-      "matures_at": "2021-05-28T00:00:00Z"
-    },
-    {
-      "ref": "T.87s4",
-      "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-      "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-      "amount": 230,
-      "description": "Transfer to my other Float account",
-      "matures_at": "2021-05-03T00:00:00Z"
-    }
-  ]
-}
-```
-
-<h3 id="List all Transfers (Available soon)-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllTransfersResponse](#schemalistalltransfersresponse)|
-
-## Get a Transfer (Available soon)
-
-<a id="opIdGetATransfer"></a>
-
-> Code samples
-
-```shell
-curl --request GET \
-  --url https://nz.api.sandbox.zepto.money/transfers/T.11ub \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/transfers/T.11ub")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "GET",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/transfers/T.11ub",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("GET", "/transfers/T.11ub", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/transfers/T.11ub")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/transfers/T.11ub');
-$request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/transfers/T.11ub"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`GET /transfers/{transfer_ref}`
-
-Get a single transfer by its reference
-
-<h3 id="Get-a-Transfer-(Available-soon)-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|transfer_ref|path|string|true|Transfer reference|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": {
-    "ref": "T.87xp",
-    "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-    "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-    "amount": 47000,
-    "description": "Deposit from my bank account",
-    "matures_at": "2021-06-03T00:00:00Z"
-  }
-}
-```
-
-<h3 id="Get a Transfer (Available soon)-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetATransferResponse](#schemagetatransferresponse)|
-
 <h1 id="Zepto-API-Unassigned-Agreements">Unassigned Agreements</h1>
 
 An agreement with no preset authoriser that can only be accepted once and must be accepted within a predefined time period.
@@ -7337,15 +6749,14 @@ var req = http.request(options, function (res) {
   });
 });
 
-req.write(JSON.stringify({
-  expiry_in_seconds: 60,
+req.write(JSON.stringify({ expiry_in_seconds: 60,
   single_use: false,
-  terms: {
-    per_payout: { min_amount: null, max_amount: 10000 },
-    per_frequency: { days: 7, max_amount: 1000000 }
-  },
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
+  terms:
+   { per_payout: { min_amount: null, max_amount: 10000 },
+     per_frequency: { days: 7, max_amount: 1000000 } },
+  metadata:
+   { custom_key: 'Custom string',
+     another_custom_key: 'Maybe a URL' } }));
 req.end();
 ```
 
@@ -10988,49 +10399,6 @@ Use this endpoint to resend a failed webhook delivery.
 |» amount|integer|true|The amount value provided (Min: 1 - Max: 99999999999)|
 |» description|string|true|Description for the Transfer|
 |» matures_at|string(date-time)|true|Date & time in UTC ISO8601 the Transfer should be processed. (Can not be earlier than the start of current day)|
-
-## ListAllTransfersResponse
-
-<a id="schemalistalltransfersresponse"></a>
-
-```json
-{
-  "data": [
-    {
-      "ref": "T.62xl",
-      "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-      "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-      "amount": 47000,
-      "description": "Deposit from my bank account",
-      "matures_at": "2021-06-03T00:00:00Z"
-    },
-    {
-      "ref": "T.87xp",
-      "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-      "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-      "amount": 9700,
-      "description": "Withdrawal June 2021",
-      "matures_at": "2021-05-28T00:00:00Z"
-    },
-    {
-      "ref": "T.87s4",
-      "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-      "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-      "amount": 230,
-      "description": "Transfer to my other Float account",
-      "matures_at": "2021-05-03T00:00:00Z"
-    }
-  ]
-}
-```
-
-### Properties
-
-*List all Transfers (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|[object]|true|No description|
 
 ## ListAllWebhooksResponse
 

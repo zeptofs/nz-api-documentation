@@ -956,8 +956,6 @@ info:
 
     | `refunds` | Manage user's Refunds |
 
-    | `transfers` | Manage user's Transfers |
-
     | `transactions` | Access user's Transactions |
 
     | `offline_access` | Create non-expiring access tokens for user |
@@ -2059,21 +2057,6 @@ tags:
       <aside class="notice">
         The <code>user_voided</code> and <code>admin_voided</code> <code>failure_reasons</code> can sometimes be accompanied by the <code>failure_details</code> key which includes user submitted comments relating to the <code>failure_reason</code>.
       </aside>
-  - name: Transfers
-    description: >
-
-      This endpoint lets you Transfer funds between any bank & float accounts registered under your Zepto account:
-
-
-      1. **From**: Bank Account **To**: Float Account:
-        * Topping up a float account via Direct Debit
-        * Up to 2 days
-      2. **From**: Float Account **To**: Bank Account:
-        * Withdrawing from a float account
-        * Will attempt NPP first and channel switch to DE if required
-      3. **From**: Float Account **To**: Float Account:
-        * Transfer between two float accounts
-        * Within seconds
   - name: Unassigned Agreements
     description: >
       An agreement with no preset authoriser that can only be accepted once and
@@ -3073,95 +3056,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListAllTransactionsResponse'
-  /transfers:
-    post:
-      tags:
-        - Transfers
-      summary: Add a Transfer
-      description: >
-        Use this endpoint when you want to create a Transfer between any 2 of your float/bank accounts.
-
-      operationId: AddATransfer
-      parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AddATransferRequest'
-        required: true
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AddATransferResponse'
-    get:
-      tags:
-        - Transfers
-      summary: List all Transfers (Available soon)
-      description: ''
-      operationId: ListAllTransfers
-      parameters:
-        - name: page
-          in: query
-          description: 'Page of results to return, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '1'
-        - name: per_page
-          in: query
-          description: 'Number of results per page, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '100'
-        - name: from_bank_account_id
-          in: query
-          description: 'Source bank/float account UUID, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: 'a79423b2-3827-4cf5-9eda-dc02a298d005'
-        - name: to_bank_account_id
-          in: query
-          description: 'Target bank/float account UUID, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '0921a719-c79d-4ffb-91b6-1b30ab77d14d'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ListAllTransfersResponse'
-  '/transfers/{transfer_ref}':
-    get:
-      tags:
-        - Transfers
-      summary: Get a Transfer (Available soon)
-      description: Get a single transfer by its reference
-      operationId: GetATransfer
-      parameters:
-        - name: transfer_ref
-          in: path
-          description: Transfer reference
-          required: true
-          style: simple
-          schema:
-            type: string
-          example: T.11ub
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetATransferResponse'
   /unassigned_agreements:
     post:
       tags:
@@ -5524,36 +5418,6 @@ components:
           amount: 47000
           description: Deposit from my bank account
           matures_at: '2021-06-03T00:00:00Z'
-    ListAllTransfersResponse:
-      title:  List all Transfers (response)
-      required:
-        - data
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-      example:
-        data:
-        - ref: T.62xl
-          from_bank_account_id: a79423b2-3827-4cf5-9eda-dc02a298d005
-          to_bank_account_id: 0921a719-c79d-4ffb-91b6-1b30ab77d14d
-          amount: 47000
-          description: Deposit from my bank account
-          matures_at: '2021-06-03T00:00:00Z'
-        - ref: T.87xp
-          from_bank_account_id: a79423b2-3827-4cf5-9eda-dc02a298d005
-          to_bank_account_id: 0921a719-c79d-4ffb-91b6-1b30ab77d14d
-          amount: 9700
-          description: Withdrawal June 2021
-          matures_at: '2021-05-28T00:00:00Z'
-        - ref: T.87s4
-          from_bank_account_id: a79423b2-3827-4cf5-9eda-dc02a298d005
-          to_bank_account_id: 0921a719-c79d-4ffb-91b6-1b30ab77d14d
-          amount: 230
-          description: Transfer to my other Float account
-          matures_at: '2021-05-03T00:00:00Z'
     ListAllWebhooksResponse:
       title:  List all Webhooks (response)
       required:
