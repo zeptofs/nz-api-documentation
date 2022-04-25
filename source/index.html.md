@@ -5726,11 +5726,6 @@ Payment Requests where the debtor is sending you funds ([Receivable Contacts](/#
 
 A Payment is used to disburse funds to your Contacts.
 
-Supported payment rails:
-
-* **NPP**: New Payments Platform (Real-time)
-* **DE / BECS**: Direct Entry / Bulk Electronic Clearing System (Slower)
-
 ##Lifecycle
 > Example payout reversal response
 
@@ -5782,7 +5777,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"description":"The SuperPackage","matures_at":"2021-06-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","channels":["new_payments_platform"],"payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"description":"The SuperPackage","matures_at":"2021-06-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -5799,7 +5794,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":[\"new_payments_platform\"],\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -5837,7 +5832,6 @@ req.write(JSON.stringify({
   description: 'The SuperPackage',
   matures_at: '2021-06-13T00:00:00Z',
   your_bank_account_id: '83623359-e86e-440c-9780-432a3bc3626f',
-  channels: [ 'new_payments_platform' ],
   payouts: [
     {
       amount: 30000,
@@ -5861,7 +5855,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
-payload = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":[\"new_payments_platform\"],\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -5882,7 +5876,7 @@ HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":[\"new_payments_platform\"],\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -5893,7 +5887,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"description":"The SuperPackage","matures_at":"2021-06-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","channels":["new_payments_platform"],"payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"description":"The SuperPackage","matures_at":"2021-06-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/payments');
 $request->setRequestMethod('POST');
@@ -5925,7 +5919,7 @@ func main() {
 
 	url := "https://nz.api.sandbox.zepto.money/payments"
 
-	payload := strings.NewReader("{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":[\"new_payments_platform\"],\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -5946,14 +5940,6 @@ func main() {
 
 `POST /payments`
 
-To enable custom payment flows, the required payment channel can be selected by setting the _channel_ attribute to one of the following combinations:
-
-<ul>
-  <li>["new_payments_platform"] - for faster payments 24/7/365</li>
-  <li>["direct_entry"] - for slower traditional payments</li>
-  <li>["new_payments_platform", "direct_entry"] - enables automatic channel switching if a payment fails on the NPP</li>
-</ul>
-
 > Body parameter
 
 ```json
@@ -5961,9 +5947,6 @@ To enable custom payment flows, the required payment channel can be selected by 
   "description": "The SuperPackage",
   "matures_at": "2021-06-13T00:00:00Z",
   "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-  "channels": [
-    "new_payments_platform"
-  ],
   "payouts": [
     {
       "amount": 30000,
@@ -5992,7 +5975,6 @@ To enable custom payment flows, the required payment channel can be selected by 
 |» description|body|string|true|User description. Only visible to the payer|
 |» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
 |» your_bank_account_id|body|string|true|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
-|» channels|body|array|true|Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)|
 |» payouts|body|[[Payout](#schemapayout)]|true|One Payout object only|
 |»» Payout|body|[Payout](#schemapayout)|false|The actual Payout|
 |»»» amount|body|integer|true|Amount in cents to pay the recipient|
@@ -6010,9 +5992,6 @@ To enable custom payment flows, the required payment channel can be selected by 
   "data": {
     "ref": "PB.1",
     "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-    "channels": [
-      "new_payments_platform"
-    ],
     "payouts": [
       {
         "ref": "D.1",
@@ -6200,10 +6179,6 @@ func main() {
     {
       "ref": "PB.1",
       "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-      "channels": [
-        "new_payments_platform",
-        "direct_entry"
-      ],
       "payouts": [
         {
           "ref": "D.1",
@@ -6404,9 +6379,6 @@ Get a single payment by its reference
   "data": {
     "ref": "PB.1",
     "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-    "channels": [
-      "direct_entry"
-    ],
     "payouts": [
       {
         "ref": "D.1",
@@ -11656,9 +11628,6 @@ Use this endpoint to resend a failed webhook delivery.
   "description": "The SuperPackage",
   "matures_at": "2021-06-13T00:00:00Z",
   "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-  "channels": [
-    "new_payments_platform"
-  ],
   "payouts": [
     {
       "amount": 30000,
@@ -11688,7 +11657,6 @@ Use this endpoint to resend a failed webhook delivery.
 |description|string|true|User description. Only visible to the payer|
 |matures_at|string(date-time)|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
 |your_bank_account_id|string|true|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
-|channels|array|true|Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)|
 |payouts|[[Payout](#schemapayout)]|true|One Payout object only|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
@@ -11760,9 +11728,6 @@ Use this endpoint to resend a failed webhook delivery.
   "data": {
     "ref": "PB.1",
     "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-    "channels": [
-      "new_payments_platform"
-    ],
     "payouts": [
       {
         "ref": "D.1",
@@ -11809,10 +11774,6 @@ Use this endpoint to resend a failed webhook delivery.
     {
       "ref": "PB.1",
       "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-      "channels": [
-        "new_payments_platform",
-        "direct_entry"
-      ],
       "payouts": [
         {
           "ref": "D.1",
@@ -11871,9 +11832,6 @@ Use this endpoint to resend a failed webhook delivery.
   "data": {
     "ref": "PB.1",
     "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-    "channels": [
-      "direct_entry"
-    ],
     "payouts": [
       {
         "ref": "D.1",
