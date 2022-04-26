@@ -5098,7 +5098,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"amount":500,"channels":["direct_entry"],"reason":"Because reason","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"amount":500,"reason":"Because reason","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -5115,7 +5115,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"amount\":500,\"channels\":[\"direct_entry\"],\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -5150,7 +5150,6 @@ var req = http.request(options, function (res) {
 });
 
 req.write(JSON.stringify({ amount: 500,
-  channels: [ 'direct_entry' ],
   reason: 'Because reason',
   your_bank_account_id: '9c70871d-8e36-4c3e-8a9c-c0ee20e7c679',
   metadata:
@@ -5164,7 +5163,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
-payload = "{\"amount\":500,\"channels\":[\"direct_entry\"],\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -5185,7 +5184,7 @@ HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"amount\":500,\"channels\":[\"direct_entry\"],\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -5196,7 +5195,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"amount":500,"channels":["direct_entry"],"reason":"Because reason","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"amount":500,"reason":"Because reason","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/credits/string/refunds');
 $request->setRequestMethod('POST');
@@ -5228,7 +5227,7 @@ func main() {
 
 	url := "https://nz.api.sandbox.zepto.money/credits/string/refunds"
 
-	payload := strings.NewReader("{\"amount\":500,\"channels\":[\"direct_entry\"],\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -5261,9 +5260,6 @@ Certain rules apply to the issuance of a refund:
 ```json
 {
   "amount": 500,
-  "channels": [
-    "direct_entry"
-  ],
   "reason": "Because reason",
   "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
   "metadata": {
@@ -5280,7 +5276,6 @@ Certain rules apply to the issuance of a refund:
 |credit_ref|path|string|true|The credit reference number e.g C.625v|
 |body|body|[IssueARefundRequest](#schemaissuearefundrequest)|true|No description|
 |» amount|body|integer|true|Amount in cents refund (Min: 1 - Max: 99999999999)|
-|» channels|body|array|false|Specify the payment channel to be used, in order. (direct_entry)|
 |» reason|body|string|false|Reason for the refund. First 9 characters are visible to both parties.|
 |» your_bank_account_id|body|string(uuid)|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
@@ -5298,9 +5293,6 @@ Certain rules apply to the issuance of a refund:
     "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "created_at": "2021-06-01T07:20:24Z",
     "amount": 500,
-    "channels": [
-      "direct_entry"
-    ],
     "reason": "Subscription refund",
     "contacts": {
       "source_contact_id": "194b0237-6c2c-4705-b4fb-308274b14eda",
@@ -5720,8 +5712,6 @@ A transaction (debit or credit) can have the following statuses:
       "description": null,
       "amount": 1,
       "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
-      "channels": ["float_account"]
-      "current_channel": "float_account"
     }
   ]
 }
@@ -5788,8 +5778,6 @@ The rejected, returned, voided & prefailed statuses are always accompanied by a 
       "description": null,
       "amount": 1,
       "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
-      "channels": ["float_account"]
-      "current_channel": "float_account"
     }
   ]
 }
@@ -9138,9 +9126,6 @@ Use this endpoint to resend a failed webhook delivery.
 ```json
 {
   "amount": 500,
-  "channels": [
-    "direct_entry"
-  ],
   "reason": "Because reason",
   "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
   "metadata": {
@@ -9157,7 +9142,6 @@ Use this endpoint to resend a failed webhook delivery.
 |Name|Type|Required|Description|
 |---|---|---|---|
 |amount|integer|true|Amount in cents refund (Min: 1 - Max: 99999999999)|
-|channels|array|false|Specify the payment channel to be used, in order. (direct_entry)|
 |reason|string|false|Reason for the refund. First 9 characters are visible to both parties.|
 |your_bank_account_id|string(uuid)|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |metadata|[Metadata](#schemametadata)|false|No description|
@@ -9175,9 +9159,6 @@ Use this endpoint to resend a failed webhook delivery.
     "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "created_at": "2021-06-01T07:20:24Z",
     "amount": 500,
-    "channels": [
-      "direct_entry"
-    ],
     "reason": "Subscription refund",
     "contacts": {
       "source_contact_id": "194b0237-6c2c-4705-b4fb-308274b14eda",
@@ -9621,32 +9602,6 @@ Use this endpoint to resend a failed webhook delivery.
 |from_account_number|string|false|Default: "12345678"|
 |debtor_name|string|false|Default:  "Simulated Debtor"|
 |debtor_legal_name|string|false|Default:  "Simulated Debtor Pty Ltd"|
-
-## SimulateIncomingNPPBBANPaymentRequest
-
-<a id="schemasimulateincomingnppbbanpaymentrequest"></a>
-
-```json
-{
-  "to_bsb": "802919",
-  "to_account_number": "88888888",
-  "amount": 10000
-}
-```
-
-### Properties
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|to_bsb|string|true|Zepto float account BSB (usually 802919)|
-|to_account_number|string|true|Zepto float account number|
-|amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
-|payment_description|string|false|Default: "Simulated NPP payment"|
-|payment_reference|string|false|Default: "simulated-npp-payment"|
-|from_bsb|string|false|Default: "014209"|
-|from_account_number|string|false|Default: "12345678"|
-|debtor_name|string|false|Default: "Simulated Debtor"|
-|debtor_legal_name|string|false|Default: "Simulated Debtor Pty Ltd"|
 
 ## SimulateIncomingDEPaymentRequest
 
