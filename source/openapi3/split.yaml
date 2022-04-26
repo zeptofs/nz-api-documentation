@@ -2090,8 +2090,6 @@ tags:
   - name: Users
     description: |
       All about the currently authenticated user.
-  - name: Sandbox Only
-    description: Special testing endpoints that only exist in the sandbox environment.
 paths:
   /agreements/outgoing:
     get:
@@ -3434,68 +3432,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RedeliverAWebhookDeliveryResponse'
-  /simulate/incoming_npp_payid_payment:
-    post:
-      tags:
-        - Sandbox Only
-      summary: Simulate incoming PayID payment
-      description: Simulate receiving a real-time PayID payment from one of your Receivable Contacts.
-      operationId: SimulateIncomingPayIDPayment
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SimulateIncomingPayIDPaymentRequest'
-        required: true
-      responses:
-        '201':
-          description: Success
-        '400':
-          description: Invalid parameters
-  /simulate/incoming_npp_bban_payment:
-    post:
-      tags:
-        - Sandbox Only
-      summary: Simulate an incoming real-time payment
-      description: >
-        Simulate receiving a real-time payment to either a Receivable
-        Contact or one of your float accounts, made using a BSB and account
-        number (i.e. not via PayID).
-      operationId: SimulateIncomingNPPBBANPayment
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SimulateIncomingNPPBBANPaymentRequest'
-        required: true
-      responses:
-        '201':
-          description: Success
-        '400':
-          description: Invalid parameters
-  /simulate/incoming_de_payment:
-    post:
-      tags:
-        - Sandbox Only
-      summary: Simulate an incoming DE payment
-      description: >
-        Simulate receiving a Direct Entry payment (i.e. not a real-time payment)
-        to either a Receivable Contact or one of your float accounts.
-      operationId: SimulateIncomingDEPayment
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SimulateIncomingDEPaymentRequest'
-        required: true
-      responses:
-        '201':
-          description: Success
-        '400':
-          description: Invalid parameters
 components:
   securitySchemes:
     bearerAuth:
