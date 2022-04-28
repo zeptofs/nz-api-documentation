@@ -16,7 +16,8 @@ Welcome to the NZ Zepto API documentation source.
 
 1. Clone the repo
 1. Make sure you have [Docker installed](https://docs.docker.com/get-docker/)
-1. Run `$ docker-compose up`
+1. Run `$ docker-compose build`
+1. Once the previous step is completed, run `$ docker-compose up`
 1. Open http://localhost:4567 in your browser to preview the documentation
 
 ### Manually

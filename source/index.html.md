@@ -1,5 +1,5 @@
 ---
-title: Zepto API
+title: Zepto API v1.0
 language_tabs:
   - shell: Shell
   - ruby: Ruby
@@ -8,6 +8,14 @@ language_tabs:
   - java: Java
   - php: PHP
   - go: Go
+language_clients:
+  - shell: curl
+  - ruby: native
+  - node: request
+  - python: python3
+  - java: unirest
+  - php: http2
+  - go: native
 toc_footers: []
 includes: []
 search: true
@@ -16,7 +24,7 @@ headingLevel: 2
 
 ---
 
-<h1 id="Zepto-API">Zepto API v1.0</h1>
+<h1 id="zepto-api">Zepto API v1.0</h1>
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
@@ -46,10 +54,6 @@ And for all kinds of How To's and Recipes, head on over to our [Help Guide](http
 * Zepto provides static public IP addresses for all outbound traffic, including webhooks.
     * Sandbox IP: `13.237.142.60`
     * Production IPs: `52.64.11.67` and `13.238.78.114`
-
-<div class="middle-header">System Status</div>
-
-Check the platform status, or subscribe to receive notifications at [status.split.cash](https://status.split.cash/). If you would like to check platform status programmatically, please refer to [status.split.cash/api](https://status.split.cash/api).
 
 <div class="middle-header">Breaking Changes</div>
 
@@ -84,7 +88,7 @@ The best way to familiarise yourself with our API is by interacting with it.
 
 We've preloaded a collection with all our endpoints for you to use in Postman. Before you start, **import a copy** of our API collection:
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/3168734-baa5ff70-4bc2-44d5-9ba6-fcb61839ff41?action=collection%2Ffork&collection-url=entityId%3D3168734-baa5ff70-4bc2-44d5-9ba6-fcb61839ff41%26entityType%3Dcollection%26workspaceId%3D6400ea2b-bb46-421e-a88c-a8625653c35a#?env%5BSplit%20Payments%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL2dvLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoib2F1dGgyX2FwcGxpY2F0aW9uX2lkIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoic2NvcGUiLCJ2YWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMgb2ZmbGluZV9hY2Nlc3MiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Imlzbzg2MDFfbm93IiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6ImFjY2Vzc190b2tlbiIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJyZWZyZXNoX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfV0=)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/10584592-0037eee4-4a63-4d1a-875f-37ae6bcbf07e?action=collection%2Ffork&collection-url=entityId%3D10584592-0037eee4-4a63-4d1a-875f-37ae6bcbf07e%26entityType%3Dcollection%26workspaceId%3D6400ea2b-bb46-421e-a88c-a8625653c35a#?env%5BNZ%20Zepto%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL256LmdvLnNhbmRib3guemVwdG8ubW9uZXkiLCJlbmFibGVkIjp0cnVlLCJzZXNzaW9uVmFsdWUiOiJodHRwczovL256LmdvLnNhbmRib3guemVwdG8ubW9uZXkiLCJzZXNzaW9uSW5kZXgiOjB9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vbnouYXBpLnNhbmRib3guemVwdG8ubW9uZXkiLCJlbmFibGVkIjp0cnVlLCJzZXNzaW9uVmFsdWUiOiJodHRwczovL256LmFwaS5zYW5kYm94LnplcHRvLm1vbmV5Iiwic2Vzc2lvbkluZGV4IjoxfSx7ImtleSI6Im9hdXRoMl9hcHBsaWNhdGlvbl9pZCIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZSwic2Vzc2lvblZhbHVlIjoiIiwic2Vzc2lvbkluZGV4IjoyfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWUsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6M30seyJrZXkiOiJzY29wZSIsInZhbHVlIjoicHVibGljIGFncmVlbWVudHMgYmFua19hY2NvdW50cyBiYW5rX2Nvbm5lY3Rpb25zIGNvbnRhY3RzIHBheW1lbnRzIHBheW1lbnRfcmVxdWVzdHMgcmVmdW5kX3JlcXVlc3RzIHRyYW5zYWN0aW9ucyByZWZ1bmRzIG9wZW5fYWdyZWVtZW50cyBvZmZsaW5lX2FjY2VzcyIsImVuYWJsZWQiOnRydWUsInNlc3Npb25WYWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMuLi4iLCJzZXNzaW9uSW5kZXgiOjR9LHsia2V5IjoiaXNvODYwMV9ub3ciLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWUsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6NX0seyJrZXkiOiJhY2Nlc3NfdG9rZW4iLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWUsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6Nn0seyJrZXkiOiJyZWZyZXNoX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlLCJzZXNzaW9uVmFsdWUiOiIiLCJzZXNzaW9uSW5kZXgiOjd9XQ==)
 
 Okay, let's get things setup!
 
@@ -216,7 +220,7 @@ The OAuth grant flow process is demonstrated using Postman in the steps below.
 
 Before you start, load up our API collection:
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/3168734-baa5ff70-4bc2-44d5-9ba6-fcb61839ff41?action=collection%2Ffork&collection-url=entityId%3D3168734-baa5ff70-4bc2-44d5-9ba6-fcb61839ff41%26entityType%3Dcollection%26workspaceId%3D6400ea2b-bb46-421e-a88c-a8625653c35a#?env%5BSplit%20Payments%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL2dvLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoib2F1dGgyX2FwcGxpY2F0aW9uX2lkIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoic2NvcGUiLCJ2YWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMgb2ZmbGluZV9hY2Nlc3MiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Imlzbzg2MDFfbm93IiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6ImFjY2Vzc190b2tlbiIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJyZWZyZXNoX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfV0=)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/10584592-0037eee4-4a63-4d1a-875f-37ae6bcbf07e?action=collection%2Ffork&collection-url=entityId%3D10584592-0037eee4-4a63-4d1a-875f-37ae6bcbf07e%26entityType%3Dcollection%26workspaceId%3D6400ea2b-bb46-421e-a88c-a8625653c35a#?env%5BNZ%20Zepto%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL256LmdvLnNhbmRib3guemVwdG8ubW9uZXkiLCJlbmFibGVkIjp0cnVlLCJzZXNzaW9uVmFsdWUiOiJodHRwczovL256LmdvLnNhbmRib3guemVwdG8ubW9uZXkiLCJzZXNzaW9uSW5kZXgiOjB9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vbnouYXBpLnNhbmRib3guemVwdG8ubW9uZXkiLCJlbmFibGVkIjp0cnVlLCJzZXNzaW9uVmFsdWUiOiJodHRwczovL256LmFwaS5zYW5kYm94LnplcHRvLm1vbmV5Iiwic2Vzc2lvbkluZGV4IjoxfSx7ImtleSI6Im9hdXRoMl9hcHBsaWNhdGlvbl9pZCIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZSwic2Vzc2lvblZhbHVlIjoiIiwic2Vzc2lvbkluZGV4IjoyfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWUsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6M30seyJrZXkiOiJzY29wZSIsInZhbHVlIjoicHVibGljIGFncmVlbWVudHMgYmFua19hY2NvdW50cyBiYW5rX2Nvbm5lY3Rpb25zIGNvbnRhY3RzIHBheW1lbnRzIHBheW1lbnRfcmVxdWVzdHMgcmVmdW5kX3JlcXVlc3RzIHRyYW5zYWN0aW9ucyByZWZ1bmRzIG9wZW5fYWdyZWVtZW50cyBvZmZsaW5lX2FjY2VzcyIsImVuYWJsZWQiOnRydWUsInNlc3Npb25WYWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMuLi4iLCJzZXNzaW9uSW5kZXgiOjR9LHsia2V5IjoiaXNvODYwMV9ub3ciLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWUsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6NX0seyJrZXkiOiJhY2Nlc3NfdG9rZW4iLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWUsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6Nn0seyJrZXkiOiJyZWZyZXNoX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlLCJzZXNzaW9uVmFsdWUiOiIiLCJzZXNzaW9uSW5kZXgiOjd9XQ==)
 
 **A screencast of this process is also available: [https://vimeo.com/246203244](https://vimeo.com/246203244).**
 
@@ -466,7 +470,6 @@ In order to speed up the process, we allow query string params to be appended to
 | `phone` | Business account only. Business phone number. |
 | `street_address` | |
 | `suburb` | |
-| `state` | See the sign up page for accepted values |
 | `postcode` | |
 | `first_name` | |
 | `last_name` | |
@@ -487,9 +490,9 @@ You can also pass the values directly to the sign up page outside of the OAuth2 
 ```json
 {
   "failure": {
-      "code": "E302",
-      "title": "BSB Not NPP Enabled",
-      "detail": "The target BSB is not NPP enabled. Please try another channel."
+      "code": "E105",
+      "title": "Account Not Found",
+      "detail": "The target account number is incorrect."
   }
 }
 ```
@@ -564,29 +567,6 @@ To simulate [transaction failures](#failure-reasons) create a Payment or Payment
     * Initiate a Payment Request for <code>$0.02</code>.
     * Zepto will mimic a failure to debit the contact's bank account.
 
-## NPP Payment failures
-### [NEW] Using failure codes
-<aside class="notice">
-  <ul>
-      <li><a href="#npp-credit-failures">NPP credit failure codes</a></li>
-  </ul>
-</aside>
-To simulate a transaction failure, create a Payment with an amount corresponding to the desired [failure code](#npp-credit-failures).
-For example:
-
-* NPP amount `$3.02` will cause the transaction to fail, triggering credit failure code `E302` (BSB Not NPP Enabled).
-* NPP amount `$3.04` will cause the transaction to fail, triggering credit failure code `E304` (Account Not Found).
-
-### [DEPRECATED] Using failure reasons
-If you are utilising an [Account Float](https://help.split.cash/en/articles/4275280-utilising-an-account-float) to create NPP payments, you can simulate a transaction that fails to process through the NPP channel by [creating a Payment from your account float](https://help.split.cash/en/articles/4275293-transacting-from-your-account-float) for one of the following amounts.
-
-| Transaction failure reason | Failure details | Amount |
-|----------------------------|-----------------|---------|
-| `refer_to_split`           | Real-time payment service currently unavailable |  $1.55  |
-| `refer_to_customer`        | Real-time payment rejected by recipient |  $1.60  |
-| `refer_to_customer`        | Real-time payments not available for recipient |  $1.65  |
-You will receive all the same notifications as if this happened in our live environment. We recommend you check out our article on [what happens when an NPP Payment fails](https://help.split.cash/en/articles/4405560-what-happens-when-an-npp-payment-fails) to learn more about what happens when an NPP Payment is unable to process.
-
 ## Instant account verification accounts
 When using any of our hosted solutions ([Payment Requests](https://help.split.cash/payment-requests/open-payment-requests), [Open Agreements](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreements](http://help.split.cash/agreements/unassigned-agreement)) you may want to test the [Instant Account Verification (IAV)](http://help.split.cash/bank-accounts/instant-account-verification-iav) process where we accept online banking credentials to validate bank account access. To do so, you can use the following credentials:
 
@@ -608,13 +588,11 @@ Scopes define the level of access granted via the OAuth2 authorisation process. 
 | `public` | View user's public information |
 | `agreements` | Manage user's Agreements |
 | `bank_accounts` | Manage user's Bank Accounts |
-| `bank_connections` | Manage user's Bank Connections |
 | `contacts` | Manage user's Contacts |
 | `open_agreements` | Manage user's Open Agreements |
 | `payments` | Manage user's Payments |
 | `payment_requests` | Manage user's Payment Requests |
 | `refunds` | Manage user's Refunds |
-| `transfers` | Manage user's Transfers |
 | `transactions` | Access user's Transactions |
 | `offline_access` | Create non-expiring access tokens for user |
 
@@ -748,7 +726,7 @@ Zepto provides a `Split-Request-ID` header in the form of a `UUID` which uniquel
 > Example header
 
 ```
-Split-Signature: 1514772000.93eee90206280b25e82b38001e23961ASB4c007f4d925ba71ecc2d9804978635
+Split-Signature: 1514772000.93eee90206280b25e82b38001e23961cba4c007f4d925ba71ecc2d9804978635
 ```
 
 Zepto signs the webhook events it sends to your endpoints. We do so by including a signature in each event’s `Split-Signature` header. This allows you to validate that the events were indeed sent by Zepto.
@@ -993,7 +971,7 @@ We take backwards compatibility seriously. The following list contains backwards
 
 Looking for more? Our docs are open sourced! [https://github.com/zeptofs/api-documentation](https://github.com/zeptofs/api-documentation)
 
-<h1 id="Zepto-API-Agreements">Agreements</h1>
+<h1 id="zepto-api-Agreements">Agreements</h1>
 
 An Agreement is an arrangement between two parties that allows them to agree on terms for which future Payment Requests will be auto-approved.
 
@@ -1028,13 +1006,14 @@ An Agreement can have the following statuses:
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/agreements/outgoing \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/agreements/outgoing")
 
@@ -1043,36 +1022,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/agreements/outgoing",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -1086,8 +1065,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/agreements/outgoing", headers=headers)
@@ -1100,8 +1079,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/agreements/outgoing")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -1113,10 +1092,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/agreements/outgoing');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -1139,8 +1118,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -1244,13 +1223,14 @@ By default, all outgoing Agreements will be returned. You can apply filters to y
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/agreements/A.2 \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/agreements/A.2")
 
@@ -1259,36 +1239,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/agreements/A.2",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -1302,8 +1282,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/agreements/A.2", headers=headers)
@@ -1316,8 +1296,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/agreements/A.2")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -1329,10 +1309,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/agreements/A.2');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -1355,8 +1335,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -1424,12 +1404,13 @@ Get a single Agreement by its reference
 ```shell
 curl --request DELETE \
   --url https://nz.api.sandbox.zepto.money/agreements/A.2 \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/agreements/A.2")
 
@@ -1438,34 +1419,34 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Delete.new(url)
-request["authorization"] = 'Bearer {access-token}'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "DELETE",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/agreements/A.2",
   "headers": {
-    "authorization": "Bearer {access-token}"
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -1478,7 +1459,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
-headers = { 'authorization': "Bearer {access-token}" }
+headers = { 'Authorization': "Bearer {access-token}" }
 
 conn.request("DELETE", "/agreements/A.2", headers=headers)
 
@@ -1490,7 +1471,7 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.delete("https://nz.api.sandbox.zepto.money/agreements/A.2")
-  .header("authorization", "Bearer {access-token}")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -1502,9 +1483,9 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/agreements/A.2');
 $request->setRequestMethod('DELETE');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}'
-));
+$request->setHeaders([
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -1527,7 +1508,7 @@ func main() {
 
 	req, _ := http.NewRequest("DELETE", url, nil)
 
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -1556,7 +1537,7 @@ An Agreement can be cancelled by the initiator at any time whilst the authoriser
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
 
-<h1 id="Zepto-API-Bank-Accounts">Bank Accounts</h1>
+<h1 id="zepto-api-Bank-Accounts">Bank Accounts</h1>
 
 Your currently linked up bank accounts.
 
@@ -1569,13 +1550,14 @@ Your currently linked up bank accounts.
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/bank_accounts \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/bank_accounts")
 
@@ -1584,36 +1566,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/bank_accounts",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -1627,8 +1609,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/bank_accounts", headers=headers)
@@ -1641,8 +1623,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/bank_accounts")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -1654,10 +1636,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/bank_accounts');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -1680,8 +1662,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -1707,16 +1689,16 @@ By default, all Bank Accounts will be returned.
   "data": [
     {
       "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
-      "branch_code": "493192",
+      "branch_code": "020100",
       "bank_name": "Bank of New Zealand",
       "account_number": "3993013",
       "status": "active",
-      "title": "NZ.493192.3993013",
+      "title": "NZ.020100.3993013'",
       "available_balance": null
     },
     {
       "id": "56df206a-aaff-471a-b075-11882bc8906a",
-      "branch_code": "302193",
+      "branch_code": "020120",
       "bank_name": "Bank of New Zealand",
       "account_number": "119302",
       "status": "active",
@@ -1748,554 +1730,7 @@ By default, all Bank Accounts will be returned.
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllBankAccountsResponse](#schemalistallbankaccountsresponse)|
 
-<h1 id="Zepto-API-Bank-Connections">Bank Connections</h1>
-
-Bank connections are read-only connections to your contacts' banking data. This allows Zepto (and yourself) to make intelligent transactional decisions leading to better outcomes.
-
-Use these endpoints to:
-
-  * List your bank connections and check their status
-  * Retrieve a link that you can share with your contact to update their invalidated bank connection (e.g Their online banking credentials have changed)
-
-<aside class="notice">To access these endpoints on behalf of another account via OAuth2, your application must request (and the user must authorise) <a href="#configuration">the bank_connections scope</a>.</aside>
-<aside class="notice">Looking to add a new bank connection to a contact? See the <a href="#get-a-contact">get a contact endpoint</a></aside>
-
-## List all Bank Connections
-
-<a id="opIdListAllBankConnections"></a>
-
-> Code samples
-
-```shell
-curl --request GET \
-  --url https://nz.api.sandbox.zepto.money/bank_connections \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/bank_connections")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "GET",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/bank_connections",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("GET", "/bank_connections", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/bank_connections")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/bank_connections');
-$request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/bank_connections"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`GET /bank_connections`
-
-By default, all Bank Connections will be returned. You can apply filters to your query to customise the returned Bank Connection list.
-
-<h3 id="List-all-Bank-Connections-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|page|query|string|false|Page of results to return, single value, exact match|
-|per_page|query|string|false|Number of results per page, single value, exact match|
-|provider_name|query|string|false|Single value, exact match|
-|state|query|string|false|Single value, exact match|
-
-#### Enumerated Values
-
-|Parameter|Value|
-|---|---|
-|provider_name|basiq|
-|provider_name|proviso|
-|provider_name|split|
-|state|active|
-|state|credentials_invalid|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": [
-    {
-      "id": "fb497754-87e2-407d-871f-32aec39d09d4",
-      "provider_name": "split",
-      "state": "active",
-      "refreshed_at": "2020-02-13T09:05:00Z",
-      "removed_at": null,
-      "failure_reason": null,
-      "institution": {
-        "short_name": "ASB",
-        "full_name": "Auckland Savings Bank"
-      },
-      "contact": {
-        "id": "626e15b1-aa4a-496e-b5d6-3f8c1a6d2189",
-        "name": "George Morissette",
-        "email": "randy@windler.net"
-      },
-      "links": {
-        "update_bank_connection": "http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4"
-      }
-    },
-    {
-      "id": "ddbee875-7344-4d74-9503-6233149fe1a0",
-      "provider_name": "split",
-      "state": "credentials_invalid",
-      "refreshed_at": "2020-02-13T09:05:00Z",
-      "removed_at": null,
-      "failure_reason": null,
-      "institution": {
-        "short_name": "ASB",
-        "full_name": "Auckland Savings Bank"
-      },
-      "contact": {
-        "id": "72e37667-6364-440f-b1bd-56df5654e258",
-        "name": "Joel Boyle",
-        "email": "travis@hermanntorp.net"
-      },
-      "links": {
-        "update_bank_connection": "http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0"
-      }
-    }
-  ]
-}
-```
-
-<h3 id="List all Bank Connections-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllBankConnectionsResponse](#schemalistallbankconnectionsresponse)|
-
-## Get a Bank Connection
-
-<a id="opIdGetABankConnection"></a>
-
-> Code samples
-
-```shell
-curl --request GET \
-  --url https://nz.api.sandbox.zepto.money/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7 \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "GET",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("GET", "/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7');
-$request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/bank_connections/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`GET /bank_connections/{id}`
-
-Get a single Bank Connection by its ID
-
-<h3 id="Get-a-Bank-Connection-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string(UUID)|true|BankConnection ID (`BankConnection.data.id`)|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": {
-    "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7",
-    "provider_name": "split",
-    "state": "credentials_invalid",
-    "refreshed_at": "2020-02-13T09:01:00Z",
-    "removed_at": null,
-    "failure_reason": null,
-    "institution": {
-      "short_name": "ASB",
-      "full_name": "Auckland Savings Bank"
-    },
-    "contact": {
-      "id": "72e37667-6364-440f-b1bd-56df5654e258",
-      "name": "Joel Boyle",
-      "email": "travis@hermanntorp.net"
-    },
-    "links": {
-      "update_bank_connection": "https://nz.go.sandbox.zepto.money/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
-    }
-  }
-}
-```
-
-<h3 id="Get a Bank Connection-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetABankConnectionResponse](#schemagetabankconnectionresponse)|
-|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
-
-## Remove a Bank Connection
-
-<a id="opIdRemoveABankConnection"></a>
-
-> Code samples
-
-```shell
-curl --request DELETE \
-  --url https://nz.api.sandbox.zepto.money/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Delete.new(url)
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "DELETE",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de",
-  "headers": {
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-headers = { 'authorization': "Bearer {access-token}" }
-
-conn.request("DELETE", "/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.delete("https://nz.api.sandbox.zepto.money/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de');
-$request->setRequestMethod('DELETE');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/bank_connections/01586a3f-f25b-404f-b135-c42a1b7ef4de"
-
-	req, _ := http.NewRequest("DELETE", url, nil)
-
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`DELETE /bank_connections/{id}`
-
-<aside class="notice">Removing a Bank Connection will not affect your transaction history.</aside>
-
-<h3 id="Remove-a-Bank-Connection-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string(UUID)|true|BankConnection ID (`BankConnection.data.id`)|
-
-<h3 id="Remove a Bank Connection-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No description|None|
-
-<h1 id="Zepto-API-Contacts">Contacts</h1>
+<h1 id="zepto-api-Contacts">Contacts</h1>
 
 Your Contacts form an address book of parties with whom you can interact. In order to initiate any type of transaction you must first have the party in your Contact list.
 
@@ -2310,15 +1745,16 @@ Your Contacts form an address book of parties with whom you can interact. In ord
 ```shell
 curl --request POST \
   --url https://nz.api.sandbox.zepto.money/contacts/anyone \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
-  --data '{"name":"Hunter Thompson","email":"hunter@batcountry.com","branch_code":"123456","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}' \
+  --header 'Content-Type: application/json' \
+  --data '{"name":"Hunter Thompson","email":"hunter@batcountry.com","branch_code":"020136","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/contacts/anyone")
 
@@ -2327,39 +1763,39 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request["Content-Type"] = 'application/json'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
+request.body = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"020136\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "POST",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/contacts/anyone",
   "headers": {
-    "content-type": "application/json",
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -2367,9 +1803,9 @@ var req = http.request(options, function (res) {
 req.write(JSON.stringify({
   name: 'Hunter Thompson',
   email: 'hunter@batcountry.com',
-  branch_code: '123456',
+  branch_code: '020136',
   account_number: '13048322',
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
+  metadata: {custom_key: 'Custom string', another_custom_key: 'Maybe a URL'}
 }));
 req.end();
 ```
@@ -2379,12 +1815,12 @@ import http.client
 
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
-payload = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"020136\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
-    'content-type': "application/json",
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Content-Type': "application/json",
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("POST", "/contacts/anyone", payload, headers)
@@ -2397,10 +1833,10 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/contacts/anyone")
-  .header("content-type", "application/json")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .body("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .header("Content-Type", "application/json")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
+  .body("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"020136\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -2411,17 +1847,17 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"name":"Hunter Thompson","email":"hunter@batcountry.com","branch_code":"123456","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"name":"Hunter Thompson","email":"hunter@batcountry.com","branch_code":"020136","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/contacts/anyone');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json',
-  'content-type' => 'application/json'
-));
+$request->setHeaders([
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -2443,13 +1879,13 @@ func main() {
 
 	url := "https://nz.api.sandbox.zepto.money/contacts/anyone"
 
-	payload := strings.NewReader("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"123456\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"020136\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -2476,7 +1912,7 @@ Use this endpoint when you want to pay somebody.
 {
   "name": "Hunter Thompson",
   "email": "hunter@batcountry.com",
-  "branch_code": "123456",
+  "branch_code": "020136",
   "account_number": "13048322",
   "metadata": {
     "custom_key": "Custom string",
@@ -2514,7 +1950,7 @@ Use this endpoint when you want to pay somebody.
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
       "account_number": "13048322",
-      "branch_code": "123456",
+      "branch_code": "020136",
       "bank_name": "Bank of New Zealand",
       "state": "active",
       "iav_provider": null,
@@ -2546,13 +1982,14 @@ Use this endpoint when you want to pay somebody.
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/contacts \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/contacts")
 
@@ -2561,36 +1998,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/contacts",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -2604,8 +2041,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/contacts", headers=headers)
@@ -2618,8 +2055,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/contacts")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -2631,10 +2068,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/contacts');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -2657,8 +2094,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -2703,7 +2140,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
       "bank_account": {
         "id": "095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc",
         "account_number": "494307",
-        "branch_code": "435434",
+        "branch_code": "020040",
         "bank_name": "Bank of New Zealand",
         "state": "active",
         "iav_provider": "split",
@@ -2725,7 +2162,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
       "bank_account": {
         "id": "861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0",
         "account_number": "4395959",
-        "branch_code": "068231",
+        "branch_code": 20018,
         "bank_name": "Bank of New Zealand",
         "state": "active",
         "iav_provider": "split",
@@ -2769,7 +2206,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
       "bank_account": {
         "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
         "account_number": "13048322",
-        "branch_code": "123456",
+        "branch_code": "020136",
         "bank_name": "Bank of New Zealand",
         "state": "pending_verification",
         "iav_provider": null,
@@ -2802,13 +2239,14 @@ By default, all Contacts will be returned. You can apply filters to your query t
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
 
@@ -2817,36 +2255,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -2860,8 +2298,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608", headers=headers)
@@ -2874,8 +2312,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -2887,10 +2325,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -2913,8 +2351,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -2956,7 +2394,7 @@ Get a single Contact by its ID
     "bank_account": {
       "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
       "account_number": "947434694",
-      "branch_code": "304304",
+      "branch_code": "020159",
       "bank_name": "Bank of New Zealand",
       "state": "active",
       "iav_provider": null,
@@ -3001,12 +2439,13 @@ Get a single Contact by its ID
 ```shell
 curl --request DELETE \
   --url https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
 
@@ -3015,34 +2454,34 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Delete.new(url)
-request["authorization"] = 'Bearer {access-token}'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "DELETE",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608",
   "headers": {
-    "authorization": "Bearer {access-token}"
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -3055,7 +2494,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
-headers = { 'authorization': "Bearer {access-token}" }
+headers = { 'Authorization': "Bearer {access-token}" }
 
 conn.request("DELETE", "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608", headers=headers)
 
@@ -3067,7 +2506,7 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.delete("https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
-  .header("authorization", "Bearer {access-token}")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -3079,9 +2518,9 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
 $request->setRequestMethod('DELETE');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}'
-));
+$request->setHeaders([
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -3104,7 +2543,7 @@ func main() {
 
 	req, _ := http.NewRequest("DELETE", url, nil)
 
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -3122,7 +2561,6 @@ func main() {
 <aside class="notice">
   <ul>
     <li>Removing a Contact will not affect your transaction history.</li>
-    <li>Removing a Receivable Contact will deactivate any associated PayIDs.</li>
   </ul>
 </aside>
 
@@ -3147,15 +2585,16 @@ func main() {
 ```shell
 curl --request PATCH \
   --url https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608 \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}' \
+  --header 'Content-Type: application/json' \
   --data '{"name":"My very own alias","email":"updated@email.com","branch_code":"123456","account_number":"99887766","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
 
@@ -3164,9 +2603,9 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Patch.new(url)
-request["content-type"] = 'application/json'
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Content-Type"] = 'application/json'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 request.body = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"branch_code\":\"123456\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
@@ -3174,29 +2613,29 @@ puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "PATCH",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608",
   "headers": {
-    "content-type": "application/json",
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -3206,7 +2645,7 @@ req.write(JSON.stringify({
   email: 'updated@email.com',
   branch_code: '123456',
   account_number: '99887766',
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
+  metadata: {custom_key: 'Custom string', another_custom_key: 'Maybe a URL'}
 }));
 req.end();
 ```
@@ -3219,9 +2658,9 @@ conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 payload = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"branch_code\":\"123456\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
-    'content-type': "application/json",
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Content-Type': "application/json",
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("PATCH", "/contacts/55afddde-4296-4daf-8e49-7ba481ef9608", payload, headers)
@@ -3234,9 +2673,9 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.patch("https://nz.api.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608")
-  .header("content-type", "application/json")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Content-Type", "application/json")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .body("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"branch_code\":\"123456\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
@@ -3254,11 +2693,11 @@ $request->setRequestUrl('https://nz.api.sandbox.zepto.money/contacts/55afddde-42
 $request->setRequestMethod('PATCH');
 $request->setBody($body);
 
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json',
-  'content-type' => 'application/json'
-));
+$request->setHeaders([
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -3284,9 +2723,9 @@ func main() {
 
 	req, _ := http.NewRequest("PATCH", url, payload)
 
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -3306,7 +2745,6 @@ You can update the name, email, bank account and metadata of any Contact.
   <ul>
     <li>Previous transactions to this Contact will retain the name and bank account that was used at the time.</li>
     <li>You cannot update a Contact's bank account details if they currently have an accepted agreement.</li>
-    <li>Any active Bank Connections will be lost if you change the Contact's bank account.</li>
     <li>See our [Help Article](https://help.split.cash/en/articles/3829211-how-do-i-change-my-customers-bank-account-details) for more information about the nuances and implications of changing a contacts Bank Account.</li>
   </ul>
 </aside>
@@ -3383,556 +2821,7 @@ You can update the name, email, bank account and metadata of any Contact.
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[UpdateAContactResponse](#schemaupdateacontactresponse)|
 |404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
 
-<h1 id="Zepto-API-Contacts--Receivable-">Contacts (Receivable)</h1>
-
-## Add a Receivable Contact
-
-<a id="opIdAddAReceivableContact"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://nz.api.sandbox.zepto.money/contacts/receivable \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
-  --data '{"name":"Delphine Jestin","email":"delphine@gmail.com","payid_email":"delphine_123@merchant.com.au","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/contacts/receivable")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/contacts/receivable",
-  "headers": {
-    "content-type": "application/json",
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.write(JSON.stringify({
-  name: 'Delphine Jestin',
-  email: 'delphine@gmail.com',
-  payid_email: 'delphine_123@merchant.com.au',
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-payload = "{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
-
-headers = {
-    'content-type': "application/json",
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/contacts/receivable", payload, headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/contacts/receivable")
-  .header("content-type", "application/json")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .body("{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$body = new http\Message\Body;
-$body->append('{"name":"Delphine Jestin","email":"delphine@gmail.com","payid_email":"delphine_123@merchant.com.au","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/contacts/receivable');
-$request->setRequestMethod('POST');
-$request->setBody($body);
-
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json',
-  'content-type' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"strings"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/contacts/receivable"
-
-	payload := strings.NewReader("{\"name\":\"Delphine Jestin\",\"email\":\"delphine@gmail.com\",\"payid_email\":\"delphine_123@merchant.com.au\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
-
-	req, _ := http.NewRequest("POST", url, payload)
-
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /contacts/receivable`
-
-Receive funds from a Contact by allowing them to pay to a personalised PayID or account number. Perfect for reconciling incoming funds to a customer, receiving funds instantly, eliminating human error & improving your customer's experience.
-
-<aside class="notice">
-  To enable this feature, please contact our support team with the following information:
-    <li>Your full legal business name</li>
-    <li>A legally owned domain name: for your PayID email addresses</li>
-    <li><strong>alias_name</strong>: the business name that will be displayed to your customers upon PayID resolution. We suggest using a shortened name appropriate for mobile displays</li>
-</aside>
-<aside class="notice">
-  There are two strategies supported for PayID assignment when creating this type of Contact:
-  <li><strong>On-demand PayID</strong>: provide a <code>payid_email</code> and we'll create a contact and register a PayID with the given email address. The PayID registration process happens when the request is received. The initial response for <code>payid_details.state</code> will always be <code>pending</code>. It will transition to <code>active</code> when the PayID registration process is complete. This can take up to a few seconds. You can use webhooks to be informed of this state change.</li>
-  <li><strong>Pooled PayID</strong>: provide your <code>payid_email_domain</code> and we'll create a contact and assign them a PayID from your pool. Pooled PayIDs are pre-registered. The PayID email value is generated using a random value and the email domain from your PayID pool configuration. Providing both <code>payid_email</code> and <code>payid_email_domain</code> will ignore your pool and use the "On-demand PayID" strategy instead.</li>
-</aside>
-<aside class="notice">
-  While unlikely, it is possible that we will be unable to register the given PayID. In this case <code>payid_details.state</code> will transition to <code>failed</code>.
-
-  You can simulate this path in sandbox by adding <code>+failure</code> to your <code>payid_email</code> e.g <code>test+failure@split.cash</code>
-</aside>
-<aside class="notice">
-  You can test receiving payments to a Receivable Contact in our sandbox environment using the <a href="#simulate-incoming-payid-payment">PayID simulation endpoint</a>.
-</aside>
-
-> Body parameter
-
-```json
-{
-  "name": "Delphine Jestin",
-  "email": "delphine@gmail.com",
-  "payid_email": "delphine_123@merchant.com.au",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}
-```
-
-<h3 id="Add-a-Receivable-Contact-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[AddAReceivableContactRequest](#schemaaddareceivablecontactrequest)|true|No description|
-|» name|body|string|true|Contact name (Min: 3 - Max: 140)|
-|» email|body|string|true|Contact email (Min: 6 - Max: 256)|
-|» payid_email|body|string|false|Contact PayID email (Min: 6 - Max: 256)|
-|» payid_email_domain|body|string|false|PayID pool email domain (Min: 3 - Max: 254)|
-|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
-
-> Example responses
-
-> 201 Response
-
-```json
-{
-  "data": {
-    "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
-    "name": "Delphine Jestin",
-    "email": "delphine@gmail.com",
-    "type": "anyone",
-    "metadata": {
-      "custom_key": "Custom string",
-      "another_custom_key": "Maybe a URL"
-    },
-    "bank_account": {
-      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-      "account_number": "1408281",
-      "branch_code": "802919",
-      "bank_name": "Zepto Float Account",
-      "state": "active",
-      "iav_provider": null,
-      "iav_status": null,
-      "blocks": {
-        "debits_blocked": false,
-        "credits_blocked": false
-      }
-    },
-    "anyone_account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
-    },
-    "payid_details": {
-      "alias_value": "delphine_123@merchant.com.au",
-      "alias_type": "email",
-      "alias_name": "your merchant's alias_name",
-      "state": "pending"
-    }
-  }
-}
-```
-
-<h3 id="Add a Receivable Contact-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddAReceivableContactResponse](#schemaaddareceivablecontactresponse)|
-|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
-
-## Disable a Receivable Contact
-
-<a id="opIdDisableAReceivableContact"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://nz.api.sandbox.zepto.money/contacts//receivable/disable \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/contacts//receivable/disable")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/contacts//receivable/disable",
-  "headers": {
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-headers = { 'authorization': "Bearer {access-token}" }
-
-conn.request("POST", "/contacts//receivable/disable", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/contacts//receivable/disable")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/contacts//receivable/disable');
-$request->setRequestMethod('POST');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/contacts//receivable/disable"
-
-	req, _ := http.NewRequest("POST", url, nil)
-
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /contacts/{contact_id}/receivable/disable`
-
-This endpoint should be used to Disable a Receivable Contact.
-
-This will reject all payments made to the relevant Account number or PayID and return them to your customer. Payments made via DE and NPP will be rejected.
-
-<h3 id="Disable-a-Receivable-Contact-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string(UUID)|true|Receivable Contact ID (`ReceivableContact.data.id`)|
-
-<h3 id="Disable a Receivable Contact-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content (success)|None|
-|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad Request (errors)|None|
-|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
-
-## Reactivate a Receivable Contact
-
-<a id="opIdActivateAReceivableContact"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://nz.api.sandbox.zepto.money/contacts//receivable/activate \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/contacts//receivable/activate")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/contacts//receivable/activate",
-  "headers": {
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-headers = { 'authorization': "Bearer {access-token}" }
-
-conn.request("POST", "/contacts//receivable/activate", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/contacts//receivable/activate")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/contacts//receivable/activate');
-$request->setRequestMethod('POST');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/contacts//receivable/activate"
-
-	req, _ := http.NewRequest("POST", url, nil)
-
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /contacts/{contact_id}/receivable/activate`
-
-This endpoint should be used to Reactivate a Receivable Contact that has been previously Disabled.
-
-This will once again allow you to receive funds from your customer via both DE and NPP channels.
-
-<h3 id="Reactivate-a-Receivable-Contact-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|id|path|string(UUID)|true|Receivable Contact ID (`ReceivableContact.data.id`)|
-
-<h3 id="Reactivate a Receivable Contact-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content (success)|None|
-|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Bad Request (errors)|None|
-|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Not Found|None|
-
-<h1 id="Zepto-API-Open-Agreements">Open Agreements</h1>
+<h1 id="zepto-api-Open-Agreements">Open Agreements</h1>
 
 An Open Agreement is essentially an Agreement template with no specific authoriser. Each time an Open Agreement is accepted by either a Zepto account holder or anyone, the authoriser is added to your Contacts list and a new Agreement is automatically created between the Open Agreement initiator and the authoriser.
 
@@ -3957,15 +2846,16 @@ An Open Agreement can have the following statuses:
 ```shell
 curl --request POST \
   --url https://nz.api.sandbox.zepto.money/open_agreements \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}' \
+  --header 'Content-Type: application/json' \
   --data '{"title":"Subscription Plan A","terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}},"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/open_agreements")
 
@@ -3974,9 +2864,9 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Content-Type"] = 'application/json'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 request.body = "{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
@@ -3984,29 +2874,29 @@ puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "POST",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/open_agreements",
   "headers": {
-    "content-type": "application/json",
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -4014,10 +2904,10 @@ var req = http.request(options, function (res) {
 req.write(JSON.stringify({
   title: 'Subscription Plan A',
   terms: {
-    per_payout: { min_amount: null, max_amount: 10000 },
-    per_frequency: { days: 7, max_amount: 1000000 }
+    per_payout: {min_amount: null, max_amount: 10000},
+    per_frequency: {days: 7, max_amount: 1000000}
   },
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
+  metadata: {custom_key: 'Custom string', another_custom_key: 'Maybe a URL'}
 }));
 req.end();
 ```
@@ -4030,9 +2920,9 @@ conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 payload = "{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
-    'content-type': "application/json",
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Content-Type': "application/json",
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("POST", "/open_agreements", payload, headers)
@@ -4045,9 +2935,9 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/open_agreements")
-  .header("content-type", "application/json")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Content-Type", "application/json")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .body("{\"title\":\"Subscription Plan A\",\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
@@ -4065,11 +2955,11 @@ $request->setRequestUrl('https://nz.api.sandbox.zepto.money/open_agreements');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json',
-  'content-type' => 'application/json'
-));
+$request->setHeaders([
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -4095,9 +2985,9 @@ func main() {
 
 	req, _ := http.NewRequest("POST", url, payload)
 
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -4151,7 +3041,7 @@ Create an Open Agreement that can be accepted by anyone.
 |»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
 |»»» days|body|integer|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
 |»»» max_amount|body|integer|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
-|»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
+|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 
 > Example responses
 
@@ -4194,13 +3084,14 @@ Create an Open Agreement that can be accepted by anyone.
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/open_agreements \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/open_agreements")
 
@@ -4209,36 +3100,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/open_agreements",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -4252,8 +3143,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/open_agreements", headers=headers)
@@ -4266,8 +3157,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/open_agreements")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -4279,10 +3170,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/open_agreements');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -4305,8 +3196,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -4390,13 +3281,14 @@ By default, all Open Agreements will be returned.
 ```shell
 curl --request POST \
   --url https://nz.api.sandbox.zepto.money/open_agreements/OA.1/activate \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/open_agreements/OA.1/activate")
 
@@ -4405,36 +3297,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Post.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "POST",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/open_agreements/OA.1/activate",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -4448,8 +3340,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("POST", "/open_agreements/OA.1/activate", headers=headers)
@@ -4462,8 +3354,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/open_agreements/OA.1/activate")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -4475,10 +3367,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/open_agreements/OA.1/activate');
 $request->setRequestMethod('POST');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -4501,8 +3393,8 @@ func main() {
 
 	req, _ := http.NewRequest("POST", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -4566,13 +3458,14 @@ Allow the Open Agreement to viewed and accepted.
 ```shell
 curl --request POST \
   --url https://nz.api.sandbox.zepto.money/open_agreements/OA.1/close \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/open_agreements/OA.1/close")
 
@@ -4581,36 +3474,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Post.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "POST",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/open_agreements/OA.1/close",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -4624,8 +3517,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("POST", "/open_agreements/OA.1/close", headers=headers)
@@ -4638,8 +3531,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/open_agreements/OA.1/close")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -4651,10 +3544,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/open_agreements/OA.1/close');
 $request->setRequestMethod('POST');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -4677,8 +3570,8 @@ func main() {
 
 	req, _ := http.NewRequest("POST", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -4733,7 +3626,701 @@ Disable the Open Agreement from being viewed or accepted.
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[CloseOpenAgreementResponse](#schemacloseopenagreementresponse)|
 
-<h1 id="Zepto-API-Payment-Requests">Payment Requests</h1>
+<h1 id="zepto-api-Payments">Payments</h1>
+
+A Payment is used to disburse funds to your Contacts.
+
+##Lifecycle
+> Example payout reversal response
+
+```json
+{
+  "data": [
+  {
+    "ref": "C.3",
+    "parent_ref": "PB.1",
+    "type": "credit",
+    "category": "payout_reversal",
+    "created_at": "2021-04-07T23:15:00Z",
+    "matures_at": "2021-04-07T23:15:00Z",
+    "cleared_at": null,
+    "bank_ref": null,
+    "status": "maturing",
+    "status_changed_at": "2016-12-08T23:15:00Z",
+    "party_contact_id": "26297f44-c5e1-40a1-9864-3e0b0754c32a",
+    "party_name": "Sanford-Rees",
+    "party_nickname": "sanford-rees-8",
+    "description": "Payout reversal of D.1 for Sanford-Rees due to no account or incorrect account number"
+      "amount": 1,
+    "reversal_details": {
+      "source_debit_ref": "D.1",
+      "source_credit_failure_reason": "incorrect_account_number",
+    }
+  }
+  ]
+}
+```
+A Payment is simply a group of Payouts, therefore it does not have a particular status. Its Payouts however have their status regularly updated. For a list of possible Payout statuses check out the [Transactions](/#Zepto-API-Transactions).
+
+  <aside class="notice">
+    Zepto no longer supports multiple Payouts within a single Payment request. A Payment request must only contain 1 Payout object.
+  </aside>
+
+### Payout Reversal
+When Zepto is unable to credit funds to a recipient, we will automatically create a payout reversal credit back to the payer. Furthermore, within the payout reversal credit, Zepto will include details in the `description` and under the `reversal_details` key as to why the original credit to the recipient failed.
+
+## Make a Payment
+
+<a id="opIdMakeAPayment"></a>
+
+> Code samples
+
+```shell
+curl --request POST \
+  --url https://nz.api.sandbox.zepto.money/payments \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}' \
+  --header 'Content-Type: application/json' \
+  --data '{"description":"The SuperPackage","matures_at":"2021-06-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+require 'openssl'
+
+url = URI("https://nz.api.sandbox.zepto.money/payments")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["Content-Type"] = 'application/json'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
+request.body = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+const http = require("https");
+
+const options = {
+  "method": "POST",
+  "hostname": "nz.api.sandbox.zepto.money",
+  "port": null,
+  "path": "/payments",
+  "headers": {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
+  }
+};
+
+const req = http.request(options, function (res) {
+  const chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    const body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({
+  description: 'The SuperPackage',
+  matures_at: '2021-06-13T00:00:00Z',
+  your_bank_account_id: '83623359-e86e-440c-9780-432a3bc3626f',
+  payouts: [
+    {
+      amount: 30000,
+      description: 'A tandem skydive jump SB23094',
+      recipient_contact_id: '48b89364-1577-4c81-ba02-96705895d457',
+      metadata: {
+        invoice_ref: 'BILL-0001',
+        invoice_id: 'c80a9958-e805-47c0-ac2a-c947d7fd778d',
+        custom_key: 'Custom string',
+        another_custom_key: 'Maybe a URL'
+      }
+    }
+  ],
+  metadata: {custom_key: 'Custom string', another_custom_key: 'Maybe a URL'}
+}));
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
+
+payload = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+
+headers = {
+    'Content-Type': "application/json",
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
+    }
+
+conn.request("POST", "/payments", payload, headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/payments")
+  .header("Content-Type", "application/json")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
+  .body("{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('{"description":"The SuperPackage","matures_at":"2021-06-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payments');
+$request->setRequestMethod('POST');
+$request->setBody($body);
+
+$request->setHeaders([
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://nz.api.sandbox.zepto.money/payments"
+
+	payload := strings.NewReader("{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`POST /payments`
+
+> Body parameter
+
+```json
+{
+  "description": "The SuperPackage",
+  "matures_at": "2021-06-13T00:00:00Z",
+  "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
+  "payouts": [
+    {
+      "amount": 30000,
+      "description": "A tandem skydive jump SB23094",
+      "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
+      "metadata": {
+        "invoice_ref": "BILL-0001",
+        "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    }
+  ],
+  "metadata": {
+    "custom_key": "Custom string",
+    "another_custom_key": "Maybe a URL"
+  }
+}
+```
+
+<h3 id="Make-a-Payment-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[MakeAPaymentRequest](#schemamakeapaymentrequest)|true|No description|
+|» description|body|string|true|User description. Only visible to the payer|
+|» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
+|» your_bank_account_id|body|string|true|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
+|» payouts|body|[[Payout](#schemapayout)]|true|One Payout object only|
+|»» Payout|body|[Payout](#schemapayout)|false|The actual Payout|
+|»»» amount|body|integer|true|Amount in cents to pay the recipient|
+|»»» description|body|string|true|Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description.|
+|»»» recipient_contact_id|body|string|true|Contact to pay (`Contact.data.id`)|
+|»»» metadata|body|Metadata|false|Use for your custom data and certain Zepto customisations. Stored against generated transactions and included in associated webhook payloads.|
+|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
+
+> Example responses
+
+> 201 Response
+
+```json
+{
+  "data": {
+    "ref": "PB.1",
+    "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
+    "payouts": [
+      {
+        "ref": "D.1",
+        "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
+        "batch_description": "The SuperPackage",
+        "matures_at": "2016-09-13T23:50:44Z",
+        "created_at": "2016-09-10T23:50:44Z",
+        "status": "maturing",
+        "amount": 30000,
+        "description": "A tandem skydive jump SB23094",
+        "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
+        "to_id": "21066764-c103-4e7f-b436-4cee7db5f400",
+        "metadata": {
+          "invoice_ref": "BILL-0001",
+          "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
+          "custom_key": "Custom string",
+          "another_custom_key": "Maybe a URL"
+        }
+      }
+    ],
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+<h3 id="Make a Payment-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[MakeAPaymentResponse](#schemamakeapaymentresponse)|
+
+## List all Payments
+
+<a id="opIdListAllPayments"></a>
+
+> Code samples
+
+```shell
+curl --request GET \
+  --url https://nz.api.sandbox.zepto.money/payments \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+require 'openssl'
+
+url = URI("https://nz.api.sandbox.zepto.money/payments")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Get.new(url)
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+const http = require("https");
+
+const options = {
+  "method": "GET",
+  "hostname": "nz.api.sandbox.zepto.money",
+  "port": null,
+  "path": "/payments",
+  "headers": {
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
+  }
+};
+
+const req = http.request(options, function (res) {
+  const chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    const body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
+
+headers = {
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
+    }
+
+conn.request("GET", "/payments", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/payments")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payments');
+$request->setRequestMethod('GET');
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://nz.api.sandbox.zepto.money/payments"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`GET /payments`
+
+<h3 id="List-all-Payments-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|page|query|string|false|Page of results to return, single value, exact match|
+|per_page|query|string|false|Number of results per page, single value, exact match|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "data": [
+    {
+      "ref": "PB.1",
+      "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
+      "payouts": [
+        {
+          "ref": "D.1",
+          "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
+          "batch_description": "This description is only available to the payer",
+          "matures_at": "2016-09-13T23:50:44Z",
+          "created_at": "2016-09-10T23:50:44Z",
+          "status": "maturing",
+          "amount": 30000,
+          "description": "The recipient will see this description",
+          "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
+          "to_id": "21066764-c103-4e7f-b436-4cee7db5f400",
+          "metadata": {
+            "invoice_ref": "BILL-0001",
+            "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
+            "custom_key": "Custom string",
+            "another_custom_key": "Maybe a URL"
+          }
+        },
+        {
+          "ref": "D.2",
+          "recipient_contact_id": "dc6f1e60-3803-43ca-a200-7d641816f57f",
+          "batch_description": "This description is only available to the payer",
+          "matures_at": "2016-09-13T23:50:44Z",
+          "created_at": "2016-09-10T23:50:44Z",
+          "status": "maturing",
+          "amount": 30000,
+          "description": "The recipient will see this description",
+          "from_id": "48b89364-1577-4c81-ba02-96705895d457",
+          "to_id": "f989d9cd-87fc-4c73-b0a4-1eb0e8768d3b"
+        }
+      ],
+      "metadata": {
+        "custom_key": "Custom string",
+        "another_custom_key": "Maybe a URL"
+      }
+    }
+  ]
+}
+```
+
+<h3 id="List all Payments-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllPaymentsResponse](#schemalistallpaymentsresponse)|
+
+## Get a Payment
+
+<a id="opIdGetAPayment"></a>
+
+> Code samples
+
+```shell
+curl --request GET \
+  --url https://nz.api.sandbox.zepto.money/payments/PB.1 \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+require 'openssl'
+
+url = URI("https://nz.api.sandbox.zepto.money/payments/PB.1")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Get.new(url)
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+const http = require("https");
+
+const options = {
+  "method": "GET",
+  "hostname": "nz.api.sandbox.zepto.money",
+  "port": null,
+  "path": "/payments/PB.1",
+  "headers": {
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
+  }
+};
+
+const req = http.request(options, function (res) {
+  const chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    const body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
+
+headers = {
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
+    }
+
+conn.request("GET", "/payments/PB.1", headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/payments/PB.1")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payments/PB.1');
+$request->setRequestMethod('GET');
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://nz.api.sandbox.zepto.money/payments/PB.1"
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`GET /payments/{payment_ref}`
+
+Get a single payment by its reference
+
+<h3 id="Get-a-Payment-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|payment_ref|path|string|true|Payment reference|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "data": {
+    "ref": "PB.1",
+    "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
+    "payouts": [
+      {
+        "ref": "D.1",
+        "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
+        "batch_description": "The SuperPackage",
+        "matures_at": "2016-09-13T23:50:44Z",
+        "created_at": "2016-09-10T23:50:44",
+        "status": "maturing",
+        "amount": 30000,
+        "description": "A tandem skydive jump SB23094",
+        "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
+        "to_id": "21066764-c103-4e7f-b436-4cee7db5f400",
+        "metadata": {
+          "invoice_ref": "BILL-0001",
+          "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
+          "custom_key": "Custom string",
+          "another_custom_key": "Maybe a URL"
+        }
+      }
+    ],
+    "metadata": {
+      "custom_key": "Custom string",
+      "another_custom_key": "Maybe a URL"
+    }
+  }
+}
+```
+
+<h3 id="Get a Payment-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAPaymentResponse](#schemagetapaymentresponse)|
+
+<h1 id="zepto-api-Payment-Requests">Payment Requests</h1>
 
 A Payment Request (PR) is used to collect funds, via direct debit, from one of your Contacts (as long as there is an accepted Agreement in place).
 
@@ -4743,8 +4330,6 @@ A Payment Request (PR) is used to collect funds, via direct debit, from one of y
     1. Given there is an Agreement in place and the Payment Request is within the terms of the Agreement, then it will be automatically approved; **or**
     1. Given the Payment Request is **not** within the terms of the Agreement, then it will not be created; **or**
     1. There is no Agreement in place, then it will not be created.
-1. **Your customer sends funds to you as a [Receivable Contact](/#add-a-receivable-contact):**
-    1. A *receivable* Payment Request will be automatically created and approved to identify the movement of funds from your customer to your chosen Zepto float account.
 
 ##Lifecycle
 
@@ -4773,15 +4358,16 @@ When using Payment Requests to collect payments from your customer, Zepto will a
 ```shell
 curl --request POST \
   --url https://nz.api.sandbox.zepto.money/payment_requests \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
-  --data '{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56.000Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}' \
+  --header 'Content-Type: application/json' \
+  --data '{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/payment_requests")
 
@@ -4790,50 +4376,50 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request["Content-Type"] = 'application/json'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
+request.body = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "POST",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/payment_requests",
   "headers": {
-    "content-type": "application/json",
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
 
 req.write(JSON.stringify({
   description: 'Visible to both initiator and authoriser',
-  matures_at: '2016-12-19T02:10:56.000Z',
+  matures_at: '2016-12-19T02:10:56Z',
   amount: 99000,
   authoriser_contact_id: 'de86472c-c027-4735-a6a7-234366a27fc7',
   your_bank_account_id: '9c70871d-8e36-4c3e-8a9c-c0ee20e7c679',
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
+  metadata: {custom_key: 'Custom string', another_custom_key: 'Maybe a URL'}
 }));
 req.end();
 ```
@@ -4843,12 +4429,12 @@ import http.client
 
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
-payload = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
-    'content-type': "application/json",
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Content-Type': "application/json",
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("POST", "/payment_requests", payload, headers)
@@ -4861,10 +4447,10 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/payment_requests")
-  .header("content-type", "application/json")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .body("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .header("Content-Type", "application/json")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
+  .body("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -4875,17 +4461,17 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56.000Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/payment_requests');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json',
-  'content-type' => 'application/json'
-));
+$request->setHeaders([
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -4907,13 +4493,13 @@ func main() {
 
 	url := "https://nz.api.sandbox.zepto.money/payment_requests"
 
-	payload := strings.NewReader("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -4933,7 +4519,7 @@ func main() {
 ```json
 {
   "description": "Visible to both initiator and authoriser",
-  "matures_at": "2016-12-19T02:10:56.000Z",
+  "matures_at": "2016-12-19T02:10:56Z",
   "amount": 99000,
   "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
   "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
@@ -5005,13 +4591,14 @@ func main() {
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/payment_requests/PR.3 \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/payment_requests/PR.3")
 
@@ -5020,36 +4607,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/payment_requests/PR.3",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -5063,8 +4650,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/payment_requests/PR.3", headers=headers)
@@ -5077,8 +4664,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/payment_requests/PR.3")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -5090,10 +4677,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/payment_requests/PR.3');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -5116,8 +4703,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -5186,12 +4773,13 @@ func main() {
 ```shell
 curl --request DELETE \
   --url https://nz.api.sandbox.zepto.money/payment_requests/PR.3 \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/payment_requests/PR.3")
 
@@ -5200,34 +4788,34 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Delete.new(url)
-request["authorization"] = 'Bearer {access-token}'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "DELETE",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/payment_requests/PR.3",
   "headers": {
-    "authorization": "Bearer {access-token}"
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -5240,7 +4828,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
-headers = { 'authorization': "Bearer {access-token}" }
+headers = { 'Authorization': "Bearer {access-token}" }
 
 conn.request("DELETE", "/payment_requests/PR.3", headers=headers)
 
@@ -5252,7 +4840,7 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.delete("https://nz.api.sandbox.zepto.money/payment_requests/PR.3")
-  .header("authorization", "Bearer {access-token}")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -5264,9 +4852,9 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/payment_requests/PR.3');
 $request->setRequestMethod('DELETE');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}'
-));
+$request->setHeaders([
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -5289,7 +4877,7 @@ func main() {
 
 	req, _ := http.NewRequest("DELETE", url, nil)
 
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -5327,13 +4915,14 @@ A Payment Request can be cancelled as long as the associated transaction's state
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/payment_requests/collections \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/payment_requests/collections")
 
@@ -5342,36 +4931,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/payment_requests/collections",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -5385,8 +4974,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/payment_requests/collections", headers=headers)
@@ -5399,8 +4988,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/payment_requests/collections")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -5412,10 +5001,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/payment_requests/collections');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -5438,8 +5027,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -5520,1299 +5109,12 @@ Payment Requests where you are the creditor and are collecting funds from your d
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListPaymentRequestCollectionsResponse](#schemalistpaymentrequestcollectionsresponse)|
 
-## List Receivables
-
-<a id="opIdListPaymentRequestReceivables"></a>
-
-> Code samples
-
-```shell
-curl --request GET \
-  --url https://nz.api.sandbox.zepto.money/payment_requests/receivables \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/payment_requests/receivables")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "GET",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/payment_requests/receivables",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("GET", "/payment_requests/receivables", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/payment_requests/receivables")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payment_requests/receivables');
-$request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/payment_requests/receivables"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`GET /payment_requests/receivables`
-
-Payment Requests where the debtor is sending you funds ([Receivable Contacts](/#add-a-receivable-contact)). This endpoint exposes all received payments.
-
-<h3 id="List-Receivables-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|page|query|string|false|Page of results to return, single value, exact match|
-|per_page|query|string|false|Number of results per page, single value, exact match|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": [
-    {
-      "ref": "PR.2t65",
-      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
-      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-      "contact_initiated": true,
-      "schedule_ref": null,
-      "status": "approved",
-      "status_reason": null,
-      "matures_at": "2021-05-12T13:43:12Z",
-      "responded_at": "2021-05-12T13:43:12Z",
-      "created_at": "2021-05-12T13:43:12Z",
-      "credit_ref": "C.77b1",
-      "payout": {
-        "amount": 50000,
-        "description": "Deposit to my Trading account",
-        "matures_at": "2021-05-12T13:43:12Z"
-      }
-    },
-    {
-      "ref": "PR.1n644",
-      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
-      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-      "contact_initiated": true,
-      "schedule_ref": null,
-      "status": "approved",
-      "status_reason": null,
-      "matures_at": "2021-06-01T04:34:50Z",
-      "responded_at": null,
-      "created_at": "2021-06-01T04:34:56Z",
-      "credit_ref": "c.54r3",
-      "payout": {
-        "amount": 5000,
-        "description": "Punting account top-up",
-        "matures_at": "2021-06-01T04:34:56Z"
-      }
-    }
-  ]
-}
-```
-
-<h3 id="List Receivables-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListPaymentRequestReceivablesResponse](#schemalistpaymentrequestreceivablesresponse)|
-
-<h1 id="Zepto-API-Payments">Payments</h1>
-
-A Payment is used to disburse funds to your Contacts.
-
-Supported payment rails:
-
-* **NPP**: New Payments Platform (Real-time)
-* **DE / BECS**: Direct Entry / Bulk Electronic Clearing System (Slower)
-
-##Lifecycle
-> Example payout reversal response
-
-```json
-{
-  "data": [
-  {
-    "ref": "C.3",
-    "parent_ref": "PB.1",
-    "type": "credit",
-    "category": "payout_reversal",
-    "created_at": "2021-04-07T23:15:00Z",
-    "matures_at": "2021-04-07T23:15:00Z",
-    "cleared_at": null,
-    "bank_ref": null,
-    "status": "maturing",
-    "status_changed_at": "2016-12-08T23:15:00Z",
-    "party_contact_id": "26297f44-c5e1-40a1-9864-3e0b0754c32a",
-    "party_name": "Sanford-Rees",
-    "party_nickname": "sanford-rees-8",
-    "description": "Payout reversal of D.1 for Sanford-Rees due to no account or incorrect account number"
-      "amount": 1,
-    "reversal_details": {
-      "source_debit_ref": "D.1",
-      "source_credit_failure_reason": "incorrect_account_number",
-    }
-  }
-  ]
-}
-```
-A Payment is simply a group of Payouts, therefore it does not have a particular status. Its Payouts however have their status regularly updated. For a list of possible Payout statuses check out the [Transactions](/#Zepto-API-Transactions).
-
-  <aside class="notice">
-    Zepto no longer supports multiple Payouts within a single Payment request. A Payment request must only contain 1 Payout object.
-  </aside>
-
-### Payout Reversal
-When Zepto is unable to credit funds to a recipient, we will automatically create a payout reversal credit back to the payer. Furthermore, within the payout reversal credit, Zepto will include details in the `description` and under the `reversal_details` key as to why the original credit to the recipient failed.
-
-## Make a Payment
-
-<a id="opIdMakeAPayment"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://nz.api.sandbox.zepto.money/payments \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
-  --data '{"description":"The SuperPackage","matures_at":"2021-06-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","channels":["new_payments_platform"],"payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/payments")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":[\"new_payments_platform\"],\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/payments",
-  "headers": {
-    "content-type": "application/json",
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.write(JSON.stringify({
-  description: 'The SuperPackage',
-  matures_at: '2021-06-13T00:00:00Z',
-  your_bank_account_id: '83623359-e86e-440c-9780-432a3bc3626f',
-  channels: [ 'new_payments_platform' ],
-  payouts: [
-    {
-      amount: 30000,
-      description: 'A tandem skydive jump SB23094',
-      recipient_contact_id: '48b89364-1577-4c81-ba02-96705895d457',
-      metadata: {
-        invoice_ref: 'BILL-0001',
-        invoice_id: 'c80a9958-e805-47c0-ac2a-c947d7fd778d',
-        custom_key: 'Custom string',
-        another_custom_key: 'Maybe a URL'
-      }
-    }
-  ],
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
-}));
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-payload = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":[\"new_payments_platform\"],\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
-
-headers = {
-    'content-type': "application/json",
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/payments", payload, headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/payments")
-  .header("content-type", "application/json")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .body("{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":[\"new_payments_platform\"],\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$body = new http\Message\Body;
-$body->append('{"description":"The SuperPackage","matures_at":"2021-06-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","channels":["new_payments_platform"],"payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payments');
-$request->setRequestMethod('POST');
-$request->setBody($body);
-
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json',
-  'content-type' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"strings"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/payments"
-
-	payload := strings.NewReader("{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"channels\":[\"new_payments_platform\"],\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
-
-	req, _ := http.NewRequest("POST", url, payload)
-
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /payments`
-
-To enable custom payment flows, the required payment channel can be selected by setting the _channel_ attribute to one of the following combinations:
-
-<ul>
-  <li>["new_payments_platform"] - for faster payments 24/7/365</li>
-  <li>["direct_entry"] - for slower traditional payments</li>
-  <li>["new_payments_platform", "direct_entry"] - enables automatic channel switching if a payment fails on the NPP</li>
-</ul>
-
-> Body parameter
-
-```json
-{
-  "description": "The SuperPackage",
-  "matures_at": "2021-06-13T00:00:00Z",
-  "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-  "channels": [
-    "new_payments_platform"
-  ],
-  "payouts": [
-    {
-      "amount": 30000,
-      "description": "A tandem skydive jump SB23094",
-      "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
-      "metadata": {
-        "invoice_ref": "BILL-0001",
-        "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
-        "custom_key": "Custom string",
-        "another_custom_key": "Maybe a URL"
-      }
-    }
-  ],
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}
-```
-
-<h3 id="Make-a-Payment-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[MakeAPaymentRequest](#schemamakeapaymentrequest)|true|No description|
-|» description|body|string|true|User description. Only visible to the payer|
-|» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
-|» your_bank_account_id|body|string|true|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
-|» channels|body|array|true|Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)|
-|» payouts|body|[[Payout](#schemapayout)]|true|One Payout object only|
-|»» Payout|body|[Payout](#schemapayout)|false|The actual Payout|
-|»»» amount|body|integer|true|Amount in cents to pay the recipient|
-|»»» description|body|string|true|Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description. For NPP payments, the payout recipient will see the first 280 characters of this description.|
-|»»» recipient_contact_id|body|string|true|Contact to pay (`Contact.data.id`)|
-|»»» metadata|body|Metadata|false|Use for your custom data and certain Zepto customisations. Stored against generated transactions and included in associated webhook payloads.|
-|»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
-
-> Example responses
-
-> 201 Response
-
-```json
-{
-  "data": {
-    "ref": "PB.1",
-    "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-    "channels": [
-      "new_payments_platform"
-    ],
-    "payouts": [
-      {
-        "ref": "D.1",
-        "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
-        "batch_description": "The SuperPackage",
-        "matures_at": "2016-09-13T23:50:44Z",
-        "created_at": "2016-09-10T23:50:44Z",
-        "status": "maturing",
-        "amount": 30000,
-        "description": "A tandem skydive jump SB23094",
-        "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
-        "to_id": "21066764-c103-4e7f-b436-4cee7db5f400",
-        "metadata": {
-          "invoice_ref": "BILL-0001",
-          "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
-          "custom_key": "Custom string",
-          "another_custom_key": "Maybe a URL"
-        }
-      }
-    ],
-    "metadata": {
-      "custom_key": "Custom string",
-      "another_custom_key": "Maybe a URL"
-    }
-  }
-}
-```
-
-<h3 id="Make a Payment-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[MakeAPaymentResponse](#schemamakeapaymentresponse)|
-
-## List all Payments
-
-<a id="opIdListAllPayments"></a>
-
-> Code samples
-
-```shell
-curl --request GET \
-  --url https://nz.api.sandbox.zepto.money/payments \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/payments")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "GET",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/payments",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("GET", "/payments", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/payments")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payments');
-$request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/payments"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`GET /payments`
-
-<h3 id="List-all-Payments-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|page|query|string|false|Page of results to return, single value, exact match|
-|per_page|query|string|false|Number of results per page, single value, exact match|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": [
-    {
-      "ref": "PB.1",
-      "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-      "channels": [
-        "new_payments_platform",
-        "direct_entry"
-      ],
-      "payouts": [
-        {
-          "ref": "D.1",
-          "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
-          "batch_description": "This description is only available to the payer",
-          "matures_at": "2016-09-13T23:50:44Z",
-          "created_at": "2016-09-10T23:50:44Z",
-          "status": "maturing",
-          "amount": 30000,
-          "description": "The recipient will see this description",
-          "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
-          "to_id": "21066764-c103-4e7f-b436-4cee7db5f400",
-          "metadata": {
-            "invoice_ref": "BILL-0001",
-            "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
-            "custom_key": "Custom string",
-            "another_custom_key": "Maybe a URL"
-          }
-        },
-        {
-          "ref": "D.2",
-          "recipient_contact_id": "dc6f1e60-3803-43ca-a200-7d641816f57f",
-          "batch_description": "This description is only available to the payer",
-          "matures_at": "2016-09-13T23:50:44Z",
-          "created_at": "2016-09-10T23:50:44Z",
-          "status": "maturing",
-          "amount": 30000,
-          "description": "The recipient will see this description",
-          "from_id": "48b89364-1577-4c81-ba02-96705895d457",
-          "to_id": "f989d9cd-87fc-4c73-b0a4-1eb0e8768d3b"
-        }
-      ],
-      "metadata": {
-        "custom_key": "Custom string",
-        "another_custom_key": "Maybe a URL"
-      }
-    }
-  ]
-}
-```
-
-<h3 id="List all Payments-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllPaymentsResponse](#schemalistallpaymentsresponse)|
-
-## Get a Payment
-
-<a id="opIdGetAPayment"></a>
-
-> Code samples
-
-```shell
-curl --request GET \
-  --url https://nz.api.sandbox.zepto.money/payments/PB.1 \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/payments/PB.1")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "GET",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/payments/PB.1",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("GET", "/payments/PB.1", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/payments/PB.1")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payments/PB.1');
-$request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/payments/PB.1"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`GET /payments/{payment_ref}`
-
-Get a single payment by its reference
-
-<h3 id="Get-a-Payment-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|payment_ref|path|string|true|Payment reference|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": {
-    "ref": "PB.1",
-    "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-    "channels": [
-      "direct_entry"
-    ],
-    "payouts": [
-      {
-        "ref": "D.1",
-        "recipient_contact_id": "48b89364-1577-4c81-ba02-96705895d457",
-        "batch_description": "The SuperPackage",
-        "matures_at": "2016-09-13T23:50:44Z",
-        "created_at": "2016-09-10T23:50:44",
-        "status": "maturing",
-        "amount": 30000,
-        "description": "A tandem skydive jump SB23094",
-        "from_id": "83623359-e86e-440c-9780-432a3bc3626f",
-        "to_id": "21066764-c103-4e7f-b436-4cee7db5f400",
-        "metadata": {
-          "invoice_ref": "BILL-0001",
-          "invoice_id": "c80a9958-e805-47c0-ac2a-c947d7fd778d",
-          "custom_key": "Custom string",
-          "another_custom_key": "Maybe a URL"
-        }
-      }
-    ],
-    "metadata": {
-      "custom_key": "Custom string",
-      "another_custom_key": "Maybe a URL"
-    }
-  }
-}
-```
-
-<h3 id="Get a Payment-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAPaymentResponse](#schemagetapaymentresponse)|
-
-<h1 id="Zepto-API-Payouts">Payouts</h1>
-
-This endpoint gives you some control over a transaction:
-
-* After it has been created; and
-* Before it has been submitted to the banks; or
-* If it was Prefailed, due to insufficient funds, and was therefore not submitted to the banks.
-
-<aside class="notice">
-  Payments and Payment Requests are made up of individual Debits and Credits. These debits and credits
-  were once referred to as Payouts [Legacy naming].
-</aside>
-
-## Retry a Prefailed Payment Request [DEPRECATED]
-
-<a id="opIdRetryAPayout"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://nz.api.sandbox.zepto.money/payouts/C.2/retry \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/payouts/C.2/retry")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/payouts/C.2/retry",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/payouts/C.2/retry", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/payouts/C.2/retry")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payouts/C.2/retry');
-$request->setRequestMethod('POST');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/payouts/C.2/retry"
-
-	req, _ := http.NewRequest("POST", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /payouts/{ref}/retry`
-
-When debitting a Contact with an active bank connection, Zepto will first ensure that there are sufficient funds available before submitting the debit to the banks.
-If a high probability of insufficient funds is detected, Zepto will not submit the transaction to the banks and will mark the transaction as <strong>Prefailed</strong>.
-
-This endpoint allows you to retry the Payment Request without having to create a brand new transaction.
-
-<aside class="notice">
-  Rather than using this endpoint, we now recommend creating a brand new transaction as this simplifies and maintains data integrity for the lifecycle of each attempt
-</aside>
-
-<h3 id="Retry-a-Prefailed-Payment-Request-[DEPRECATED]-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|ref|path|string|true|Payment Request credit reference number e.g C.2|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": {
-    "ref": "C.2",
-    "parent_ref": "PR.039a",
-    "type": "credit",
-    "category": "payout",
-    "created_at": "2016-12-05T23:15:00Z",
-    "matures_at": "2016-12-06T23:15:00Z",
-    "cleared_at": null,
-    "bank_ref": null,
-    "status": "maturing",
-    "status_changed_at": "2016-12-05T23:15:00Z",
-    "party_contact_id": "33c6e31d3-1dc1-448b-9512-0320bc44fdcf",
-    "party_name": "Price and Sons",
-    "party_nickname": "price-and-sons-2",
-    "party_bank_ref": null,
-    "description": "Money for jam",
-    "amount": 1
-  }
-}
-```
-
-<h3 id="Retry a Prefailed Payment Request [DEPRECATED]-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[RetryPayoutResponse](#schemaretrypayoutresponse)|
-
-## Void a Payment
-
-<a id="opIdVoidAPayment"></a>
-
-> Code samples
-
-```shell
-curl --request DELETE \
-  --url https://nz.api.sandbox.zepto.money/payouts/D.48 \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
-  --data false
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/payouts/D.48")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Delete.new(url)
-request["content-type"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-request.body = "false"
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "DELETE",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/payouts/D.48",
-  "headers": {
-    "content-type": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-payload = "false"
-
-headers = {
-    'content-type': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("DELETE", "/payouts/D.48", payload, headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.delete("https://nz.api.sandbox.zepto.money/payouts/D.48")
-  .header("content-type", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .body("false")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$body = new http\Message\Body;
-$body->append('false');
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/payouts/D.48');
-$request->setRequestMethod('DELETE');
-$request->setBody($body);
-
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'content-type' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"strings"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/payouts/D.48"
-
-	payload := strings.NewReader("false")
-
-	req, _ := http.NewRequest("DELETE", url, payload)
-
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`DELETE /payouts/{ref}`
-
-You can void any Payment from your account that has not yet matured.
-
-> Body parameter
-
-```json
-false
-```
-
-<h3 id="Void-a-Payment-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|ref|path|string|true|Payment debit reference number e.g D.48|
-
-<h3 id="Void a Payment-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
-
-<h1 id="Zepto-API-Refunds">Refunds</h1>
+<h1 id="zepto-api-Refunds">Refunds</h1>
 
 Refunds can be issued for any successfully completed Payment Request transaction. This includes:
 
 1. Payment Requests for direct debit payments **(Collections)**:
-2. Payment Requests for funds received via DE/NPP **(Receivables)**:
+2. Payment Requests for funds received via DE **(Receivables)**:
 
 This allows you to return any funds that were previously collected or received into one of your bank/float accounts.
 
@@ -6825,15 +5127,16 @@ This allows you to return any funds that were previously collected or received i
 ```shell
 curl --request POST \
   --url https://nz.api.sandbox.zepto.money/credits/string/refunds \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
-  --data '{"amount":500,"channels":["direct_entry"],"reason":"Because reason","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}' \
+  --header 'Content-Type: application/json' \
+  --data '{"amount":500,"reason":"Because reason","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/credits/string/refunds")
 
@@ -6842,49 +5145,48 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"amount\":500,\"channels\":[\"direct_entry\"],\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request["Content-Type"] = 'application/json'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
+request.body = "{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "POST",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/credits/string/refunds",
   "headers": {
-    "content-type": "application/json",
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
 
 req.write(JSON.stringify({
   amount: 500,
-  channels: [ 'direct_entry' ],
   reason: 'Because reason',
   your_bank_account_id: '9c70871d-8e36-4c3e-8a9c-c0ee20e7c679',
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
+  metadata: {custom_key: 'Custom string', another_custom_key: 'Maybe a URL'}
 }));
 req.end();
 ```
@@ -6894,12 +5196,12 @@ import http.client
 
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
-payload = "{\"amount\":500,\"channels\":[\"direct_entry\"],\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
-    'content-type': "application/json",
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Content-Type': "application/json",
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("POST", "/credits/string/refunds", payload, headers)
@@ -6912,10 +5214,10 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/credits/string/refunds")
-  .header("content-type", "application/json")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .body("{\"amount\":500,\"channels\":[\"direct_entry\"],\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .header("Content-Type", "application/json")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
+  .body("{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -6926,17 +5228,17 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"amount":500,"channels":["direct_entry"],"reason":"Because reason","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"amount":500,"reason":"Because reason","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/credits/string/refunds');
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json',
-  'content-type' => 'application/json'
-));
+$request->setHeaders([
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -6958,13 +5260,13 @@ func main() {
 
 	url := "https://nz.api.sandbox.zepto.money/credits/string/refunds"
 
-	payload := strings.NewReader("{\"amount\":500,\"channels\":[\"direct_entry\"],\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -6991,9 +5293,6 @@ Certain rules apply to the issuance of a refund:
 ```json
 {
   "amount": 500,
-  "channels": [
-    "direct_entry"
-  ],
   "reason": "Because reason",
   "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
   "metadata": {
@@ -7010,7 +5309,6 @@ Certain rules apply to the issuance of a refund:
 |credit_ref|path|string|true|The credit reference number e.g C.625v|
 |body|body|[IssueARefundRequest](#schemaissuearefundrequest)|true|No description|
 |» amount|body|integer|true|Amount in cents refund (Min: 1 - Max: 99999999999)|
-|» channels|body|array|false|Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)|
 |» reason|body|string|false|Reason for the refund. First 9 characters are visible to both parties.|
 |» your_bank_account_id|body|string(uuid)|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
@@ -7028,9 +5326,6 @@ Certain rules apply to the issuance of a refund:
     "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "created_at": "2021-06-01T07:20:24Z",
     "amount": 500,
-    "channels": [
-      "direct_entry"
-    ],
     "reason": "Subscription refund",
     "contacts": {
       "source_contact_id": "194b0237-6c2c-4705-b4fb-308274b14eda",
@@ -7059,13 +5354,14 @@ Certain rules apply to the issuance of a refund:
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/refunds/outgoing \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/refunds/outgoing")
 
@@ -7074,36 +5370,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/refunds/outgoing",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -7117,8 +5413,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/refunds/outgoing", headers=headers)
@@ -7131,8 +5427,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/refunds/outgoing")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -7144,10 +5440,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/refunds/outgoing');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -7170,8 +5466,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -7232,13 +5528,14 @@ func main() {
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/refunds/PRF.75f \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/refunds/PRF.75f")
 
@@ -7247,36 +5544,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/refunds/PRF.75f",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -7290,8 +5587,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/refunds/PRF.75f", headers=headers)
@@ -7304,8 +5601,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/refunds/PRF.75f")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -7317,10 +5614,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/refunds/PRF.75f');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -7343,8 +5640,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -7395,559 +5692,7 @@ Get a single Refund by its reference
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[RetrieveARefundResponse](#schemaretrievearefundresponse)|
 
-<h1 id="Zepto-API-Sandbox-Only">Sandbox Only</h1>
-
-Special testing endpoints that only exist in the sandbox environment.
-
-## Simulate incoming PayID payment
-
-<a id="opIdSimulateIncomingPayIDPayment"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://nz.api.sandbox.zepto.money/simulate/incoming_npp_payid_payment \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
-  --data '{"payid_email":"incoming@split.cash","amount":10000}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/simulate/incoming_npp_payid_payment")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"payid_email\":\"incoming@split.cash\",\"amount\":10000}"
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/simulate/incoming_npp_payid_payment",
-  "headers": {
-    "content-type": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.write(JSON.stringify({ payid_email: 'incoming@split.cash', amount: 10000 }));
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-payload = "{\"payid_email\":\"incoming@split.cash\",\"amount\":10000}"
-
-headers = {
-    'content-type': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/simulate/incoming_npp_payid_payment", payload, headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/simulate/incoming_npp_payid_payment")
-  .header("content-type", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .body("{\"payid_email\":\"incoming@split.cash\",\"amount\":10000}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$body = new http\Message\Body;
-$body->append('{"payid_email":"incoming@split.cash","amount":10000}');
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/simulate/incoming_npp_payid_payment');
-$request->setRequestMethod('POST');
-$request->setBody($body);
-
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'content-type' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"strings"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/simulate/incoming_npp_payid_payment"
-
-	payload := strings.NewReader("{\"payid_email\":\"incoming@split.cash\",\"amount\":10000}")
-
-	req, _ := http.NewRequest("POST", url, payload)
-
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /simulate/incoming_npp_payid_payment`
-
-Simulate receiving a real-time PayID payment from one of your Receivable Contacts.
-
-> Body parameter
-
-```json
-{
-  "payid_email": "incoming@split.cash",
-  "amount": 10000
-}
-```
-
-<h3 id="Simulate-incoming-PayID-payment-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[SimulateIncomingPayIDPaymentRequest](#schemasimulateincomingpayidpaymentrequest)|true|No description|
-|» payid_email|body|string|true|Receivable Contact PayID email (Min: 6 - Max: 256)|
-|» amount|body|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
-|» payment_description|body|string|false|Default:  "Simulated PayID payment"|
-|» payment_reference|body|string|false|Default:  "simulated-payid-payment"|
-|» from_bsb|body|string|false|Default: "014209"|
-|» from_account_number|body|string|false|Default: "12345678"|
-|» debtor_name|body|string|false|Default:  "Simulated Debtor"|
-|» debtor_legal_name|body|string|false|Default:  "Simulated Debtor Pty Ltd"|
-
-<h3 id="Simulate incoming PayID payment-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Success|None|
-|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Invalid parameters|None|
-
-## Simulate an incoming real-time payment
-
-<a id="opIdSimulateIncomingNPPBBANPayment"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://nz.api.sandbox.zepto.money/simulate/incoming_npp_bban_payment \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
-  --data '{"to_bsb":"802919","to_account_number":"88888888","amount":10000}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/simulate/incoming_npp_bban_payment")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"to_bsb\":\"802919\",\"to_account_number\":\"88888888\",\"amount\":10000}"
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/simulate/incoming_npp_bban_payment",
-  "headers": {
-    "content-type": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.write(JSON.stringify({ to_bsb: '802919', to_account_number: '88888888', amount: 10000 }));
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-payload = "{\"to_bsb\":\"802919\",\"to_account_number\":\"88888888\",\"amount\":10000}"
-
-headers = {
-    'content-type': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/simulate/incoming_npp_bban_payment", payload, headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/simulate/incoming_npp_bban_payment")
-  .header("content-type", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .body("{\"to_bsb\":\"802919\",\"to_account_number\":\"88888888\",\"amount\":10000}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$body = new http\Message\Body;
-$body->append('{"to_bsb":"802919","to_account_number":"88888888","amount":10000}');
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/simulate/incoming_npp_bban_payment');
-$request->setRequestMethod('POST');
-$request->setBody($body);
-
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'content-type' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"strings"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/simulate/incoming_npp_bban_payment"
-
-	payload := strings.NewReader("{\"to_bsb\":\"802919\",\"to_account_number\":\"88888888\",\"amount\":10000}")
-
-	req, _ := http.NewRequest("POST", url, payload)
-
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /simulate/incoming_npp_bban_payment`
-
-Simulate receiving a real-time payment to either a Receivable Contact or one of your float accounts, made using a BSB and account number (i.e. not via PayID).
-
-> Body parameter
-
-```json
-{
-  "to_bsb": "802919",
-  "to_account_number": "88888888",
-  "amount": 10000
-}
-```
-
-<h3 id="Simulate-an-incoming-real-time-payment-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[SimulateIncomingNPPBBANPaymentRequest](#schemasimulateincomingnppbbanpaymentrequest)|true|No description|
-|» to_bsb|body|string|true|Zepto float account BSB (usually 802919)|
-|» to_account_number|body|string|true|Zepto float account number|
-|» amount|body|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
-|» payment_description|body|string|false|Default: "Simulated NPP payment"|
-|» payment_reference|body|string|false|Default: "simulated-npp-payment"|
-|» from_bsb|body|string|false|Default: "014209"|
-|» from_account_number|body|string|false|Default: "12345678"|
-|» debtor_name|body|string|false|Default: "Simulated Debtor"|
-|» debtor_legal_name|body|string|false|Default: "Simulated Debtor Pty Ltd"|
-
-<h3 id="Simulate an incoming real-time payment-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Success|None|
-|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Invalid parameters|None|
-
-## Simulate an incoming DE payment
-
-<a id="opIdSimulateIncomingDEPayment"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://nz.api.sandbox.zepto.money/simulate/incoming_de_payment \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
-  --data '{"to_bsb":"802919","to_account_number":"88888888","amount":10000}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/simulate/incoming_de_payment")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"to_bsb\":\"802919\",\"to_account_number\":\"88888888\",\"amount\":10000}"
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/simulate/incoming_de_payment",
-  "headers": {
-    "content-type": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.write(JSON.stringify({ to_bsb: '802919', to_account_number: '88888888', amount: 10000 }));
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-payload = "{\"to_bsb\":\"802919\",\"to_account_number\":\"88888888\",\"amount\":10000}"
-
-headers = {
-    'content-type': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/simulate/incoming_de_payment", payload, headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/simulate/incoming_de_payment")
-  .header("content-type", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .body("{\"to_bsb\":\"802919\",\"to_account_number\":\"88888888\",\"amount\":10000}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$body = new http\Message\Body;
-$body->append('{"to_bsb":"802919","to_account_number":"88888888","amount":10000}');
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/simulate/incoming_de_payment');
-$request->setRequestMethod('POST');
-$request->setBody($body);
-
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'content-type' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"strings"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/simulate/incoming_de_payment"
-
-	payload := strings.NewReader("{\"to_bsb\":\"802919\",\"to_account_number\":\"88888888\",\"amount\":10000}")
-
-	req, _ := http.NewRequest("POST", url, payload)
-
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /simulate/incoming_de_payment`
-
-Simulate receiving a Direct Entry payment (i.e. not a real-time payment) to either a Receivable Contact or one of your float accounts.
-
-> Body parameter
-
-```json
-{
-  "to_bsb": "802919",
-  "to_account_number": "88888888",
-  "amount": 10000
-}
-```
-
-<h3 id="Simulate-an-incoming-DE-payment-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[SimulateIncomingDEPaymentRequest](#schemasimulateincomingdepaymentrequest)|true|No description|
-|» to_bsb|body|string|true|Zepto float account BSB (usually 802919)|
-|» to_account_number|body|string|true|Zepto float account number|
-|» amount|body|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
-|» payment_reference|body|string|false|Max 18 characters. Default: "simulated-de-pymt"|
-|» from_bsb|body|string|false|Default: "014209"|
-|» from_account_number|body|string|false|Default: "12345678"|
-|» debtor_name|body|string|false|Max 16 characters. Default: "Simulated Debtor"|
-
-<h3 id="Simulate an incoming DE payment-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Success|None|
-|400|[Bad Request](https://tools.ietf.org/html/rfc7231#section-6.5.1)|Invalid parameters|None|
-
-<h1 id="Zepto-API-Transactions">Transactions</h1>
+<h1 id="zepto-api-Transactions">Transactions</h1>
 
 By default, the transactions endpoint provides a detailed look at all past, current and future debits & credits related to your account.
 
@@ -8002,8 +5747,6 @@ A transaction (debit or credit) can have the following statuses:
       "description": null,
       "amount": 1,
       "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
-      "channels": ["float_account"]
-      "current_channel": "float_account"
     }
   ]
 }
@@ -8043,18 +5786,6 @@ The rejected, returned, voided & prefailed statuses are always accompanied by a 
 | E252 | Insufficient Funds | There were insufficient funds to complete the transaction. |
 | E253 | System Error | The transaction was unable to complete. Please contact Zepto for assistance. |
 | E299 | Unknown DE Error | An unknown DE error occurred. Please contact Zepto for assistance. |
-### NPP credit failures
-| Code | Title | Detail |
-| ------------ | ------------- | -------------- |
-| E301 | Upstream Network Outage | An upstream network issue occurred. Please try again later. |
-| E302 | BSB Not NPP Enabled | The target BSB is not NPP enabled. Please try another channel. |
-| E303 | Account Not NPP Enabled | The target account exists but cannot accept funds via the NPP. Please try another channel. |
-| E304 | Account Not Found | The target account number cannot be found. |
-| E305 | Intermittent Outage At Target Institution | The target financial institution is experiencing technical difficulties. Please try again later. |
-| E306 | Account Closed | The target account is closed. |
-| E307 | Target Institution Offline | The target financial institution is undergoing maintenance or experiencing an outage. Please try again later. |
-| E308 | Account Blocked | The target account is blocked and cannot receive funds. |
-| E399 | Unknown NPP Error | An unknown NPP error occurred. Please contact Zepto for assistance. |
 
 ## [DEPRECATED] Failure reasons
 
@@ -8082,8 +5813,6 @@ The rejected, returned, voided & prefailed statuses are always accompanied by a 
       "description": null,
       "amount": 1,
       "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
-      "channels": ["float_account"]
-      "current_channel": "float_account"
     }
   ]
 }
@@ -8119,13 +5848,14 @@ The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompani
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/transactions \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/transactions")
 
@@ -8134,36 +5864,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/transactions",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -8177,8 +5907,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/transactions", headers=headers)
@@ -8191,8 +5921,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/transactions")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -8204,10 +5934,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/transactions');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -8230,8 +5960,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -8369,7 +6099,6 @@ func main() {
       "amount": 19999,
       "bank_account_id": "c2e329ae-606f-4311-a9ab-a751baa1915c",
       "channels": [
-        "new_payments_platform",
         "direct_entry"
       ],
       "current_channel": "direct_entry",
@@ -8388,585 +6117,7 @@ func main() {
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllTransactionsResponse](#schemalistalltransactionsresponse)|
 
-<h1 id="Zepto-API-Transfers">Transfers</h1>
-
-This endpoint lets you Transfer funds between any bank & float accounts registered under your Zepto account:
-
-1. **From**: Bank Account **To**: Float Account:
-  * Topping up a float account via Direct Debit
-  * Up to 2 days
-2. **From**: Float Account **To**: Bank Account:
-  * Withdrawing from a float account
-  * Will attempt NPP first and channel switch to DE if required
-3. **From**: Float Account **To**: Float Account:
-  * Transfer between two float accounts
-  * Within seconds
-
-## Add a Transfer
-
-<a id="opIdAddATransfer"></a>
-
-> Code samples
-
-```shell
-curl --request POST \
-  --url https://nz.api.sandbox.zepto.money/transfers \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
-  --data '{"from_bank_account_id":"a79423b2-3827-4cf5-9eda-dc02a298d005","to_bank_account_id":"0921a719-c79d-4ffb-91b6-1b30ab77d14d","amount":100000,"description":"Float account balance adjustment","matures_at":"2021-06-06T00:00:00Z"}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/transfers")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"from_bank_account_id\":\"a79423b2-3827-4cf5-9eda-dc02a298d005\",\"to_bank_account_id\":\"0921a719-c79d-4ffb-91b6-1b30ab77d14d\",\"amount\":100000,\"description\":\"Float account balance adjustment\",\"matures_at\":\"2021-06-06T00:00:00Z\"}"
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "POST",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/transfers",
-  "headers": {
-    "content-type": "application/json",
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.write(JSON.stringify({
-  from_bank_account_id: 'a79423b2-3827-4cf5-9eda-dc02a298d005',
-  to_bank_account_id: '0921a719-c79d-4ffb-91b6-1b30ab77d14d',
-  amount: 100000,
-  description: 'Float account balance adjustment',
-  matures_at: '2021-06-06T00:00:00Z'
-}));
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-payload = "{\"from_bank_account_id\":\"a79423b2-3827-4cf5-9eda-dc02a298d005\",\"to_bank_account_id\":\"0921a719-c79d-4ffb-91b6-1b30ab77d14d\",\"amount\":100000,\"description\":\"Float account balance adjustment\",\"matures_at\":\"2021-06-06T00:00:00Z\"}"
-
-headers = {
-    'content-type': "application/json",
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("POST", "/transfers", payload, headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/transfers")
-  .header("content-type", "application/json")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .body("{\"from_bank_account_id\":\"a79423b2-3827-4cf5-9eda-dc02a298d005\",\"to_bank_account_id\":\"0921a719-c79d-4ffb-91b6-1b30ab77d14d\",\"amount\":100000,\"description\":\"Float account balance adjustment\",\"matures_at\":\"2021-06-06T00:00:00Z\"}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$body = new http\Message\Body;
-$body->append('{"from_bank_account_id":"a79423b2-3827-4cf5-9eda-dc02a298d005","to_bank_account_id":"0921a719-c79d-4ffb-91b6-1b30ab77d14d","amount":100000,"description":"Float account balance adjustment","matures_at":"2021-06-06T00:00:00Z"}');
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/transfers');
-$request->setRequestMethod('POST');
-$request->setBody($body);
-
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json',
-  'content-type' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"strings"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/transfers"
-
-	payload := strings.NewReader("{\"from_bank_account_id\":\"a79423b2-3827-4cf5-9eda-dc02a298d005\",\"to_bank_account_id\":\"0921a719-c79d-4ffb-91b6-1b30ab77d14d\",\"amount\":100000,\"description\":\"Float account balance adjustment\",\"matures_at\":\"2021-06-06T00:00:00Z\"}")
-
-	req, _ := http.NewRequest("POST", url, payload)
-
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`POST /transfers`
-
-Use this endpoint when you want to create a Transfer between any 2 of your float/bank accounts.
-
-> Body parameter
-
-```json
-{
-  "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-  "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-  "amount": 100000,
-  "description": "Float account balance adjustment",
-  "matures_at": "2021-06-06T00:00:00Z"
-}
-```
-
-<h3 id="Add-a-Transfer-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[AddATransferRequest](#schemaaddatransferrequest)|true|No description|
-|» from_bank_account_id|body|string|true|The source float/bank account (UUID)|
-|» to_bank_account_id|body|string|true|The destination float/bank account (UUID)|
-|» amount|body|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
-|» description|body|string|true|Description for the Transfer|
-|» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 the Transfer should be processed. (Can not be earlier than the start of current day)|
-
-> Example responses
-
-> 201 Response
-
-```json
-{
-  "data": {
-    "ref": "T.11ub",
-    "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-    "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-    "amount": 100000,
-    "description": "Float account balance adjustment",
-    "matures_at": "2021-06-06T00:00:00Z"
-  }
-}
-```
-
-<h3 id="Add a Transfer-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[AddATransferResponse](#schemaaddatransferresponse)|
-
-## List all Transfers (Available soon)
-
-<a id="opIdListAllTransfers"></a>
-
-> Code samples
-
-```shell
-curl --request GET \
-  --url https://nz.api.sandbox.zepto.money/transfers \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/transfers")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "GET",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/transfers",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("GET", "/transfers", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/transfers")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/transfers');
-$request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/transfers"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`GET /transfers`
-
-<h3 id="List-all-Transfers-(Available-soon)-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|page|query|string|false|Page of results to return, single value, exact match|
-|per_page|query|string|false|Number of results per page, single value, exact match|
-|from_bank_account_id|query|string|false|Source bank/float account UUID, single value, exact match|
-|to_bank_account_id|query|string|false|Target bank/float account UUID, single value, exact match|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": [
-    {
-      "ref": "T.62xl",
-      "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-      "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-      "amount": 47000,
-      "description": "Deposit from my bank account",
-      "matures_at": "2021-06-03T00:00:00Z"
-    },
-    {
-      "ref": "T.87xp",
-      "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-      "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-      "amount": 9700,
-      "description": "Withdrawal June 2021",
-      "matures_at": "2021-05-28T00:00:00Z"
-    },
-    {
-      "ref": "T.87s4",
-      "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-      "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-      "amount": 230,
-      "description": "Transfer to my other Float account",
-      "matures_at": "2021-05-03T00:00:00Z"
-    }
-  ]
-}
-```
-
-<h3 id="List all Transfers (Available soon)-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[ListAllTransfersResponse](#schemalistalltransfersresponse)|
-
-## Get a Transfer (Available soon)
-
-<a id="opIdGetATransfer"></a>
-
-> Code samples
-
-```shell
-curl --request GET \
-  --url https://nz.api.sandbox.zepto.money/transfers/T.11ub \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
-```
-
-```ruby
-require 'uri'
-require 'net/http'
-
-url = URI("https://nz.api.sandbox.zepto.money/transfers/T.11ub")
-
-http = Net::HTTP.new(url.host, url.port)
-http.use_ssl = true
-http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
-
-response = http.request(request)
-puts response.read_body
-```
-
-```javascript--node
-var http = require("https");
-
-var options = {
-  "method": "GET",
-  "hostname": "nz.api.sandbox.zepto.money",
-  "port": null,
-  "path": "/transfers/T.11ub",
-  "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
-  }
-};
-
-var req = http.request(options, function (res) {
-  var chunks = [];
-
-  res.on("data", function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on("end", function () {
-    var body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-```
-
-```python
-import http.client
-
-conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
-
-headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
-    }
-
-conn.request("GET", "/transfers/T.11ub", headers=headers)
-
-res = conn.getresponse()
-data = res.read()
-
-print(data.decode("utf-8"))
-```
-
-```java
-HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/transfers/T.11ub")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
-  .asString();
-```
-
-```php
-<?php
-
-$client = new http\Client;
-$request = new http\Client\Request;
-
-$request->setRequestUrl('https://nz.api.sandbox.zepto.money/transfers/T.11ub');
-$request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
-
-$client->enqueue($request)->send();
-$response = $client->getResponse();
-
-echo $response->getBody();
-```
-
-```go
-package main
-
-import (
-	"fmt"
-	"net/http"
-	"io/ioutil"
-)
-
-func main() {
-
-	url := "https://nz.api.sandbox.zepto.money/transfers/T.11ub"
-
-	req, _ := http.NewRequest("GET", url, nil)
-
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
-
-	res, _ := http.DefaultClient.Do(req)
-
-	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-
-	fmt.Println(res)
-	fmt.Println(string(body))
-
-}
-```
-
-`GET /transfers/{transfer_ref}`
-
-Get a single transfer by its reference
-
-<h3 id="Get-a-Transfer-(Available-soon)-parameters" class="parameters">Parameters</h3>
-
-|Parameter|In|Type|Required|Description|
-|---|---|---|---|---|
-|transfer_ref|path|string|true|Transfer reference|
-
-> Example responses
-
-> 200 Response
-
-```json
-{
-  "data": {
-    "ref": "T.87xp",
-    "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-    "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-    "amount": 47000,
-    "description": "Deposit from my bank account",
-    "matures_at": "2021-06-03T00:00:00Z"
-  }
-}
-```
-
-<h3 id="Get a Transfer (Available soon)-responses">Responses</h3>
-
-|Status|Meaning|Description|Schema|
-|---|---|---|---|
-|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetATransferResponse](#schemagetatransferresponse)|
-
-<h1 id="Zepto-API-Unassigned-Agreements">Unassigned Agreements</h1>
+<h1 id="zepto-api-Unassigned-Agreements">Unassigned Agreements</h1>
 
 An agreement with no preset authoriser that can only be accepted once and must be accepted within a predefined time period.
 
@@ -8983,15 +6134,16 @@ Please refer to the [Unassigned Agreement](http://help.split.cash/agreements/una
 ```shell
 curl --request POST \
   --url https://nz.api.sandbox.zepto.money/unassigned_agreements \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}' \
-  --header 'content-type: application/json' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}' \
+  --header 'Content-Type: application/json' \
   --data '{"expiry_in_seconds":60,"single_use":false,"terms":{"per_payout":{"min_amount":null,"max_amount":10000},"per_frequency":{"days":7,"max_amount":1000000}},"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/unassigned_agreements")
 
@@ -9000,9 +6152,9 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Post.new(url)
-request["content-type"] = 'application/json'
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Content-Type"] = 'application/json'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 request.body = "{\"expiry_in_seconds\":60,\"single_use\":false,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
@@ -9010,29 +6162,29 @@ puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "POST",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/unassigned_agreements",
   "headers": {
-    "content-type": "application/json",
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -9041,10 +6193,10 @@ req.write(JSON.stringify({
   expiry_in_seconds: 60,
   single_use: false,
   terms: {
-    per_payout: { min_amount: null, max_amount: 10000 },
-    per_frequency: { days: 7, max_amount: 1000000 }
+    per_payout: {min_amount: null, max_amount: 10000},
+    per_frequency: {days: 7, max_amount: 1000000}
   },
-  metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
+  metadata: {custom_key: 'Custom string', another_custom_key: 'Maybe a URL'}
 }));
 req.end();
 ```
@@ -9057,9 +6209,9 @@ conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 payload = "{\"expiry_in_seconds\":60,\"single_use\":false,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
-    'content-type': "application/json",
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Content-Type': "application/json",
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("POST", "/unassigned_agreements", payload, headers)
@@ -9072,9 +6224,9 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/unassigned_agreements")
-  .header("content-type", "application/json")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Content-Type", "application/json")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .body("{\"expiry_in_seconds\":60,\"single_use\":false,\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":10000},\"per_frequency\":{\"days\":7,\"max_amount\":1000000}},\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
@@ -9092,11 +6244,11 @@ $request->setRequestUrl('https://nz.api.sandbox.zepto.money/unassigned_agreement
 $request->setRequestMethod('POST');
 $request->setBody($body);
 
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json',
-  'content-type' => 'application/json'
-));
+$request->setHeaders([
+  'Content-Type' => 'application/json',
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -9122,9 +6274,9 @@ func main() {
 
 	req, _ := http.NewRequest("POST", url, payload)
 
-	req.Header.Add("content-type", "application/json")
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Content-Type", "application/json")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -9180,7 +6332,7 @@ Create an Unassigned Agreement.
 |»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
 |»»» days|body|integer|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
 |»»» max_amount|body|integer|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
-|»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
+|» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 
 > Example responses
 
@@ -9229,13 +6381,14 @@ Create an Unassigned Agreement.
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/unassigned_agreements \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/unassigned_agreements")
 
@@ -9244,36 +6397,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/unassigned_agreements",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -9287,8 +6440,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/unassigned_agreements", headers=headers)
@@ -9301,8 +6454,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/unassigned_agreements")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -9314,10 +6467,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/unassigned_agreements');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -9340,8 +6493,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -9429,13 +6582,14 @@ Will return all Unassigned Agreements that have not yet been accepted.
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/unassigned_agreements/A.4k \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/unassigned_agreements/A.4k")
 
@@ -9444,36 +6598,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/unassigned_agreements/A.4k",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -9487,8 +6641,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/unassigned_agreements/A.4k", headers=headers)
@@ -9501,8 +6655,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/unassigned_agreements/A.4k")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -9514,10 +6668,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/unassigned_agreements/A.4k');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -9540,8 +6694,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -9607,12 +6761,13 @@ Get a single Unassigned Agreement by its reference.
 ```shell
 curl --request DELETE \
   --url https://nz.api.sandbox.zepto.money/unassigned_agreements/A.2 \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/unassigned_agreements/A.2")
 
@@ -9621,34 +6776,34 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Delete.new(url)
-request["authorization"] = 'Bearer {access-token}'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "DELETE",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/unassigned_agreements/A.2",
   "headers": {
-    "authorization": "Bearer {access-token}"
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -9661,7 +6816,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
-headers = { 'authorization': "Bearer {access-token}" }
+headers = { 'Authorization': "Bearer {access-token}" }
 
 conn.request("DELETE", "/unassigned_agreements/A.2", headers=headers)
 
@@ -9673,7 +6828,7 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.delete("https://nz.api.sandbox.zepto.money/unassigned_agreements/A.2")
-  .header("authorization", "Bearer {access-token}")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -9685,9 +6840,9 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/unassigned_agreements/A.2');
 $request->setRequestMethod('DELETE');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}'
-));
+$request->setHeaders([
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -9710,7 +6865,7 @@ func main() {
 
 	req, _ := http.NewRequest("DELETE", url, nil)
 
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -9739,7 +6894,7 @@ An Unassigned Agreement can be deleted at anytime as long as it has not yet been
 |---|---|---|---|
 |204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
 
-<h1 id="Zepto-API-Users">Users</h1>
+<h1 id="zepto-api-Users">Users</h1>
 
 All about the currently authenticated user.
 
@@ -9752,13 +6907,14 @@ All about the currently authenticated user.
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/user \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/user")
 
@@ -9767,36 +6923,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/user",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -9810,8 +6966,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/user", headers=headers)
@@ -9824,8 +6980,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/user")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -9837,10 +6993,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/user');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -9863,8 +7019,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -9888,13 +7044,13 @@ func main() {
   "data": {
     "first_name": "Bear",
     "last_name": "Dog",
-    "mobile_phone": "0456945832",
+    "mobile_phone": 456945832,
     "email": "bear@dog.com",
     "account": {
       "name": "Dog Bones Inc",
       "nickname": "dog-bones-inc",
       "abn": "129959040",
-      "phone": "0418495033",
+      "phone": 418495033,
       "street_address": "98 Acme Avenue",
       "suburb": "Lead",
       "postcode": "2478"
@@ -9909,7 +7065,7 @@ func main() {
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetUserDetailsResponse](#schemagetuserdetailsresponse)|
 
-<h1 id="Zepto-API-Webhooks">Webhooks</h1>
+<h1 id="zepto-api-Webhooks">Webhooks</h1>
 
 ## List all webhooks
 
@@ -9920,13 +7076,14 @@ func main() {
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/webhooks \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/webhooks")
 
@@ -9935,36 +7092,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/webhooks",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -9978,8 +7135,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/webhooks", headers=headers)
@@ -9992,8 +7149,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/webhooks")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -10005,10 +7162,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/webhooks');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -10031,8 +7188,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -10085,13 +7242,14 @@ List all your application's webhook configurations.
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries")
 
@@ -10100,36 +7258,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -10143,8 +7301,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries", headers=headers)
@@ -10157,8 +7315,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -10170,10 +7328,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/webhooks/31918dce-2dc3-405b-8d3c-fd3901b17e9f/deliveries');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -10196,8 +7354,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -10252,7 +7410,7 @@ NOTE: Webhook deliveries are stored for 30 days.
       "event_type": "payout_request.added",
       "state": "completed",
       "response_status_code": 200,
-      "created_at": "2021-09-02T02:24:50.000Z",
+      "created_at": "2021-09-02T02:24:50Z",
       "payload_data_summary": [
         {
           "ref": "PR.ct5b"
@@ -10264,7 +7422,7 @@ NOTE: Webhook deliveries are stored for 30 days.
       "event_type": "creditor_debit.scheduled",
       "state": "completed",
       "response_status_code": 200,
-      "created_at": "2021-09-02T02:24:50.000Z",
+      "created_at": "2021-09-02T02:24:50Z",
       "payload_data_summary": [
         {
           "ref": "D.hyy9"
@@ -10294,13 +7452,14 @@ NOTE: Webhook deliveries are stored for 30 days.
 ```shell
 curl --request GET \
   --url https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
 
@@ -10309,36 +7468,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "GET",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -10352,8 +7511,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("GET", "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f", headers=headers)
@@ -10366,8 +7525,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.get("https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -10379,10 +7538,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f');
 $request->setRequestMethod('GET');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -10405,8 +7564,8 @@ func main() {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -10446,15 +7605,15 @@ Get a single webhook delivery by ID.
           "ref": "PR.ct5b",
           "payout": {
             "amount": 1501,
-            "matures_at": "2021-09-02T02:24:49.000Z",
+            "matures_at": "2021-09-02T02:24:49Z",
             "description": "Payment from Incoming Test Payment Contact 014209 12345678 (Test Payment)"
           },
           "status": "approved",
-          "created_at": "2021-09-02T02:24:49.000Z",
+          "created_at": "2021-09-02T02:24:49Z",
           "credit_ref": "C.p2rt",
-          "matures_at": "2021-09-02T02:24:49.000Z",
+          "matures_at": "2021-09-02T02:24:49Z",
           "initiator_id": "b50a6e92-a5e1-4175-b560-9e4c9a9bb4b9",
-          "responded_at": "2021-09-02T02:24:49.000Z",
+          "responded_at": "2021-09-02T02:24:49Z",
           "schedule_ref": null,
           "authoriser_id": "780f186c-80fd-42b9-97d5-650d99a0bc99",
           "status_reason": null,
@@ -10464,7 +7623,7 @@ Get a single webhook delivery by ID.
         },
         {
           "event": {
-            "at": "2021-09-02T02:24:49.000Z",
+            "at": "2021-09-02T02:24:49Z",
             "who": {
               "account_id": "20f4e3f8-2efc-48a9-920b-541515f1c9e3",
               "account_type": "Account",
@@ -10478,7 +7637,7 @@ Get a single webhook delivery by ID.
     }
   },
   "response_status_code": 200,
-  "created_at": "2021-09-02T02:24:50.000Z"
+  "created_at": "2021-09-02T02:24:50Z"
 }
 ```
 
@@ -10498,13 +7657,14 @@ Get a single webhook delivery by ID.
 ```shell
 curl --request POST \
   --url https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver \
-  --header 'accept: application/json' \
-  --header 'authorization: Bearer {access-token}'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer {access-token}'
 ```
 
 ```ruby
 require 'uri'
 require 'net/http'
+require 'openssl'
 
 url = URI("https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver")
 
@@ -10513,36 +7673,36 @@ http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Post.new(url)
-request["accept"] = 'application/json'
-request["authorization"] = 'Bearer {access-token}'
+request["Accept"] = 'application/json'
+request["Authorization"] = 'Bearer {access-token}'
 
 response = http.request(request)
 puts response.read_body
 ```
 
 ```javascript--node
-var http = require("https");
+const http = require("https");
 
-var options = {
+const options = {
   "method": "POST",
   "hostname": "nz.api.sandbox.zepto.money",
   "port": null,
   "path": "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver",
   "headers": {
-    "accept": "application/json",
-    "authorization": "Bearer {access-token}"
+    "Accept": "application/json",
+    "Authorization": "Bearer {access-token}"
   }
 };
 
-var req = http.request(options, function (res) {
-  var chunks = [];
+const req = http.request(options, function (res) {
+  const chunks = [];
 
   res.on("data", function (chunk) {
     chunks.push(chunk);
   });
 
   res.on("end", function () {
-    var body = Buffer.concat(chunks);
+    const body = Buffer.concat(chunks);
     console.log(body.toString());
   });
 });
@@ -10556,8 +7716,8 @@ import http.client
 conn = http.client.HTTPSConnection("nz.api.sandbox.zepto.money")
 
 headers = {
-    'accept': "application/json",
-    'authorization': "Bearer {access-token}"
+    'Accept': "application/json",
+    'Authorization': "Bearer {access-token}"
     }
 
 conn.request("POST", "/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver", headers=headers)
@@ -10570,8 +7730,8 @@ print(data.decode("utf-8"))
 
 ```java
 HttpResponse<String> response = Unirest.post("https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver")
-  .header("accept", "application/json")
-  .header("authorization", "Bearer {access-token}")
+  .header("Accept", "application/json")
+  .header("Authorization", "Bearer {access-token}")
   .asString();
 ```
 
@@ -10583,10 +7743,10 @@ $request = new http\Client\Request;
 
 $request->setRequestUrl('https://nz.api.sandbox.zepto.money/webhook_deliveries/31918dce-2dc3-405b-8d3c-fd3901b17e9f/redeliver');
 $request->setRequestMethod('POST');
-$request->setHeaders(array(
-  'authorization' => 'Bearer {access-token}',
-  'accept' => 'application/json'
-));
+$request->setHeaders([
+  'Accept' => 'application/json',
+  'Authorization' => 'Bearer {access-token}'
+]);
 
 $client->enqueue($request)->send();
 $response = $client->getResponse();
@@ -10609,8 +7769,8 @@ func main() {
 
 	req, _ := http.NewRequest("POST", url, nil)
 
-	req.Header.Add("accept", "application/json")
-	req.Header.Add("authorization", "Bearer {access-token}")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -10701,7 +7861,7 @@ Use this endpoint to resend a failed webhook delivery.
 |» status_reason|string|true|The reason the agreement was cancelled. This is a free text field.|
 |» responded_at|string(date-time)|true|The date-time when the Agreement status changed|
 |» created_at|string(date-time)|true|The date-time when the Agreement was created|
-|» terms|[Terms](#schematerms)|true|No description|
+|» terms|[Terms](#schematerms)|true|Terms|
 |» metadata|object|false|Your custom keyed data|
 
 #### Enumerated Values
@@ -10784,16 +7944,16 @@ Use this endpoint to resend a failed webhook delivery.
   "data": [
     {
       "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
-      "branch_code": "493192",
+      "branch_code": "020100",
       "bank_name": "Bank of New Zealand",
       "account_number": "3993013",
       "status": "active",
-      "title": "NZ.493192.3993013",
+      "title": "NZ.020100.3993013'",
       "available_balance": null
     },
     {
       "id": "56df206a-aaff-471a-b075-11882bc8906a",
-      "branch_code": "302193",
+      "branch_code": "020120",
       "bank_name": "Bank of New Zealand",
       "account_number": "119302",
       "status": "active",
@@ -10822,65 +7982,6 @@ Use this endpoint to resend a failed webhook delivery.
 ### Properties
 
 *List all Bank Accounts (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|[object]|true|No description|
-
-## ListAllBankConnectionsResponse
-
-<a id="schemalistallbankconnectionsresponse"></a>
-
-```json
-{
-  "data": [
-    {
-      "id": "fb497754-87e2-407d-871f-32aec39d09d4",
-      "provider_name": "split",
-      "state": "active",
-      "refreshed_at": "2020-02-13T09:05:00Z",
-      "removed_at": null,
-      "failure_reason": null,
-      "institution": {
-        "short_name": "ASB",
-        "full_name": "Auckland Savings Bank"
-      },
-      "contact": {
-        "id": "626e15b1-aa4a-496e-b5d6-3f8c1a6d2189",
-        "name": "George Morissette",
-        "email": "randy@windler.net"
-      },
-      "links": {
-        "update_bank_connection": "http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4"
-      }
-    },
-    {
-      "id": "ddbee875-7344-4d74-9503-6233149fe1a0",
-      "provider_name": "split",
-      "state": "credentials_invalid",
-      "refreshed_at": "2020-02-13T09:05:00Z",
-      "removed_at": null,
-      "failure_reason": null,
-      "institution": {
-        "short_name": "ASB",
-        "full_name": "Auckland Savings Bank"
-      },
-      "contact": {
-        "id": "72e37667-6364-440f-b1bd-56df5654e258",
-        "name": "Joel Boyle",
-        "email": "travis@hermanntorp.net"
-      },
-      "links": {
-        "update_bank_connection": "http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0"
-      }
-    }
-  ]
-}
-```
-
-### Properties
-
-*List all Bank Connections (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
@@ -10917,8 +8018,8 @@ Use this endpoint to resend a failed webhook delivery.
 |Name|Type|Required|Description|
 |---|---|---|---|
 |title|string|true|Title of the Open Agreement (Visible to authorisers)|
-|terms|[Terms](#schematerms)|true|No description|
-|metadata|[Metadata](#schemametadata)|false|No description|
+|terms|[Terms](#schematerms)|true|Terms|
+|metadata|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 
 ## Terms
 
@@ -11141,117 +8242,6 @@ Use this endpoint to resend a failed webhook delivery.
 |---|---|---|---|
 |data|object|true|No description|
 
-## AddAReceivableContactRequest
-
-<a id="schemaaddareceivablecontactrequest"></a>
-
-```json
-{
-  "name": "Delphine Jestin",
-  "email": "delphine@gmail.com",
-  "payid_email": "delphine_123@merchant.com.au",
-  "metadata": {
-    "custom_key": "Custom string",
-    "another_custom_key": "Maybe a URL"
-  }
-}
-```
-
-### Properties
-
-*Add a Receivable Contact (request)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|name|string|true|Contact name (Min: 3 - Max: 140)|
-|email|string|true|Contact email (Min: 6 - Max: 256)|
-|payid_email|string|false|Contact PayID email (Min: 6 - Max: 256)|
-|payid_email_domain|string|false|PayID pool email domain (Min: 3 - Max: 254)|
-|metadata|[Metadata](#schemametadata)|false|No description|
-
-## AddAReceivableContactResponse
-
-<a id="schemaaddareceivablecontactresponse"></a>
-
-```json
-{
-  "data": {
-    "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
-    "name": "Delphine Jestin",
-    "email": "delphine@gmail.com",
-    "type": "anyone",
-    "metadata": {
-      "custom_key": "Custom string",
-      "another_custom_key": "Maybe a URL"
-    },
-    "bank_account": {
-      "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-      "account_number": "1408281",
-      "branch_code": "802919",
-      "bank_name": "Zepto Float Account",
-      "state": "active",
-      "iav_provider": null,
-      "iav_status": null,
-      "blocks": {
-        "debits_blocked": false,
-        "credits_blocked": false
-      }
-    },
-    "anyone_account": {
-      "id": "77be6ecc-5fa7-454b-86d6-02a5f147878d"
-    },
-    "payid_details": {
-      "alias_value": "delphine_123@merchant.com.au",
-      "alias_type": "email",
-      "alias_name": "your merchant's alias_name",
-      "state": "pending"
-    }
-  }
-}
-```
-
-### Properties
-
-*Add a Receivable Contact (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|object|false|No description|
-|» id|string(uuid)|false|No description|
-|» name|string|false|Contact name (Min: 3 - Max: 140)|
-|» email|string|false|Contact email (Min: 6 - Max: 256)|
-|» type|string|false|Fixed to 'anyone'|
-|» metadata|[Metadata](#schemametadata)|false|No description|
-|» bank_account|object|false|No description|
-|»» id|string(uuid)|false|No description|
-|»» account_number|string|false|Zepto generated account number (Min: 5 - Max: 9)|
-|»» branch_code|string|false|Zepto branch code (Min: 6 - Max: 6)|
-|»» bank_name|string|false|Fixed to 'Zepto Float Acount'|
-|»» state|string|false|Fixed to 'Active'|
-|»» iav_provider|string|false|Always null|
-|»» iav_status|string|false|Always null|
-|»» blocks|object|false|No description|
-|»»» debits_blocked|boolean|false|Used by Zepto admins. Defines whether the bank account is blocked from being debited|
-|»»» credits_blocked|boolean|false|Used by Zepto admins. Defined Whether this bank account is blocked from being credited|
-|»» anyone_account|object|false|No description|
-|»»» id|string(uuid)|false|No description|
-|»» payid_details|object|false|No description|
-|»»» alias_value|string(email)|false|The PayID email|
-|»»» alias_type|string|false|Type of PayID. Fixed to `email`|
-|»»» alias_name|string|false|Your merchant's alias_name|
-|»»» state|string|false|Pending -> Active or Failed -> Deregistered (Contact removed)|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|state|active|
-|state|removed|
-|state|pending|
-|state|active|
-|state|failed|
-|state|deregistered|
-
 ## ListAllContactsResponse
 
 <a id="schemalistallcontactsresponse"></a>
@@ -11267,7 +8257,7 @@ Use this endpoint to resend a failed webhook delivery.
       "bank_account": {
         "id": "095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc",
         "account_number": "494307",
-        "branch_code": "435434",
+        "branch_code": "020040",
         "bank_name": "Bank of New Zealand",
         "state": "active",
         "iav_provider": "split",
@@ -11289,7 +8279,7 @@ Use this endpoint to resend a failed webhook delivery.
       "bank_account": {
         "id": "861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0",
         "account_number": "4395959",
-        "branch_code": "068231",
+        "branch_code": 20018,
         "bank_name": "Bank of New Zealand",
         "state": "active",
         "iav_provider": "split",
@@ -11333,7 +8323,7 @@ Use this endpoint to resend a failed webhook delivery.
       "bank_account": {
         "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
         "account_number": "13048322",
-        "branch_code": "123456",
+        "branch_code": "020136",
         "bank_name": "Bank of New Zealand",
         "state": "pending_verification",
         "iav_provider": null,
@@ -11367,7 +8357,7 @@ Use this endpoint to resend a failed webhook delivery.
 {
   "name": "Hunter Thompson",
   "email": "hunter@batcountry.com",
-  "branch_code": "123456",
+  "branch_code": "020136",
   "account_number": "13048322",
   "metadata": {
     "custom_key": "Custom string",
@@ -11386,7 +8376,7 @@ Use this endpoint to resend a failed webhook delivery.
 |email|string|true|The email of the Contact (256 max. characters)|
 |branch_code|string|true|The bank account BSB of the Contact|
 |account_number|string|true|The bank account number of the Contact|
-|metadata|[Metadata](#schemametadata)|false|No description|
+|metadata|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 
 ## AddAnAnyoneContactResponse
 
@@ -11406,7 +8396,7 @@ Use this endpoint to resend a failed webhook delivery.
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
       "account_number": "13048322",
-      "branch_code": "123456",
+      "branch_code": "020136",
       "bank_name": "Bank of New Zealand",
       "state": "active",
       "iav_provider": null,
@@ -11487,7 +8477,7 @@ Use this endpoint to resend a failed webhook delivery.
     "bank_account": {
       "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
       "account_number": "947434694",
-      "branch_code": "304304",
+      "branch_code": "020159",
       "bank_name": "Bank of New Zealand",
       "state": "active",
       "iav_provider": null,
@@ -11528,7 +8518,7 @@ Use this endpoint to resend a failed webhook delivery.
 |» name|string|true|The Contact name (Min: 3 - Max: 140)|
 |» email|string(email)|true|The Contact email (Min: 6 - Max: 256)|
 |» type|string|true|(Deprecated) The Contact account type|
-|» metadata|[Metadata](#schemametadata)|true|No description|
+|» metadata|[Metadata](#schemametadata)|true|Use for your custom data and certain Zepto customisations.|
 |» bank_account|object|true|No description|
 |»» id|string(uuid)|false|The Bank Account ID|
 |»» account_number|string|false|The Bank Account number (Min: 5 - Max: 9)|
@@ -11539,17 +8529,17 @@ Use this endpoint to resend a failed webhook delivery.
 |»» blocks|object|false|No description|
 |»»» debits_blocked|boolean|false|Used by Zepto admins. Defines whether the bank account is blocked from being debited|
 |»»» credits_blocked|boolean|false|Used by Zepto admins. Defined Whether this bank account is blocked from being credited|
-|»» anyone_account|object|true|No description|
-|»»» id|string(uuid)|false|(Deprecated) The Anyone Account ID|
-|»» bank_connection|object|false|No description|
-|»»» id|string(uuid)|false|The bank connection ID|
-|»» links|object|false|No description|
-|»»» add_bank_connection|string(url)|false|A unique URL to share with the Contact in order to establish a new bank connection to their bank account|
-|»» payid_details|object|false|No description|
-|»»» alias_value|string(email)|false|The PayID email|
-|»»» alias_type|string|false|Type of PayID. Fixed to `email`|
-|»»» alias_name|string|false|Your merchant's alias_name|
-|»»» state|string|false|Pending -> Active or Failed -> Deregistered (Contact removed)|
+|» anyone_account|object|true|No description|
+|»» id|string(uuid)|false|(Deprecated) The Anyone Account ID|
+|» bank_connection|object|false|No description|
+|»» id|string(uuid)|false|The bank connection ID|
+|» links|object|false|No description|
+|»» add_bank_connection|string(url)|false|A unique URL to share with the Contact in order to establish a new bank connection to their bank account|
+|» payid_details|object|false|No description|
+|»» alias_value|string(email)|false|The PayID email|
+|»» alias_type|string|false|Type of PayID. Fixed to `email`|
+|»» alias_name|string|false|Your merchant's alias_name|
+|»» state|string|false|Pending -> Active or Failed -> Deregistered (Contact removed)|
 
 #### Enumerated Values
 
@@ -11598,7 +8588,7 @@ Use this endpoint to resend a failed webhook delivery.
 |email|string|false|The email of the Contact|
 |branch_code|string|false|The bank account BSB of the Contact|
 |account_number|string|false|The bank account number of the Contact|
-|metadata|[Metadata](#schemametadata)|false|No description|
+|metadata|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 
 ## UpdateAContactResponse
 
@@ -11655,9 +8645,6 @@ Use this endpoint to resend a failed webhook delivery.
   "description": "The SuperPackage",
   "matures_at": "2021-06-13T00:00:00Z",
   "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-  "channels": [
-    "new_payments_platform"
-  ],
   "payouts": [
     {
       "amount": 30000,
@@ -11687,9 +8674,8 @@ Use this endpoint to resend a failed webhook delivery.
 |description|string|true|User description. Only visible to the payer|
 |matures_at|string(date-time)|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
 |your_bank_account_id|string|true|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
-|channels|array|true|Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)|
 |payouts|[[Payout](#schemapayout)]|true|One Payout object only|
-|metadata|[Metadata](#schemametadata)|false|No description|
+|metadata|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 
 ## Payout
 
@@ -11711,7 +8697,7 @@ Use this endpoint to resend a failed webhook delivery.
 |Name|Type|Required|Description|
 |---|---|---|---|
 |amount|integer|true|Amount in cents to pay the recipient|
-|description|string|true|Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description. For NPP payments, the payout recipient will see the first 280 characters of this description.|
+|description|string|true|Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description.|
 |recipient_contact_id|string|true|Contact to pay (`Contact.data.id`)|
 |metadata|Metadata|false|Use for your custom data and certain Zepto customisations. Stored against generated transactions and included in associated webhook payloads.|
 
@@ -11759,9 +8745,6 @@ Use this endpoint to resend a failed webhook delivery.
   "data": {
     "ref": "PB.1",
     "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-    "channels": [
-      "new_payments_platform"
-    ],
     "payouts": [
       {
         "ref": "D.1",
@@ -11808,10 +8791,6 @@ Use this endpoint to resend a failed webhook delivery.
     {
       "ref": "PB.1",
       "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-      "channels": [
-        "new_payments_platform",
-        "direct_entry"
-      ],
       "payouts": [
         {
           "ref": "D.1",
@@ -11870,9 +8849,6 @@ Use this endpoint to resend a failed webhook delivery.
   "data": {
     "ref": "PB.1",
     "your_bank_account_id": "83623359-e86e-440c-9780-432a3bc3626f",
-    "channels": [
-      "direct_entry"
-    ],
     "payouts": [
       {
         "ref": "D.1",
@@ -11916,7 +8892,7 @@ Use this endpoint to resend a failed webhook delivery.
 ```json
 {
   "description": "Visible to both initiator and authoriser",
-  "matures_at": "2016-12-19T02:10:56.000Z",
+  "matures_at": "2016-12-19T02:10:56Z",
   "amount": 99000,
   "authoriser_contact_id": "de86472c-c027-4735-a6a7-234366a27fc7",
   "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
@@ -12188,83 +9164,6 @@ Use this endpoint to resend a failed webhook delivery.
 |status_reason|The balance of the nominated bank account for this Payment Request is not available.|
 |status_reason|The nominated bank account for this Payment Request has insufficient funds.|
 
-## ListPaymentRequestReceivablesResponse
-
-<a id="schemalistpaymentrequestreceivablesresponse"></a>
-
-```json
-{
-  "data": [
-    {
-      "ref": "PR.2t65",
-      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
-      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-      "contact_initiated": true,
-      "schedule_ref": null,
-      "status": "approved",
-      "status_reason": null,
-      "matures_at": "2021-05-12T13:43:12Z",
-      "responded_at": "2021-05-12T13:43:12Z",
-      "created_at": "2021-05-12T13:43:12Z",
-      "credit_ref": "C.77b1",
-      "payout": {
-        "amount": 50000,
-        "description": "Deposit to my Trading account",
-        "matures_at": "2021-05-12T13:43:12Z"
-      }
-    },
-    {
-      "ref": "PR.1n644",
-      "initiator_id": "ca7bc5b3-e47f-4153-96fb-bbe326b42772",
-      "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
-      "authoriser_id": "de86472c-c027-4735-a6a7-234366a27fc7",
-      "authoriser_contact_id": "fb6a9252-3818-44dc-b5aa-2195391a746f",
-      "contact_initiated": true,
-      "schedule_ref": null,
-      "status": "approved",
-      "status_reason": null,
-      "matures_at": "2021-06-01T04:34:50Z",
-      "responded_at": null,
-      "created_at": "2021-06-01T04:34:56Z",
-      "credit_ref": "c.54r3",
-      "payout": {
-        "amount": 5000,
-        "description": "Punting account top-up",
-        "matures_at": "2021-06-01T04:34:56Z"
-      }
-    }
-  ]
-}
-```
-
-### Properties
-
-*List Receivables (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|[object]|true|No description|
-|» ref|string|true|The Payment Reference reference (PR.*)|
-|» initiator_id|string(uuid)|true|Your bank account ID where the funds will settle|
-|» your_bank_account_id|string(uuid)|true|Your bank account ID where the funds will settle (alias of `initiator_id`)|
-|» authoriser_id|string(uuid)|true|The debtor's bank account ID|
-|» authoriser_contact_id|string(uuid)|true|The contact ID representing the debtor within Zepto|
-|» contact_initiated|boolean|true|Initiated by Contact or Merchant|
-|» schedule_ref|string|true|The schedule that generated the Payment request if applicable|
-|» status|string|true|The status of the Payment Request. For Receivables, this will always be *approved*|
-|» status_reason|string|true|Only used when the `status` is `declined` due to prechecking.|
-|» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
-|» responded_at|string(date-time)|true|The date-time when the Payment Request status changed|
-|» created_at|string(date-time)|true|The date-time when the Payment Request was created|
-|» credit_ref|string|true|The resulting credit entry reference (available once approved)|
-|» payout|object|true|No description|
-|»» amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
-|»» description|string|true|Payment Request description|
-|»» matures_at|string(date-time)|true|The date-time when the Payment Request is up for processing|
-|» metadata|[object]|false|Your custom keyed data|
-
 ## IssueARefundRequest
 
 <a id="schemaissuearefundrequest"></a>
@@ -12272,9 +9171,6 @@ Use this endpoint to resend a failed webhook delivery.
 ```json
 {
   "amount": 500,
-  "channels": [
-    "direct_entry"
-  ],
   "reason": "Because reason",
   "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
   "metadata": {
@@ -12291,10 +9187,9 @@ Use this endpoint to resend a failed webhook delivery.
 |Name|Type|Required|Description|
 |---|---|---|---|
 |amount|integer|true|Amount in cents refund (Min: 1 - Max: 99999999999)|
-|channels|array|false|Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)|
 |reason|string|false|Reason for the refund. First 9 characters are visible to both parties.|
 |your_bank_account_id|string(uuid)|false|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
-|metadata|[Metadata](#schemametadata)|false|No description|
+|metadata|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 
 ## IssueARefundResponse
 
@@ -12309,9 +9204,6 @@ Use this endpoint to resend a failed webhook delivery.
     "your_bank_account_id": "9c70871d-8e36-4c3e-8a9c-c0ee20e7c679",
     "created_at": "2021-06-01T07:20:24Z",
     "amount": 500,
-    "channels": [
-      "direct_entry"
-    ],
     "reason": "Subscription refund",
     "contacts": {
       "source_contact_id": "194b0237-6c2c-4705-b4fb-308274b14eda",
@@ -12338,11 +9230,8 @@ Use this endpoint to resend a failed webhook delivery.
 |» your_bank_account_id|string|true|The source bank/float account (UUID)|
 |» created_at|string(date-time)|true|The date-time when the Payment Request was created|
 |» amount|integer|true|The amount value provided (Min: 1 - Max: 99999999999)|
-|» channels|array|false|The requested payment channel(s) to be used, in order. (new_payments_platform, direct_entry, or both)|
+|» channels|array|false|The requested payment channel(s) to be used, in order. (direct_entry)|
 |» reason|string|true|Reason for the refund|
-|» contacts|object|false|No description|
-|»» source_contact_id|string|false|The original 'Receivable Contact' ID (only visible when refunding Receivables)|
-|»» target_contact_id|string|false|The new Contact ID receiving the funds (only visible when refunding Receivables)|
 
 ## ListOutgoingRefundsResponse
 
@@ -12513,7 +9402,6 @@ Use this endpoint to resend a failed webhook delivery.
       "amount": 19999,
       "bank_account_id": "c2e329ae-606f-4311-a9ab-a751baa1915c",
       "channels": [
-        "new_payments_platform",
         "direct_entry"
       ],
       "current_channel": "direct_entry",
@@ -12567,8 +9455,8 @@ Use this endpoint to resend a failed webhook delivery.
 |---|---|---|---|
 |expiry_in_seconds|integer|true|The amount of time in seconds before the Unassigned Agreement can no longer be accepted.|
 |single_use|boolean|false|Optionally propose a single use agreement. When the Unassigned Agreement is accepted and a Payment Request is approved according to the Agreement terms, the agreement will automatically become <code>expended</code>.<br><br>The proposed agreement must have equal max/min <code>per_payout</code> amounts and <code>null</code> <code>per_frequency</code> amounts.<br><br>Furthermore, we will automatically check that the authoriser's bank account has sufficient funds to honour the agreement terms.|
-|terms|[Terms](#schematerms)|true|No description|
-|metadata|[Metadata](#schemametadata)|false|No description|
+|terms|[Terms](#schematerms)|true|Terms|
+|metadata|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 
 ## ProposeUnassignedAgreementResponse
 
@@ -12712,13 +9600,13 @@ Use this endpoint to resend a failed webhook delivery.
   "data": {
     "first_name": "Bear",
     "last_name": "Dog",
-    "mobile_phone": "0456945832",
+    "mobile_phone": 456945832,
     "email": "bear@dog.com",
     "account": {
       "name": "Dog Bones Inc",
       "nickname": "dog-bones-inc",
       "abn": "129959040",
-      "phone": "0418495033",
+      "phone": 418495033,
       "street_address": "98 Acme Avenue",
       "suburb": "Lead",
       "postcode": "2478"
@@ -12758,32 +9646,6 @@ Use this endpoint to resend a failed webhook delivery.
 |from_account_number|string|false|Default: "12345678"|
 |debtor_name|string|false|Default:  "Simulated Debtor"|
 |debtor_legal_name|string|false|Default:  "Simulated Debtor Pty Ltd"|
-
-## SimulateIncomingNPPBBANPaymentRequest
-
-<a id="schemasimulateincomingnppbbanpaymentrequest"></a>
-
-```json
-{
-  "to_bsb": "802919",
-  "to_account_number": "88888888",
-  "amount": 10000
-}
-```
-
-### Properties
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|to_bsb|string|true|Zepto float account BSB (usually 802919)|
-|to_account_number|string|true|Zepto float account number|
-|amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
-|payment_description|string|false|Default: "Simulated NPP payment"|
-|payment_reference|string|false|Default: "simulated-npp-payment"|
-|from_bsb|string|false|Default: "014209"|
-|from_account_number|string|false|Default: "12345678"|
-|debtor_name|string|false|Default: "Simulated Debtor"|
-|debtor_legal_name|string|false|Default: "Simulated Debtor Pty Ltd"|
 
 ## SimulateIncomingDEPaymentRequest
 
@@ -12892,49 +9754,6 @@ Use this endpoint to resend a failed webhook delivery.
 |» description|string|true|Description for the Transfer|
 |» matures_at|string(date-time)|true|Date & time in UTC ISO8601 the Transfer should be processed. (Can not be earlier than the start of current day)|
 
-## ListAllTransfersResponse
-
-<a id="schemalistalltransfersresponse"></a>
-
-```json
-{
-  "data": [
-    {
-      "ref": "T.62xl",
-      "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-      "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-      "amount": 47000,
-      "description": "Deposit from my bank account",
-      "matures_at": "2021-06-03T00:00:00Z"
-    },
-    {
-      "ref": "T.87xp",
-      "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-      "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-      "amount": 9700,
-      "description": "Withdrawal June 2021",
-      "matures_at": "2021-05-28T00:00:00Z"
-    },
-    {
-      "ref": "T.87s4",
-      "from_bank_account_id": "a79423b2-3827-4cf5-9eda-dc02a298d005",
-      "to_bank_account_id": "0921a719-c79d-4ffb-91b6-1b30ab77d14d",
-      "amount": 230,
-      "description": "Transfer to my other Float account",
-      "matures_at": "2021-05-03T00:00:00Z"
-    }
-  ]
-}
-```
-
-### Properties
-
-*List all Transfers (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|[object]|true|No description|
-
 ## ListAllWebhooksResponse
 
 <a id="schemalistallwebhooksresponse"></a>
@@ -12975,7 +9794,7 @@ Use this endpoint to resend a failed webhook delivery.
       "event_type": "payout_request.added",
       "state": "completed",
       "response_status_code": 200,
-      "created_at": "2021-09-02T02:24:50.000Z",
+      "created_at": "2021-09-02T02:24:50Z",
       "payload_data_summary": [
         {
           "ref": "PR.ct5b"
@@ -12987,7 +9806,7 @@ Use this endpoint to resend a failed webhook delivery.
       "event_type": "creditor_debit.scheduled",
       "state": "completed",
       "response_status_code": 200,
-      "created_at": "2021-09-02T02:24:50.000Z",
+      "created_at": "2021-09-02T02:24:50Z",
       "payload_data_summary": [
         {
           "ref": "D.hyy9"
@@ -13024,15 +9843,15 @@ Use this endpoint to resend a failed webhook delivery.
           "ref": "PR.ct5b",
           "payout": {
             "amount": 1501,
-            "matures_at": "2021-09-02T02:24:49.000Z",
+            "matures_at": "2021-09-02T02:24:49Z",
             "description": "Payment from Incoming Test Payment Contact 014209 12345678 (Test Payment)"
           },
           "status": "approved",
-          "created_at": "2021-09-02T02:24:49.000Z",
+          "created_at": "2021-09-02T02:24:49Z",
           "credit_ref": "C.p2rt",
-          "matures_at": "2021-09-02T02:24:49.000Z",
+          "matures_at": "2021-09-02T02:24:49Z",
           "initiator_id": "b50a6e92-a5e1-4175-b560-9e4c9a9bb4b9",
-          "responded_at": "2021-09-02T02:24:49.000Z",
+          "responded_at": "2021-09-02T02:24:49Z",
           "schedule_ref": null,
           "authoriser_id": "780f186c-80fd-42b9-97d5-650d99a0bc99",
           "status_reason": null,
@@ -13042,7 +9861,7 @@ Use this endpoint to resend a failed webhook delivery.
         },
         {
           "event": {
-            "at": "2021-09-02T02:24:49.000Z",
+            "at": "2021-09-02T02:24:49Z",
             "who": {
               "account_id": "20f4e3f8-2efc-48a9-920b-541515f1c9e3",
               "account_type": "Account",
@@ -13056,7 +9875,7 @@ Use this endpoint to resend a failed webhook delivery.
     }
   },
   "response_status_code": 200,
-  "created_at": "2021-09-02T02:24:50.000Z"
+  "created_at": "2021-09-02T02:24:50Z"
 }
 ```
 

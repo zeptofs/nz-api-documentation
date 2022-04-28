@@ -59,14 +59,6 @@ info:
         * Sandbox IP: `13.237.142.60`
         * Production IPs: `52.64.11.67` and `13.238.78.114`
 
-
-    <div class="middle-header">System Status</div>
-
-
-    Check the platform status, or subscribe to receive notifications at [status.split.cash](https://status.split.cash/).
-    If you would like to check platform status programmatically, please refer to [status.split.cash/api](https://status.split.cash/api).
-
-
     <div class="middle-header">Breaking Changes</div>
 
 
@@ -131,7 +123,7 @@ info:
     Before you start, **import a copy** of our API collection:
 
 
-    [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/3168734-baa5ff70-4bc2-44d5-9ba6-fcb61839ff41?action=collection%2Ffork&collection-url=entityId%3D3168734-baa5ff70-4bc2-44d5-9ba6-fcb61839ff41%26entityType%3Dcollection%26workspaceId%3D6400ea2b-bb46-421e-a88c-a8625653c35a#?env%5BSplit%20Payments%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL2dvLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoib2F1dGgyX2FwcGxpY2F0aW9uX2lkIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoic2NvcGUiLCJ2YWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMgb2ZmbGluZV9hY2Nlc3MiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Imlzbzg2MDFfbm93IiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6ImFjY2Vzc190b2tlbiIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJyZWZyZXNoX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfV0=)
+    [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/10584592-0037eee4-4a63-4d1a-875f-37ae6bcbf07e?action=collection%2Ffork&collection-url=entityId%3D10584592-0037eee4-4a63-4d1a-875f-37ae6bcbf07e%26entityType%3Dcollection%26workspaceId%3D6400ea2b-bb46-421e-a88c-a8625653c35a#?env%5BNZ%20Zepto%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL256LmdvLnNhbmRib3guemVwdG8ubW9uZXkiLCJlbmFibGVkIjp0cnVlLCJzZXNzaW9uVmFsdWUiOiJodHRwczovL256LmdvLnNhbmRib3guemVwdG8ubW9uZXkiLCJzZXNzaW9uSW5kZXgiOjB9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vbnouYXBpLnNhbmRib3guemVwdG8ubW9uZXkiLCJlbmFibGVkIjp0cnVlLCJzZXNzaW9uVmFsdWUiOiJodHRwczovL256LmFwaS5zYW5kYm94LnplcHRvLm1vbmV5Iiwic2Vzc2lvbkluZGV4IjoxfSx7ImtleSI6Im9hdXRoMl9hcHBsaWNhdGlvbl9pZCIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZSwic2Vzc2lvblZhbHVlIjoiIiwic2Vzc2lvbkluZGV4IjoyfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWUsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6M30seyJrZXkiOiJzY29wZSIsInZhbHVlIjoicHVibGljIGFncmVlbWVudHMgYmFua19hY2NvdW50cyBiYW5rX2Nvbm5lY3Rpb25zIGNvbnRhY3RzIHBheW1lbnRzIHBheW1lbnRfcmVxdWVzdHMgcmVmdW5kX3JlcXVlc3RzIHRyYW5zYWN0aW9ucyByZWZ1bmRzIG9wZW5fYWdyZWVtZW50cyBvZmZsaW5lX2FjY2VzcyIsImVuYWJsZWQiOnRydWUsInNlc3Npb25WYWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMuLi4iLCJzZXNzaW9uSW5kZXgiOjR9LHsia2V5IjoiaXNvODYwMV9ub3ciLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWUsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6NX0seyJrZXkiOiJhY2Nlc3NfdG9rZW4iLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWUsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6Nn0seyJrZXkiOiJyZWZyZXNoX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlLCJzZXNzaW9uVmFsdWUiOiIiLCJzZXNzaW9uSW5kZXgiOjd9XQ==)
 
 
     Okay, let's get things setup!
@@ -296,7 +288,7 @@ info:
     Before you start, load up our API collection:
 
 
-    [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/3168734-baa5ff70-4bc2-44d5-9ba6-fcb61839ff41?action=collection%2Ffork&collection-url=entityId%3D3168734-baa5ff70-4bc2-44d5-9ba6-fcb61839ff41%26entityType%3Dcollection%26workspaceId%3D6400ea2b-bb46-421e-a88c-a8625653c35a#?env%5BSplit%20Payments%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL2dvLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vYXBpLnNhbmRib3guc3BsaXQuY2FzaCIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoib2F1dGgyX2FwcGxpY2F0aW9uX2lkIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWV9LHsia2V5Ijoic2NvcGUiLCJ2YWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMgb2ZmbGluZV9hY2Nlc3MiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Imlzbzg2MDFfbm93IiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6ImFjY2Vzc190b2tlbiIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZX0seyJrZXkiOiJyZWZyZXNoX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlfV0=)
+    [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/10584592-0037eee4-4a63-4d1a-875f-37ae6bcbf07e?action=collection%2Ffork&collection-url=entityId%3D10584592-0037eee4-4a63-4d1a-875f-37ae6bcbf07e%26entityType%3Dcollection%26workspaceId%3D6400ea2b-bb46-421e-a88c-a8625653c35a#?env%5BNZ%20Zepto%20Public%20Sandbox%5D=W3sia2V5Ijoic2l0ZV9ob3N0IiwidmFsdWUiOiJodHRwczovL256LmdvLnNhbmRib3guemVwdG8ubW9uZXkiLCJlbmFibGVkIjp0cnVlLCJzZXNzaW9uVmFsdWUiOiJodHRwczovL256LmdvLnNhbmRib3guemVwdG8ubW9uZXkiLCJzZXNzaW9uSW5kZXgiOjB9LHsia2V5IjoiYXBpX2hvc3QiLCJ2YWx1ZSI6Imh0dHBzOi8vbnouYXBpLnNhbmRib3guemVwdG8ubW9uZXkiLCJlbmFibGVkIjp0cnVlLCJzZXNzaW9uVmFsdWUiOiJodHRwczovL256LmFwaS5zYW5kYm94LnplcHRvLm1vbmV5Iiwic2Vzc2lvbkluZGV4IjoxfSx7ImtleSI6Im9hdXRoMl9hcHBsaWNhdGlvbl9pZCIsInZhbHVlIjoiIiwiZW5hYmxlZCI6dHJ1ZSwic2Vzc2lvblZhbHVlIjoiIiwic2Vzc2lvbkluZGV4IjoyfSx7ImtleSI6Im9hdXRoMl9zZWNyZXQiLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWUsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6M30seyJrZXkiOiJzY29wZSIsInZhbHVlIjoicHVibGljIGFncmVlbWVudHMgYmFua19hY2NvdW50cyBiYW5rX2Nvbm5lY3Rpb25zIGNvbnRhY3RzIHBheW1lbnRzIHBheW1lbnRfcmVxdWVzdHMgcmVmdW5kX3JlcXVlc3RzIHRyYW5zYWN0aW9ucyByZWZ1bmRzIG9wZW5fYWdyZWVtZW50cyBvZmZsaW5lX2FjY2VzcyIsImVuYWJsZWQiOnRydWUsInNlc3Npb25WYWx1ZSI6InB1YmxpYyBhZ3JlZW1lbnRzIGJhbmtfYWNjb3VudHMgYmFua19jb25uZWN0aW9ucyBjb250YWN0cyBwYXltZW50cyBwYXltZW50X3JlcXVlc3RzIHJlZnVuZF9yZXF1ZXN0cyB0cmFuc2FjdGlvbnMgcmVmdW5kcyBvcGVuX2FncmVlbWVudHMuLi4iLCJzZXNzaW9uSW5kZXgiOjR9LHsia2V5IjoiaXNvODYwMV9ub3ciLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWUsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6NX0seyJrZXkiOiJhY2Nlc3NfdG9rZW4iLCJ2YWx1ZSI6IiIsImVuYWJsZWQiOnRydWUsInNlc3Npb25WYWx1ZSI6IiIsInNlc3Npb25JbmRleCI6Nn0seyJrZXkiOiJyZWZyZXNoX3Rva2VuIiwidmFsdWUiOiIiLCJlbmFibGVkIjp0cnVlLCJzZXNzaW9uVmFsdWUiOiIiLCJzZXNzaW9uSW5kZXgiOjd9XQ==)
 
 
     **A screencast of this process is also available:
@@ -743,9 +735,9 @@ info:
 
     {
       "failure": {
-          "code": "E302",
-          "title": "BSB Not NPP Enabled",
-          "detail": "The target BSB is not NPP enabled. Please try another channel."
+          "code": "E105",
+          "title": "Account Not Found",
+          "detail": "The target account number is incorrect."
       }
     }
 
@@ -854,48 +846,6 @@ info:
         * Initiate a Payment Request for <code>$0.02</code>.
         * Zepto will mimic a failure to debit the contact's bank account.
 
-    ## NPP Payment failures
-
-    ### [NEW] Using failure codes
-
-    <aside class="notice">
-      <ul>
-          <li><a href="#npp-credit-failures">NPP credit failure codes</a></li>
-      </ul>
-    </aside>
-
-    To simulate a transaction failure, create a Payment with an amount corresponding to the desired [failure code](#npp-credit-failures).
-
-    For example:
-
-
-    * NPP amount `$3.02` will cause the transaction to fail, triggering credit failure code `E302` (BSB Not NPP Enabled).
-
-    * NPP amount `$3.04` will cause the transaction to fail, triggering credit failure code `E304` (Account Not Found).
-
-
-    ### [DEPRECATED] Using failure reasons
-
-    If you are utilising an [Account Float](https://help.split.cash/en/articles/4275280-utilising-an-account-float)
-    to create NPP payments, you can simulate a transaction that fails to process through the NPP channel by
-    [creating a Payment from your account float](https://help.split.cash/en/articles/4275293-transacting-from-your-account-float)
-    for one of the following amounts.
-
-
-    | Transaction failure reason | Failure details | Amount |
-
-    |----------------------------|-----------------|---------|
-
-    | `refer_to_split`           | Real-time payment service currently unavailable |  $1.55  |
-
-    | `refer_to_customer`        | Real-time payment rejected by recipient |  $1.60  |
-
-    | `refer_to_customer`        | Real-time payments not available for recipient |  $1.65  |
-
-    You will receive all the same notifications as if this happened in our live environment. We recommend you
-    check out our article on [what happens when an NPP Payment fails](https://help.split.cash/en/articles/4405560-what-happens-when-an-npp-payment-fails)
-    to learn more about what happens when an NPP Payment is unable to process.
-
 
     ## Instant account verification accounts
 
@@ -950,8 +900,6 @@ info:
 
     | `bank_accounts` | Manage user's Bank Accounts |
 
-    | `bank_connections` | Manage user's Bank Connections |
-
     | `contacts` | Manage user's Contacts |
 
     | `open_agreements` | Manage user's Open Agreements |
@@ -961,8 +909,6 @@ info:
     | `payment_requests` | Manage user's Payment Requests |
 
     | `refunds` | Manage user's Refunds |
-
-    | `transfers` | Manage user's Transfers |
 
     | `transactions` | Access user's Transactions |
 
@@ -1675,32 +1621,9 @@ tags:
       <aside class="notice">When you close an Open Agreement, no new Agreements
       can be created from it and all past Agreement resulting from the
       acceptance of the Open Agreement are unaffected.</aside>
-  - name: Bank Connections
-    description: >
-      Bank connections are read-only connections to your contacts' banking data. This
-      allows Zepto (and yourself) to make intelligent transactional decisions leading
-      to better outcomes.
-
-
-      Use these endpoints to:
-
-        * List your bank connections and check their status
-        * Retrieve a link that you can share with your contact to update their invalidated bank connection (e.g Their online banking credentials have changed)
-
-      <aside class="notice">To access these endpoints on behalf of another account via OAuth2, your application must request (and the user must authorise) <a href="#configuration">the bank_connections scope</a>.</aside>
-
-      <aside class="notice">Looking to add a new bank connection to a contact? See the <a href="#get-a-contact">get a contact endpoint</a></aside>
   - name: Payments
     description: >
       A Payment is used to disburse funds to your Contacts.
-
-
-      Supported payment rails:
-
-
-      * **NPP**: New Payments Platform (Real-time)
-
-      * **DE / BECS**: Direct Entry / Bulk Electronic Clearing System (Slower)
 
 
       ##Lifecycle
@@ -1753,22 +1676,6 @@ tags:
       When Zepto is unable to credit funds to a recipient, we will automatically create a payout reversal credit back to the payer.
       Furthermore, within the payout reversal credit, Zepto will include details in the `description` and under the `reversal_details` key
       as to why the original credit to the recipient failed.
-  - name: Payouts
-    description: >
-      This endpoint gives you some control over a transaction:
-
-
-      * After it has been created; and
-
-      * Before it has been submitted to the banks; or
-
-      * If it was Prefailed, due to insufficient funds, and was therefore not submitted to the banks.
-
-
-      <aside class="notice">
-        Payments and Payment Requests are made up of individual Debits and Credits. These debits and credits
-        were once referred to as Payouts [Legacy naming].
-      </aside>
   - name: Payment Requests
     description: >
       A Payment Request (PR) is used to collect funds, via direct debit, from one of your Contacts (as long as there is an accepted Agreement in place).
@@ -1781,8 +1688,6 @@ tags:
           1. Given there is an Agreement in place and the Payment Request is within the terms of the Agreement, then it will be automatically approved; **or**
           1. Given the Payment Request is **not** within the terms of the Agreement, then it will not be created; **or**
           1. There is no Agreement in place, then it will not be created.
-      1. **Your customer sends funds to you as a [Receivable Contact](/#add-a-receivable-contact):**
-          1. A *receivable* Payment Request will be automatically created and approved to identify the movement of funds from your customer to your chosen Zepto float account.
 
 
       ##Lifecycle
@@ -1822,7 +1727,7 @@ tags:
 
       1. Payment Requests for direct debit payments **(Collections)**:
 
-      2. Payment Requests for funds received via DE/NPP **(Receivables)**:
+      2. Payment Requests for funds received via DE **(Receivables)**:
 
 
       This allows you to return any funds that were previously collected or received into one of your bank/float accounts.
@@ -1913,8 +1818,6 @@ tags:
             "description": null,
             "amount": 1,
             "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
-            "channels": ["float_account"]
-            "current_channel": "float_account"
           }
         ]
       }
@@ -1991,30 +1894,6 @@ tags:
 
       | E299 | Unknown DE Error | An unknown DE error occurred. Please contact Zepto for assistance. |
 
-      ### NPP credit failures
-
-      | Code | Title | Detail |
-
-      | ------------ | ------------- | -------------- |
-
-      | E301 | Upstream Network Outage | An upstream network issue occurred. Please try again later. |
-
-      | E302 | BSB Not NPP Enabled | The target BSB is not NPP enabled. Please try another channel. |
-
-      | E303 | Account Not NPP Enabled | The target account exists but cannot accept funds via the NPP. Please try another channel. |
-
-      | E304 | Account Not Found | The target account number cannot be found. |
-
-      | E305 | Intermittent Outage At Target Institution | The target financial institution is experiencing technical difficulties. Please try again later. |
-
-      | E306 | Account Closed | The target account is closed. |
-
-      | E307 | Target Institution Offline | The target financial institution is undergoing maintenance or experiencing an outage. Please try again later. |
-
-      | E308 | Account Blocked | The target account is blocked and cannot receive funds. |
-
-      | E399 | Unknown NPP Error | An unknown NPP error occurred. Please contact Zepto for assistance. |
-
 
       ## [DEPRECATED] Failure reasons
 
@@ -2045,8 +1924,6 @@ tags:
             "description": null,
             "amount": 1,
             "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
-            "channels": ["float_account"]
-            "current_channel": "float_account"
           }
         ]
       }
@@ -2091,21 +1968,6 @@ tags:
       <aside class="notice">
         The <code>user_voided</code> and <code>admin_voided</code> <code>failure_reasons</code> can sometimes be accompanied by the <code>failure_details</code> key which includes user submitted comments relating to the <code>failure_reason</code>.
       </aside>
-  - name: Transfers
-    description: >
-
-      This endpoint lets you Transfer funds between any bank & float accounts registered under your Zepto account:
-
-
-      1. **From**: Bank Account **To**: Float Account:
-        * Topping up a float account via Direct Debit
-        * Up to 2 days
-      2. **From**: Float Account **To**: Bank Account:
-        * Withdrawing from a float account
-        * Will attempt NPP first and channel switch to DE if required
-      3. **From**: Float Account **To**: Float Account:
-        * Transfer between two float accounts
-        * Within seconds
   - name: Unassigned Agreements
     description: >
       An agreement with no preset authoriser that can only be accepted once and
@@ -2122,8 +1984,6 @@ tags:
   - name: Users
     description: |
       All about the currently authenticated user.
-  - name: Sandbox Only
-    description: Special testing endpoints that only exist in the sandbox environment.
 paths:
   /agreements/outgoing:
     get:
@@ -2245,101 +2105,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListAllBankAccountsResponse'
-  /bank_connections:
-    get:
-      tags:
-        - Bank Connections
-      summary: List all Bank Connections
-      description: >
-        By default, all Bank Connections will be returned. You can apply filters to your
-        query to customise the returned Bank Connection list.
-      operationId: ListAllBankConnections
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ListAllBankConnectionsResponse'
-      parameters:
-        - name: page
-          in: query
-          description: 'Page of results to return, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '1'
-        - name: per_page
-          in: query
-          description: 'Number of results per page, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '100'
-        - name: provider_name
-          in: query
-          description: 'Single value, exact match'
-          style: simple
-          schema:
-            type: string
-            enum: [basiq, proviso, split]
-          example: basiq
-        - name: state
-          in: query
-          description: 'Single value, exact match'
-          style: simple
-          schema:
-            type: string
-            enum: [active, credentials_invalid]
-          example: credentials_invalid
-  /bank_connections/{id}:
-    get:
-      tags:
-        - Bank Connections
-      summary: Get a Bank Connection
-      description: Get a single Bank Connection by its ID
-      operationId: GetABankConnection
-      parameters:
-        - name: id
-          in: path
-          description: BankConnection ID (`BankConnection.data.id`)
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: UUID
-          example: c397645b-bd4f-4fc6-b1fe-4993fef6c3c7
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetABankConnectionResponse'
-        '404':
-          description: Not Found
-    delete:
-      tags:
-        - Bank Connections
-      summary: Remove a Bank Connection
-      description: >
-        <aside class="notice">Removing a Bank Connection will not affect your
-        transaction history.</aside>
-      operationId: RemoveABankConnection
-      parameters:
-        - name: id
-          in: path
-          description: BankConnection ID (`BankConnection.data.id`)
-          required: true
-          style: simple
-          schema:
-            type: string
-            format: UUID
-          example: 01586a3f-f25b-404f-b135-c42a1b7ef4de
-      responses:
-        '204':
-          description: ''
   /contacts/anyone:
     post:
       tags:
@@ -2368,108 +2133,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AddAnAnyoneContactResponse'
-  /contacts/receivable:
-    post:
-      tags:
-        - Contacts (Receivable)
-      summary: Add a Receivable Contact
-      description: |
-        Receive funds from a Contact by allowing them to pay to a personalised PayID or account number. Perfect for reconciling incoming funds to a customer, receiving funds instantly, eliminating human error & improving your customer's experience.
-
-
-        <aside class="notice">
-          To enable this feature, please contact our support team with the following information:
-            <li>Your full legal business name</li>
-            <li>A legally owned domain name: for your PayID email addresses</li>
-            <li><strong>alias_name</strong>: the business name that will be displayed to your customers upon PayID resolution. We suggest using a shortened name appropriate for mobile displays</li>
-        </aside>
-        <aside class="notice">
-          There are two strategies supported for PayID assignment when creating this type of Contact:
-          <li><strong>On-demand PayID</strong>: provide a <code>payid_email</code> and we'll create a contact and register a PayID with the given email address. The PayID registration process happens when the request is received. The initial response for <code>payid_details.state</code> will always be <code>pending</code>. It will transition to <code>active</code> when the PayID registration process is complete. This can take up to a few seconds. You can use webhooks to be informed of this state change.</li>
-          <li><strong>Pooled PayID</strong>: provide your <code>payid_email_domain</code> and we'll create a contact and assign them a PayID from your pool. Pooled PayIDs are pre-registered. The PayID email value is generated using a random value and the email domain from your PayID pool configuration. Providing both <code>payid_email</code> and <code>payid_email_domain</code> will ignore your pool and use the "On-demand PayID" strategy instead.</li>
-        </aside>
-        <aside class="notice">
-          While unlikely, it is possible that we will be unable to register the given PayID. In this case <code>payid_details.state</code> will transition to <code>failed</code>.
-
-          You can simulate this path in sandbox by adding <code>+failure</code> to your <code>payid_email</code> e.g <code>test+failure@split.cash</code>
-        </aside>
-        <aside class="notice">
-          You can test receiving payments to a Receivable Contact in our sandbox environment using the <a href="#simulate-incoming-payid-payment">PayID simulation endpoint</a>.
-        </aside>
-      operationId: AddAReceivableContact
-      parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AddAReceivableContactRequest'
-        required: true
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AddAReceivableContactResponse'
-        '404':
-          description: Not Found
-  '/contacts/{contact_id}/receivable/disable':
-    post:
-      tags:
-        - Contacts (Receivable)
-      summary: Disable a Receivable Contact
-      description: |
-        This endpoint should be used to Disable a Receivable Contact.
-
-        This will reject all payments made to the relevant Account number or PayID and return them to your customer. Payments made via DE and NPP will be rejected.
-      operationId: DisableAReceivableContact
-      parameters:
-        - name: id
-          in: path
-          description: Receivable Contact ID (`ReceivableContact.data.id`)
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: UUID
-          example: 2d2429c2-b868-455e-80ef-915df7c115a7
-      responses:
-        '204':
-          description: No Content (success)
-        '400':
-          description: Bad Request (errors)
-        '404':
-          description: Not Found
-  '/contacts/{contact_id}/receivable/activate':
-    post:
-      tags:
-        - Contacts (Receivable)
-      summary: Reactivate a Receivable Contact
-      description: |
-        This endpoint should be used to Reactivate a Receivable Contact that has been previously Disabled.
-
-        This will once again allow you to receive funds from your customer via both DE and NPP channels.
-      operationId: ActivateAReceivableContact
-      parameters:
-        - name: id
-          in: path
-          description: Receivable Contact ID (`ReceivableContact.data.id`)
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-            format: UUID
-          example: 2d2429c2-b868-455e-80ef-915df7c115a7
-      responses:
-        '204':
-          description: No Content (success)
-        '400':
-          description: Bad Request (errors)
-        '404':
-          description: Not Found
   /contacts:
     get:
       tags:
@@ -2578,7 +2241,6 @@ paths:
         <aside class="notice">
           <ul>
             <li>Removing a Contact will not affect your transaction history.</li>
-            <li>Removing a Receivable Contact will deactivate any associated PayIDs.</li>
           </ul>
         </aside>
       operationId: RemoveAContact
@@ -2606,7 +2268,6 @@ paths:
           <ul>
             <li>Previous transactions to this Contact will retain the name and bank account that was used at the time.</li>
             <li>You cannot update a Contact's bank account details if they currently have an accepted agreement.</li>
-            <li>Any active Bank Connections will be lost if you change the Contact's bank account.</li>
             <li>See our [Help Article](https://help.split.cash/en/articles/3829211-how-do-i-change-my-customers-bank-account-details) for more information about the nuances and implications of changing a contacts Bank Account.</li>
           </ul>
         </aside>
@@ -2742,15 +2403,6 @@ paths:
       tags:
         - Payments
       summary: Make a Payment
-      description: >
-        To enable custom payment flows, the required payment channel can be selected by setting the _channel_ attribute to one of the following combinations:
-
-
-        <ul>
-          <li>["new_payments_platform"] - for faster payments 24/7/365</li>
-          <li>["direct_entry"] - for slower traditional payments</li>
-          <li>["new_payments_platform", "direct_entry"] - enables automatic channel switching if a payment fails on the NPP</li>
-        </ul>
 
       operationId: MakeAPayment
       requestBody:
@@ -2818,65 +2470,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetAPaymentResponse'
-  '/payouts/{ref}/retry':
-    post:
-      tags:
-        - Payouts
-      summary: Retry a Prefailed Payment Request [DEPRECATED]
-      description: |
-        When debitting a Contact with an active bank connection, Zepto will first ensure that there are sufficient funds available before submitting the debit to the banks.
-        If a high probability of insufficient funds is detected, Zepto will not submit the transaction to the banks and will mark the transaction as <strong>Prefailed</strong>.
-
-        This endpoint allows you to retry the Payment Request without having to create a brand new transaction.
-
-        <aside class="notice">
-          Rather than using this endpoint, we now recommend creating a brand new transaction as this simplifies and maintains data integrity for the lifecycle of each attempt
-        </aside>
-      operationId: RetryAPayout
-      parameters:
-        - name: ref
-          in: path
-          description: Payment Request credit reference number e.g C.2
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-          example: C.2
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RetryPayoutResponse'
-  '/payouts/{ref}':
-    delete:
-      tags:
-        - Payouts
-      summary: Void a Payment
-      description: >
-        You can void any Payment from your account that has not yet matured.
-      operationId: VoidAPayment
-      parameters:
-        - name: ref
-          in: path
-          description: Payment debit reference number e.g D.48
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-          example: D.48
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/VoidAPayment'
-      responses:
-        '204':
-          description: No Content
   /payment_requests:
     post:
       tags:
@@ -2975,36 +2568,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListPaymentRequestCollectionsResponse'
-  /payment_requests/receivables:
-    get:
-      tags:
-        - Payment Requests
-      summary: 'List Receivables'
-      description: Payment Requests where the debtor is sending you funds ([Receivable Contacts](/#add-a-receivable-contact)).
-                  This endpoint exposes all received payments.
-      operationId: ListPaymentRequestReceivables
-      parameters:
-        - name: page
-          in: query
-          description: 'Page of results to return, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '1'
-        - name: per_page
-          in: query
-          description: 'Number of results per page, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '100'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ListPaymentRequestReceivablesResponse'
   '/credits/{credit_ref}/refunds':
     post:
       tags:
@@ -3308,95 +2871,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListAllTransactionsResponse'
-  /transfers:
-    post:
-      tags:
-        - Transfers
-      summary: Add a Transfer
-      description: >
-        Use this endpoint when you want to create a Transfer between any 2 of your float/bank accounts.
-
-      operationId: AddATransfer
-      parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AddATransferRequest'
-        required: true
-      responses:
-        '201':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AddATransferResponse'
-    get:
-      tags:
-        - Transfers
-      summary: List all Transfers (Available soon)
-      description: ''
-      operationId: ListAllTransfers
-      parameters:
-        - name: page
-          in: query
-          description: 'Page of results to return, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '1'
-        - name: per_page
-          in: query
-          description: 'Number of results per page, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '100'
-        - name: from_bank_account_id
-          in: query
-          description: 'Source bank/float account UUID, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: 'a79423b2-3827-4cf5-9eda-dc02a298d005'
-        - name: to_bank_account_id
-          in: query
-          description: 'Target bank/float account UUID, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '0921a719-c79d-4ffb-91b6-1b30ab77d14d'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ListAllTransfersResponse'
-  '/transfers/{transfer_ref}':
-    get:
-      tags:
-        - Transfers
-      summary: Get a Transfer (Available soon)
-      description: Get a single transfer by its reference
-      operationId: GetATransfer
-      parameters:
-        - name: transfer_ref
-          in: path
-          description: Transfer reference
-          required: true
-          style: simple
-          schema:
-            type: string
-          example: T.11ub
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GetATransferResponse'
   /unassigned_agreements:
     post:
       tags:
@@ -3667,68 +3141,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RedeliverAWebhookDeliveryResponse'
-  /simulate/incoming_npp_payid_payment:
-    post:
-      tags:
-        - Sandbox Only
-      summary: Simulate incoming PayID payment
-      description: Simulate receiving a real-time PayID payment from one of your Receivable Contacts.
-      operationId: SimulateIncomingPayIDPayment
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SimulateIncomingPayIDPaymentRequest'
-        required: true
-      responses:
-        '201':
-          description: Success
-        '400':
-          description: Invalid parameters
-  /simulate/incoming_npp_bban_payment:
-    post:
-      tags:
-        - Sandbox Only
-      summary: Simulate an incoming real-time payment
-      description: >
-        Simulate receiving a real-time payment to either a Receivable
-        Contact or one of your float accounts, made using a BSB and account
-        number (i.e. not via PayID).
-      operationId: SimulateIncomingNPPBBANPayment
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SimulateIncomingNPPBBANPaymentRequest'
-        required: true
-      responses:
-        '201':
-          description: Success
-        '400':
-          description: Invalid parameters
-  /simulate/incoming_de_payment:
-    post:
-      tags:
-        - Sandbox Only
-      summary: Simulate an incoming DE payment
-      description: >
-        Simulate receiving a Direct Entry payment (i.e. not a real-time payment)
-        to either a Receivable Contact or one of your float accounts.
-      operationId: SimulateIncomingDEPayment
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SimulateIncomingDEPaymentRequest'
-        required: true
-      responses:
-        '201':
-          description: Success
-        '400':
-          description: Invalid parameters
 components:
   securitySchemes:
     bearerAuth:
@@ -3918,49 +3330,6 @@ components:
               pooling_state: disabled
               max_pool_size: 10
               current_pool_size: 1
-    ListAllBankConnectionsResponse:
-      title: List all Bank Connections (response)
-      required:
-        - data
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-          description: ''
-      example:
-        data:
-          - id: fb497754-87e2-407d-871f-32aec39d09d4
-            provider_name: split
-            state: active
-            refreshed_at: '2020-02-13T09:05:00Z'
-            removed_at:
-            failure_reason:
-            institution:
-              short_name: ASB
-              full_name: Auckland Savings Bank
-            contact:
-              id: 626e15b1-aa4a-496e-b5d6-3f8c1a6d2189
-              name: George Morissette
-              email: randy@windler.net
-            links:
-              update_bank_connection: http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/fb497754-87e2-407d-871f-32aec39d09d4
-          - id: ddbee875-7344-4d74-9503-6233149fe1a0
-            provider_name: split
-            state: credentials_invalid
-            refreshed_at: '2020-02-13T09:05:00Z'
-            removed_at:
-            failure_reason:
-            institution:
-              short_name: ASB
-              full_name: Auckland Savings Bank
-            contact:
-              id: 72e37667-6364-440f-b1bd-56df5654e258
-              name: Joel Boyle
-              email: travis@hermanntorp.net
-            links:
-              update_bank_connection: http://nz.go.zepto.money/authorise_bank_connections/williams-and-sons-5/ddbee875-7344-4d74-9503-6233149fe1a0
     CreateOpenAgreementRequest:
       title: Create an Open Agreement (request)
       required:
@@ -4140,165 +3509,6 @@ components:
               max_amount: 1000000
           link: >-
             https://nz.go.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation
-    AddAReceivableContactRequest:
-      title: Add a Receivable Contact (request)
-      required:
-        - name
-        - email
-      type: object
-      properties:
-        name:
-          type: string
-          min: 3
-          max: 140
-          description: 'Contact name (Min: 3 - Max: 140)'
-        email:
-          type: string
-          min: 6
-          max: 256
-          description: 'Contact email (Min: 6 - Max: 256)'
-        payid_email:
-          type: string
-          min: 6
-          max: 256
-          description: 'Contact PayID email (Min: 6 - Max: 256)'
-        payid_email_domain:
-          type: string
-          min: 3
-          max: 254
-          description: 'PayID pool email domain (Min: 3 - Max: 254)'
-        metadata:
-          $ref: '#/components/schemas/Metadata'
-      example:
-        name: Delphine Jestin
-        email: delphine@gmail.com
-        payid_email: delphine_123@merchant.com.au
-        metadata:
-          custom_key: Custom string
-          another_custom_key: Maybe a URL
-    AddAReceivableContactResponse:
-      title: Add a Receivable Contact (response)
-      type: object
-      properties:
-        data:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-            name:
-              type: string
-              min: 3
-              max: 140
-              description: 'Contact name (Min: 3 - Max: 140)'
-            email:
-              type: string
-              min: 6
-              max: 256
-              description: 'Contact email (Min: 6 - Max: 256)'
-            'type':
-              type: string
-              description: Fixed to 'anyone'
-            metadata:
-              $ref: '#/components/schemas/Metadata'
-            bank_account:
-              type: object
-              properties:
-                id:
-                  type: string
-                  format: uuid
-                account_number:
-                  type: string
-                  min: 5
-                  max: 9
-                  description: 'Zepto generated account number (Min: 5 - Max: 9)'
-                branch_code:
-                  type: string
-                  min: 6
-                  max: 6
-                  description: 'Zepto branch code (Min: 6 - Max: 6)'
-                bank_name:
-                  type: string
-                  description: Fixed to 'Zepto Float Acount'
-                state:
-                  type: string
-                  description: Fixed to 'Active'
-                  enum:
-                    - active
-                    - removed
-                iav_provider:
-                  type: string
-                  description: Always null
-                iav_status:
-                  type: string
-                  description: Always null
-                blocks:
-                  type: object
-                  properties:
-                    debits_blocked:
-                      type: boolean
-                      description: Used by Zepto admins. Defines whether the bank account is blocked from being debited
-                    credits_blocked:
-                      type: boolean
-                      description: Used by Zepto admins. Defined Whether this bank account is blocked from being credited
-            anyone_account:
-              type: object
-              properties:
-                id:
-                  type: string
-                  format:  uuid
-            payid_details:
-              type: object
-              properties:
-                alias_value:
-                  type: string
-                  format: email
-                  min: 6
-                  max: 256
-                  description: The PayID email
-                alias_type:
-                  type: string
-                  description: Type of PayID. Fixed to `email`
-                alias_name:
-                  type: string
-                  min: 3
-                  max: 140
-                  description: Your merchant's alias_name
-                state:
-                  type: string
-                  description: Pending -> Active or Failed -> Deregistered (Contact removed)
-                  enum:
-                    - pending
-                    - active
-                    - failed
-                    - deregistered
-      example:
-        data:
-          id: 6a7ed958-f1e8-42dc-8c02-3901d7057357
-          name: Delphine Jestin
-          email: delphine@gmail.com
-          type: anyone
-          metadata:
-            custom_key: Custom string
-            another_custom_key: Maybe a URL
-          bank_account:
-            id: 55afddde-4296-4daf-8e49-7ba481ef9608
-            account_number: '1408281'
-            branch_code: '802919'
-            bank_name: Zepto Float Account
-            state: active
-            iav_provider: null
-            iav_status: null
-            blocks:
-              debits_blocked: false
-              credits_blocked: false
-          anyone_account:
-            id: 77be6ecc-5fa7-454b-86d6-02a5f147878d
-          payid_details:
-            alias_value: delphine_123@merchant.com.au
-            alias_type: email
-            alias_name: your merchant's alias_name
-            state: pending
     ListAllContactsResponse:
       title: List all Contacts (response)
       required:
@@ -4701,7 +3911,6 @@ components:
         - matures_at
         - payouts
         - your_bank_account_id
-        - channels
       type: object
       properties:
         description:
@@ -4720,9 +3929,6 @@ components:
           schema:
             type: string
           example: 83623359-e86e-440c-9780-432a3bc3626f
-        channels:
-          type: array
-          description: Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)
         payouts:
           type: array
           items:
@@ -4734,7 +3940,6 @@ components:
         description: The SuperPackage
         matures_at: '2021-06-13T00:00:00Z'
         your_bank_account_id: 83623359-e86e-440c-9780-432a3bc3626f
-        channels: ["new_payments_platform"]
         payouts:
           - amount: 30000
             description: A tandem skydive jump SB23094
@@ -4762,7 +3967,7 @@ components:
           example: 30000
         description:
           type: string
-          description: Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description. For NPP payments, the payout recipient will see the first 280 characters of this description.
+          description: Description that both the payer and recipient can see. For Direct Entry payments, the payout recipient will see the first 9 characters of this description.
           example: A tandem skydive jump SB23094
         recipient_contact_id:
           type: string
@@ -4799,7 +4004,6 @@ components:
         data:
           ref: PB.1
           your_bank_account_id: 83623359-e86e-440c-9780-432a3bc3626f
-          channels: ["new_payments_platform"]
           payouts:
             - ref: D.1
               recipient_contact_id: 48b89364-1577-4c81-ba02-96705895d457
@@ -4834,7 +4038,6 @@ components:
         data:
           - ref: PB.1
             your_bank_account_id: 83623359-e86e-440c-9780-432a3bc3626f
-            channels: ["new_payments_platform", "direct_entry"]
             payouts:
               - ref: D.1
                 recipient_contact_id: 48b89364-1577-4c81-ba02-96705895d457
@@ -4876,7 +4079,6 @@ components:
         data:
           ref: PB.1
           your_bank_account_id: 83623359-e86e-440c-9780-432a3bc3626f
-          channels: ["direct_entry"]
           payouts:
             - ref: D.1
               recipient_contact_id: 48b89364-1577-4c81-ba02-96705895d457
@@ -5336,137 +4538,6 @@ components:
               amount: 3000
               description: Membership fees
               matures_at: '2021-03-09T16:58:00Z'
-    ListPaymentRequestReceivablesResponse:
-      title: 'List Receivables (response)'
-      required:
-        - data
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            required:
-              - ref
-              - initiator_id
-              - your_bank_account_id
-              - authoriser_id
-              - authoriser_contact_id
-              - contact_initiated
-              - schedule_ref
-              - status
-              - status_reason
-              - matures_at
-              - responded_at
-              - created_at
-              - credit_ref
-              - payout
-            properties:
-              ref:
-                type: string
-                description: The Payment Reference reference (PR.*)
-              initiator_id:
-                type: string
-                format: uuid
-                description: Your bank account ID where the funds will settle
-              your_bank_account_id:
-                type: string
-                format: uuid
-                description: Your bank account ID where the funds will settle (alias of `initiator_id`)
-              authoriser_id:
-                type: string
-                format: uuid
-                description: The debtor's bank account ID
-              authoriser_contact_id:
-                type: string
-                format: uuid
-                description: The contact ID representing the debtor within Zepto
-              contact_initiated:
-                type: boolean
-                description: Initiated by Contact or Merchant
-              schedule_ref:
-                type: string
-                description: The schedule that generated the Payment request if applicable
-              status:
-                type: string
-                description: The status of the Payment Request. For Receivables, this will always be *approved*
-              status_reason:
-                type: string
-                description: Only used when the `status` is `declined` due to prechecking.
-              matures_at:
-                type: string
-                format: date-time
-                description: The date-time when the Payment Request is up for processing
-              responded_at:
-                type: string
-                format: date-time
-                description: The date-time when the Payment Request status changed
-              created_at:
-                type: string
-                format: date-time
-                description: The date-time when the Payment Request was created
-              credit_ref:
-                type: string
-                description: The resulting credit entry reference (available once approved)
-              payout:
-                type: object
-                properties:
-                  amount:
-                    type: integer
-                    min: 1
-                    max: 99999999999
-                    description: 'Amount in cents (Min: 1 - Max: 99999999999)'
-                  'description':
-                    type: string
-                    description: Payment Request description
-                  matures_at:
-                    type: string
-                    format: date-time
-                    description: The date-time when the Payment Request is up for processing
-                required:
-                  - amount
-                  - description
-                  - matures_at
-              metadata:
-                type: array
-                description: Your custom keyed data
-                items:
-                  type: object
-      example:
-        data:
-          - ref: PR.2t65
-            initiator_id: ca7bc5b3-e47f-4153-96fb-bbe326b42772
-            your_bank_account_id: 9c70871d-8e36-4c3e-8a9c-c0ee20e7c679
-            authoriser_id: de86472c-c027-4735-a6a7-234366a27fc7
-            authoriser_contact_id: fb6a9252-3818-44dc-b5aa-2195391a746f
-            contact_initiated: true
-            schedule_ref: null
-            status: approved
-            status_reason: null
-            matures_at: '2021-05-12T13:43:12Z'
-            responded_at: '2021-05-12T13:43:12Z'
-            created_at: '2021-05-12T13:43:12Z'
-            credit_ref: C.77b1
-            payout:
-              amount: 50000
-              description: Deposit to my Trading account
-              matures_at: '2021-05-12T13:43:12Z'
-          - ref: PR.1n644
-            initiator_id: ca7bc5b3-e47f-4153-96fb-bbe326b42772
-            your_bank_account_id: 9c70871d-8e36-4c3e-8a9c-c0ee20e7c679
-            authoriser_id: de86472c-c027-4735-a6a7-234366a27fc7
-            authoriser_contact_id: fb6a9252-3818-44dc-b5aa-2195391a746f
-            contact_initiated: true
-            schedule_ref: null
-            status: approved
-            status_reason: null
-            matures_at: '2021-06-01T04:34:50Z'
-            responded_at: null
-            created_at: '2021-06-01T04:34:56Z'
-            credit_ref: c.54r3
-            payout:
-              amount: 5000
-              description: Punting account top-up
-              matures_at: '2021-06-01T04:34:56Z'
     IssueARefundRequest:
       title: Issue a Refund (request)
       required:
@@ -5479,9 +4550,6 @@ components:
           max: 99999999999
           description: 'Amount in cents refund (Min: 1 - Max: 99999999999)'
           example: 500
-        channels:
-          description: Specify the payment channel to be used, in order. (new_payments_platform, direct_entry, or both)
-          type: array
         reason:
           type: string
           description: Reason for the refund. First 9 characters are visible to both parties.
@@ -5494,7 +4562,6 @@ components:
           $ref: '#/components/schemas/Metadata'
       example:
         amount: 500
-        channels: ["direct_entry"]
         reason: Because reason
         your_bank_account_id: 9c70871d-8e36-4c3e-8a9c-c0ee20e7c679
         metadata:
@@ -5540,19 +4607,10 @@ components:
               description: 'The amount value provided (Min: 1 - Max: 99999999999)'
             channels:
               type: array
-              description: The requested payment channel(s) to be used, in order. (new_payments_platform, direct_entry, or both)
+              description: The requested payment channel(s) to be used, in order. (direct_entry)
             reason:
               type: string
               description: Reason for the refund
-            contacts:
-              type: object
-              properties:
-                source_contact_id:
-                  type: string
-                  description: The original 'Receivable Contact' ID (only visible when refunding Receivables)
-                target_contact_id:
-                  type: string
-                  description: The new Contact ID receiving the funds (only visible when refunding Receivables)
       example:
         data:
           ref: PRF.7f4
@@ -5561,7 +4619,6 @@ components:
           your_bank_account_id: 9c70871d-8e36-4c3e-8a9c-c0ee20e7c679
           created_at: '2021-06-01T07:20:24Z'
           amount: 500
-          channels: ["direct_entry"]
           reason: Subscription refund
           contacts:
             source_contact_id: 194b0237-6c2c-4705-b4fb-308274b14eda
@@ -5709,7 +4766,7 @@ components:
             description: Online purchase
             amount: 19999
             bank_account_id: 'c2e329ae-606f-4311-a9ab-a751baa1915c'
-            channels: [new_payments_platform,direct_entry]
+            channels: [direct_entry]
             current_channel: direct_entry
             metadata:
               customer_id: xur4492
@@ -5910,56 +4967,6 @@ components:
       example:
         payid_email: incoming@split.cash
         amount: 10000
-    SimulateIncomingNPPBBANPaymentRequest:
-      required:
-        - to_bsb
-        - to_account_number
-        - amount
-      type: object
-      properties:
-        to_bsb:
-          type: string
-          min: 6
-          max: 6
-          description: 'Zepto float account BSB (usually 802919)'
-        to_account_number:
-          type: string
-          min: 1
-          max: 9
-          description: 'Zepto float account number'
-        amount:
-          type: integer
-          min: 1
-          max: 99999999999
-          description: 'Amount in cents (Min: 1 - Max: 99999999999)'
-        payment_description:
-          type: string
-          description: 'Default: "Simulated NPP payment"'
-        payment_reference:
-          type: string
-          description: 'Default: "simulated-npp-payment"'
-        from_bsb:
-          type: string
-          min: 6
-          max: 6
-          description: 'Default: "014209"'
-        from_account_number:
-          type: string
-          min: 1
-          max: 9
-          description: 'Default: "12345678"'
-        debtor_name:
-          type: string
-          min: 1
-          description: 'Default: "Simulated Debtor"'
-        debtor_legal_name:
-          type: string
-          min: 1
-          description: 'Default: "Simulated Debtor Pty Ltd"'
-      example:
-        to_bsb: "802919"
-        to_account_number: "88888888"
-        amount: 10000
     SimulateIncomingDEPaymentRequest:
       required:
         - to_bsb
@@ -6127,36 +5134,6 @@ components:
           amount: 47000
           description: Deposit from my bank account
           matures_at: '2021-06-03T00:00:00Z'
-    ListAllTransfersResponse:
-      title:  List all Transfers (response)
-      required:
-        - data
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-      example:
-        data:
-        - ref: T.62xl
-          from_bank_account_id: a79423b2-3827-4cf5-9eda-dc02a298d005
-          to_bank_account_id: 0921a719-c79d-4ffb-91b6-1b30ab77d14d
-          amount: 47000
-          description: Deposit from my bank account
-          matures_at: '2021-06-03T00:00:00Z'
-        - ref: T.87xp
-          from_bank_account_id: a79423b2-3827-4cf5-9eda-dc02a298d005
-          to_bank_account_id: 0921a719-c79d-4ffb-91b6-1b30ab77d14d
-          amount: 9700
-          description: Withdrawal June 2021
-          matures_at: '2021-05-28T00:00:00Z'
-        - ref: T.87s4
-          from_bank_account_id: a79423b2-3827-4cf5-9eda-dc02a298d005
-          to_bank_account_id: 0921a719-c79d-4ffb-91b6-1b30ab77d14d
-          amount: 230
-          description: Transfer to my other Float account
-          matures_at: '2021-05-03T00:00:00Z'
     ListAllWebhooksResponse:
       title:  List all Webhooks (response)
       required:
