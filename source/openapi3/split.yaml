@@ -698,8 +698,6 @@ info:
 
     | `suburb` | |
 
-    | `state` | See the sign up page for accepted values |
-
     | `postcode` | |
 
     | `first_name` | |
@@ -2193,7 +2191,7 @@ paths:
           style: form
           schema:
             type: string
-          example: 068231
+          example: 020018
         - name: bank_account_account_number
           in: query
           description: 'Single value, exact match'
@@ -3307,15 +3305,15 @@ components:
       example:
         data:
           - id: 6a7ed958-f1e8-42dc-8c02-3901d7057357
-            branch_code: '493192'
-            bank_name: National Australia Bank
+            branch_code: '020100'
+            bank_name: Bank of New Zealand
             account_number: '3993013'
             status: active
-            title: 'AU.493192.3993013'
+            title: NZ.020100.3993013'
             available_balance: null
           - id: 56df206a-aaff-471a-b075-11882bc8906a
-            branch_code: '302193'
-            bank_name: National Australia Bank
+            branch_code: '020120'
+            bank_name: Bank of New Zealand
             account_number: '119302'
             status: active
             title: 'Trust Account'
@@ -3531,8 +3529,8 @@ components:
             bank_account:
               id: 095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc
               account_number: '494307'
-              branch_code: '435434'
-              bank_name: National Australia Bank
+              branch_code: '020040'
+              bank_name: Bank of New Zealand
               state: active
               iav_provider: split
               iav_status: active
@@ -3548,8 +3546,8 @@ components:
             bank_account:
               id: 861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0
               account_number: '4395959'
-              branch_code: 068231
-              bank_name: National Australia Bank
+              branch_code: 020018
+              bank_name: Bank of New Zealand
               state: active
               iav_provider: split
               iav_status: credentials_invalid
@@ -3582,8 +3580,8 @@ components:
             bank_account:
               id: 55afddde-4296-4daf-8e49-7ba481ef9608
               account_number: '13048322'
-              branch_code: '123456'
-              bank_name: National Australia Bank
+              branch_code: '020136'
+              bank_name: Bank of New Zealand
               state: pending_verification
               iav_provider: null
               iav_status: null
@@ -3618,7 +3616,7 @@ components:
       example:
         name: Hunter Thompson
         email: hunter@batcountry.com
-        branch_code: '123456'
+        branch_code: '020136'
         account_number: '13048322'
         metadata:
           custom_key: Custom string
@@ -3643,8 +3641,8 @@ components:
           bank_account:
             id: 55afddde-4296-4daf-8e49-7ba481ef9608
             account_number: '13048322'
-            branch_code: '123456'
-            bank_name: National Australia Bank
+            branch_code: '020136'
+            bank_name: Bank of New Zealand
             state: active
             iav_provider: null
             iav_status: null
@@ -3670,8 +3668,8 @@ components:
           removed_at:
           failure_reason:
           institution:
-            short_name: CBA
-            full_name: Commonwealth Bank of Australia
+            short_name: ASB
+            full_name: Auckland Savings Bank
           contact:
             id: 72e37667-6364-440f-b1bd-56df5654e258
             name: Joel Boyle
@@ -3829,8 +3827,8 @@ components:
           bank_account:
             id: fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb
             account_number: '947434694'
-            branch_code: '304304'
-            bank_name: National Australia Bank
+            branch_code: '020159'
+            bank_name: Bank of New Zealand
             state: active
             iav_provider: null
             iav_status: null
@@ -4925,7 +4923,6 @@ components:
             phone: 0418495033
             street_address: 98 Acme Avenue
             suburb: Lead
-            state: NSW
             postcode: '2478'
     SimulateIncomingPayIDPaymentRequest:
       required:
