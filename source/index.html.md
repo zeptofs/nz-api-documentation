@@ -4643,7 +4643,7 @@ func main() {
 |---|---|---|---|---|
 |body|body|[MakeAPaymentRequest](#schemamakeapaymentrequest)|true|No description|
 |» description|body|string|true|User description. Only visible to the payer|
-|» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
+|» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day in NZST)|
 |» your_bank_account_id|body|string|true|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |» payouts|body|[[Payout](#schemapayout)]|true|One Payout object only|
 |»» Payout|body|[Payout](#schemapayout)|false|The actual Payout|
@@ -8633,7 +8633,7 @@ Use this endpoint to resend a failed webhook delivery.
 |Name|Type|Required|Description|
 |---|---|---|---|
 |description|string|true|User description. Only visible to the payer|
-|matures_at|string(date-time)|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day)|
+|matures_at|string(date-time)|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day in NZST)|
 |your_bank_account_id|string|true|Specify where we should take the funds for this transaction. If omitted, your primary bank account will be used.|
 |payouts|[[Payout](#schemapayout)]|true|One Payout object only|
 |metadata|[Metadata](#schemametadata)|false|No description|
@@ -9654,7 +9654,7 @@ Use this endpoint to resend a failed webhook delivery.
 |to_bank_account_id|string|true|The destination float/bank account (UUID)|
 |amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
 |description|string|true|Description for the Transfer|
-|matures_at|string(date-time)|true|Date & time in UTC ISO8601 the Transfer should be processed. (Can not be earlier than the start of current day)|
+|matures_at|string(date-time)|true|Date & time in UTC ISO8601 the Transfer should be processed. (Can not be earlier than the start of current day in NZST)|
 
 ## AddATransferResponse
 
@@ -9683,7 +9683,7 @@ Use this endpoint to resend a failed webhook delivery.
 |» to_bank_account_id|string|true|The destination bank/float account (UUID|
 |» amount|integer|true|The amount value provided (Min: 1 - Max: 99999999999)|
 |» description|string|true|Description for the Transfer|
-|» matures_at|string(date-time)|true|Date & time in UTC ISO8601 the Transfer should be processed. (Can not be earlier than the start of current day)|
+|» matures_at|string(date-time)|true|Date & time in UTC ISO8601 the Transfer should be processed. (Can not be earlier than the start of current day in NZST)|
 
 ## GetATransferResponse
 
@@ -9713,7 +9713,7 @@ Use this endpoint to resend a failed webhook delivery.
 |» to_bank_account_id|string|true|The destination bank/float account (UUID|
 |» amount|integer|true|The amount value provided (Min: 1 - Max: 99999999999)|
 |» description|string|true|Description for the Transfer|
-|» matures_at|string(date-time)|true|Date & time in UTC ISO8601 the Transfer should be processed. (Can not be earlier than the start of current day)|
+|» matures_at|string(date-time)|true|Date & time in UTC ISO8601 the Transfer should be processed. (Can not be earlier than the start of current day in NZST)|
 
 ## ListAllWebhooksResponse
 
