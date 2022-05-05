@@ -20,7 +20,7 @@ headingLevel: 2
 
 > Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-<aside class="notice">Please note, the API’s referred to in this documentation are not currently live. This is only to be used as a reference point for customers who are looking to launch with Zepto into New Zealand.</aside>
+<aside class="warning">Please note, the API’s referred to in this documentation are not currently live. This is only to be used as a reference point for customers who are looking to launch with Zepto into New Zealand.</aside>
 
 Zepto allows you to make, get and manage payments using nothing but bank accounts.
 
