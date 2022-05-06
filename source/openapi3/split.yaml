@@ -37,11 +37,11 @@ info:
 
     * All communication is via `https` and supports **only** `TLSv1.2`.
 
-    * Production API: `https://nz.api.zepto.money/`.
+    * Production API: `https://api.nz.zepto.money/`.
 
     * Production UI: `https://nz.go.zepto.money/`.
 
-    * Sandbox API: `https://nz.api.sandbox.zepto.money/`.
+    * Sandbox API: `https://api.nz.sandbox.zepto.money/`.
 
     * Sandbox UI: `https://nz.go.sandbox.zepto.money/`.
 
@@ -928,8 +928,8 @@ info:
 
     ```
 
-    Link: <http://nz.api.sandbox.zepto.money/contacts?page=5>; rel="last",
-    <http://nz.api.sandbox.zepto.money/contacts?page=2>; rel="next"
+    Link: <http://api.nz.sandbox.zepto.money/contacts?page=5>; rel="last",
+    <http://api.nz.sandbox.zepto.money/contacts?page=2>; rel="next"
 
     Per-Page: 25
 
@@ -1529,9 +1529,9 @@ info:
     Looking for more? Our docs are open sourced! [https://github.com/zeptofs/api-documentation](https://github.com/zeptofs/api-documentation)
   version: '1.0'
 servers:
-  - url: 'https://nz.api.sandbox.zepto.money'
+  - url: 'https://api.nz.sandbox.zepto.money'
     description: Sandbox API server
-  - url: 'https://nz.api.zepto.money'
+  - url: 'https://api.nz.zepto.money'
     description: Production API server
 tags:
   - name: Agreements
