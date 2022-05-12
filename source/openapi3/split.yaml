@@ -1696,10 +1696,6 @@ tags:
 
       ##Lifecycle
 
-
-      <aside class="notice">Payment Requests generated from a customer sending you funds will always be <code>approved</code></aside>
-
-
       A Payment Request can have the following statuses:
 
 

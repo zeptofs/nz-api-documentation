@@ -3619,9 +3619,6 @@ A Payment Request (PR) is used to collect funds, via direct debit, from one of y
     1. There is no Agreement in place, then it will not be created.
 
 ##Lifecycle
-
-<aside class="notice">Payment Requests generated from a customer sending you funds will always be <code>approved</code></aside>
-
 A Payment Request can have the following statuses:
 
 | Status | Description |
