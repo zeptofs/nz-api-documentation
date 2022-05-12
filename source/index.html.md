@@ -5687,7 +5687,6 @@ A transaction (debit or credit) can have the following statuses:
 | `pending_verification` | The bank account must be verified before the transaction can proceed. |
 | `paused` | The transaction has temporary been paused by Zepto pending internal review. |
 | `prefailed` | The transaction was never submitted to the bank because we detected that there were insufficient funds. The transaction can be retried. |
-| `channel_switched` | The initial payment channel has failed and the credit has automatically switched to attempt the payment using the next available channel. |
 ## Failure codes
 > Example response
 
