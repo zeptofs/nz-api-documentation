@@ -5085,12 +5085,9 @@ Get a single payment by its reference
 
 <h1 id="Zepto-API-Refunds">Refunds</h1>
 
-Refunds can be issued for any successfully completed Payment Request transaction. This includes:
+Refunds can be issued for any successfully completed Payment Request transaction. This includes Payment Requests for direct debit payments.
 
-1. Payment Requests for direct debit payments **(Collections)**:
-2. Payment Requests for funds received via DE **(Receivables)**:
-
-This allows you to return any funds that were previously collected or received into one of your bank/float accounts.
+This allows you to return any funds that were previously collected or received into one of your bank accounts.
 
 ## Issue a Refund
 
@@ -5256,7 +5253,7 @@ func main() {
 
 Certain rules apply to the issuance of a refund:
 <ul>
-  <li>Must be applied against a successfully cleared Payment Request (Collections or Receivables)</li>
+  <li>Must be applied against a successfully cleared Payment Request</li>
   <li>Many refunds may be created against the original Payment Request</li>
   <li>The total refunded amount must not exceed the original value</li>
 </ul>
