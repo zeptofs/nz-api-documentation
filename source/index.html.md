@@ -494,8 +494,6 @@ Try out your happy paths and not-so happy paths; the sandbox is a great place to
 
 The sandbox works on a 1 minute cycle to better illustrate how transactions are received and the lifecyle they go through. In other words, every minute, we simulate communicating with financial institutions and update statuses and events accordingly.
 
-All 6 digits BSBs are valid in the sandbox with the exception of `100000`. This BSB allows you to simulate the adding of an invalid BSB. In production, only real BSBs are accepted.
-
 Failed transactions will contain the following information inside the event:
 
 * Failure Code
@@ -534,7 +532,6 @@ To simulate [transaction failures](#failure-reasons) create a Payment or Payment
 
 | Transaction failure reason | Debit | Credit |
 |----------------------------|-------|--------|
-| `invalid_bsb_number`       |  $0.01  |  $0.51   |
 | `account_closed`           |  $0.02  |  $0.52   |
 | `customer_deceased`        |  $0.03  |  $0.53   |
 | `incorrect_account_number` |  $0.04  |  $0.54   |
@@ -1660,7 +1657,6 @@ By default, all Bank Accounts will be returned.
   "data": [
     {
       "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
-      "branch_code": "020100",
       "bank_name": "Bank of New Zealand",
       "account_number": "3993013",
       "status": "active",
@@ -1669,7 +1665,6 @@ By default, all Bank Accounts will be returned.
     },
     {
       "id": "56df206a-aaff-471a-b075-11882bc8906a",
-      "branch_code": "020120",
       "bank_name": "Bank of New Zealand",
       "account_number": "119302",
       "status": "active",
@@ -1678,7 +1673,6 @@ By default, all Bank Accounts will be returned.
     },
     {
       "id": "ab3de19b-709b-4a41-82a5-3b43b3dc58c9",
-      "branch_code": "802919",
       "bank_name": "Zepto Float Account",
       "account_number": "1748212",
       "status": "active",
@@ -1719,7 +1713,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"name":"Hunter Thompson","email":"hunter@batcountry.com","branch_code":"020136","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"name":"Hunter Thompson","email":"hunter@batcountry.com","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -1736,7 +1730,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"020136\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -1773,7 +1767,6 @@ var req = http.request(options, function (res) {
 req.write(JSON.stringify({
   name: 'Hunter Thompson',
   email: 'hunter@batcountry.com',
-  branch_code: '020136',
   account_number: '13048322',
   metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
 }));
@@ -1785,7 +1778,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.nz.sandbox.zepto.money")
 
-payload = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"020136\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -1806,7 +1799,7 @@ HttpResponse<String> response = Unirest.post("https://api.nz.sandbox.zepto.money
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"020136\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -1817,7 +1810,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"name":"Hunter Thompson","email":"hunter@batcountry.com","branch_code":"020136","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"name":"Hunter Thompson","email":"hunter@batcountry.com","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api.nz.sandbox.zepto.money/contacts/anyone');
 $request->setRequestMethod('POST');
@@ -1849,7 +1842,7 @@ func main() {
 
 	url := "https://api.nz.sandbox.zepto.money/contacts/anyone"
 
-	payload := strings.NewReader("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"020136\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -1882,7 +1875,6 @@ Use this endpoint when you want to pay somebody.
 {
   "name": "Hunter Thompson",
   "email": "hunter@batcountry.com",
-  "branch_code": "020136",
   "account_number": "13048322",
   "metadata": {
     "custom_key": "Custom string",
@@ -1898,7 +1890,6 @@ Use this endpoint when you want to pay somebody.
 |body|body|[AddAnAnyoneContactRequest](#schemaaddananyonecontactrequest)|true|No description|
 |» name|body|string|true|The name of the Contact (140 max. characters)|
 |» email|body|string|true|The email of the Contact (256 max. characters)|
-|» branch_code|body|string|true|The bank account BSB of the Contact|
 |» account_number|body|string|true|The bank account number of the Contact|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 
@@ -1920,7 +1911,6 @@ Use this endpoint when you want to pay somebody.
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
       "account_number": "13048322",
-      "branch_code": "020136",
       "bank_name": "Bank of New Zealand",
       "state": "active",
       "iav_provider": null,
@@ -2091,7 +2081,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
 |nickname|query|string|false|Single value, string search|
 |email|query|string|false|Single value, string search|
 |bank_account_id|query|string|false|Single value, exact match|
-|bank_account_branch_code|query|string|false|Single value, exact match|
 |bank_account_account_number|query|string|false|Single value, exact match|
 
 > Example responses
@@ -2109,7 +2098,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
       "bank_account": {
         "id": "095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc",
         "account_number": "494307",
-        "branch_code": "020040",
         "bank_name": "Bank of New Zealand",
         "state": "active",
         "iav_provider": "split",
@@ -2131,7 +2119,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
       "bank_account": {
         "id": "861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0",
         "account_number": "4395959",
-        "branch_code": "020018",
         "bank_name": "Bank of New Zealand",
         "state": "active",
         "iav_provider": "split",
@@ -2153,7 +2140,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
       "bank_account": {
         "id": null,
         "account_number": null,
-        "branch_code": null,
         "bank_name": null,
         "state": "disabled",
         "iav_provider": null,
@@ -2175,7 +2161,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
       "bank_account": {
         "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
         "account_number": "13048322",
-        "branch_code": "020136",
         "bank_name": "Bank of New Zealand",
         "state": "pending_verification",
         "iav_provider": null,
@@ -2362,7 +2347,6 @@ Get a single Contact by its ID
     "bank_account": {
       "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
       "account_number": "947434694",
-      "branch_code": "020159",
       "bank_name": "Bank of New Zealand",
       "state": "active",
       "iav_provider": null,
@@ -2555,7 +2539,7 @@ curl --request PATCH \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"name":"My very own alias","email":"updated@email.com","branch_code":"123456","account_number":"99887766","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"name":"My very own alias","email":"updated@email.com","account_number":"99887766","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -2572,7 +2556,7 @@ request = Net::HTTP::Patch.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"branch_code\":\"123456\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -2609,7 +2593,6 @@ var req = http.request(options, function (res) {
 req.write(JSON.stringify({
   name: 'My very own alias',
   email: 'updated@email.com',
-  branch_code: '123456',
   account_number: '99887766',
   metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
 }));
@@ -2621,7 +2604,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.nz.sandbox.zepto.money")
 
-payload = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"branch_code\":\"123456\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -2642,7 +2625,7 @@ HttpResponse<String> response = Unirest.patch("https://api.nz.sandbox.zepto.mone
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"branch_code\":\"123456\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -2653,7 +2636,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"name":"My very own alias","email":"updated@email.com","branch_code":"123456","account_number":"99887766","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"name":"My very own alias","email":"updated@email.com","account_number":"99887766","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api.nz.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
 $request->setRequestMethod('PATCH');
@@ -2685,7 +2668,7 @@ func main() {
 
 	url := "https://api.nz.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
 
-	payload := strings.NewReader("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"branch_code\":\"123456\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("PATCH", url, payload)
 
@@ -2721,7 +2704,6 @@ You can update the name, email, bank account and metadata of any Contact.
 {
   "name": "My very own alias",
   "email": "updated@email.com",
-  "branch_code": "123456",
   "account_number": "99887766",
   "metadata": {
     "custom_key": "Custom string",
@@ -2738,7 +2720,6 @@ You can update the name, email, bank account and metadata of any Contact.
 |body|body|[UpdateAContactRequest](#schemaupdateacontactrequest)|true|No description|
 |» name|body|string|false|The name of the Contact|
 |» email|body|string|false|The email of the Contact|
-|» branch_code|body|string|false|The bank account BSB of the Contact|
 |» account_number|body|string|false|The bank account number of the Contact|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 
@@ -2760,7 +2741,6 @@ You can update the name, email, bank account and metadata of any Contact.
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
       "account_number": "99887766",
-      "branch_code": "123456",
       "bank_name": "Zepto SANDBOX Bank",
       "state": "active",
       "iav_provider": null,
@@ -5700,7 +5680,6 @@ The rejected, returned, voided & prefailed statuses are always accompanied by a 
 ### DE credit failures
 | Code | Title | Detail |
 | ------------ | ------------- | -------------- |
-| E101 | Invalid BSB Number | The BSB is not valid or is no longer active. |
 | E102 | Payment Stopped | The target institution has blocked transactions to this account. Please refer to customer. |
 | E103 | Account Closed | The target account is closed. |
 | E104 | Customer Deceased | The target account's owner has been listed as deceased. |
@@ -5717,7 +5696,6 @@ The rejected, returned, voided & prefailed statuses are always accompanied by a 
 ### DE debit failures
 | Code | Title | Detail |
 | ------------ | ------------- | -------------- |
-| E201 | Invalid BSB Number | The BSB is not valid or is no longer active. |
 | E202 | Payment Stopped | The target institution has blocked transactions to this account. Please refer to customer. |
 | E203 | Account Closed | The target account is closed. |
 | E204 | Customer Deceased | The target account's owner has been listed as deceased. |
@@ -5772,7 +5750,6 @@ The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompani
 | `refer_to_customer` | Usually due to insufficient funds |
 | `insufficient_funds` | Insufficient funds |
 | `payment_stopped` | The payment was stopped at the bank. Can be due to a customer requesting a stop payment with their financial institution. |
-| `invalid_bsb_number` | BSB number is invalid |
 | `account_closed` | The bank account is closed |
 | `customer_deceased` | Customer is deceased |
 | `incorrect_account_number` | Account number is incorrect |
@@ -7879,7 +7856,6 @@ Use this endpoint to resend a failed webhook delivery.
   "data": [
     {
       "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
-      "branch_code": "020100",
       "bank_name": "Bank of New Zealand",
       "account_number": "3993013",
       "status": "active",
@@ -7888,7 +7864,6 @@ Use this endpoint to resend a failed webhook delivery.
     },
     {
       "id": "56df206a-aaff-471a-b075-11882bc8906a",
-      "branch_code": "020120",
       "bank_name": "Bank of New Zealand",
       "account_number": "119302",
       "status": "active",
@@ -7897,7 +7872,6 @@ Use this endpoint to resend a failed webhook delivery.
     },
     {
       "id": "ab3de19b-709b-4a41-82a5-3b43b3dc58c9",
-      "branch_code": "802919",
       "bank_name": "Zepto Float Account",
       "account_number": "1748212",
       "status": "active",
@@ -8192,7 +8166,6 @@ Use this endpoint to resend a failed webhook delivery.
       "bank_account": {
         "id": "095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc",
         "account_number": "494307",
-        "branch_code": "020040",
         "bank_name": "Bank of New Zealand",
         "state": "active",
         "iav_provider": "split",
@@ -8214,7 +8187,6 @@ Use this endpoint to resend a failed webhook delivery.
       "bank_account": {
         "id": "861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0",
         "account_number": "4395959",
-        "branch_code": "020018",
         "bank_name": "Bank of New Zealand",
         "state": "active",
         "iav_provider": "split",
@@ -8236,7 +8208,6 @@ Use this endpoint to resend a failed webhook delivery.
       "bank_account": {
         "id": null,
         "account_number": null,
-        "branch_code": null,
         "bank_name": null,
         "state": "disabled",
         "iav_provider": null,
@@ -8258,7 +8229,6 @@ Use this endpoint to resend a failed webhook delivery.
       "bank_account": {
         "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
         "account_number": "13048322",
-        "branch_code": "020136",
         "bank_name": "Bank of New Zealand",
         "state": "pending_verification",
         "iav_provider": null,
@@ -8292,7 +8262,6 @@ Use this endpoint to resend a failed webhook delivery.
 {
   "name": "Hunter Thompson",
   "email": "hunter@batcountry.com",
-  "branch_code": "020136",
   "account_number": "13048322",
   "metadata": {
     "custom_key": "Custom string",
@@ -8309,7 +8278,6 @@ Use this endpoint to resend a failed webhook delivery.
 |---|---|---|---|
 |name|string|true|The name of the Contact (140 max. characters)|
 |email|string|true|The email of the Contact (256 max. characters)|
-|branch_code|string|true|The bank account BSB of the Contact|
 |account_number|string|true|The bank account number of the Contact|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
@@ -8331,7 +8299,6 @@ Use this endpoint to resend a failed webhook delivery.
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
       "account_number": "13048322",
-      "branch_code": "020136",
       "bank_name": "Bank of New Zealand",
       "state": "active",
       "iav_provider": null,
@@ -8412,7 +8379,6 @@ Use this endpoint to resend a failed webhook delivery.
     "bank_account": {
       "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
       "account_number": "947434694",
-      "branch_code": "020159",
       "bank_name": "Bank of New Zealand",
       "state": "active",
       "iav_provider": null,
@@ -8457,7 +8423,6 @@ Use this endpoint to resend a failed webhook delivery.
 |» bank_account|object|true|No description|
 |»» id|string(uuid)|false|The Bank Account ID|
 |»» account_number|string|false|The Bank Account number (Min: 5 - Max: 9)|
-|»» branch_code|string|false|The BSB number (Min: 6 - Max: 6)|
 |»» state|string|false|The bank account state|
 |»» iav_provider|string|false|The instant account verification provider|
 |»» iav_status|string|false|The instant account verification bank connection status|
@@ -8504,7 +8469,6 @@ Use this endpoint to resend a failed webhook delivery.
 {
   "name": "My very own alias",
   "email": "updated@email.com",
-  "branch_code": "123456",
   "account_number": "99887766",
   "metadata": {
     "custom_key": "Custom string",
@@ -8521,7 +8485,6 @@ Use this endpoint to resend a failed webhook delivery.
 |---|---|---|---|
 |name|string|false|The name of the Contact|
 |email|string|false|The email of the Contact|
-|branch_code|string|false|The bank account BSB of the Contact|
 |account_number|string|false|The bank account number of the Contact|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
@@ -8543,7 +8506,6 @@ Use this endpoint to resend a failed webhook delivery.
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
       "account_number": "99887766",
-      "branch_code": "123456",
       "bank_name": "Zepto SANDBOX Bank",
       "state": "active",
       "iav_provider": null,
@@ -9577,7 +9539,6 @@ Use this endpoint to resend a failed webhook delivery.
 |amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
 |payment_description|string|false|Default:  "Simulated PayID payment"|
 |payment_reference|string|false|Default:  "simulated-payid-payment"|
-|from_bsb|string|false|Default: "014209"|
 |from_account_number|string|false|Default: "12345678"|
 |debtor_name|string|false|Default:  "Simulated Debtor"|
 |debtor_legal_name|string|false|Default:  "Simulated Debtor Pty Ltd"|
@@ -9588,7 +9549,6 @@ Use this endpoint to resend a failed webhook delivery.
 
 ```json
 {
-  "to_bsb": "802919",
   "to_account_number": "88888888",
   "amount": 10000
 }
@@ -9598,11 +9558,9 @@ Use this endpoint to resend a failed webhook delivery.
 
 |Name|Type|Required|Description|
 |---|---|---|---|
-|to_bsb|string|true|Zepto float account BSB (usually 802919)|
 |to_account_number|string|true|Zepto float account number|
 |amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
 |payment_reference|string|false|Max 18 characters. Default: "simulated-de-pymt"|
-|from_bsb|string|false|Default: "014209"|
 |from_account_number|string|false|Default: "12345678"|
 |debtor_name|string|false|Max 16 characters. Default: "Simulated Debtor"|
 
