@@ -238,7 +238,7 @@ Before you start, load up our API collection:
 
     Using the details from the OAuth2 app you created earlier, fill in the **oauth2_application_id** & **oauth2_secret** fields.
 
-    [![Fill in environment values](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_environment_values.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_environment_values.png)
+    [![Fill in environment values](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_nz_environment_values.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/postman_nz_environment_values.png)
 
 4. **Setup the authorization**
 
