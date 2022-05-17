@@ -501,7 +501,7 @@ Failed transactions will contain the following information inside the event:
 * Failure Details
 
 ## DE Transaction failures
-### [NEW] Using failure codes
+### Using failure codes
 <aside class="notice">
   <ul>
       <li><a href="#de-credit-failures">DE credit failure codes</a></li>
