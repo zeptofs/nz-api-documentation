@@ -344,7 +344,7 @@ Provides the ability to send a Payment Request (get paid) to any Contact that ha
 
 To send a Payment Request to a Contact using the API, you must first have an accepted [Agreement](/#Zepto-API-Agreements) with them.
 
-To do so, you can send them an [Open Agreement link](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreement link](http://help.split.cash/agreements/unassigned-agreement) for them to [elect their bank account](https://help.split.cash/bank-accounts/instant-account-verification-iav) and accept the Agreement.
+To do so, you can send them an [Open Agreement link](https://help.zepto.money/en/articles/6210908-nz-open-agreement) or [Unassigned Agreement link](https://help.zepto.money/en/articles/6210903-nz-unassigned-agreement) for them to accept the Agreement.
 
 Having this in place will allow any future Payment Requests to be automatically approved and processed as per the Agreement terms.
 
