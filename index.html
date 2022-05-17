@@ -1100,7 +1100,7 @@ want to store the newly generated <code>refresh_token</code> everytime you use i
 
 <p>To send a Payment Request to a Contact using the API, you must first have an accepted <a href="/#Zepto-API-Agreements">Agreement</a> with them.</p>
 
-<p>To do so, you can send them an <a href="https://help.zepto.money/en/articles/6210908-nz-open-agreement">Open Agreement link</a> or <a href="https://help.zepto.money/en/articles/6210903-nz-unassigned-agreement">Unassigned Agreement link</a> for them to accept the Agreement.</p>
+<p>To do so, you can send them an <a href="https://help.split.cash/agreements/open-agreement">Open Agreement link</a> or <a href="http://help.split.cash/agreements/unassigned-agreement">Unassigned Agreement link</a> for them to <a href="https://help.split.cash/bank-accounts/instant-account-verification-iav">elect &amp; verify their bank account</a> and accept the Agreement.</p>
 
 <p>Having this in place will allow any future Payment Requests to be automatically approved and processed as per the Agreement terms.</p>
 
@@ -1293,8 +1293,6 @@ You can pass any value as the key but we suggest that you use <a href="https://w
 
 <p>The sandbox works on a 1 minute cycle to better illustrate how transactions are received and the lifecyle they go through. In other words, every minute, we simulate communicating with financial institutions and update statuses and events accordingly.</p>
 
-<p>All 6 digits BSBs are valid in the sandbox with the exception of <code>100000</code>. This BSB allows you to simulate the adding of an invalid BSB. In production, only real BSBs are accepted.</p>
-
 <p>Failed transactions will contain the following information inside the event:</p>
 
 <ul>
@@ -1345,11 +1343,6 @@ You can pass any value as the key but we suggest that you use <a href="https://w
 <th>Credit</th>
 </tr>
 </thead><tbody>
-<tr>
-<td><code>invalid_bsb_number</code></td>
-<td>$0.01</td>
-<td>$0.51</td>
-</tr>
 <tr>
 <td><code>account_closed</code></td>
 <td>$0.02</td>
@@ -1908,29 +1901,10 @@ class MainClass {
 <p>We take backwards compatibility seriously. The following list contains backwards compatible changes:</p>
 
 <ul>
-<li><strong>2022-01-21</strong> - Reduced webhook delivery retries on sandbox to a single retry</li>
-<li><strong>2021-12-01</strong> - Add ref to Webhook Delivery endpoint</li>
-<li><strong>2021-10-08</strong> - Introduced improved transaction failure messaging (code, title and detail)</li>
-<li><strong>2021-09-29</strong> - Added/expanded sandbox-only endpoints for simulating incoming payments</li>
-<li><strong>2021-09-08</strong> - Added Webhooks and Webhook Delivery endpoints</li>
-<li><strong>2021-08-31</strong> - Added PayID pool references to <em>/contacts/receivable</em> and <em>/bank_accounts</em> endpoints</li>
-<li><strong>2021-07-01</strong> - Added $1.65 amount for Sandbox simulated failures and minor tweaks</li>
-<li><strong>2021-06-08</strong> - Added Transfers, Payment Channel selection, Receivable Refunds</li>
-<li><strong>2021-05-21</strong> - Added new Payment Request endpoints, updated Postman collection</li>
-<li><strong>2021-05-03</strong> - Deprecated <em>/payments_requests/outgoing</em> endpoint</li>
-<li><strong>2021-04-20</strong> - Removed deprecated API references, refreshed Refunds and Payout descriptions</li>
-<li><strong>2021-03-17</strong> - Remove note indicating single active bank account limitation</li>
-<li><strong>2021-03-12</strong> - Add ref to GetAContactResponse</li>
-<li><strong>2021-02-24</strong> - Added details on enabling the Receivable Contact feature and amended the POST/contacts/receivable response body</li>
-<li><strong>2020-12-17</strong> - Add Sandbox Only API endpoints</li>
-<li><strong>2020-12-17</strong> - Enhance response schema for several endpoints</li>
-<li><strong>2020-12-16</strong> - Add webhook schema table</li>
-<li><strong>2020-12-15</strong> - Improve webhooks section</li>
-<li><strong>2020-12-15</strong> - Re-word Payment Requests introduction to better cover its use with Receivable Contacts.</li>
-<li><strong>2020-12-15</strong> - Add changelog</li>
+<li>NZ Changelogs will be added to this list once the application is deployed in New Zealand</li>
 </ul>
 
-<p>Looking for more? Our docs are open sourced! <a href="https://github.com/zeptofs/api-documentation">https://github.com/zeptofs/api-documentation</a></p>
+<p>Looking for more? Our docs are open sourced! <a href="https://github.com/zeptofs/nz-api-documentation">https://github.com/zeptofs/nz-api-documentation</a></p>
 
 <h1 id="Zepto-API-Agreements">Agreements</h1>
 
@@ -2697,7 +2671,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6a7ed958-f1e8-42dc-8c02-3901d7057357"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"020100"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3993013"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
@@ -2706,7 +2679,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56df206a-aaff-471a-b075-11882bc8906a"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"020120"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"119302"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
@@ -2715,7 +2687,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ab3de19b-709b-4a41-82a5-3b43b3dc58c9"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"802919"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Zepto Float Account"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1748212"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
@@ -2765,7 +2736,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
   <span class="nt">--header</span> <span class="s1">'accept: application/json'</span> <span class="se">\</span>
   <span class="nt">--header</span> <span class="s1">'authorization: Bearer {access-token}'</span> <span class="se">\</span>
   <span class="nt">--header</span> <span class="s1">'content-type: application/json'</span> <span class="se">\</span>
-  <span class="nt">--data</span> <span class="s1">'{"name":"Hunter Thompson","email":"hunter@batcountry.com","branch_code":"020136","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'</span>
+  <span class="nt">--data</span> <span class="s1">'{"name":"Hunter Thompson","email":"hunter@batcountry.com","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'uri'</span>
 <span class="nb">require</span> <span class="s1">'net/http'</span>
 
@@ -2779,7 +2750,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <span class="n">request</span><span class="p">[</span><span class="s2">"content-type"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'application/json'</span>
 <span class="n">request</span><span class="p">[</span><span class="s2">"accept"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'application/json'</span>
 <span class="n">request</span><span class="p">[</span><span class="s2">"authorization"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'Bearer {access-token}'</span>
-<span class="n">request</span><span class="p">.</span><span class="nf">body</span> <span class="o">=</span> <span class="s2">"{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Hunter Thompson</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">email</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">hunter@batcountry.com</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">branch_code</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">020136</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">account_number</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">13048322</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">metadata</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">custom_key</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Custom string</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">another_custom_key</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Maybe a URL</span><span class="se">\"</span><span class="s2">}}"</span>
+<span class="n">request</span><span class="p">.</span><span class="nf">body</span> <span class="o">=</span> <span class="s2">"{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Hunter Thompson</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">email</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">hunter@batcountry.com</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">account_number</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">13048322</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">metadata</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">custom_key</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Custom string</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">another_custom_key</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Maybe a URL</span><span class="se">\"</span><span class="s2">}}"</span>
 
 <span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 <span class="nb">puts</span> <span class="n">response</span><span class="p">.</span><span class="nf">read_body</span>
@@ -2813,7 +2784,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <span class="nx">req</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
   <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hunter Thompson</span><span class="dl">'</span><span class="p">,</span>
   <span class="na">email</span><span class="p">:</span> <span class="dl">'</span><span class="s1">hunter@batcountry.com</span><span class="dl">'</span><span class="p">,</span>
-  <span class="na">branch_code</span><span class="p">:</span> <span class="dl">'</span><span class="s1">020136</span><span class="dl">'</span><span class="p">,</span>
   <span class="na">account_number</span><span class="p">:</span> <span class="dl">'</span><span class="s1">13048322</span><span class="dl">'</span><span class="p">,</span>
   <span class="na">metadata</span><span class="p">:</span> <span class="p">{</span> <span class="na">custom_key</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Custom string</span><span class="dl">'</span><span class="p">,</span> <span class="na">another_custom_key</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Maybe a URL</span><span class="dl">'</span> <span class="p">}</span>
 <span class="p">}));</span>
@@ -2822,7 +2792,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 
 <span class="n">conn</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="n">HTTPSConnection</span><span class="p">(</span><span class="s">"api.nz.sandbox.zepto.money"</span><span class="p">)</span>
 
-<span class="n">payload</span> <span class="o">=</span> <span class="s">"{</span><span class="se">\"</span><span class="s">name</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Hunter Thompson</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">email</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">hunter@batcountry.com</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">branch_code</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">020136</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">account_number</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">13048322</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">metadata</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">custom_key</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Custom string</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">another_custom_key</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Maybe a URL</span><span class="se">\"</span><span class="s">}}"</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="s">"{</span><span class="se">\"</span><span class="s">name</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Hunter Thompson</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">email</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">hunter@batcountry.com</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">account_number</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">13048322</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">metadata</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">custom_key</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Custom string</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">another_custom_key</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Maybe a URL</span><span class="se">\"</span><span class="s">}}"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'content-type'</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">,</span>
@@ -2840,7 +2810,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
   <span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"content-type"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">)</span>
   <span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"accept"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">)</span>
   <span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"authorization"</span><span class="o">,</span> <span class="s">"Bearer {access-token}"</span><span class="o">)</span>
-  <span class="o">.</span><span class="na">body</span><span class="o">(</span><span class="s">"{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"branch_code\":\"020136\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">body</span><span class="o">(</span><span class="s">"{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"</span><span class="o">)</span>
   <span class="o">.</span><span class="na">asString</span><span class="o">();</span>
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 
@@ -2848,7 +2818,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <span class="nv">$request</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">http\Client\Request</span><span class="p">;</span>
 
 <span class="nv">$body</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">http\Message\Body</span><span class="p">;</span>
-<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">append</span><span class="p">(</span><span class="s1">'{"name":"Hunter Thompson","email":"hunter@batcountry.com","branch_code":"020136","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'</span><span class="p">);</span>
+<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">append</span><span class="p">(</span><span class="s1">'{"name":"Hunter Thompson","email":"hunter@batcountry.com","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'</span><span class="p">);</span>
 
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">setRequestUrl</span><span class="p">(</span><span class="s1">'https://api.nz.sandbox.zepto.money/contacts/anyone'</span><span class="p">);</span>
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">setRequestMethod</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">);</span>
@@ -2877,7 +2847,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 
     <span class="n">url</span> <span class="o">:=</span> <span class="s">"https://api.nz.sandbox.zepto.money/contacts/anyone"</span>
 
-    <span class="n">payload</span> <span class="o">:=</span> <span class="n">strings</span><span class="o">.</span><span class="n">NewReader</span><span class="p">(</span><span class="s">"{</span><span class="se">\"</span><span class="s">name</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Hunter Thompson</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">email</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">hunter@batcountry.com</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">branch_code</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">020136</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">account_number</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">13048322</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">metadata</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">custom_key</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Custom string</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">another_custom_key</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Maybe a URL</span><span class="se">\"</span><span class="s">}}"</span><span class="p">)</span>
+    <span class="n">payload</span> <span class="o">:=</span> <span class="n">strings</span><span class="o">.</span><span class="n">NewReader</span><span class="p">(</span><span class="s">"{</span><span class="se">\"</span><span class="s">name</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Hunter Thompson</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">email</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">hunter@batcountry.com</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">account_number</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">13048322</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">metadata</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">custom_key</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Custom string</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">another_custom_key</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Maybe a URL</span><span class="se">\"</span><span class="s">}}"</span><span class="p">)</span>
 
     <span class="n">req</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">NewRequest</span><span class="p">(</span><span class="s">"POST"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
 
@@ -2909,7 +2879,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hunter Thompson"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hunter@batcountry.com"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"020136"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13048322"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"custom_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Custom string"</span><span class="p">,</span><span class="w">
@@ -2950,13 +2919,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <td>The email of the Contact (256 max. characters)</td>
 </tr>
 <tr>
-<td>» branch_code</td>
-<td>body</td>
-<td>string</td>
-<td>true</td>
-<td>The bank account BSB of the Contact</td>
-</tr>
-<tr>
 <td>» account_number</td>
 <td>body</td>
 <td>string</td>
@@ -2990,7 +2952,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
     </span><span class="nl">"bank_account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55afddde-4296-4daf-8e49-7ba481ef9608"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13048322"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"020136"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -3195,13 +3156,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <td>Single value, exact match</td>
 </tr>
 <tr>
-<td>bank_account_branch_code</td>
-<td>query</td>
-<td>string</td>
-<td>false</td>
-<td>Single value, exact match</td>
-</tr>
-<tr>
 <td>bank_account_account_number</td>
 <td>query</td>
 <td>string</td>
@@ -3225,7 +3179,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
       </span><span class="nl">"bank_account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"494307"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"020040"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"split"</span><span class="p">,</span><span class="w">
@@ -3247,7 +3200,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
       </span><span class="nl">"bank_account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4395959"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"020018"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"split"</span><span class="p">,</span><span class="w">
@@ -3269,7 +3221,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
       </span><span class="nl">"bank_account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -3291,7 +3242,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
       </span><span class="nl">"bank_account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55afddde-4296-4daf-8e49-7ba481ef9608"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13048322"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"020136"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending_verification"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -3482,7 +3432,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
     </span><span class="nl">"bank_account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"947434694"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"020159"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -3694,7 +3643,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
   <span class="nt">--header</span> <span class="s1">'accept: application/json'</span> <span class="se">\</span>
   <span class="nt">--header</span> <span class="s1">'authorization: Bearer {access-token}'</span> <span class="se">\</span>
   <span class="nt">--header</span> <span class="s1">'content-type: application/json'</span> <span class="se">\</span>
-  <span class="nt">--data</span> <span class="s1">'{"name":"My very own alias","email":"updated@email.com","branch_code":"123456","account_number":"99887766","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'</span>
+  <span class="nt">--data</span> <span class="s1">'{"name":"My very own alias","email":"updated@email.com","account_number":"99887766","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'</span>
 </code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'uri'</span>
 <span class="nb">require</span> <span class="s1">'net/http'</span>
 
@@ -3708,7 +3657,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <span class="n">request</span><span class="p">[</span><span class="s2">"content-type"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'application/json'</span>
 <span class="n">request</span><span class="p">[</span><span class="s2">"accept"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'application/json'</span>
 <span class="n">request</span><span class="p">[</span><span class="s2">"authorization"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'Bearer {access-token}'</span>
-<span class="n">request</span><span class="p">.</span><span class="nf">body</span> <span class="o">=</span> <span class="s2">"{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">My very own alias</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">email</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">updated@email.com</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">branch_code</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">123456</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">account_number</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">99887766</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">metadata</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">custom_key</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Custom string</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">another_custom_key</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Maybe a URL</span><span class="se">\"</span><span class="s2">}}"</span>
+<span class="n">request</span><span class="p">.</span><span class="nf">body</span> <span class="o">=</span> <span class="s2">"{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">My very own alias</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">email</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">updated@email.com</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">account_number</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">99887766</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">metadata</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">custom_key</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Custom string</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">another_custom_key</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Maybe a URL</span><span class="se">\"</span><span class="s2">}}"</span>
 
 <span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 <span class="nb">puts</span> <span class="n">response</span><span class="p">.</span><span class="nf">read_body</span>
@@ -3742,7 +3691,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <span class="nx">req</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
   <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">My very own alias</span><span class="dl">'</span><span class="p">,</span>
   <span class="na">email</span><span class="p">:</span> <span class="dl">'</span><span class="s1">updated@email.com</span><span class="dl">'</span><span class="p">,</span>
-  <span class="na">branch_code</span><span class="p">:</span> <span class="dl">'</span><span class="s1">123456</span><span class="dl">'</span><span class="p">,</span>
   <span class="na">account_number</span><span class="p">:</span> <span class="dl">'</span><span class="s1">99887766</span><span class="dl">'</span><span class="p">,</span>
   <span class="na">metadata</span><span class="p">:</span> <span class="p">{</span> <span class="na">custom_key</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Custom string</span><span class="dl">'</span><span class="p">,</span> <span class="na">another_custom_key</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Maybe a URL</span><span class="dl">'</span> <span class="p">}</span>
 <span class="p">}));</span>
@@ -3751,7 +3699,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 
 <span class="n">conn</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="n">HTTPSConnection</span><span class="p">(</span><span class="s">"api.nz.sandbox.zepto.money"</span><span class="p">)</span>
 
-<span class="n">payload</span> <span class="o">=</span> <span class="s">"{</span><span class="se">\"</span><span class="s">name</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">My very own alias</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">email</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">updated@email.com</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">branch_code</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">123456</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">account_number</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">99887766</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">metadata</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">custom_key</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Custom string</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">another_custom_key</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Maybe a URL</span><span class="se">\"</span><span class="s">}}"</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="s">"{</span><span class="se">\"</span><span class="s">name</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">My very own alias</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">email</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">updated@email.com</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">account_number</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">99887766</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">metadata</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">custom_key</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Custom string</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">another_custom_key</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Maybe a URL</span><span class="se">\"</span><span class="s">}}"</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'content-type'</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">,</span>
@@ -3769,7 +3717,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
   <span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"content-type"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">)</span>
   <span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"accept"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">)</span>
   <span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"authorization"</span><span class="o">,</span> <span class="s">"Bearer {access-token}"</span><span class="o">)</span>
-  <span class="o">.</span><span class="na">body</span><span class="o">(</span><span class="s">"{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"branch_code\":\"123456\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">body</span><span class="o">(</span><span class="s">"{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"</span><span class="o">)</span>
   <span class="o">.</span><span class="na">asString</span><span class="o">();</span>
 </code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 
@@ -3777,7 +3725,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <span class="nv">$request</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">http\Client\Request</span><span class="p">;</span>
 
 <span class="nv">$body</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">http\Message\Body</span><span class="p">;</span>
-<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">append</span><span class="p">(</span><span class="s1">'{"name":"My very own alias","email":"updated@email.com","branch_code":"123456","account_number":"99887766","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'</span><span class="p">);</span>
+<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">append</span><span class="p">(</span><span class="s1">'{"name":"My very own alias","email":"updated@email.com","account_number":"99887766","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'</span><span class="p">);</span>
 
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">setRequestUrl</span><span class="p">(</span><span class="s1">'https://api.nz.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608'</span><span class="p">);</span>
 <span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">setRequestMethod</span><span class="p">(</span><span class="s1">'PATCH'</span><span class="p">);</span>
@@ -3806,7 +3754,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 
     <span class="n">url</span> <span class="o">:=</span> <span class="s">"https://api.nz.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"</span>
 
-    <span class="n">payload</span> <span class="o">:=</span> <span class="n">strings</span><span class="o">.</span><span class="n">NewReader</span><span class="p">(</span><span class="s">"{</span><span class="se">\"</span><span class="s">name</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">My very own alias</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">email</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">updated@email.com</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">branch_code</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">123456</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">account_number</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">99887766</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">metadata</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">custom_key</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Custom string</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">another_custom_key</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Maybe a URL</span><span class="se">\"</span><span class="s">}}"</span><span class="p">)</span>
+    <span class="n">payload</span> <span class="o">:=</span> <span class="n">strings</span><span class="o">.</span><span class="n">NewReader</span><span class="p">(</span><span class="s">"{</span><span class="se">\"</span><span class="s">name</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">My very own alias</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">email</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">updated@email.com</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">account_number</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">99887766</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">metadata</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">custom_key</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Custom string</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">another_custom_key</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">Maybe a URL</span><span class="se">\"</span><span class="s">}}"</span><span class="p">)</span>
 
     <span class="n">req</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">NewRequest</span><span class="p">(</span><span class="s">"PATCH"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
 
@@ -3841,7 +3789,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My very own alias"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"updated@email.com"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"99887766"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"custom_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Custom string"</span><span class="p">,</span><span class="w">
@@ -3889,13 +3836,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <td>The email of the Contact</td>
 </tr>
 <tr>
-<td>» branch_code</td>
-<td>body</td>
-<td>string</td>
-<td>false</td>
-<td>The bank account BSB of the Contact</td>
-</tr>
-<tr>
 <td>» account_number</td>
 <td>body</td>
 <td>string</td>
@@ -3929,7 +3869,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
     </span><span class="nl">"bank_account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55afddde-4296-4daf-8e49-7ba481ef9608"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"99887766"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Zepto SANDBOX Bank"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -3976,7 +3915,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 
 <p>An Open Agreement is essentially an Agreement template with no specific authoriser. Each time an Open Agreement is accepted by either a Zepto account holder or anyone, the authoriser is added to your Contacts list and a new Agreement is automatically created between the Open Agreement initiator and the authoriser.</p>
 
-<p>An Open Agreement can be accepted multiple times by different parties and the result is the same: A new Agreement. Additionally, an Open Agreement can be accepted by anybody, not just other Zepto users. This is achieved by using our <a href="http://help.split.cash/bank-accounts/instant-account-verification-iav">Instant Account Verification process</a> as part of accepting an <a href="https://help.split.cash/agreements/open-agreement">Open Agreement</a>.</p>
+<p>An Open Agreement can be accepted multiple times by different parties and the result is the same: A new Agreement. Additionally, an Open Agreement can be accepted by anybody, not just other Zepto users.</p>
 <h2 id='lifecycle-2'>Lifecycle</h2>
 <p>An Open Agreement can have the following statuses:</p>
 
@@ -4874,8 +4813,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 </ol></li>
 </ol>
 <h2 id='lifecycle-3'>Lifecycle</h2>
-<aside class="notice">Payment Requests generated from a customer sending you funds will always be <code>approved</code></aside>
-
 <p>A Payment Request can have the following statuses:</p>
 
 <table><thead>
@@ -6497,14 +6434,9 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 
 <h1 id="Zepto-API-Refunds">Refunds</h1>
 
-<p>Refunds can be issued for any successfully completed Payment Request transaction. This includes:</p>
+<p>Refunds can be issued for any successfully completed Payment Request transaction. This includes Payment Requests for direct debit payments.</p>
 
-<ol>
-<li>Payment Requests for direct debit payments <strong>(Collections)</strong>:</li>
-<li>Payment Requests for funds received via DE <strong>(Receivables)</strong>:</li>
-</ol>
-
-<p>This allows you to return any funds that were previously collected or received into one of your bank/float accounts.</p>
+<p>This allows you to return any funds that were previously collected or received into one of your bank accounts.</p>
 <h2 id='issue-a-refund'>Issue a Refund</h2>
 <p><a id="opIdIssueARefund"></a></p>
 
@@ -6649,7 +6581,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 
 <p>Certain rules apply to the issuance of a refund:
 <ul>
-  <li>Must be applied against a successfully cleared Payment Request (Collections or Receivables)</li>
+  <li>Must be applied against a successfully cleared Payment Request</li>
   <li>Many refunds may be created against the original Payment Request</li>
   <li>The total refunded amount must not exceed the original value</li>
 </ul></p>
@@ -7186,10 +7118,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <td><code>prefailed</code></td>
 <td>The transaction was never submitted to the bank because we detected that there were insufficient funds. The transaction can be retried.</td>
 </tr>
-<tr>
-<td><code>channel_switched</code></td>
-<td>The initial payment channel has failed and the credit has automatically switched to attempt the payment using the next available channel.</td>
-</tr>
 </tbody></table>
 <h2 id='failure-codes'>Failure codes</h2>
 <blockquote>
@@ -7234,11 +7162,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <th>Detail</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>E101</td>
-<td>Invalid BSB Number</td>
-<td>The BSB is not valid or is no longer active.</td>
-</tr>
 <tr>
 <td>E102</td>
 <td>Payment Stopped</td>
@@ -7313,11 +7236,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <th>Detail</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>E201</td>
-<td>Invalid BSB Number</td>
-<td>The BSB is not valid or is no longer active.</td>
-</tr>
 <tr>
 <td>E202</td>
 <td>Payment Stopped</td>
@@ -7434,10 +7352,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <tr>
 <td><code>payment_stopped</code></td>
 <td>The payment was stopped at the bank. Can be due to a customer requesting a stop payment with their financial institution.</td>
-</tr>
-<tr>
-<td><code>invalid_bsb_number</code></td>
-<td>BSB number is invalid</td>
 </tr>
 <tr>
 <td><code>account_closed</code></td>
@@ -9986,7 +9900,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6a7ed958-f1e8-42dc-8c02-3901d7057357"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"020100"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3993013"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
@@ -9995,7 +9908,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56df206a-aaff-471a-b075-11882bc8906a"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"020120"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"119302"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
@@ -10004,7 +9916,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ab3de19b-709b-4a41-82a5-3b43b3dc58c9"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"802919"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Zepto Float Account"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1748212"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
@@ -10369,7 +10280,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
       </span><span class="nl">"bank_account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"494307"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"020040"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"split"</span><span class="p">,</span><span class="w">
@@ -10391,7 +10301,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
       </span><span class="nl">"bank_account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4395959"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"020018"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"split"</span><span class="p">,</span><span class="w">
@@ -10413,7 +10322,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
       </span><span class="nl">"bank_account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -10435,7 +10343,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
       </span><span class="nl">"bank_account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55afddde-4296-4daf-8e49-7ba481ef9608"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13048322"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"020136"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending_verification"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -10474,7 +10381,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hunter Thompson"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hunter@batcountry.com"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"020136"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13048322"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"custom_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Custom string"</span><span class="p">,</span><span class="w">
@@ -10505,12 +10411,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <td>The email of the Contact (256 max. characters)</td>
 </tr>
 <tr>
-<td>branch_code</td>
-<td>string</td>
-<td>true</td>
-<td>The bank account BSB of the Contact</td>
-</tr>
-<tr>
 <td>account_number</td>
 <td>string</td>
 <td>true</td>
@@ -10538,7 +10438,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
     </span><span class="nl">"bank_account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55afddde-4296-4daf-8e49-7ba481ef9608"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13048322"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"020136"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -10629,7 +10528,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
     </span><span class="nl">"bank_account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"947434694"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"020159"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -10726,12 +10624,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <td>string</td>
 <td>false</td>
 <td>The Bank Account number (Min: 5 - Max: 9)</td>
-</tr>
-<tr>
-<td>»» branch_code</td>
-<td>string</td>
-<td>false</td>
-<td>The BSB number (Min: 6 - Max: 6)</td>
 </tr>
 <tr>
 <td>»» state</td>
@@ -10909,7 +10801,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My very own alias"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"updated@email.com"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"99887766"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="nl">"custom_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Custom string"</span><span class="p">,</span><span class="w">
@@ -10940,12 +10831,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <td>The email of the Contact</td>
 </tr>
 <tr>
-<td>branch_code</td>
-<td>string</td>
-<td>false</td>
-<td>The bank account BSB of the Contact</td>
-</tr>
-<tr>
 <td>account_number</td>
 <td>string</td>
 <td>false</td>
@@ -10973,7 +10858,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
     </span><span class="nl">"bank_account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
       </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"55afddde-4296-4daf-8e49-7ba481ef9608"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"99887766"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"branch_code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123456"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Zepto SANDBOX Bank"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
@@ -12606,12 +12490,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <td>Default:  &quot;simulated-payid-payment&quot;</td>
 </tr>
 <tr>
-<td>from_bsb</td>
-<td>string</td>
-<td>false</td>
-<td>Default: &quot;014209&quot;</td>
-</tr>
-<tr>
 <td>from_account_number</td>
 <td>string</td>
 <td>false</td>
@@ -12633,7 +12511,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <h2 id='simulateincomingdepaymentrequest'>SimulateIncomingDEPaymentRequest</h2>
 <p><a id="schemasimulateincomingdepaymentrequest"></a></p>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"to_bsb"</span><span class="p">:</span><span class="w"> </span><span class="s2">"802919"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"to_account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"88888888"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -12646,12 +12523,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <th>Description</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>to_bsb</td>
-<td>string</td>
-<td>true</td>
-<td>Zepto float account BSB (usually 802919)</td>
-</tr>
 <tr>
 <td>to_account_number</td>
 <td>string</td>
@@ -12669,12 +12540,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <td>string</td>
 <td>false</td>
 <td>Max 18 characters. Default: &quot;simulated-de-pymt&quot;</td>
-</tr>
-<tr>
-<td>from_bsb</td>
-<td>string</td>
-<td>false</td>
-<td>Default: &quot;014209&quot;</td>
 </tr>
 <tr>
 <td>from_account_number</td>
