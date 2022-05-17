@@ -457,7 +457,7 @@ In order to speed up the process, we allow query string params to be appended to
 
 | Parameter | Description |
 |-----------|--------|
-| `landing`   | Accepted value: `sign_up`. What page the user should see first if not already signed in. Default is the sign in page. <br><br>Deprecated values: `business_sign_up`, `personal_sign_up`.|
+| `landing`   | Accepted value: `sign_up`. What page the user should see first if not already signed in. Default is the sign in page. |
 | `nickname` | Only letters, numbers, dashes and underscores are permitted. This will be used to identify the account in Zepto. |
 | `name` | Business account only. Business name. |
 | `abn` | Business account only. Business ABN. |
@@ -501,7 +501,7 @@ Failed transactions will contain the following information inside the event:
 * Failure Details
 
 ## DE Transaction failures
-### [NEW] Using failure codes
+### Using failure codes
 <aside class="notice">
   <ul>
       <li><a href="#de-credit-failures">DE credit failure codes</a></li>
@@ -525,37 +525,6 @@ For example:
     * Zepto will automatically create a <code>payout_reversal</code> credit transaction back to your bank account.
   2. Request payment from a contact with a closed bank account:
     * Initiate a Payment Request for <code>$2.03</code>.
-    * Zepto will mimic a failure to debit the contact's bank account.
-
-### [DEPRECATED] Using failure reasons
-To simulate [transaction failures](#failure-reasons) create a Payment or Payment Request with a specific amount listed in the table.
-
-| Transaction failure reason | Debit | Credit |
-|----------------------------|-------|--------|
-| `account_closed`           |  $0.02  |  $0.52   |
-| `customer_deceased`        |  $0.03  |  $0.53   |
-| `incorrect_account_number` |  $0.04  |  $0.54   |
-| `refer_to_split`           |  $0.05  |  $0.55   |
-| `user_voided`              |  $0.06  |  $0.56   |
-| `admin_voided`             |  $0.07  |  $0.57   |
-| `refer_to_customer`        |  $0.10  |          |
-| `insufficient_funds`       |  $0.11  |          |
-| `payment_stopped`          |  $0.12  |          |
-
-### [DEPRECATED] Example scenarios
-
-  1. Pay a contact with an invalid account number:
-    * Initiate a Payment for <code>$0.54</code>.
-    * Zepto will mimic a successful debit from your bank account.
-    * Zepto will mimic a failure to credit the contact's bank account.
-    * Zepto will automatically create a <code>payout_reversal</code> credit transaction back to your bank account.
-  2. Pay a contact whilst having insufficient funds:
-    * Initiate a Payment for <code>$0.11</code>.
-    * Zepto will mimic a failure to debit your bank account.
-    * Zepto will mark the debit as `returned` due to `insufficient_funds`.
-    * Zepto will void the scheduled credit to the contact's bank account.
-  3. Request payment from a contact with a closed bank account:
-    * Initiate a Payment Request for <code>$0.02</code>.
     * Zepto will mimic a failure to debit the contact's bank account.
 
 ## Instant account verification accounts
@@ -949,13 +918,6 @@ An Agreement is an arrangement between two parties that allows them to agree on 
 
 Zepto Agreements are managed on a per Contact basis, and if a Payment Request is sent for an amount that exceeds the terms of the agreement, it will not be created.
 Please refer to the [What is an Agreement](http://help.split.cash/articles/3094575-what-is-an-agreement) article in our knowledge base for an overview.
-<div class="middle-header">Direction</div>
-
-Agreements are therefore broken up by direction:
-
-1. **Outgoing:** Agreement sent to one of your Contacts
-2. **Outgoing:** Agreement sent to another Zepto account [Deprecated]
-3. **Incoming:** Agreement received from another Zepto account [Deprecated]
 
 ##Lifecycle
 
@@ -3584,7 +3546,6 @@ A Payment Request can have the following statuses:
 
 | Status | Description |
 |-------|-------------|
-| `pending_approval` | Waiting for the debtor to approve the Payment Request. [DEPRECATED] |
 | `unverified` | Waiting for available funds response. |
 | `approved` | The debtor has approved the Payment Request. |
 | `declined` | The debtor has declined the Payment Request. |
@@ -5709,57 +5670,6 @@ The rejected, returned, voided & prefailed statuses are always accompanied by a 
 | E252 | Insufficient Funds | There were insufficient funds to complete the transaction. |
 | E253 | System Error | The transaction was unable to complete. Please contact Zepto for assistance. |
 | E299 | Unknown DE Error | An unknown DE error occurred. Please contact Zepto for assistance. |
-
-## [DEPRECATED] Failure reasons
-
-> Example response
-
-```json
-{
-  "data": [
-    {
-      "ref": "D.3",
-      "parent_ref": null,
-      "type": "debit",
-      "category": "payout_refund",
-      "created_at": "2021-04-07T23:15:00Z",
-      "matures_at": "2021-04-10T23:15:00Z",
-      "cleared_at": null,
-      "bank_ref": null,
-      "status": "returned",
-      "status_changed_at": "2021-04-08T23:15:00Z",
-      "failure_reason": "user_voided",
-      "failure_details": "Wrong amount - approved by Stacey"
-      "party_contact_id": "26297f44-c5e1-40a1-9864-3e0b0754c32a",
-      "party_name": "Sanford-Rees",
-      "party_nickname": "sanford-rees-8",
-      "description": null,
-      "amount": 1,
-      "bank_account_id": "56df206a-aaff-471a-b075-11882bc8906a"
-    }
-  ]
-}
-```
-
-The `rejected`, `returned`, `voided` & `prefailed` statuses are always accompanied by a `failure_reason`:
-
-<aside class="notice">Please note that these failure reasons are passed to us directly from the banks.</aside>
-
-| Reason | Description |
-|--------|-------------|
-| `refer_to_customer` | Usually due to insufficient funds |
-| `insufficient_funds` | Insufficient funds |
-| `payment_stopped` | The payment was stopped at the bank. Can be due to a customer requesting a stop payment with their financial institution. |
-| `account_closed` | The bank account is closed |
-| `customer_deceased` | Customer is deceased |
-| `incorrect_account_number` | Account number is incorrect |
-| `refer_to_split` | Failed due to reasons not listed here. Please contact us. |
-| `user_voided` | Voided by payout initiator |
-| `admin_voided` | Voided by Zepto admin |
-
-<aside class="notice">
-  The <code>user_voided</code> and <code>admin_voided</code> <code>failure_reasons</code> can sometimes be accompanied by the <code>failure_details</code> key which includes user submitted comments relating to the <code>failure_reason</code>.
-</aside>
 
 ## List all transactions
 
@@ -8418,7 +8328,6 @@ Use this endpoint to resend a failed webhook delivery.
 |» ref|string(string)|true|The Contact ref|
 |» name|string|true|The Contact name (Min: 3 - Max: 140)|
 |» email|string(email)|true|The Contact email (Min: 6 - Max: 256)|
-|» type|string|true|(Deprecated) The Contact account type|
 |» metadata|[Metadata](#schemametadata)|true|No description|
 |» bank_account|object|true|No description|
 |»» id|string(uuid)|false|The Bank Account ID|
@@ -8430,7 +8339,6 @@ Use this endpoint to resend a failed webhook delivery.
 |»»» debits_blocked|boolean|false|Used by Zepto admins. Defines whether the bank account is blocked from being debited|
 |»»» credits_blocked|boolean|false|Used by Zepto admins. Defined Whether this bank account is blocked from being credited|
 |»» anyone_account|object|true|No description|
-|»»» id|string(uuid)|false|(Deprecated) The Anyone Account ID|
 |»» bank_connection|object|false|No description|
 |»»» id|string(uuid)|false|The bank connection ID|
 |»» links|object|false|No description|
@@ -8445,8 +8353,6 @@ Use this endpoint to resend a failed webhook delivery.
 
 |Property|Value|
 |---|---|
-|type|Zepto account|
-|type|anyone|
 |state|active|
 |state|removed|
 |iav_provider|split|
