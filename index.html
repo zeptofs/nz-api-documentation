@@ -516,9 +516,6 @@
                     <a href="#failure-codes" class="toc-h2 toc-link" data-title="Failure codes">Failure codes</a>
                   </li>
                   <li>
-                    <a href="#deprecated-failure-reasons" class="toc-h2 toc-link" data-title="[DEPRECATED] Failure reasons">[DEPRECATED] Failure reasons</a>
-                  </li>
-                  <li>
                     <a href="#list-all-transactions" class="toc-h2 toc-link" data-title="List all transactions">List all transactions</a>
                   </li>
               </ul>
@@ -1223,7 +1220,7 @@ You can pass any value as the key but we suggest that you use <a href="https://w
 </thead><tbody>
 <tr>
 <td><code>landing</code></td>
-<td>Accepted value: <code>sign_up</code>. What page the user should see first if not already signed in. Default is the sign in page. <br><br>Deprecated values: <code>business_sign_up</code>, <code>personal_sign_up</code>.</td>
+<td>Accepted value: <code>sign_up</code>. What page the user should see first if not already signed in. Default is the sign in page.</td>
 </tr>
 <tr>
 <td><code>nickname</code></td>
@@ -1300,7 +1297,7 @@ You can pass any value as the key but we suggest that you use <a href="https://w
 <li>Failure Title</li>
 <li>Failure Details</li>
 </ul>
-<h2 id='de-transaction-failures'>DE Transaction failures</h2><h3 id='new-using-failure-codes'>[NEW] Using failure codes</h3>
+<h2 id='de-transaction-failures'>DE Transaction failures</h2><h3 id='using-failure-codes'>Using failure codes</h3>
 <aside class="notice">
   <ul>
       <li><a href="#de-credit-failures">DE credit failure codes</a></li>
@@ -1330,87 +1327,6 @@ You can pass any value as the key but we suggest that you use <a href="https://w
 
 <ul>
 <li>Initiate a Payment Request for <code>$2.03</code>.</li>
-<li>Zepto will mimic a failure to debit the contact&#39;s bank account.</li>
-</ul></li>
-</ol>
-<h3 id='deprecated-using-failure-reasons'>[DEPRECATED] Using failure reasons</h3>
-<p>To simulate <a href="#failure-reasons">transaction failures</a> create a Payment or Payment Request with a specific amount listed in the table.</p>
-
-<table><thead>
-<tr>
-<th>Transaction failure reason</th>
-<th>Debit</th>
-<th>Credit</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>account_closed</code></td>
-<td>$0.02</td>
-<td>$0.52</td>
-</tr>
-<tr>
-<td><code>customer_deceased</code></td>
-<td>$0.03</td>
-<td>$0.53</td>
-</tr>
-<tr>
-<td><code>incorrect_account_number</code></td>
-<td>$0.04</td>
-<td>$0.54</td>
-</tr>
-<tr>
-<td><code>refer_to_split</code></td>
-<td>$0.05</td>
-<td>$0.55</td>
-</tr>
-<tr>
-<td><code>user_voided</code></td>
-<td>$0.06</td>
-<td>$0.56</td>
-</tr>
-<tr>
-<td><code>admin_voided</code></td>
-<td>$0.07</td>
-<td>$0.57</td>
-</tr>
-<tr>
-<td><code>refer_to_customer</code></td>
-<td>$0.10</td>
-<td></td>
-</tr>
-<tr>
-<td><code>insufficient_funds</code></td>
-<td>$0.11</td>
-<td></td>
-</tr>
-<tr>
-<td><code>payment_stopped</code></td>
-<td>$0.12</td>
-<td></td>
-</tr>
-</tbody></table>
-<h3 id='deprecated-example-scenarios'>[DEPRECATED] Example scenarios</h3>
-<ol>
-<li>Pay a contact with an invalid account number:
-
-<ul>
-<li>Initiate a Payment for <code>$0.54</code>.</li>
-<li>Zepto will mimic a successful debit from your bank account.</li>
-<li>Zepto will mimic a failure to credit the contact&#39;s bank account.</li>
-<li>Zepto will automatically create a <code>payout_reversal</code> credit transaction back to your bank account.</li>
-</ul></li>
-<li>Pay a contact whilst having insufficient funds:
-
-<ul>
-<li>Initiate a Payment for <code>$0.11</code>.</li>
-<li>Zepto will mimic a failure to debit your bank account.</li>
-<li>Zepto will mark the debit as <code>returned</code> due to <code>insufficient_funds</code>.</li>
-<li>Zepto will void the scheduled credit to the contact&#39;s bank account.</li>
-</ul></li>
-<li>Request payment from a contact with a closed bank account:
-
-<ul>
-<li>Initiate a Payment Request for <code>$0.02</code>.</li>
 <li>Zepto will mimic a failure to debit the contact&#39;s bank account.</li>
 </ul></li>
 </ol>
@@ -1911,16 +1827,7 @@ class MainClass {
 <p>An Agreement is an arrangement between two parties that allows them to agree on terms for which future Payment Requests will be auto-approved.</p>
 
 <p>Zepto Agreements are managed on a per Contact basis, and if a Payment Request is sent for an amount that exceeds the terms of the agreement, it will not be created.
-Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-agreement">What is an Agreement</a> article in our knowledge base for an overview.
-<div class="middle-header">Direction</div></p>
-
-<p>Agreements are therefore broken up by direction:</p>
-
-<ol>
-<li><strong>Outgoing:</strong> Agreement sent to one of your Contacts</li>
-<li><strong>Outgoing:</strong> Agreement sent to another Zepto account [Deprecated]</li>
-<li><strong>Incoming:</strong> Agreement received from another Zepto account [Deprecated]</li>
-</ol>
+Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-agreement">What is an Agreement</a> article in our knowledge base for an overview.</p>
 <h2 id='lifecycle'>Lifecycle</h2>
 <p>An Agreement can have the following statuses:</p>
 
@@ -4822,10 +4729,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 </tr>
 </thead><tbody>
 <tr>
-<td><code>pending_approval</code></td>
-<td>Waiting for the debtor to approve the Payment Request. [DEPRECATED]</td>
-</tr>
-<tr>
 <td><code>unverified</code></td>
 <td>Waiting for available funds response.</td>
 </tr>
@@ -7302,86 +7205,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <td>An unknown DE error occurred. Please contact Zepto for assistance.</td>
 </tr>
 </tbody></table>
-<h2 id='deprecated-failure-reasons'>[DEPRECATED] Failure reasons</h2>
-<blockquote>
-<p>Example response</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"D.3"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"parent_ref"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"debit"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"payout_refund"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-04-07T23:15:00Z"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"matures_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-04-10T23:15:00Z"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"cleared_at"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"bank_ref"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"returned"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"status_changed_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-04-08T23:15:00Z"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"failure_reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user_voided"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"failure_details"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Wrong amount - approved by Stacey"</span><span class="w">
-      </span><span class="nl">"party_contact_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"26297f44-c5e1-40a1-9864-3e0b0754c32a"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"party_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sanford-Rees"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"party_nickname"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sanford-rees-8"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"bank_account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"56df206a-aaff-471a-b075-11882bc8906a"</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<p>The <code>rejected</code>, <code>returned</code>, <code>voided</code> &amp; <code>prefailed</code> statuses are always accompanied by a <code>failure_reason</code>:</p>
-
-<aside class="notice">Please note that these failure reasons are passed to us directly from the banks.</aside>
-
-<table><thead>
-<tr>
-<th>Reason</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>refer_to_customer</code></td>
-<td>Usually due to insufficient funds</td>
-</tr>
-<tr>
-<td><code>insufficient_funds</code></td>
-<td>Insufficient funds</td>
-</tr>
-<tr>
-<td><code>payment_stopped</code></td>
-<td>The payment was stopped at the bank. Can be due to a customer requesting a stop payment with their financial institution.</td>
-</tr>
-<tr>
-<td><code>account_closed</code></td>
-<td>The bank account is closed</td>
-</tr>
-<tr>
-<td><code>customer_deceased</code></td>
-<td>Customer is deceased</td>
-</tr>
-<tr>
-<td><code>incorrect_account_number</code></td>
-<td>Account number is incorrect</td>
-</tr>
-<tr>
-<td><code>refer_to_split</code></td>
-<td>Failed due to reasons not listed here. Please contact us.</td>
-</tr>
-<tr>
-<td><code>user_voided</code></td>
-<td>Voided by payout initiator</td>
-</tr>
-<tr>
-<td><code>admin_voided</code></td>
-<td>Voided by Zepto admin</td>
-</tr>
-</tbody></table>
-
-<aside class="notice">
-  The <code>user_voided</code> and <code>admin_voided</code> <code>failure_reasons</code> can sometimes be accompanied by the <code>failure_details</code> key which includes user submitted comments relating to the <code>failure_reason</code>.
-</aside>
 <h2 id='list-all-transactions'>List all transactions</h2>
 <p><a id="opIdListAllTransactions"></a></p>
 
@@ -10596,12 +10419,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <td>The Contact email (Min: 6 - Max: 256)</td>
 </tr>
 <tr>
-<td>» type</td>
-<td>string</td>
-<td>true</td>
-<td>(Deprecated) The Contact account type</td>
-</tr>
-<tr>
 <td>» metadata</td>
 <td><a href="#schemametadata">Metadata</a></td>
 <td>true</td>
@@ -10668,12 +10485,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <td>No description</td>
 </tr>
 <tr>
-<td>»»» id</td>
-<td>string(uuid)</td>
-<td>false</td>
-<td>(Deprecated) The Anyone Account ID</td>
-</tr>
-<tr>
 <td>»» bank_connection</td>
 <td>object</td>
 <td>false</td>
@@ -10735,14 +10546,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <th>Value</th>
 </tr>
 </thead><tbody>
-<tr>
-<td>type</td>
-<td>Zepto account</td>
-</tr>
-<tr>
-<td>type</td>
-<td>anyone</td>
-</tr>
 <tr>
 <td>state</td>
 <td>active</td>
