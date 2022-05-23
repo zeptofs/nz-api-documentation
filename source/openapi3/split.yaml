@@ -3288,8 +3288,6 @@ components:
               account_number: '494307'
               bank_name: Bank of New Zealand
               state: active
-              iav_provider: split
-              iav_status: active
               blocks:
                 debits_blocked: false
                 credits_blocked: false
@@ -3304,8 +3302,6 @@ components:
               account_number: '4395959'
               bank_name: Bank of New Zealand
               state: active
-              iav_provider: split
-              iav_status: credentials_invalid
               blocks:
                 debits_blocked: false
                 credits_blocked: false
@@ -3320,8 +3316,6 @@ components:
               account_number: null
               bank_name: null
               state: disabled
-              iav_provider: null
-              iav_status: null
               blocks:
                 debits_blocked: false
                 credits_blocked: false
@@ -3336,8 +3330,6 @@ components:
               account_number: '13048322'
               bank_name: Bank of New Zealand
               state: pending_verification
-              iav_provider: null
-              iav_status: null
               blocks:
                 debits_blocked: false
                 credits_blocked: false
@@ -3391,8 +3383,6 @@ components:
             account_number: '13048322'
             bank_name: Bank of New Zealand
             state: active
-            iav_provider: null
-            iav_status: null
             blocks:
               debits_blocked: false
               credits_blocked: false
@@ -3480,21 +3470,6 @@ components:
                   enum:
                     - active
                     - removed
-                iav_provider:
-                  type: string
-                  description: The instant account verification provider
-                  enum:
-                    - split
-                    - proviso
-                    - basiq
-                    - credit_sense
-                iav_status:
-                  type: string
-                  description: The instant account verification bank connection status
-                  enum:
-                    - active
-                    - removed
-                    - credentials_invalid
                 blocks:
                   type: object
                   properties:
@@ -3560,8 +3535,6 @@ components:
             account_number: '947434694'
             bank_name: Bank of New Zealand
             state: active
-            iav_provider: null
-            iav_status: null
             blocks:
               debits_blocked: false
               credits_blocked: false
@@ -3620,8 +3593,6 @@ components:
             account_number: '99887766'
             bank_name: Zepto SANDBOX Bank
             state: active
-            iav_provider: null
-            iav_status: null
             blocks:
               debits_blocked: false
               credits_blocked: false

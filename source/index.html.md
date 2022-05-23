@@ -1863,8 +1863,6 @@ Use this endpoint when you want to pay somebody.
       "account_number": "13048322",
       "bank_name": "Bank of New Zealand",
       "state": "active",
-      "iav_provider": null,
-      "iav_status": null,
       "blocks": {
         "debits_blocked": false,
         "credits_blocked": false
@@ -2050,8 +2048,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "account_number": "494307",
         "bank_name": "Bank of New Zealand",
         "state": "active",
-        "iav_provider": "split",
-        "iav_status": "active",
         "blocks": {
           "debits_blocked": false,
           "credits_blocked": false
@@ -2071,8 +2067,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "account_number": "4395959",
         "bank_name": "Bank of New Zealand",
         "state": "active",
-        "iav_provider": "split",
-        "iav_status": "credentials_invalid",
         "blocks": {
           "debits_blocked": false,
           "credits_blocked": false
@@ -2092,8 +2086,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "account_number": null,
         "bank_name": null,
         "state": "disabled",
-        "iav_provider": null,
-        "iav_status": null,
         "blocks": {
           "debits_blocked": false,
           "credits_blocked": false
@@ -2113,8 +2105,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
         "account_number": "13048322",
         "bank_name": "Bank of New Zealand",
         "state": "pending_verification",
-        "iav_provider": null,
-        "iav_status": null,
         "blocks": {
           "debits_blocked": false,
           "credits_blocked": false
@@ -2299,8 +2289,6 @@ Get a single Contact by its ID
       "account_number": "947434694",
       "bank_name": "Bank of New Zealand",
       "state": "active",
-      "iav_provider": null,
-      "iav_status": null,
       "blocks": {
         "debits_blocked": false,
         "credits_blocked": false
@@ -2693,8 +2681,6 @@ You can update the name, email, bank account and metadata of any Contact.
       "account_number": "99887766",
       "bank_name": "Zepto SANDBOX Bank",
       "state": "active",
-      "iav_provider": null,
-      "iav_status": null,
       "blocks": {
         "debits_blocked": false,
         "credits_blocked": false
@@ -8065,8 +8051,6 @@ Use this endpoint to resend a failed webhook delivery.
         "account_number": "494307",
         "bank_name": "Bank of New Zealand",
         "state": "active",
-        "iav_provider": "split",
-        "iav_status": "active",
         "blocks": {
           "debits_blocked": false,
           "credits_blocked": false
@@ -8086,8 +8070,6 @@ Use this endpoint to resend a failed webhook delivery.
         "account_number": "4395959",
         "bank_name": "Bank of New Zealand",
         "state": "active",
-        "iav_provider": "split",
-        "iav_status": "credentials_invalid",
         "blocks": {
           "debits_blocked": false,
           "credits_blocked": false
@@ -8107,8 +8089,6 @@ Use this endpoint to resend a failed webhook delivery.
         "account_number": null,
         "bank_name": null,
         "state": "disabled",
-        "iav_provider": null,
-        "iav_status": null,
         "blocks": {
           "debits_blocked": false,
           "credits_blocked": false
@@ -8128,8 +8108,6 @@ Use this endpoint to resend a failed webhook delivery.
         "account_number": "13048322",
         "bank_name": "Bank of New Zealand",
         "state": "pending_verification",
-        "iav_provider": null,
-        "iav_status": null,
         "blocks": {
           "debits_blocked": false,
           "credits_blocked": false
@@ -8198,8 +8176,6 @@ Use this endpoint to resend a failed webhook delivery.
       "account_number": "13048322",
       "bank_name": "Bank of New Zealand",
       "state": "active",
-      "iav_provider": null,
-      "iav_status": null,
       "blocks": {
         "debits_blocked": false,
         "credits_blocked": false
@@ -8278,8 +8254,6 @@ Use this endpoint to resend a failed webhook delivery.
       "account_number": "947434694",
       "bank_name": "Bank of New Zealand",
       "state": "active",
-      "iav_provider": null,
-      "iav_status": null,
       "blocks": {
         "debits_blocked": false,
         "credits_blocked": false
@@ -8320,8 +8294,6 @@ Use this endpoint to resend a failed webhook delivery.
 |»» id|string(uuid)|false|The Bank Account ID|
 |»» account_number|string|false|The Bank Account number (Min: 5 - Max: 9)|
 |»» state|string|false|The bank account state|
-|»» iav_provider|string|false|The instant account verification provider|
-|»» iav_status|string|false|The instant account verification bank connection status|
 |»» blocks|object|false|No description|
 |»»» debits_blocked|boolean|false|Used by Zepto admins. Defines whether the bank account is blocked from being debited|
 |»»» credits_blocked|boolean|false|Used by Zepto admins. Defined Whether this bank account is blocked from being credited|
@@ -8342,13 +8314,6 @@ Use this endpoint to resend a failed webhook delivery.
 |---|---|
 |state|active|
 |state|removed|
-|iav_provider|split|
-|iav_provider|proviso|
-|iav_provider|basiq|
-|iav_provider|credit_sense|
-|iav_status|active|
-|iav_status|removed|
-|iav_status|credentials_invalid|
 |state|pending|
 |state|active|
 |state|failed|
@@ -8401,8 +8366,6 @@ Use this endpoint to resend a failed webhook delivery.
       "account_number": "99887766",
       "bank_name": "Zepto SANDBOX Bank",
       "state": "active",
-      "iav_provider": null,
-      "iav_status": null,
       "blocks": {
         "debits_blocked": false,
         "credits_blocked": false
