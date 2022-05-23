@@ -5590,7 +5590,6 @@ A transaction (debit or credit) can have the following statuses:
 | `voided` | The transaction has been cancelled and is no longer eligible for processing. |
 | `pending_verification` | The bank account must be verified before the transaction can proceed. |
 | `paused` | The transaction has temporary been paused by Zepto pending internal review. |
-| `prefailed` | The transaction was never submitted to the bank because we detected that there were insufficient funds. The transaction can be retried. |
 ## Failure codes
 > Example response
 
@@ -5625,7 +5624,7 @@ A transaction (debit or credit) can have the following statuses:
   ]
 }
 ```
-The rejected, returned, voided & prefailed statuses are always accompanied by a failure code, title and detail as listed below.
+The rejected, returned & voided statuses are always accompanied by a failure code, title and detail as listed below.
 ### DE credit failures
 | Code | Title | Detail |
 | ------------ | ------------- | -------------- |
