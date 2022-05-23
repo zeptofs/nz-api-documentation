@@ -31,7 +31,7 @@ It is important to understand that there are 2 main ways Zepto can be used for m
 
 Due to the above, certain endpoints and techniques will differ slightly depending on who you are interacting with. You can find more on this in the [Making payments](/#making-payments) and [Getting paid](/#getting-paid) guides.
 
-And for all kinds of How To's and Recipes, head on over to our [Help Guide](https://help.split.cash/en/).
+And for all kinds of How To's and Recipes, head on over to our [Help Guide](https://help.zepto.money/en/).
 <div class="middle-header">Conventions</div>
 
 * Authentication is performed using OAuth2. See the [Get started](/#get-started) and [Authentication & Authorisation](/#authentication-and-authorisation) guides for more.
@@ -355,7 +355,7 @@ Common use cases:
 * Bill smoothing
 * Repayment plans
 
-Example flow embedding an [Open Agreement link](https://help.split.cash/agreements/open-agreement) using an iFrame in order to automate future Payment Request approvals:
+Example flow embedding an [Open Agreement link](https://help.zepto.money/en/articles/6210908-nz-open-agreement) using an iFrame in order to automate future Payment Request approvals:
 
 [![Hosted Open Agreement](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/host_oa.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/host_oa.png)
 
@@ -370,7 +370,7 @@ Example flow embedding an [Open Agreement link](https://help.split.cash/agreemen
       "title": "Duplicate idempotency key",
       "detail": "A resource has already been created with this idempotency key",
       "links": {
-        "about": "https://docs.split.cash/"
+        "about": "https://docs.nz.zepto.money/"
       },
       "meta": {
         "resource_ref": "PB.1a4"
@@ -405,7 +405,7 @@ Keys expire after 24 hours. If there is a subsequent request with the same idemp
       "title": "A Specific Error",
       "detail": "Details about the error",
       "links": {
-        "about": "https://docs.split.cash/..."
+        "about": "https://docs.nz.zepto.money/..."
       }
     }
   ]
@@ -527,18 +527,6 @@ For example:
     * Initiate a Payment Request for <code>$2.03</code>.
     * Zepto will mimic a failure to debit the contact's bank account.
 
-## Instant account verification accounts
-When using any of our hosted solutions ([Payment Requests](https://help.split.cash/payment-requests/open-payment-requests), [Open Agreements](https://help.split.cash/agreements/open-agreement) or [Unassigned Agreements](http://help.split.cash/agreements/unassigned-agreement)) you may want to test the [Instant Account Verification (IAV)](http://help.split.cash/bank-accounts/instant-account-verification-iav) process where we accept online banking credentials to validate bank account access. To do so, you can use the following credentials:
-
-| Login | Password |
-|-------|----------|
-| `12345678` | `TestMyMoney` |
-
-<aside class="notice">The credentials will work with any of the available financial institutions.</aside>
-## Available balances in the Sandbox
-If your integration includes allowing us to pre-fail transactions prior to being processed, you may want to test that your system is handling these events correctly. A transaction will pre-fail when the available balance of the customers account is less than the amount of the payment being requested. This is checked during pre-processing just before your debit is sent for processing if there is an active bank connection.
-
-In the Sandbox environment, if the contact you are attempting to debit has a bank connection that was created through our Instant Account Verification feature, the available balance of any **Transactional** bank account will always be `$123.45`. Any payment requests above this amount will pre-fail and any amount less than or equal to this amount will succeed.
 # Configuration
 ## Scopes
 Scopes define the level of access granted via the OAuth2 authorisation process. As a best practice, only use the scopes your application will require.
@@ -626,7 +614,7 @@ Should you prefer debit aggregation to be disabled, please contact [support@zept
   ]
 }
 ```
-Please refer to our help centre [article on webhooks](http://help.split.cash/en/articles/3303626-webhooks) for more information and an overview of what you can achieve with webhooks.
+Please refer to our help centre [article on webhooks]( https://help.zepto.money/en/articles/6210952-nz-how-to-use-webhooks-with-your-api-integration) for more information and an overview of what you can achieve with webhooks.
 
 We support two main categories of webhooks:
 
@@ -917,7 +905,7 @@ Looking for more? Our docs are open sourced! [https://github.com/zeptofs/nz-api-
 An Agreement is an arrangement between two parties that allows them to agree on terms for which future Payment Requests will be auto-approved.
 
 Zepto Agreements are managed on a per Contact basis, and if a Payment Request is sent for an amount that exceeds the terms of the agreement, it will not be created.
-Please refer to the [What is an Agreement](http://help.split.cash/articles/3094575-what-is-an-agreement) article in our knowledge base for an overview.
+Please refer to the [What is an Agreement](https://help.zepto.money/en/articles/6210894-nz-agreements) article in our knowledge base for an overview.
 
 ##Lifecycle
 
@@ -2656,7 +2644,7 @@ You can update the name, email, bank account and metadata of any Contact.
   <ul>
     <li>Previous transactions to this Contact will retain the name and bank account that was used at the time.</li>
     <li>You cannot update a Contact's bank account details if they currently have an accepted agreement.</li>
-    <li>See our [Help Article](https://help.split.cash/en/articles/3829211-how-do-i-change-my-customers-bank-account-details) for more information about the nuances and implications of changing a contacts Bank Account.</li>
+    <li>See our [Help Article](https://help.zepto.money/en/articles/6239641-nz-how-do-i-change-my-customers-bank-account-details) for more information about the nuances and implications of changing a contacts Bank Account.</li>
   </ul>
 </aside>
 
@@ -5954,7 +5942,7 @@ An agreement with no preset authoriser that can only be accepted once and must b
 
 Unassigned Agreements are shared using the generated link available in the response body. You can then include it in an email, text message, embed it in an iFrame, etc...
 
-Please refer to the [Unassigned Agreement](http://help.split.cash/agreements/unassigned-agreement) article in our knowledge base for more information.
+Please refer to the [Unassigned Agreement](https://help.zepto.money/en/articles/6210903-nz-unassigned-agreement) article in our knowledge base for more information.
 
 ## Propose an Unassigned Agreement
 
