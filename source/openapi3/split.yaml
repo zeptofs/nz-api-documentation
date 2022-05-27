@@ -26,7 +26,7 @@ info:
 
 
     And for all kinds of How To's and Recipes, head on over to our
-    [Help Guide](https://help.split.cash/en/).
+    [Help Guide](https://help.zepto.money/en/).
 
     <div class="middle-header">Conventions</div>
 
@@ -503,7 +503,7 @@ info:
 
 
     Example flow embedding an [Open Agreement
-    link](https://help.split.cash/agreements/open-agreement) using an iFrame in
+    link](https://help.zepto.money/en/articles/6210908-nz-open-agreement) using an iFrame in
     order to automate future Payment Request approvals:
 
 
@@ -525,7 +525,7 @@ info:
           "title": "Duplicate idempotency key",
           "detail": "A resource has already been created with this idempotency key",
           "links": {
-            "about": "https://docs.split.cash/"
+            "about": "https://docs.nz.zepto.money/"
           },
           "meta": {
             "resource_ref": "PB.1a4"
@@ -586,7 +586,7 @@ info:
           "title": "A Specific Error",
           "detail": "Details about the error",
           "links": {
-            "about": "https://docs.split.cash/..."
+            "about": "https://docs.nz.zepto.money/..."
           }
         }
       ]
@@ -797,40 +797,6 @@ info:
         * Zepto will mimic a failure to debit the contact's bank account.
 
 
-    ## Instant account verification accounts
-
-    When using any of our hosted solutions ([Payment
-    Requests](https://help.split.cash/payment-requests/open-payment-requests),
-    [Open Agreements](https://help.split.cash/agreements/open-agreement) or
-    [Unassigned
-    Agreements](http://help.split.cash/agreements/unassigned-agreement)) you may
-    want to test the [Instant Account Verification
-    (IAV)](http://help.split.cash/bank-accounts/instant-account-verification-iav)
-    process where we accept online banking credentials to validate bank account
-    access. To do so, you can use the following credentials:
-
-
-    | Login | Password |
-
-    |-------|----------|
-
-    | `12345678` | `TestMyMoney` |
-
-
-    <aside class="notice">The credentials will work with any of the available
-    financial institutions.</aside>
-
-    ## Available balances in the Sandbox
-
-    If your integration includes allowing us to pre-fail transactions prior to being processed, you may want to test that your system is handling these events correctly.
-    A transaction will pre-fail when the available balance of the customers account is less than the amount of the payment being requested.
-    This is checked during pre-processing just before your debit is sent for processing if there is an active bank connection.
-
-
-    In the Sandbox environment, if the contact you are attempting to debit has a bank connection that was created through our Instant Account Verification feature, the
-    available balance of any **Transactional** bank account will always be `$123.45`. Any payment requests above this amount will pre-fail and any amount
-    less than or equal to this amount will succeed.
-
     # Configuration
 
     ## Scopes
@@ -976,7 +942,7 @@ info:
 
     ```
 
-    Please refer to our help centre [article on webhooks](http://help.split.cash/en/articles/3303626-webhooks) for more information and an overview of what you can achieve with webhooks.
+    Please refer to our help centre [article on webhooks](https://help.zepto.money/en/articles/6210952-nz-how-to-use-webhooks-with-your-api-integration) for more information and an overview of what you can achieve with webhooks.
 
 
     We support two main categories of webhooks:
@@ -1451,7 +1417,7 @@ tags:
       Zepto Agreements are managed on a per Contact basis, and if a Payment Request
       is sent for an amount that exceeds the terms of the agreement, it will not be created.
 
-      Please refer to the [What is an Agreement](http://help.split.cash/articles/3094575-what-is-an-agreement) article in our knowledge base for an overview.
+      Please refer to the [What is an Agreement](https://help.zepto.money/en/articles/6210894-nz-agreements) article in our knowledge base for an overview.
 
 
       ##Lifecycle
@@ -1663,10 +1629,6 @@ tags:
       | `paused` | The transaction has temporary been paused by Zepto pending
       internal review. |
 
-      | `prefailed` | The transaction was never submitted to the bank because we
-      detected that there were insufficient funds. The transaction can be
-      retried. |
-
       ## Failure codes
 
       > Example response
@@ -1706,7 +1668,7 @@ tags:
 
       ```
 
-      The rejected, returned, voided & prefailed statuses are always accompanied by a failure code, title and detail as listed below.
+      The rejected, returned & voided statuses are always accompanied by a failure code, title and detail as listed below.
 
       ### DE credit failures
 
@@ -1784,7 +1746,7 @@ tags:
       in an iFrame, etc...
 
 
-      Please refer to the [Unassigned Agreement](http://help.split.cash/agreements/unassigned-agreement)
+      Please refer to the [Unassigned Agreement](https://help.zepto.money/en/articles/6210903-nz-unassigned-agreement)
       article in our knowledge base for more information.
   - name: Users
     description: |
@@ -2066,7 +2028,7 @@ paths:
           <ul>
             <li>Previous transactions to this Contact will retain the name and bank account that was used at the time.</li>
             <li>You cannot update a Contact's bank account details if they currently have an accepted agreement.</li>
-            <li>See our [Help Article](https://help.split.cash/en/articles/3829211-how-do-i-change-my-customers-bank-account-details) for more information about the nuances and implications of changing a contacts Bank Account.</li>
+            <li>See our [Help Article](https://help.zepto.money/en/articles/6239641-nz-how-do-i-change-my-customers-bank-account-details) for more information about the nuances and implications of changing a contacts Bank Account.</li>
           </ul>
         </aside>
       operationId: UpdateAContact
@@ -3326,8 +3288,6 @@ components:
               account_number: '494307'
               bank_name: Bank of New Zealand
               state: active
-              iav_provider: split
-              iav_status: active
               blocks:
                 debits_blocked: false
                 credits_blocked: false
@@ -3342,8 +3302,6 @@ components:
               account_number: '4395959'
               bank_name: Bank of New Zealand
               state: active
-              iav_provider: split
-              iav_status: credentials_invalid
               blocks:
                 debits_blocked: false
                 credits_blocked: false
@@ -3358,8 +3316,6 @@ components:
               account_number: null
               bank_name: null
               state: disabled
-              iav_provider: null
-              iav_status: null
               blocks:
                 debits_blocked: false
                 credits_blocked: false
@@ -3374,8 +3330,6 @@ components:
               account_number: '13048322'
               bank_name: Bank of New Zealand
               state: pending_verification
-              iav_provider: null
-              iav_status: null
               blocks:
                 debits_blocked: false
                 credits_blocked: false
@@ -3429,8 +3383,6 @@ components:
             account_number: '13048322'
             bank_name: Bank of New Zealand
             state: active
-            iav_provider: null
-            iav_status: null
             blocks:
               debits_blocked: false
               credits_blocked: false
@@ -3518,21 +3470,6 @@ components:
                   enum:
                     - active
                     - removed
-                iav_provider:
-                  type: string
-                  description: The instant account verification provider
-                  enum:
-                    - split
-                    - proviso
-                    - basiq
-                    - credit_sense
-                iav_status:
-                  type: string
-                  description: The instant account verification bank connection status
-                  enum:
-                    - active
-                    - removed
-                    - credentials_invalid
                 blocks:
                   type: object
                   properties:
@@ -3598,8 +3535,6 @@ components:
             account_number: '947434694'
             bank_name: Bank of New Zealand
             state: active
-            iav_provider: null
-            iav_status: null
             blocks:
               debits_blocked: false
               credits_blocked: false
@@ -3658,8 +3593,6 @@ components:
             account_number: '99887766'
             bank_name: Zepto SANDBOX Bank
             state: active
-            iav_provider: null
-            iav_status: null
             blocks:
               debits_blocked: false
               credits_blocked: false
