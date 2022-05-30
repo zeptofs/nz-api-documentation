@@ -359,12 +359,6 @@
                   <li>
                     <a href="#de-transaction-failures" class="toc-h2 toc-link" data-title="DE Transaction failures">DE Transaction failures</a>
                   </li>
-                  <li>
-                    <a href="#instant-account-verification-accounts" class="toc-h2 toc-link" data-title="Instant account verification accounts">Instant account verification accounts</a>
-                  </li>
-                  <li>
-                    <a href="#available-balances-in-the-sandbox" class="toc-h2 toc-link" data-title="Available balances in the Sandbox">Available balances in the Sandbox</a>
-                  </li>
               </ul>
           </li>
           <li>
@@ -743,7 +737,7 @@
 
 <p>Due to the above, certain endpoints and techniques will differ slightly depending on who you are interacting with. You can find more on this in the <a href="/#making-payments">Making payments</a> and <a href="/#getting-paid">Getting paid</a> guides.</p>
 
-<p>And for all kinds of How To&#39;s and Recipes, head on over to our <a href="https://help.split.cash/en/">Help Guide</a>.
+<p>And for all kinds of How To&#39;s and Recipes, head on over to our <a href="https://help.zepto.money/en/">Help Guide</a>.
 <div class="middle-header">Conventions</div></p>
 
 <ul>
@@ -1110,7 +1104,7 @@ want to store the newly generated <code>refresh_token</code> everytime you use i
 <li>Repayment plans</li>
 </ul>
 
-<p>Example flow embedding an <a href="https://help.split.cash/agreements/open-agreement">Open Agreement link</a> using an iFrame in order to automate future Payment Request approvals:</p>
+<p>Example flow embedding an <a href="https://help.zepto.money/en/articles/6210908-nz-open-agreement">Open Agreement link</a> using an iFrame in order to automate future Payment Request approvals:</p>
 
 <p><a href="https://raw.githubusercontent.com/zeptofs/public_assets/master/images/host_oa.png"><img src="https://raw.githubusercontent.com/zeptofs/public_assets/master/images/host_oa.png" alt="Hosted Open Agreement" /></a></p>
 <h2 id='idempotent-requests'>Idempotent requests</h2>
@@ -1123,7 +1117,7 @@ want to store the newly generated <code>refresh_token</code> everytime you use i
       </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Duplicate idempotency key"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"detail"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A resource has already been created with this idempotency key"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"about"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://docs.split.cash/"</span><span class="w">
+        </span><span class="nl">"about"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://docs.nz.zepto.money/"</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"resource_ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PB.1a4"</span><span class="w">
@@ -1157,7 +1151,7 @@ You can pass any value as the key but we suggest that you use <a href="https://w
       </span><span class="nl">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A Specific Error"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"detail"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Details about the error"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"about"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://docs.split.cash/..."</span><span class="w">
+        </span><span class="nl">"about"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://docs.nz.zepto.money/..."</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
@@ -1330,26 +1324,6 @@ You can pass any value as the key but we suggest that you use <a href="https://w
 <li>Zepto will mimic a failure to debit the contact&#39;s bank account.</li>
 </ul></li>
 </ol>
-<h2 id='instant-account-verification-accounts'>Instant account verification accounts</h2>
-<p>When using any of our hosted solutions (<a href="https://help.split.cash/payment-requests/open-payment-requests">Payment Requests</a>, <a href="https://help.split.cash/agreements/open-agreement">Open Agreements</a> or <a href="http://help.split.cash/agreements/unassigned-agreement">Unassigned Agreements</a>) you may want to test the <a href="http://help.split.cash/bank-accounts/instant-account-verification-iav">Instant Account Verification (IAV)</a> process where we accept online banking credentials to validate bank account access. To do so, you can use the following credentials:</p>
-
-<table><thead>
-<tr>
-<th>Login</th>
-<th>Password</th>
-</tr>
-</thead><tbody>
-<tr>
-<td><code>12345678</code></td>
-<td><code>TestMyMoney</code></td>
-</tr>
-</tbody></table>
-
-<aside class="notice">The credentials will work with any of the available financial institutions.</aside>
-<h2 id='available-balances-in-the-sandbox'>Available balances in the Sandbox</h2>
-<p>If your integration includes allowing us to pre-fail transactions prior to being processed, you may want to test that your system is handling these events correctly. A transaction will pre-fail when the available balance of the customers account is less than the amount of the payment being requested. This is checked during pre-processing just before your debit is sent for processing if there is an active bank connection.</p>
-
-<p>In the Sandbox environment, if the contact you are attempting to debit has a bank connection that was created through our Instant Account Verification feature, the available balance of any <strong>Transactional</strong> bank account will always be <code>$123.45</code>. Any payment requests above this amount will pre-fail and any amount less than or equal to this amount will succeed.</p>
 <h1 id='configuration'>Configuration</h1><h2 id='scopes'>Scopes</h2>
 <p>Scopes define the level of access granted via the OAuth2 authorisation process. As a best practice, only use the scopes your application will require.</p>
 
@@ -1464,7 +1438,7 @@ Likewise for credits:</p></li>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>Please refer to our help centre <a href="http://help.split.cash/en/articles/3303626-webhooks">article on webhooks</a> for more information and an overview of what you can achieve with webhooks.</p>
+<p>Please refer to our help centre <a href="https://help.zepto.money/en/articles/6210952-nz-how-to-use-webhooks-with-your-api-integration">article on webhooks</a> for more information and an overview of what you can achieve with webhooks.</p>
 
 <p>We support two main categories of webhooks:</p>
 
@@ -1827,7 +1801,7 @@ class MainClass {
 <p>An Agreement is an arrangement between two parties that allows them to agree on terms for which future Payment Requests will be auto-approved.</p>
 
 <p>Zepto Agreements are managed on a per Contact basis, and if a Payment Request is sent for an amount that exceeds the terms of the agreement, it will not be created.
-Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-agreement">What is an Agreement</a> article in our knowledge base for an overview.</p>
+Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agreements">What is an Agreement</a> article in our knowledge base for an overview.</p>
 <h2 id='lifecycle'>Lifecycle</h2>
 <p>An Agreement can have the following statuses:</p>
 
@@ -2861,8 +2835,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13048322"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"iav_status"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="nl">"blocks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"debits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
         </span><span class="nl">"credits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
@@ -3088,8 +3060,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
         </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"494307"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"split"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"iav_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"blocks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nl">"debits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
           </span><span class="nl">"credits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
@@ -3109,8 +3079,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
         </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4395959"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"split"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"iav_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"credentials_invalid"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"blocks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nl">"debits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
           </span><span class="nl">"credits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
@@ -3130,8 +3098,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
         </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"iav_status"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"blocks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nl">"debits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
           </span><span class="nl">"credits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
@@ -3151,8 +3117,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
         </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13048322"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending_verification"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"iav_status"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"blocks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nl">"debits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
           </span><span class="nl">"credits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
@@ -3341,8 +3305,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"947434694"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"iav_status"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="nl">"blocks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"debits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
         </span><span class="nl">"credits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
@@ -3686,7 +3648,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
   <ul>
     <li>Previous transactions to this Contact will retain the name and bank account that was used at the time.</li>
     <li>You cannot update a Contact&#39;s bank account details if they currently have an accepted agreement.</li>
-    <li>See our <a href="https://help.split.cash/en/articles/3829211-how-do-i-change-my-customers-bank-account-details">Help Article</a> for more information about the nuances and implications of changing a contacts Bank Account.</li>
+    <li>See our <a href="https://help.zepto.money/en/articles/6239641-nz-how-do-i-change-my-customers-bank-account-details">Help Article</a> for more information about the nuances and implications of changing a contacts Bank Account.</li>
   </ul>
 </aside></p>
 
@@ -3778,8 +3740,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"99887766"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Zepto SANDBOX Bank"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"iav_status"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="nl">"blocks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"debits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
         </span><span class="nl">"credits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
@@ -7017,10 +6977,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <td><code>paused</code></td>
 <td>The transaction has temporary been paused by Zepto pending internal review.</td>
 </tr>
-<tr>
-<td><code>prefailed</code></td>
-<td>The transaction was never submitted to the bank because we detected that there were insufficient funds. The transaction can be retried.</td>
-</tr>
 </tbody></table>
 <h2 id='failure-codes'>Failure codes</h2>
 <blockquote>
@@ -7056,7 +7012,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>
-<p>The rejected, returned, voided &amp; prefailed statuses are always accompanied by a failure code, title and detail as listed below.</p>
+<p>The rejected, returned &amp; voided statuses are always accompanied by a failure code, title and detail as listed below.</p>
 <h3 id='de-credit-failures'>DE credit failures</h3>
 <table><thead>
 <tr>
@@ -7676,7 +7632,7 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 
 <p>Unassigned Agreements are shared using the generated link available in the response body. You can then include it in an email, text message, embed it in an iFrame, etc...</p>
 
-<p>Please refer to the <a href="http://help.split.cash/agreements/unassigned-agreement">Unassigned Agreement</a> article in our knowledge base for more information.</p>
+<p>Please refer to the <a href="https://help.zepto.money/en/articles/6210903-nz-unassigned-agreement">Unassigned Agreement</a> article in our knowledge base for more information.</p>
 <h2 id='propose-an-unassigned-agreement'>Propose an Unassigned Agreement</h2>
 <p><a id="opIdProposeUnassignedAgreement"></a></p>
 
@@ -10105,8 +10061,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
         </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"494307"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"split"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"iav_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"blocks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nl">"debits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
           </span><span class="nl">"credits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
@@ -10126,8 +10080,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
         </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4395959"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="s2">"split"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"iav_status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"credentials_invalid"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"blocks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nl">"debits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
           </span><span class="nl">"credits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
@@ -10147,8 +10099,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
         </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"iav_status"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"blocks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nl">"debits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
           </span><span class="nl">"credits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
@@ -10168,8 +10118,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
         </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13048322"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending_verification"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"iav_status"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="nl">"blocks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nl">"debits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
           </span><span class="nl">"credits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
@@ -10263,8 +10211,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"13048322"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"iav_status"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="nl">"blocks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"debits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
         </span><span class="nl">"credits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
@@ -10353,8 +10299,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"947434694"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank of New Zealand"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"iav_status"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="nl">"blocks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"debits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
         </span><span class="nl">"credits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
@@ -10447,18 +10391,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <td>string</td>
 <td>false</td>
 <td>The bank account state</td>
-</tr>
-<tr>
-<td>»» iav_provider</td>
-<td>string</td>
-<td>false</td>
-<td>The instant account verification provider</td>
-</tr>
-<tr>
-<td>»» iav_status</td>
-<td>string</td>
-<td>false</td>
-<td>The instant account verification bank connection status</td>
 </tr>
 <tr>
 <td>»» blocks</td>
@@ -10555,34 +10487,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
 <td>removed</td>
 </tr>
 <tr>
-<td>iav_provider</td>
-<td>split</td>
-</tr>
-<tr>
-<td>iav_provider</td>
-<td>proviso</td>
-</tr>
-<tr>
-<td>iav_provider</td>
-<td>basiq</td>
-</tr>
-<tr>
-<td>iav_provider</td>
-<td>credit_sense</td>
-</tr>
-<tr>
-<td>iav_status</td>
-<td>active</td>
-</tr>
-<tr>
-<td>iav_status</td>
-<td>removed</td>
-</tr>
-<tr>
-<td>iav_status</td>
-<td>credentials_invalid</td>
-</tr>
-<tr>
 <td>state</td>
 <td>pending</td>
 </tr>
@@ -10663,8 +10567,6 @@ Please refer to the <a href="http://help.split.cash/articles/3094575-what-is-an-
       </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"99887766"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"bank_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Zepto SANDBOX Bank"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"iav_provider"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"iav_status"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="nl">"blocks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"debits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
         </span><span class="nl">"credits_blocked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
