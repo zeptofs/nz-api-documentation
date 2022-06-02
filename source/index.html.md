@@ -637,7 +637,6 @@ Use the following table to discover what type of response schema to expect for f
 | `creditor_debit.*`       | [ListAllTransactionsResponse](/#schemalistalltransactionsresponse)        |
 | `debit.*`                | [ListAllTransactionsResponse](/#schemalistalltransactionsresponse)        |
 | `debtor_credit.*`        | [ListAllTransactionsResponse](/#schemalistalltransactionsresponse)        |
-| `open_agreement.*`       | [ListAllOpenAgreementsRespose](/#schemalistallopenagreementsresponse)     |
 | `payment.*`              | [GetAPaymentResponse](/#schemagetapaymentresponse)                        |
 | `payment_request.*`      | [GetAPaymentRequestResponse](/#schemagetapaymentrequestresponse)          |
 | `unassigned_agreement.*` | [GetAnUnassignedAgreementResponse](#schemagetunassignedagreementresponse) |

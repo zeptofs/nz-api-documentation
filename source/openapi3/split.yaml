@@ -984,8 +984,6 @@ info:
 
     | `debtor_credit.*`        | [ListAllTransactionsResponse](/#schemalistalltransactionsresponse)        |
 
-    | `open_agreement.*`       | [ListAllOpenAgreementsRespose](/#schemalistallopenagreementsresponse)     |
-
     | `payment.*`              | [GetAPaymentResponse](/#schemagetapaymentresponse)                        |
 
     | `payment_request.*`      | [GetAPaymentRequestResponse](/#schemagetapaymentrequestresponse)          |
