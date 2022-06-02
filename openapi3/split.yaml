@@ -481,7 +481,6 @@ info:
 
 
     To do so, you can send them an
-    [Open Agreement link](https://help.zepto.money/en/articles/6210908-nz-open-agreement) or
     [Unassigned Agreement
     link](https://help.zepto.money/en/articles/6210903-nz-unassigned-agreement) for them to accept the Agreement.
 
@@ -500,15 +499,6 @@ info:
     * Bill smoothing
 
     * Repayment plans
-
-
-    Example flow embedding an [Open Agreement
-    link](https://help.zepto.money/en/articles/6210908-nz-open-agreement) using an iFrame in
-    order to automate future Payment Request approvals:
-
-
-    [![Hosted Open
-    Agreement](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/host_oa.png)](https://raw.githubusercontent.com/zeptofs/public_assets/master/images/host_oa.png)
 
 
     ## Idempotent requests
@@ -818,8 +808,6 @@ info:
 
     | `contacts` | Manage user's Contacts |
 
-    | `open_agreements` | Manage user's Open Agreements |
-
     | `payments` | Manage user's Payments |
 
     | `payment_requests` | Manage user's Payment Requests |
@@ -995,8 +983,6 @@ info:
     | `debit.*`                | [ListAllTransactionsResponse](/#schemalistalltransactionsresponse)        |
 
     | `debtor_credit.*`        | [ListAllTransactionsResponse](/#schemalistalltransactionsresponse)        |
-
-    | `open_agreement.*`       | [ListAllOpenAgreementsRespose](/#schemalistallopenagreementsresponse)     |
 
     | `payment.*`              | [GetAPaymentResponse](/#schemagetapaymentresponse)                        |
 
@@ -1450,39 +1436,6 @@ tags:
       in your Contact list.
 
 
-      <aside class="notice">In the case of Open Agreements, the authorising
-      party will be automatically added to your Contacts list.</aside>
-  - name: Open Agreements
-    description: >
-      An Open Agreement is essentially an Agreement template with no specific
-      authoriser. Each time an Open Agreement is accepted by either a Zepto
-      account holder or anyone, the authoriser is added to your Contacts list
-      and a new Agreement is automatically created between the Open Agreement
-      initiator and the authoriser.
-
-
-      An Open Agreement can be accepted multiple times by different parties and
-      the result is the same: A new Agreement. Additionally, an Open Agreement
-      can be accepted by anybody, not just other Zepto users.
-
-      ##Lifecycle
-
-
-      An Open Agreement can have the following statuses:
-
-
-      | Status | Description |
-
-      |-------|-------------|
-
-      | `active` | The Open Agreement can be viewed and accepted. |
-
-      | `closed` | The Open Agreement can not be viewed or accepted. |
-
-
-      <aside class="notice">When you close an Open Agreement, no new Agreements
-      can be created from it and all past Agreement resulting from the
-      acceptance of the Open Agreement are unaffected.</aside>
   - name: Payments
     description: >
       A Payment is used to disburse funds to your Contacts.
@@ -2057,107 +2010,6 @@ paths:
                 $ref: '#/components/schemas/UpdateAContactResponse'
         '404':
           description: Not Found
-  /open_agreements:
-    post:
-      tags:
-        - Open Agreements
-      summary: Create an Open Agreement
-      description: >-
-        Create an Open Agreement that can be accepted by anyone.
-
-
-        <aside class="notice">You can set any of the term metrics to
-        <code>null</code> if you wish them to not have a limit.</aside>
-      operationId: CreateOpenAgreement
-      parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateOpenAgreementRequest'
-        required: true
-      responses:
-        '200':
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreateOpenAgreementResponse'
-    get:
-      tags:
-        - Open Agreements
-      summary: List all Open Agreements
-      description: By default, all Open Agreements will be returned.
-      operationId: ListAllOpenAgreements
-      parameters:
-        - name: page
-          in: query
-          description: 'Page of results to return, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '1'
-        - name: per_page
-          in: query
-          description: 'Number of results per page, single value, exact match'
-          style: form
-          schema:
-            type: string
-          example: '100'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ListAllOpenAgreementsResponse'
-  '/open_agreements/{open_agreement_ref}/activate':
-    post:
-      tags:
-        - Open Agreements
-      summary: Activate a closed Open Agreement
-      description: Allow the Open Agreement to viewed and accepted.
-      operationId: ActivateOpenAgreement
-      parameters:
-        - name: open_agreement_ref
-          in: path
-          description: 'Single value, exact match'
-          required: true
-          style: simple
-          schema:
-            type: string
-          example: OA.1
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ActivateOpenAgreementResponse'
-  '/open_agreements/{open_agreement_ref}/close':
-    post:
-      tags:
-        - Open Agreements
-      summary: Close an active Open Agreement
-      description: Disable the Open Agreement from being viewed or accepted.
-      operationId: CloseOpenAgreement
-      parameters:
-        - name: open_agreement_ref
-          in: path
-          description: 'Single value, exact match'
-          required: true
-          style: simple
-          schema:
-            type: string
-          example: OA.1
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CloseOpenAgreementResponse'
   /payments:
     post:
       tags:
@@ -2918,7 +2770,6 @@ components:
             refunds: Manage your refunds
             agreements: Manage your agreements
             transactions: Access your transaction history
-            open_agreements: Manage your open agreements
             transfers: Manage your Transfers
   schemas:
     GetAgreementResponse:
@@ -3087,33 +2938,6 @@ components:
               pooling_state: disabled
               max_pool_size: 10
               current_pool_size: 1
-    CreateOpenAgreementRequest:
-      title: Create an Open Agreement (request)
-      required:
-        - title
-        - terms
-      type: object
-      properties:
-        title:
-          type: string
-          description: Title of the Open Agreement (Visible to authorisers)
-          example: Subscription Plan A
-        terms:
-          $ref: '#/components/schemas/Terms'
-        metadata:
-          $ref: '#/components/schemas/Metadata'
-      example:
-        title: Subscription Plan A
-        terms:
-          per_payout:
-            min_amount: null
-            max_amount: 10000
-          per_frequency:
-            days: 7
-            max_amount: 1000000
-        metadata:
-          custom_key: Custom string
-          another_custom_key: Maybe a URL
     Terms:
       title: Agreement terms
       required:
@@ -3158,114 +2982,6 @@ components:
             Maximum amount in cents the total of all PRs can be for the duration
             of the frequency. Specify <code>null</code> for no limit.
           example: 1000000
-    CreateOpenAgreementResponse:
-      title: Create an Open Agreement (response)
-      required:
-        - data
-      type: object
-      properties:
-        data:
-          type: object
-      example:
-        data:
-          ref: OA.1
-          title: Subscription Plan A
-          status: active
-          created_at: '2017-03-20T00:53:27Z'
-          terms:
-            per_payout:
-              min_amount: null
-              max_amount: 10000
-            per_frequency:
-              days: 7
-              max_amount: 1000000
-          link: >-
-            https://go.nz.sandbox.zepto.money/open_agreements/aecff76d-13e0-4e17-b7c5-844ae07fa675/agreements/invitation
-    ListAllOpenAgreementsResponse:
-      title: List all Open Agreements (response)
-      required:
-        - data
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-          description: ''
-      example:
-        data:
-          - ref: OA.1
-            title: Subscription Plan A
-            status: active
-            created_at: '2017-03-20T00:53:27Z'
-            terms:
-              per_payout:
-                max_amount: 10000
-                min_amount: null
-              per_frequency:
-                days: 7
-                max_amount: 1000000
-            link: >-
-              https://go.nz.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation
-          - ref: OA.2
-            title: Subscription Plan B
-            status: closed
-            created_at: '2017-03-20T00:53:27Z'
-            terms:
-              per_payout:
-                max_amount: 10000
-                min_amount: null
-              per_frequency:
-                days: null
-                max_amount: null
-            link: >-
-              https://go.nz.sandbox.zepto.money/open_agreements/948e3662-154d-42d1-bdc9-a05c251d3981/agreements/invitation
-    ActivateOpenAgreementResponse:
-      title: Activate Open Agreement Request (response)
-      required:
-        - data
-      type: object
-      properties:
-        data:
-          type: object
-      example:
-        data:
-          ref: OA.1
-          title: Subscription Plan A
-          status: active
-          created_at: '2017-03-20T00:53:27Z'
-          terms:
-            per_payout:
-              max_amount: 10000
-              min_amount: null
-            per_frequency:
-              days: 7
-              max_amount: 1000000
-          link: >-
-            https://go.nz.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation
-    CloseOpenAgreementResponse:
-      title: Close Open Agreement Request (response)
-      required:
-        - data
-      type: object
-      properties:
-        data:
-          type: object
-      example:
-        data:
-          ref: OA.1
-          title: Subscription Plan A
-          status: closed
-          created_at: '2017-03-20T00:53:27Z'
-          terms:
-            per_payout:
-              max_amount: 10000
-              min_amount: null
-            per_frequency:
-              days: 7
-              max_amount: 1000000
-          link: >-
-            https://go.nz.sandbox.zepto.money/open_agreements/2e002c0b-ffaf-44eb-a35c-15fa384ddde1/agreements/invitation
     ListAllContactsResponse:
       title: List all Contacts (response)
       required:
