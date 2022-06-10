@@ -913,6 +913,271 @@ An Agreement can have the following statuses:
 | `declined` | The Agreement has been declined. |
 | `expended` | The Agreement has been expended (Only for [single_use Unassigned Agreements](/#Zepto-API-Unassigned-Agreements)). |
 
+## Create KYC Trusted Agreement
+
+<a id="opIdCreateKYCTrustedAgreement"></a>
+
+> Code samples
+
+```shell
+curl --request POST \
+  --url https://api.nz.sandbox.zepto.money/agreements/kyc \
+  --header 'accept: application/json' \
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data '{"authoriser":{"name":"John Doe","email":"john@supplies.com","phone":"0283867110","bank_account":{"account_number":"4334443934342023"},"metadata":{"some_data":"stored on the authoriser contact"}},"terms":{"per_payout":{"min_amount":null,"max_amount":null},"per_frequency":{"days":null,"max_amount":null}},"metadata":{"your_customer_uid":"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e","some_other_data":"stored on the agreement"}}'
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.nz.sandbox.zepto.money/agreements/kyc")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Post.new(url)
+request["content-type"] = 'application/json'
+request["accept"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+request.body = "{\"authoriser\":{\"name\":\"John Doe\",\"email\":\"john@supplies.com\",\"phone\":\"0283867110\",\"bank_account\":{\"account_number\":\"4334443934342023\"},\"metadata\":{\"some_data\":\"stored on the authoriser contact\"}},\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":null},\"per_frequency\":{\"days\":null,\"max_amount\":null}},\"metadata\":{\"your_customer_uid\":\"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e\",\"some_other_data\":\"stored on the agreement\"}}"
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "POST",
+  "hostname": "api.nz.sandbox.zepto.money",
+  "port": null,
+  "path": "/agreements/kyc",
+  "headers": {
+    "content-type": "application/json",
+    "accept": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.write(JSON.stringify({
+  authoriser: {
+    name: 'John Doe',
+    email: 'john@supplies.com',
+    phone: '0283867110',
+    bank_account: { account_number: '4334443934342023' },
+    metadata: { some_data: 'stored on the authoriser contact' }
+  },
+  terms: {
+    per_payout: { min_amount: null, max_amount: null },
+    per_frequency: { days: null, max_amount: null }
+  },
+  metadata: {
+    your_customer_uid: '6041475e-c5b4-4abe-a8e9-e2c3620a0a3e',
+    some_other_data: 'stored on the agreement'
+  }
+}));
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.nz.sandbox.zepto.money")
+
+payload = "{\"authoriser\":{\"name\":\"John Doe\",\"email\":\"john@supplies.com\",\"phone\":\"0283867110\",\"bank_account\":{\"account_number\":\"4334443934342023\"},\"metadata\":{\"some_data\":\"stored on the authoriser contact\"}},\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":null},\"per_frequency\":{\"days\":null,\"max_amount\":null}},\"metadata\":{\"your_customer_uid\":\"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e\",\"some_other_data\":\"stored on the agreement\"}}"
+
+headers = {
+    'content-type': "application/json",
+    'accept': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("POST", "/agreements/kyc", payload, headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.post("https://api.nz.sandbox.zepto.money/agreements/kyc")
+  .header("content-type", "application/json")
+  .header("accept", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .body("{\"authoriser\":{\"name\":\"John Doe\",\"email\":\"john@supplies.com\",\"phone\":\"0283867110\",\"bank_account\":{\"account_number\":\"4334443934342023\"},\"metadata\":{\"some_data\":\"stored on the authoriser contact\"}},\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":null},\"per_frequency\":{\"days\":null,\"max_amount\":null}},\"metadata\":{\"your_customer_uid\":\"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e\",\"some_other_data\":\"stored on the agreement\"}}")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('{"authoriser":{"name":"John Doe","email":"john@supplies.com","phone":"0283867110","bank_account":{"account_number":"4334443934342023"},"metadata":{"some_data":"stored on the authoriser contact"}},"terms":{"per_payout":{"min_amount":null,"max_amount":null},"per_frequency":{"days":null,"max_amount":null}},"metadata":{"your_customer_uid":"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e","some_other_data":"stored on the agreement"}}');
+
+$request->setRequestUrl('https://api.nz.sandbox.zepto.money/agreements/kyc');
+$request->setRequestMethod('POST');
+$request->setBody($body);
+
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'accept' => 'application/json',
+  'content-type' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.nz.sandbox.zepto.money/agreements/kyc"
+
+	payload := strings.NewReader("{\"authoriser\":{\"name\":\"John Doe\",\"email\":\"john@supplies.com\",\"phone\":\"0283867110\",\"bank_account\":{\"account_number\":\"4334443934342023\"},\"metadata\":{\"some_data\":\"stored on the authoriser contact\"}},\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":null},\"per_frequency\":{\"days\":null,\"max_amount\":null}},\"metadata\":{\"your_customer_uid\":\"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e\",\"some_other_data\":\"stored on the agreement\"}}")
+
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("content-type", "application/json")
+	req.Header.Add("accept", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`POST /agreements/kyc`
+
+TODO
+
+> Body parameter
+
+```json
+{
+  "authoriser": {
+    "name": "John Doe",
+    "email": "john@supplies.com",
+    "phone": "0283867110",
+    "bank_account": {
+      "account_number": "4334443934342023"
+    },
+    "metadata": {
+      "some_data": "stored on the authoriser contact"
+    }
+  },
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": null
+    },
+    "per_frequency": {
+      "days": null,
+      "max_amount": null
+    }
+  },
+  "metadata": {
+    "your_customer_uid": "6041475e-c5b4-4abe-a8e9-e2c3620a0a3e",
+    "some_other_data": "stored on the agreement"
+  }
+}
+```
+
+<h3 id="Create-KYC-Trusted-Agreement-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[CreateKYCTrustedAgreementRequest](#schemacreatekyctrustedagreementrequest)|true|No description|
+|» authoriser|body|[AddAnAnyoneContactRequest](#schemaaddananyonecontactrequest)|true|No description|
+|»» name|body|string|true|The name of the Contact (140 max. characters)|
+|»» email|body|string|true|The email of the Contact (256 max. characters)|
+|»» account_number|body|string|true|The bank account number of the Contact|
+|»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
+|» terms|body|[Terms](#schematerms)|true|Terms|
+|»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
+|»»» min_amount|body|integer|true|Minimum amount in cents a Payment Request can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|»»» max_amount|body|integer|true|Maximum amount in cents a Payment Request can be in order to be auto-approved. Specify <code>null</code> for no limit.|
+|»» per_frequency|body|[PerFrequency](#schemaperfrequency)|true|No description|
+|»»» days|body|integer|true|Amount of days to apply against the frequency. Specify <code>null</code> for no limit.|
+|»»» max_amount|body|integer|true|Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.|
+|»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
+
+> Example responses
+
+> 201 Response
+
+```json
+{
+  "data": {
+    "ref": "A.ci",
+    "initiator_id": "6a0a05c4-8ad9-495d-bcf9-66a7d0046909",
+    "authoriser_id": "9fa1be8d-40fb-4bf6-9743-577a1d5a3775",
+    "contact_id": "bea8107a-a5b5-4719-92ec-8389ad7aa619",
+    "bank_account_id": "91dbef6d-b596-4387-a36c-5a8497822b97",
+    "status": "accepted",
+    "responded_at": "2018-04-30T04:43:52Z",
+    "created_at": "2018-04-30T04:43:52Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": null,
+        "min_amount": null
+      },
+      "per_frequency": {
+        "days": null,
+        "max_amount": null
+      }
+    },
+    "metadata": {
+      "your_customer_uid": "6041475e-c5b4-4abe-a8e9-e2c3620a0a3e",
+      "some_other_data": "stored on the agreement"
+    }
+  }
+}
+```
+
+<h3 id="Create KYC Trusted Agreement-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|201|[Created](https://tools.ietf.org/html/rfc7231#section-6.3.2)|Created|[CreateKYCTrustedAgreementResponse](#schemacreatekyctrustedagreementresponse)|
+
 ## List Agreements
 
 <a id="opIdListOutgoingAgreements"></a>
@@ -6800,6 +7065,91 @@ Use this endpoint to resend a failed webhook delivery.
 |202|[Accepted](https://tools.ietf.org/html/rfc7231#section-6.3.3)|Accepted|[RedeliverAWebhookDeliveryResponse](#schemaredeliverawebhookdeliveryresponse)|
 
 # Schemas
+
+## CreateKYCTrustedAgreementRequest
+
+<a id="schemacreatekyctrustedagreementrequest"></a>
+
+```json
+{
+  "authoriser": {
+    "name": "John Doe",
+    "email": "john@supplies.com",
+    "phone": "0283867110",
+    "bank_account": {
+      "account_number": "4334443934342023"
+    },
+    "metadata": {
+      "some_data": "stored on the authoriser contact"
+    }
+  },
+  "terms": {
+    "per_payout": {
+      "min_amount": null,
+      "max_amount": null
+    },
+    "per_frequency": {
+      "days": null,
+      "max_amount": null
+    }
+  },
+  "metadata": {
+    "your_customer_uid": "6041475e-c5b4-4abe-a8e9-e2c3620a0a3e",
+    "some_other_data": "stored on the agreement"
+  }
+}
+```
+
+### Properties
+
+*Create a KYC Trusted Agreement (request)*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|authoriser|[AddAnAnyoneContactRequest](#schemaaddananyonecontactrequest)|true|No description|
+|terms|[Terms](#schematerms)|true|No description|
+|metadata|[Metadata](#schemametadata)|false|No description|
+
+## CreateKYCTrustedAgreementResponse
+
+<a id="schemacreatekyctrustedagreementresponse"></a>
+
+```json
+{
+  "data": {
+    "ref": "A.ci",
+    "initiator_id": "6a0a05c4-8ad9-495d-bcf9-66a7d0046909",
+    "authoriser_id": "9fa1be8d-40fb-4bf6-9743-577a1d5a3775",
+    "contact_id": "bea8107a-a5b5-4719-92ec-8389ad7aa619",
+    "bank_account_id": "91dbef6d-b596-4387-a36c-5a8497822b97",
+    "status": "accepted",
+    "responded_at": "2018-04-30T04:43:52Z",
+    "created_at": "2018-04-30T04:43:52Z",
+    "terms": {
+      "per_payout": {
+        "max_amount": null,
+        "min_amount": null
+      },
+      "per_frequency": {
+        "days": null,
+        "max_amount": null
+      }
+    },
+    "metadata": {
+      "your_customer_uid": "6041475e-c5b4-4abe-a8e9-e2c3620a0a3e",
+      "some_other_data": "stored on the agreement"
+    }
+  }
+}
+```
+
+### Properties
+
+*Create a KYC Trusted Agreement (response)*
+
+|Name|Type|Required|Description|
+|---|---|---|---|
+|data|object|true|No description|
 
 ## GetAgreementResponse
 
