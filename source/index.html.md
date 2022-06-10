@@ -1621,13 +1621,7 @@ By default, all Bank Accounts will be returned.
       "account_number": "1748212",
       "status": "active",
       "title": "Float Account",
-      "available_balance": 10000,
-      "payid_configs": {
-        "email_domain": "pay.zepto.com.au",
-        "pooling_state": "disabled",
-        "max_pool_size": 10,
-        "current_pool_size": 1
-      }
+      "available_balance": 10000
     }
   ]
 }
@@ -2294,12 +2288,6 @@ Get a single Contact by its ID
     },
     "links": {
       "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
-    },
-    "payid_details": {
-      "alias_value": "otp@pay.travel.com.au",
-      "alias_type": "email",
-      "alias_name": "your merchant's alias_name",
-      "state": "active"
     }
   }
 }
@@ -6950,13 +6938,7 @@ Use this endpoint to resend a failed webhook delivery.
       "account_number": "1748212",
       "status": "active",
       "title": "Float Account",
-      "available_balance": 10000,
-      "payid_configs": {
-        "email_domain": "pay.zepto.com.au",
-        "pooling_state": "disabled",
-        "max_pool_size": 10,
-        "current_pool_size": 1
-      }
+      "available_balance": 10000
     }
   ]
 }
@@ -7269,12 +7251,6 @@ Use this endpoint to resend a failed webhook delivery.
     },
     "links": {
       "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
-    },
-    "payid_details": {
-      "alias_value": "otp@pay.travel.com.au",
-      "alias_type": "email",
-      "alias_name": "your merchant's alias_name",
-      "state": "active"
     }
   }
 }
@@ -7304,11 +7280,6 @@ Use this endpoint to resend a failed webhook delivery.
 |»»» id|string(uuid)|false|The bank connection ID|
 |»» links|object|false|No description|
 |»»» add_bank_connection|string(url)|false|A unique URL to share with the Contact in order to establish a new bank connection to their bank account|
-|»» payid_details|object|false|No description|
-|»»» alias_value|string(email)|false|The PayID email|
-|»»» alias_type|string|false|Type of PayID. Fixed to `email`|
-|»»» alias_name|string|false|Your merchant's alias_name|
-|»»» state|string|false|Pending -> Active or Failed -> Deregistered (Contact removed)|
 
 #### Enumerated Values
 
@@ -7316,10 +7287,6 @@ Use this endpoint to resend a failed webhook delivery.
 |---|---|
 |state|active|
 |state|removed|
-|state|pending|
-|state|active|
-|state|failed|
-|state|deregistered|
 
 ## UpdateAContactRequest
 
@@ -8377,29 +8344,6 @@ Use this endpoint to resend a failed webhook delivery.
 |Name|Type|Required|Description|
 |---|---|---|---|
 |data|object|true|No description|
-
-## SimulateIncomingPayIDPaymentRequest
-
-<a id="schemasimulateincomingpayidpaymentrequest"></a>
-
-```json
-{
-  "payid_email": "incoming@split.cash",
-  "amount": 10000
-}
-```
-
-### Properties
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|payid_email|string|true|Receivable Contact PayID email (Min: 6 - Max: 256)|
-|amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
-|payment_description|string|false|Default:  "Simulated PayID payment"|
-|payment_reference|string|false|Default:  "simulated-payid-payment"|
-|from_account_number|string|false|Default: "12345678"|
-|debtor_name|string|false|Default:  "Simulated Debtor"|
-|debtor_legal_name|string|false|Default:  "Simulated Debtor Pty Ltd"|
 
 ## SimulateIncomingDEPaymentRequest
 
