@@ -3072,7 +3072,7 @@ components:
           description: The email of the Contact (256 max. characters)
         phone:
           type: string
-          description: The phone number of the Contact
+          description: The phone number of the Contact (11 max. characters)
         account_number:
           type: string
           description: The bank account number of the Contact

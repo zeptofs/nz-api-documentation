@@ -1834,7 +1834,7 @@ Use this endpoint when you want to pay somebody.
 |body|body|[AddAnAnyoneContactRequest](#schemaaddananyonecontactrequest)|true|No description|
 |» name|body|string|true|The name of the Contact (140 max. characters)|
 |» email|body|string|true|The email of the Contact (256 max. characters)|
-|» phone|body|string|true|The phone number of the Contact|
+|» phone|body|string|true|The phone number of the Contact (11 max. characters)|
 |» account_number|body|string|true|The bank account number of the Contact|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 
@@ -7173,7 +7173,7 @@ Use this endpoint to resend a failed webhook delivery.
 |---|---|---|---|
 |name|string|true|The name of the Contact (140 max. characters)|
 |email|string|true|The email of the Contact (256 max. characters)|
-|phone|string|true|The phone number of the Contact|
+|phone|string|true|The phone number of the Contact (11 max. characters)|
 |account_number|string|true|The bank account number of the Contact|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
