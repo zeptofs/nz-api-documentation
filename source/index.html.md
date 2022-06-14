@@ -1649,7 +1649,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"name":"Hunter Thompson","email":"hunter@batcountry.com","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"name":"Hunter Thompson","email":"hunter@batcountry.com","phone":"0256945832","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -1666,7 +1666,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"phone\":\"0256945832\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -1703,6 +1703,7 @@ var req = http.request(options, function (res) {
 req.write(JSON.stringify({
   name: 'Hunter Thompson',
   email: 'hunter@batcountry.com',
+  phone: '0256945832',
   account_number: '13048322',
   metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
 }));
@@ -1714,7 +1715,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.nz.sandbox.zepto.money")
 
-payload = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"phone\":\"0256945832\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -1735,7 +1736,7 @@ HttpResponse<String> response = Unirest.post("https://api.nz.sandbox.zepto.money
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"phone\":\"0256945832\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -1746,7 +1747,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"name":"Hunter Thompson","email":"hunter@batcountry.com","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"name":"Hunter Thompson","email":"hunter@batcountry.com","phone":"0256945832","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api.nz.sandbox.zepto.money/contacts/anyone');
 $request->setRequestMethod('POST');
@@ -1778,7 +1779,7 @@ func main() {
 
 	url := "https://api.nz.sandbox.zepto.money/contacts/anyone"
 
-	payload := strings.NewReader("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"phone\":\"0256945832\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -1811,6 +1812,7 @@ Use this endpoint when you want to pay somebody.
 {
   "name": "Hunter Thompson",
   "email": "hunter@batcountry.com",
+  "phone": "0256945832",
   "account_number": "13048322",
   "metadata": {
     "custom_key": "Custom string",
@@ -1826,6 +1828,7 @@ Use this endpoint when you want to pay somebody.
 |body|body|[AddAnAnyoneContactRequest](#schemaaddananyonecontactrequest)|true|No description|
 |» name|body|string|true|The name of the Contact (140 max. characters)|
 |» email|body|string|true|The email of the Contact (256 max. characters)|
+|» phone|body|string|true|The phone number of the Contact (11 max. characters)|
 |» account_number|body|string|true|The bank account number of the Contact|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 
@@ -1839,6 +1842,7 @@ Use this endpoint when you want to pay somebody.
     "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
     "name": "Hunter Thompson",
     "email": "hunter@batcountry.com",
+    "phone": "0256945832",
     "type": "anyone",
     "metadata": {
       "custom_key": "Custom string",
@@ -2028,6 +2032,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
       "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
       "name": "Outstanding Tours Pty Ltd",
       "email": "accounts@outstandingtours.com.au",
+      "phone": "0226644022",
       "type": "Zepto account",
       "bank_account": {
         "id": "095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc",
@@ -2047,6 +2052,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
       "id": "49935c67-c5df-4f00-99f4-1413c18a89a0",
       "name": "Adventure Dudes Pty Ltd",
       "email": "accounts@adventuredudes.com.au",
+      "phone": "0276143146",
       "type": "Zepto account",
       "bank_account": {
         "id": "861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0",
@@ -2066,6 +2072,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
       "id": "eb3266f9-e172-4b6c-b802-fe5ac4d3250a",
       "name": "Surfing World Pty Ltd",
       "email": "accounts@surfingworld.com.au",
+      "phone": "0265345344",
       "type": "Zepto account",
       "bank_account": {
         "id": null,
@@ -2085,6 +2092,7 @@ By default, all Contacts will be returned. You can apply filters to your query t
       "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
       "name": "Hunter Thompson",
       "email": "hunter@batcountry.com",
+      "phone": "0256945832",
       "type": "anyone",
       "bank_account": {
         "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
@@ -2265,6 +2273,7 @@ Get a single Contact by its ID
     "ref": "CNT.123",
     "name": "Outstanding Tours Pty Ltd",
     "email": "accounts@outstandingtours.com.au",
+    "phone": "0256945832",
     "type": "anyone",
     "metadata": {
       "custom_key": "Custom string",
@@ -2457,7 +2466,7 @@ curl --request PATCH \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"name":"My very own alias","email":"updated@email.com","account_number":"99887766","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"name":"My very own alias","email":"updated@email.com","phone":"0226644022","account_number":"99887766","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -2474,7 +2483,7 @@ request = Net::HTTP::Patch.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"phone\":\"0226644022\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -2511,6 +2520,7 @@ var req = http.request(options, function (res) {
 req.write(JSON.stringify({
   name: 'My very own alias',
   email: 'updated@email.com',
+  phone: '0226644022',
   account_number: '99887766',
   metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
 }));
@@ -2522,7 +2532,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.nz.sandbox.zepto.money")
 
-payload = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"phone\":\"0226644022\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -2543,7 +2553,7 @@ HttpResponse<String> response = Unirest.patch("https://api.nz.sandbox.zepto.mone
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"phone\":\"0226644022\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -2554,7 +2564,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"name":"My very own alias","email":"updated@email.com","account_number":"99887766","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"name":"My very own alias","email":"updated@email.com","phone":"0226644022","account_number":"99887766","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api.nz.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
 $request->setRequestMethod('PATCH');
@@ -2586,7 +2596,7 @@ func main() {
 
 	url := "https://api.nz.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
 
-	payload := strings.NewReader("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"phone\":\"0226644022\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("PATCH", url, payload)
 
@@ -2622,6 +2632,7 @@ You can update the name, email, bank account and metadata of any Contact.
 {
   "name": "My very own alias",
   "email": "updated@email.com",
+  "phone": "0226644022",
   "account_number": "99887766",
   "metadata": {
     "custom_key": "Custom string",
@@ -2638,6 +2649,7 @@ You can update the name, email, bank account and metadata of any Contact.
 |body|body|[UpdateAContactRequest](#schemaupdateacontactrequest)|true|No description|
 |» name|body|string|false|The name of the Contact|
 |» email|body|string|false|The email of the Contact|
+|» phone|body|string|false|The phone number of the Contact|
 |» account_number|body|string|false|The bank account number of the Contact|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 
@@ -2651,6 +2663,7 @@ You can update the name, email, bank account and metadata of any Contact.
     "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
     "name": "My very own alias",
     "email": "updated@email.com",
+    "phone": "0226644022",
     "type": "anyone",
     "metadata": {
       "custom_key": "Custom string",
@@ -6022,7 +6035,7 @@ func main() {
   "data": {
     "first_name": "Bear",
     "last_name": "Dog",
-    "mobile_phone": "0456945832",
+    "mobile_phone": "0256945832",
     "email": "bear@dog.com",
     "account": {
       "name": "Dog Bones Inc",
@@ -7029,6 +7042,7 @@ Use this endpoint to resend a failed webhook delivery.
       "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
       "name": "Outstanding Tours Pty Ltd",
       "email": "accounts@outstandingtours.com.au",
+      "phone": "0226644022",
       "type": "Zepto account",
       "bank_account": {
         "id": "095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc",
@@ -7048,6 +7062,7 @@ Use this endpoint to resend a failed webhook delivery.
       "id": "49935c67-c5df-4f00-99f4-1413c18a89a0",
       "name": "Adventure Dudes Pty Ltd",
       "email": "accounts@adventuredudes.com.au",
+      "phone": "0276143146",
       "type": "Zepto account",
       "bank_account": {
         "id": "861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0",
@@ -7067,6 +7082,7 @@ Use this endpoint to resend a failed webhook delivery.
       "id": "eb3266f9-e172-4b6c-b802-fe5ac4d3250a",
       "name": "Surfing World Pty Ltd",
       "email": "accounts@surfingworld.com.au",
+      "phone": "0265345344",
       "type": "Zepto account",
       "bank_account": {
         "id": null,
@@ -7086,6 +7102,7 @@ Use this endpoint to resend a failed webhook delivery.
       "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
       "name": "Hunter Thompson",
       "email": "hunter@batcountry.com",
+      "phone": "0256945832",
       "type": "anyone",
       "bank_account": {
         "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
@@ -7121,6 +7138,7 @@ Use this endpoint to resend a failed webhook delivery.
 {
   "name": "Hunter Thompson",
   "email": "hunter@batcountry.com",
+  "phone": "0256945832",
   "account_number": "13048322",
   "metadata": {
     "custom_key": "Custom string",
@@ -7137,6 +7155,7 @@ Use this endpoint to resend a failed webhook delivery.
 |---|---|---|---|
 |name|string|true|The name of the Contact (140 max. characters)|
 |email|string|true|The email of the Contact (256 max. characters)|
+|phone|string|true|The phone number of the Contact (11 max. characters)|
 |account_number|string|true|The bank account number of the Contact|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
@@ -7150,6 +7169,7 @@ Use this endpoint to resend a failed webhook delivery.
     "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
     "name": "Hunter Thompson",
     "email": "hunter@batcountry.com",
+    "phone": "0256945832",
     "type": "anyone",
     "metadata": {
       "custom_key": "Custom string",
@@ -7228,6 +7248,7 @@ Use this endpoint to resend a failed webhook delivery.
     "ref": "CNT.123",
     "name": "Outstanding Tours Pty Ltd",
     "email": "accounts@outstandingtours.com.au",
+    "phone": "0256945832",
     "type": "anyone",
     "metadata": {
       "custom_key": "Custom string",
@@ -7296,6 +7317,7 @@ Use this endpoint to resend a failed webhook delivery.
 {
   "name": "My very own alias",
   "email": "updated@email.com",
+  "phone": "0226644022",
   "account_number": "99887766",
   "metadata": {
     "custom_key": "Custom string",
@@ -7312,6 +7334,7 @@ Use this endpoint to resend a failed webhook delivery.
 |---|---|---|---|
 |name|string|false|The name of the Contact|
 |email|string|false|The email of the Contact|
+|phone|string|false|The phone number of the Contact|
 |account_number|string|false|The bank account number of the Contact|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
@@ -7325,6 +7348,7 @@ Use this endpoint to resend a failed webhook delivery.
     "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
     "name": "My very own alias",
     "email": "updated@email.com",
+    "phone": "0226644022",
     "type": "anyone",
     "metadata": {
       "custom_key": "Custom string",
@@ -8322,7 +8346,7 @@ Use this endpoint to resend a failed webhook delivery.
   "data": {
     "first_name": "Bear",
     "last_name": "Dog",
-    "mobile_phone": "0456945832",
+    "mobile_phone": "0256945832",
     "email": "bear@dog.com",
     "account": {
       "name": "Dog Bones Inc",

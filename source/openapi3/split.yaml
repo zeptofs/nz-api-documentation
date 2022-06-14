@@ -2993,6 +2993,7 @@ components:
           - id: 6a7ed958-f1e8-42dc-8c02-3901d7057357
             name: Outstanding Tours Pty Ltd
             email: accounts@outstandingtours.com.au
+            phone: '0226644022'
             type: Zepto account
             bank_account:
               id: 095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc
@@ -3007,6 +3008,7 @@ components:
           - id: 49935c67-c5df-4f00-99f4-1413c18a89a0
             name: Adventure Dudes Pty Ltd
             email: accounts@adventuredudes.com.au
+            phone: '0276143146'
             type: Zepto account
             bank_account:
               id: 861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0
@@ -3021,6 +3023,7 @@ components:
           - id: eb3266f9-e172-4b6c-b802-fe5ac4d3250a
             name: Surfing World Pty Ltd
             email: accounts@surfingworld.com.au
+            phone: '0265345344'
             type: Zepto account
             bank_account:
               id: null
@@ -3035,6 +3038,7 @@ components:
           - id: 6a7ed958-f1e8-42dc-8c02-3901d7057357
             name: Hunter Thompson
             email: hunter@batcountry.com
+            phone: '0256945832'
             type: anyone
             bank_account:
               id: 55afddde-4296-4daf-8e49-7ba481ef9608
@@ -3051,6 +3055,7 @@ components:
       required:
         - name
         - email
+        - phone
         - account_number
       type: object
       properties:
@@ -3060,6 +3065,9 @@ components:
         email:
           type: string
           description: The email of the Contact (256 max. characters)
+        phone:
+          type: string
+          description: The phone number of the Contact (11 max. characters)
         account_number:
           type: string
           description: The bank account number of the Contact
@@ -3068,6 +3076,7 @@ components:
       example:
         name: Hunter Thompson
         email: hunter@batcountry.com
+        phone: '0256945832'
         account_number: '13048322'
         metadata:
           custom_key: Custom string
@@ -3085,6 +3094,7 @@ components:
           id: 6a7ed958-f1e8-42dc-8c02-3901d7057357
           name: Hunter Thompson
           email: hunter@batcountry.com
+          phone: '0256945832'
           type: anyone
           metadata:
             custom_key: Custom string
@@ -3212,6 +3222,7 @@ components:
           ref: CNT.123
           name: Outstanding Tours Pty Ltd
           email: accounts@outstandingtours.com.au
+          phone: '0256945832'
           type: anyone
           metadata:
             custom_key: Custom string
@@ -3240,6 +3251,9 @@ components:
         email:
           type: string
           description: The email of the Contact
+        phone:
+          type: string
+          description: The phone number of the Contact
         account_number:
           type: string
           description: The bank account number of the Contact
@@ -3248,6 +3262,7 @@ components:
       example:
         name: My very own alias
         email: updated@email.com
+        phone: '0226644022'
         account_number: '99887766'
         metadata:
           custom_key: Custom string
@@ -3265,6 +3280,7 @@ components:
           id: fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb
           name: My very own alias
           email: updated@email.com
+          phone: '0226644022'
           type: anyone
           metadata:
             custom_key: Custom string
@@ -4291,7 +4307,7 @@ components:
         data:
           first_name: Bear
           last_name: Dog
-          mobile_phone: 0456945832
+          mobile_phone: 0256945832
           email: bear@dog.com
           account:
             name: Dog Bones Inc
