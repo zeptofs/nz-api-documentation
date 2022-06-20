@@ -925,7 +925,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"authoriser":{"name":"John Doe","email":"john@supplies.com","phone":"0283867110","bank_account":{"account_number":"4334443934342023"},"metadata":{"some_data":"stored on the authoriser contact"}},"terms":{"per_payout":{"min_amount":null,"max_amount":null},"per_frequency":{"days":null,"max_amount":null}},"metadata":{"your_customer_uid":"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e","some_other_data":"stored on the agreement"}}'
+  --data '{"authoriser":{"name":"John Doe","email":"john@supplies.com","phone":"0283867110","bank_account":{"account_number":"200100693049678"},"metadata":{"some_data":"stored on the authoriser contact"}},"terms":{"per_payout":{"min_amount":null,"max_amount":null},"per_frequency":{"days":null,"max_amount":null}},"metadata":{"your_customer_uid":"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e","some_other_data":"stored on the agreement"}}'
 ```
 
 ```ruby
@@ -942,7 +942,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"authoriser\":{\"name\":\"John Doe\",\"email\":\"john@supplies.com\",\"phone\":\"0283867110\",\"bank_account\":{\"account_number\":\"4334443934342023\"},\"metadata\":{\"some_data\":\"stored on the authoriser contact\"}},\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":null},\"per_frequency\":{\"days\":null,\"max_amount\":null}},\"metadata\":{\"your_customer_uid\":\"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e\",\"some_other_data\":\"stored on the agreement\"}}"
+request.body = "{\"authoriser\":{\"name\":\"John Doe\",\"email\":\"john@supplies.com\",\"phone\":\"0283867110\",\"bank_account\":{\"account_number\":\"200100693049678\"},\"metadata\":{\"some_data\":\"stored on the authoriser contact\"}},\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":null},\"per_frequency\":{\"days\":null,\"max_amount\":null}},\"metadata\":{\"your_customer_uid\":\"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e\",\"some_other_data\":\"stored on the agreement\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -981,7 +981,7 @@ req.write(JSON.stringify({
     name: 'John Doe',
     email: 'john@supplies.com',
     phone: '0283867110',
-    bank_account: { account_number: '4334443934342023' },
+    bank_account: { account_number: '200100693049678' },
     metadata: { some_data: 'stored on the authoriser contact' }
   },
   terms: {
@@ -1001,7 +1001,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.nz.sandbox.zepto.money")
 
-payload = "{\"authoriser\":{\"name\":\"John Doe\",\"email\":\"john@supplies.com\",\"phone\":\"0283867110\",\"bank_account\":{\"account_number\":\"4334443934342023\"},\"metadata\":{\"some_data\":\"stored on the authoriser contact\"}},\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":null},\"per_frequency\":{\"days\":null,\"max_amount\":null}},\"metadata\":{\"your_customer_uid\":\"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e\",\"some_other_data\":\"stored on the agreement\"}}"
+payload = "{\"authoriser\":{\"name\":\"John Doe\",\"email\":\"john@supplies.com\",\"phone\":\"0283867110\",\"bank_account\":{\"account_number\":\"200100693049678\"},\"metadata\":{\"some_data\":\"stored on the authoriser contact\"}},\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":null},\"per_frequency\":{\"days\":null,\"max_amount\":null}},\"metadata\":{\"your_customer_uid\":\"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e\",\"some_other_data\":\"stored on the agreement\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -1022,7 +1022,7 @@ HttpResponse<String> response = Unirest.post("https://api.nz.sandbox.zepto.money
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"authoriser\":{\"name\":\"John Doe\",\"email\":\"john@supplies.com\",\"phone\":\"0283867110\",\"bank_account\":{\"account_number\":\"4334443934342023\"},\"metadata\":{\"some_data\":\"stored on the authoriser contact\"}},\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":null},\"per_frequency\":{\"days\":null,\"max_amount\":null}},\"metadata\":{\"your_customer_uid\":\"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e\",\"some_other_data\":\"stored on the agreement\"}}")
+  .body("{\"authoriser\":{\"name\":\"John Doe\",\"email\":\"john@supplies.com\",\"phone\":\"0283867110\",\"bank_account\":{\"account_number\":\"200100693049678\"},\"metadata\":{\"some_data\":\"stored on the authoriser contact\"}},\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":null},\"per_frequency\":{\"days\":null,\"max_amount\":null}},\"metadata\":{\"your_customer_uid\":\"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e\",\"some_other_data\":\"stored on the agreement\"}}")
   .asString();
 ```
 
@@ -1033,7 +1033,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"authoriser":{"name":"John Doe","email":"john@supplies.com","phone":"0283867110","bank_account":{"account_number":"4334443934342023"},"metadata":{"some_data":"stored on the authoriser contact"}},"terms":{"per_payout":{"min_amount":null,"max_amount":null},"per_frequency":{"days":null,"max_amount":null}},"metadata":{"your_customer_uid":"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e","some_other_data":"stored on the agreement"}}');
+$body->append('{"authoriser":{"name":"John Doe","email":"john@supplies.com","phone":"0283867110","bank_account":{"account_number":"200100693049678"},"metadata":{"some_data":"stored on the authoriser contact"}},"terms":{"per_payout":{"min_amount":null,"max_amount":null},"per_frequency":{"days":null,"max_amount":null}},"metadata":{"your_customer_uid":"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e","some_other_data":"stored on the agreement"}}');
 
 $request->setRequestUrl('https://api.nz.sandbox.zepto.money/agreements/kyc');
 $request->setRequestMethod('POST');
@@ -1065,7 +1065,7 @@ func main() {
 
 	url := "https://api.nz.sandbox.zepto.money/agreements/kyc"
 
-	payload := strings.NewReader("{\"authoriser\":{\"name\":\"John Doe\",\"email\":\"john@supplies.com\",\"phone\":\"0283867110\",\"bank_account\":{\"account_number\":\"4334443934342023\"},\"metadata\":{\"some_data\":\"stored on the authoriser contact\"}},\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":null},\"per_frequency\":{\"days\":null,\"max_amount\":null}},\"metadata\":{\"your_customer_uid\":\"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e\",\"some_other_data\":\"stored on the agreement\"}}")
+	payload := strings.NewReader("{\"authoriser\":{\"name\":\"John Doe\",\"email\":\"john@supplies.com\",\"phone\":\"0283867110\",\"bank_account\":{\"account_number\":\"200100693049678\"},\"metadata\":{\"some_data\":\"stored on the authoriser contact\"}},\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":null},\"per_frequency\":{\"days\":null,\"max_amount\":null}},\"metadata\":{\"your_customer_uid\":\"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e\",\"some_other_data\":\"stored on the agreement\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -1086,7 +1086,12 @@ func main() {
 
 `POST /agreements/kyc`
 
-TODO
+Creates a KYC Trusted Agreement, which also finds or creates the given authoriser and associated bank account. Requests are automatically idempotent, which means resending the same payload will return the currently live Agreement.
+<aside class="notice">
+  To access this endpoint, your account must have KYC Trusted Status. Refer to the
+  [KYC Trusted](https://help.zepto.money/en/articles/6217876-nz-kyc-trusted-general) article in our knowledge
+  base more information.
+</aside>
 
 > Body parameter
 
@@ -1097,7 +1102,7 @@ TODO
     "email": "john@supplies.com",
     "phone": "0283867110",
     "bank_account": {
-      "account_number": "4334443934342023"
+      "account_number": "200100693049678"
     },
     "metadata": {
       "some_data": "stored on the authoriser contact"
@@ -1128,6 +1133,7 @@ TODO
 |» authoriser|body|[AddAnAnyoneContactRequest](#schemaaddananyonecontactrequest)|true|No description|
 |»» name|body|string|true|The name of the Contact (140 max. characters)|
 |»» email|body|string|true|The email of the Contact (256 max. characters)|
+|»» phone|body|string|true|The phone number of the Contact (11 max. characters)|
 |»» account_number|body|string|true|The bank account number of the Contact|
 |»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 |» terms|body|[Terms](#schematerms)|true|Terms|
@@ -7078,7 +7084,7 @@ Use this endpoint to resend a failed webhook delivery.
     "email": "john@supplies.com",
     "phone": "0283867110",
     "bank_account": {
-      "account_number": "4334443934342023"
+      "account_number": "200100693049678"
     },
     "metadata": {
       "some_data": "stored on the authoriser contact"

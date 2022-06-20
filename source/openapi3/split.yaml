@@ -1710,8 +1710,15 @@ paths:
       tags:
         - Agreements
       summary: Create KYC Trusted Agreement
-      description: >-
-        TODO
+      description: >
+        Creates a KYC Trusted Agreement, which also finds or creates the given authoriser and associated bank account.
+        Requests are automatically idempotent, which means resending the same payload will return the currently live Agreement.
+
+        <aside class="notice">
+          To access this endpoint, your account must have KYC Trusted Status. Refer to the
+          [KYC Trusted](https://help.zepto.money/en/articles/6217876-nz-kyc-trusted-general) article in our knowledge
+          base more information.
+        </aside>
       operationId: CreateKYCTrustedAgreement
       parameters: []
       requestBody:
@@ -2814,7 +2821,7 @@ components:
           email: john@supplies.com
           phone: '0283867110'
           bank_account:
-            account_number: '4334443934342023'
+            account_number: '200100693049678'
           metadata:
             some_data: stored on the authoriser contact
         terms:
