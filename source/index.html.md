@@ -1090,7 +1090,7 @@ Creates a KYC Trusted Agreement, which also finds or creates the given authorise
 <aside class="notice">
   To access this endpoint, your account must have KYC Trusted Status. Refer to the
   [KYC Trusted](https://help.zepto.money/en/articles/6217876-nz-kyc-trusted-general) article in our knowledge
-  base more information.
+  base for more information.
 </aside>
 
 > Body parameter
