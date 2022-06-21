@@ -2988,10 +2988,6 @@ A Payment Request can have the following statuses:
 | `declined` | The debtor has declined the Payment Request. |
 | `cancelled` | The creditor has cancelled the Payment Request. |
 
-<div class="middle-header">Prechecking</div>
-
-When using Payment Requests to collect payments from your customer, Zepto will automatically check for available funds before **attempting to debit** the debtor. This check is only performed for contacts with an active [bank connection](/#Zepto-API-Bank-Connections).
-
 ## Request Payment
 
 <a id="opIdMakeAPaymentRequest"></a>
