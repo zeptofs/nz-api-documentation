@@ -1523,11 +1523,6 @@ tags:
       | `cancelled` | The creditor has cancelled the Payment Request. |
 
 
-      <div class="middle-header">Prechecking</div>
-
-
-      When using Payment Requests to collect payments from your customer, Zepto will automatically check for available funds before **attempting to debit** the debtor.
-      This check is only performed for contacts with an active [bank connection](/#Zepto-API-Bank-Connections).
   - name: Refunds
     description: >
 
@@ -1705,6 +1700,36 @@ tags:
     description: |
       All about the currently authenticated user.
 paths:
+  /agreements/kyc:
+    post:
+      tags:
+        - Agreements
+      summary: Create KYC Trusted Agreement
+      description: >
+        Creates a KYC Trusted Agreement, which also finds or creates the given authoriser and associated bank account.
+        Requests are automatically idempotent, which means resending the same payload will return the currently live Agreement.
+
+        <aside class="notice">
+          To access this endpoint, your account must have KYC Trusted Status. Refer to the
+          [KYC Trusted](https://help.zepto.money/en/articles/6217876-nz-kyc-trusted-general) article in our knowledge
+          base for more information.
+        </aside>
+      operationId: CreateKYCTrustedAgreement
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateKYCTrustedAgreementRequest'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateKYCTrustedAgreementResponse'
   /agreements/outgoing:
     get:
       tags:
@@ -2772,6 +2797,66 @@ components:
             transactions: Access your transaction history
             transfers: Manage your Transfers
   schemas:
+    CreateKYCTrustedAgreementRequest:
+      title: Create a KYC Trusted Agreement (request)
+      required:
+        - authoriser
+        - terms
+      type: object
+      properties:
+        authoriser:
+          $ref: '#/components/schemas/AddAnAnyoneContactRequest'
+        terms:
+          $ref: '#/components/schemas/Terms'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+      example:
+        authoriser:
+          name: John Doe
+          email: john@supplies.com
+          phone: '0283867110'
+          bank_account:
+            account_number: '200100693049678'
+          metadata:
+            some_data: stored on the authoriser contact
+        terms:
+          per_payout:
+            min_amount: null
+            max_amount: null
+          per_frequency:
+            days: null
+            max_amount: null
+        metadata:
+          your_customer_uid: 6041475e-c5b4-4abe-a8e9-e2c3620a0a3e
+          some_other_data: stored on the agreement
+    CreateKYCTrustedAgreementResponse:
+      title: Create a KYC Trusted Agreement (response)
+      required:
+        - data
+      type: object
+      properties:
+        data:
+          type: object
+      example:
+        data:
+          ref: A.ci
+          initiator_id: 6a0a05c4-8ad9-495d-bcf9-66a7d0046909
+          authoriser_id: 9fa1be8d-40fb-4bf6-9743-577a1d5a3775
+          contact_id: bea8107a-a5b5-4719-92ec-8389ad7aa619
+          bank_account_id: 91dbef6d-b596-4387-a36c-5a8497822b97
+          status: accepted
+          responded_at: '2018-04-30T04:43:52Z'
+          created_at: '2018-04-30T04:43:52Z'
+          terms:
+            per_payout:
+              max_amount: null
+              min_amount: null
+            per_frequency:
+              days: null
+              max_amount: null
+          metadata:
+            your_customer_uid: 6041475e-c5b4-4abe-a8e9-e2c3620a0a3e
+            some_other_data: stored on the agreement
     GetAgreementResponse:
       title: Get an Agreement (response)
       required:

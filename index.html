@@ -391,6 +391,9 @@
                     <a href="#lifecycle" class="toc-h2 toc-link" data-title="Lifecycle">Lifecycle</a>
                   </li>
                   <li>
+                    <a href="#create-kyc-trusted-agreement" class="toc-h2 toc-link" data-title="Create KYC Trusted Agreement">Create KYC Trusted Agreement</a>
+                  </li>
+                  <li>
                     <a href="#list-agreements" class="toc-h2 toc-link" data-title="List Agreements">List Agreements</a>
                   </li>
                   <li>
@@ -539,6 +542,12 @@
           <li>
             <a href="#schemas" class="toc-h1 toc-link" data-title="Schemas">Schemas</a>
               <ul class="toc-list-h2">
+                  <li>
+                    <a href="#createkyctrustedagreementrequest" class="toc-h2 toc-link" data-title="CreateKYCTrustedAgreementRequest">CreateKYCTrustedAgreementRequest</a>
+                  </li>
+                  <li>
+                    <a href="#createkyctrustedagreementresponse" class="toc-h2 toc-link" data-title="CreateKYCTrustedAgreementResponse">CreateKYCTrustedAgreementResponse</a>
+                  </li>
                   <li>
                     <a href="#getagreementresponse" class="toc-h2 toc-link" data-title="GetAgreementResponse">GetAgreementResponse</a>
                   </li>
@@ -1780,6 +1789,364 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
 <tr>
 <td><code>expended</code></td>
 <td>The Agreement has been expended (Only for <a href="/#Zepto-API-Unassigned-Agreements">single_use Unassigned Agreements</a>).</td>
+</tr>
+</tbody></table>
+<h2 id='create-kyc-trusted-agreement'>Create KYC Trusted Agreement</h2>
+<p><a id="opIdCreateKYCTrustedAgreement"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--request</span> POST <span class="se">\</span>
+  <span class="nt">--url</span> https://api.nz.sandbox.zepto.money/agreements/kyc <span class="se">\</span>
+  <span class="nt">--header</span> <span class="s1">'accept: application/json'</span> <span class="se">\</span>
+  <span class="nt">--header</span> <span class="s1">'authorization: Bearer {access-token}'</span> <span class="se">\</span>
+  <span class="nt">--header</span> <span class="s1">'content-type: application/json'</span> <span class="se">\</span>
+  <span class="nt">--data</span> <span class="s1">'{"authoriser":{"name":"John Doe","email":"john@supplies.com","phone":"0283867110","bank_account":{"account_number":"200100693049678"},"metadata":{"some_data":"stored on the authoriser contact"}},"terms":{"per_payout":{"min_amount":null,"max_amount":null},"per_frequency":{"days":null,"max_amount":null}},"metadata":{"your_customer_uid":"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e","some_other_data":"stored on the agreement"}}'</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'uri'</span>
+<span class="nb">require</span> <span class="s1">'net/http'</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://api.nz.sandbox.zepto.money/agreements/kyc"</span><span class="p">)</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
+<span class="n">http</span><span class="p">.</span><span class="nf">use_ssl</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">http</span><span class="p">.</span><span class="nf">verify_mode</span> <span class="o">=</span> <span class="no">OpenSSL</span><span class="o">::</span><span class="no">SSL</span><span class="o">::</span><span class="no">VERIFY_NONE</span>
+
+<span class="n">request</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Post</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">request</span><span class="p">[</span><span class="s2">"content-type"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'application/json'</span>
+<span class="n">request</span><span class="p">[</span><span class="s2">"accept"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'application/json'</span>
+<span class="n">request</span><span class="p">[</span><span class="s2">"authorization"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'Bearer {access-token}'</span>
+<span class="n">request</span><span class="p">.</span><span class="nf">body</span> <span class="o">=</span> <span class="s2">"{</span><span class="se">\"</span><span class="s2">authoriser</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">John Doe</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">email</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">john@supplies.com</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">phone</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">0283867110</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">bank_account</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">account_number</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">200100693049678</span><span class="se">\"</span><span class="s2">},</span><span class="se">\"</span><span class="s2">metadata</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">some_data</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">stored on the authoriser contact</span><span class="se">\"</span><span class="s2">}},</span><span class="se">\"</span><span class="s2">terms</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">per_payout</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">min_amount</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">max_amount</span><span class="se">\"</span><span class="s2">:null},</span><span class="se">\"</span><span class="s2">per_frequency</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">days</span><span class="se">\"</span><span class="s2">:null,</span><span class="se">\"</span><span class="s2">max_amount</span><span class="se">\"</span><span class="s2">:null}},</span><span class="se">\"</span><span class="s2">metadata</span><span class="se">\"</span><span class="s2">:{</span><span class="se">\"</span><span class="s2">your_customer_uid</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">6041475e-c5b4-4abe-a8e9-e2c3620a0a3e</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">some_other_data</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">stored on the agreement</span><span class="se">\"</span><span class="s2">}}"</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">response</span><span class="p">.</span><span class="nf">read_body</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript--node"><code><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">https</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="dl">"</span><span class="s2">method</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">hostname</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">api.nz.sandbox.zepto.money</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">port</span><span class="dl">"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">path</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">/agreements/kyc</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">headers</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">content-type</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">accept</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">authorization</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Bearer {access-token}</span><span class="dl">"</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">req</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">chunks</span> <span class="o">=</span> <span class="p">[];</span>
+
+  <span class="nx">res</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">data</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">chunk</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">chunks</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">chunk</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">res</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">end</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="nx">Buffer</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">chunks</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="nx">req</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+  <span class="na">authoriser</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">John Doe</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">email</span><span class="p">:</span> <span class="dl">'</span><span class="s1">john@supplies.com</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">phone</span><span class="p">:</span> <span class="dl">'</span><span class="s1">0283867110</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">bank_account</span><span class="p">:</span> <span class="p">{</span> <span class="na">account_number</span><span class="p">:</span> <span class="dl">'</span><span class="s1">200100693049678</span><span class="dl">'</span> <span class="p">},</span>
+    <span class="na">metadata</span><span class="p">:</span> <span class="p">{</span> <span class="na">some_data</span><span class="p">:</span> <span class="dl">'</span><span class="s1">stored on the authoriser contact</span><span class="dl">'</span> <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="na">terms</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">per_payout</span><span class="p">:</span> <span class="p">{</span> <span class="na">min_amount</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="na">max_amount</span><span class="p">:</span> <span class="kc">null</span> <span class="p">},</span>
+    <span class="na">per_frequency</span><span class="p">:</span> <span class="p">{</span> <span class="na">days</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="na">max_amount</span><span class="p">:</span> <span class="kc">null</span> <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="na">metadata</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">your_customer_uid</span><span class="p">:</span> <span class="dl">'</span><span class="s1">6041475e-c5b4-4abe-a8e9-e2c3620a0a3e</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">some_other_data</span><span class="p">:</span> <span class="dl">'</span><span class="s1">stored on the agreement</span><span class="dl">'</span>
+  <span class="p">}</span>
+<span class="p">}));</span>
+<span class="nx">req</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">http.client</span>
+
+<span class="n">conn</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="n">HTTPSConnection</span><span class="p">(</span><span class="s">"api.nz.sandbox.zepto.money"</span><span class="p">)</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="s">"{</span><span class="se">\"</span><span class="s">authoriser</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">name</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">John Doe</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">email</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">john@supplies.com</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">phone</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">0283867110</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">bank_account</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">account_number</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">200100693049678</span><span class="se">\"</span><span class="s">},</span><span class="se">\"</span><span class="s">metadata</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">some_data</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">stored on the authoriser contact</span><span class="se">\"</span><span class="s">}},</span><span class="se">\"</span><span class="s">terms</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">per_payout</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">min_amount</span><span class="se">\"</span><span class="s">:null,</span><span class="se">\"</span><span class="s">max_amount</span><span class="se">\"</span><span class="s">:null},</span><span class="se">\"</span><span class="s">per_frequency</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">days</span><span class="se">\"</span><span class="s">:null,</span><span class="se">\"</span><span class="s">max_amount</span><span class="se">\"</span><span class="s">:null}},</span><span class="se">\"</span><span class="s">metadata</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">your_customer_uid</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">6041475e-c5b4-4abe-a8e9-e2c3620a0a3e</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">some_other_data</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">stored on the agreement</span><span class="se">\"</span><span class="s">}}"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'content-type'</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">,</span>
+    <span class="s">'accept'</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">,</span>
+    <span class="s">'authorization'</span><span class="p">:</span> <span class="s">"Bearer {access-token}"</span>
+    <span class="p">}</span>
+
+<span class="n">conn</span><span class="p">.</span><span class="n">request</span><span class="p">(</span><span class="s">"POST"</span><span class="p">,</span> <span class="s">"/agreements/kyc"</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">getresponse</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">))</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">HttpResponse</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">response</span> <span class="o">=</span> <span class="nc">Unirest</span><span class="o">.</span><span class="na">post</span><span class="o">(</span><span class="s">"https://api.nz.sandbox.zepto.money/agreements/kyc"</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"content-type"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"accept"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"authorization"</span><span class="o">,</span> <span class="s">"Bearer {access-token}"</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">body</span><span class="o">(</span><span class="s">"{\"authoriser\":{\"name\":\"John Doe\",\"email\":\"john@supplies.com\",\"phone\":\"0283867110\",\"bank_account\":{\"account_number\":\"200100693049678\"},\"metadata\":{\"some_data\":\"stored on the authoriser contact\"}},\"terms\":{\"per_payout\":{\"min_amount\":null,\"max_amount\":null},\"per_frequency\":{\"days\":null,\"max_amount\":null}},\"metadata\":{\"your_customer_uid\":\"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e\",\"some_other_data\":\"stored on the agreement\"}}"</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">asString</span><span class="o">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+
+<span class="nv">$client</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">http\Client</span><span class="p">;</span>
+<span class="nv">$request</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">http\Client\Request</span><span class="p">;</span>
+
+<span class="nv">$body</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">http\Message\Body</span><span class="p">;</span>
+<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">append</span><span class="p">(</span><span class="s1">'{"authoriser":{"name":"John Doe","email":"john@supplies.com","phone":"0283867110","bank_account":{"account_number":"200100693049678"},"metadata":{"some_data":"stored on the authoriser contact"}},"terms":{"per_payout":{"min_amount":null,"max_amount":null},"per_frequency":{"days":null,"max_amount":null}},"metadata":{"your_customer_uid":"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e","some_other_data":"stored on the agreement"}}'</span><span class="p">);</span>
+
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">setRequestUrl</span><span class="p">(</span><span class="s1">'https://api.nz.sandbox.zepto.money/agreements/kyc'</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">setRequestMethod</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">setBody</span><span class="p">(</span><span class="nv">$body</span><span class="p">);</span>
+
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">setHeaders</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+  <span class="s1">'authorization'</span> <span class="o">=&gt;</span> <span class="s1">'Bearer {access-token}'</span><span class="p">,</span>
+  <span class="s1">'accept'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span><span class="p">,</span>
+  <span class="s1">'content-type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span>
+<span class="p">));</span>
+
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">enqueue</span><span class="p">(</span><span class="nv">$request</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">send</span><span class="p">();</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getResponse</span><span class="p">();</span>
+
+<span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="nf">getBody</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight go tab-go"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"strings"</span>
+    <span class="s">"net/http"</span>
+    <span class="s">"io/ioutil"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="n">url</span> <span class="o">:=</span> <span class="s">"https://api.nz.sandbox.zepto.money/agreements/kyc"</span>
+
+    <span class="n">payload</span> <span class="o">:=</span> <span class="n">strings</span><span class="o">.</span><span class="n">NewReader</span><span class="p">(</span><span class="s">"{</span><span class="se">\"</span><span class="s">authoriser</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">name</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">John Doe</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">email</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">john@supplies.com</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">phone</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">0283867110</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">bank_account</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">account_number</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">200100693049678</span><span class="se">\"</span><span class="s">},</span><span class="se">\"</span><span class="s">metadata</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">some_data</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">stored on the authoriser contact</span><span class="se">\"</span><span class="s">}},</span><span class="se">\"</span><span class="s">terms</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">per_payout</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">min_amount</span><span class="se">\"</span><span class="s">:null,</span><span class="se">\"</span><span class="s">max_amount</span><span class="se">\"</span><span class="s">:null},</span><span class="se">\"</span><span class="s">per_frequency</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">days</span><span class="se">\"</span><span class="s">:null,</span><span class="se">\"</span><span class="s">max_amount</span><span class="se">\"</span><span class="s">:null}},</span><span class="se">\"</span><span class="s">metadata</span><span class="se">\"</span><span class="s">:{</span><span class="se">\"</span><span class="s">your_customer_uid</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">6041475e-c5b4-4abe-a8e9-e2c3620a0a3e</span><span class="se">\"</span><span class="s">,</span><span class="se">\"</span><span class="s">some_other_data</span><span class="se">\"</span><span class="s">:</span><span class="se">\"</span><span class="s">stored on the agreement</span><span class="se">\"</span><span class="s">}}"</span><span class="p">)</span>
+
+    <span class="n">req</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">NewRequest</span><span class="p">(</span><span class="s">"POST"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+    <span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="s">"content-type"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
+    <span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="s">"accept"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
+    <span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="s">"authorization"</span><span class="p">,</span> <span class="s">"Bearer {access-token}"</span><span class="p">)</span>
+
+    <span class="n">res</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">DefaultClient</span><span class="o">.</span><span class="n">Do</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+
+    <span class="k">defer</span> <span class="n">res</span><span class="o">.</span><span class="n">Body</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+    <span class="n">body</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">ioutil</span><span class="o">.</span><span class="n">ReadAll</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">Body</span><span class="p">)</span>
+
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="kt">string</span><span class="p">(</span><span class="n">body</span><span class="p">))</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<p><code>POST /agreements/kyc</code></p>
+
+<p>Creates a KYC Trusted Agreement, which also finds or creates the given authoriser and associated bank account. Requests are automatically idempotent, which means resending the same payload will return the currently live Agreement.
+<aside class="notice">
+  To access this endpoint, your account must have KYC Trusted Status. Refer to the
+  <a href="https://help.zepto.money/en/articles/6217876-nz-kyc-trusted-general">KYC Trusted</a> article in our knowledge
+  base for more information.
+</aside></p>
+
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"authoriser"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@supplies.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0283867110"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"bank_account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200100693049678"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"some_data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stored on the authoriser contact"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"terms"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"per_payout"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"min_amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"max_amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"per_frequency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"days"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"max_amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"your_customer_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"some_other_data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stored on the agreement"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<h3 id="Create-KYC-Trusted-Agreement-parameters" class="parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td><a href="#schemacreatekyctrustedagreementrequest">CreateKYCTrustedAgreementRequest</a></td>
+<td>true</td>
+<td>No description</td>
+</tr>
+<tr>
+<td>» authoriser</td>
+<td>body</td>
+<td><a href="#schemaaddananyonecontactrequest">AddAnAnyoneContactRequest</a></td>
+<td>true</td>
+<td>No description</td>
+</tr>
+<tr>
+<td>»» name</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>The name of the Contact (140 max. characters)</td>
+</tr>
+<tr>
+<td>»» email</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>The email of the Contact (256 max. characters)</td>
+</tr>
+<tr>
+<td>»» phone</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>The phone number of the Contact (11 max. characters)</td>
+</tr>
+<tr>
+<td>»» account_number</td>
+<td>body</td>
+<td>string</td>
+<td>true</td>
+<td>The bank account number of the Contact</td>
+</tr>
+<tr>
+<td>»» metadata</td>
+<td>body</td>
+<td><a href="#schemametadata">Metadata</a></td>
+<td>false</td>
+<td>Use for your custom data and certain Zepto customisations.</td>
+</tr>
+<tr>
+<td>» terms</td>
+<td>body</td>
+<td><a href="#schematerms">Terms</a></td>
+<td>true</td>
+<td>Terms</td>
+</tr>
+<tr>
+<td>»» per_payout</td>
+<td>body</td>
+<td><a href="#schemaperpayout">PerPayout</a></td>
+<td>true</td>
+<td>No description</td>
+</tr>
+<tr>
+<td>»»» min_amount</td>
+<td>body</td>
+<td>integer</td>
+<td>true</td>
+<td>Minimum amount in cents a Payment Request can be in order to be auto-approved. Specify <code>null</code> for no limit.</td>
+</tr>
+<tr>
+<td>»»» max_amount</td>
+<td>body</td>
+<td>integer</td>
+<td>true</td>
+<td>Maximum amount in cents a Payment Request can be in order to be auto-approved. Specify <code>null</code> for no limit.</td>
+</tr>
+<tr>
+<td>»» per_frequency</td>
+<td>body</td>
+<td><a href="#schemaperfrequency">PerFrequency</a></td>
+<td>true</td>
+<td>No description</td>
+</tr>
+<tr>
+<td>»»» days</td>
+<td>body</td>
+<td>integer</td>
+<td>true</td>
+<td>Amount of days to apply against the frequency. Specify <code>null</code> for no limit.</td>
+</tr>
+<tr>
+<td>»»» max_amount</td>
+<td>body</td>
+<td>integer</td>
+<td>true</td>
+<td>Maximum amount in cents the total of all PRs can be for the duration of the frequency. Specify <code>null</code> for no limit.</td>
+</tr>
+<tr>
+<td>»» metadata</td>
+<td>body</td>
+<td><a href="#schemametadata">Metadata</a></td>
+<td>false</td>
+<td>Use for your custom data and certain Zepto customisations.</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>Example responses</p>
+
+<p>201 Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A.ci"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"initiator_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6a0a05c4-8ad9-495d-bcf9-66a7d0046909"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"authoriser_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9fa1be8d-40fb-4bf6-9743-577a1d5a3775"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"contact_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bea8107a-a5b5-4719-92ec-8389ad7aa619"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"bank_account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"91dbef6d-b596-4387-a36c-5a8497822b97"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accepted"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"responded_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-30T04:43:52Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-30T04:43:52Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"terms"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"per_payout"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"max_amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"min_amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"per_frequency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"days"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"max_amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"your_customer_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"some_other_data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stored on the agreement"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<h3 id="Create KYC Trusted Agreement-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>201</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.2">Created</a></td>
+<td>Created</td>
+<td><a href="#schemacreatekyctrustedagreementresponse">CreateKYCTrustedAgreementResponse</a></td>
 </tr>
 </tbody></table>
 <h2 id='list-agreements'>List Agreements</h2>
@@ -3780,10 +4147,6 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
 <td>The creditor has cancelled the Payment Request.</td>
 </tr>
 </tbody></table>
-
-<div class="middle-header">Prechecking</div>
-
-<p>When using Payment Requests to collect payments from your customer, Zepto will automatically check for available funds before <strong>attempting to debit</strong> the debtor. This check is only performed for contacts with an active <a href="/#Zepto-API-Bank-Connections">bank connection</a>.</p>
 <h2 id='request-payment'>Request Payment</h2>
 <p><a id="opIdMakeAPaymentRequest"></a></p>
 
@@ -8545,7 +8908,112 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
 <td><a href="#schemaredeliverawebhookdeliveryresponse">RedeliverAWebhookDeliveryResponse</a></td>
 </tr>
 </tbody></table>
-<h1 id='schemas'>Schemas</h1><h2 id='getagreementresponse'>GetAgreementResponse</h2>
+<h1 id='schemas'>Schemas</h1><h2 id='createkyctrustedagreementrequest'>CreateKYCTrustedAgreementRequest</h2>
+<p><a id="schemacreatekyctrustedagreementrequest"></a></p>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"authoriser"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@supplies.com"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0283867110"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"bank_account"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"200100693049678"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"some_data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stored on the authoriser contact"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"terms"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"per_payout"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"min_amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"max_amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"per_frequency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"days"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"max_amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"your_customer_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"some_other_data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stored on the agreement"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='properties'>Properties</h3>
+<p><em>Create a KYC Trusted Agreement (request)</em></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>authoriser</td>
+<td><a href="#schemaaddananyonecontactrequest">AddAnAnyoneContactRequest</a></td>
+<td>true</td>
+<td>No description</td>
+</tr>
+<tr>
+<td>terms</td>
+<td><a href="#schematerms">Terms</a></td>
+<td>true</td>
+<td>No description</td>
+</tr>
+<tr>
+<td>metadata</td>
+<td><a href="#schemametadata">Metadata</a></td>
+<td>false</td>
+<td>No description</td>
+</tr>
+</tbody></table>
+<h2 id='createkyctrustedagreementresponse'>CreateKYCTrustedAgreementResponse</h2>
+<p><a id="schemacreatekyctrustedagreementresponse"></a></p>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A.ci"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"initiator_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6a0a05c4-8ad9-495d-bcf9-66a7d0046909"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"authoriser_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9fa1be8d-40fb-4bf6-9743-577a1d5a3775"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"contact_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bea8107a-a5b5-4719-92ec-8389ad7aa619"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"bank_account_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"91dbef6d-b596-4387-a36c-5a8497822b97"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accepted"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"responded_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-30T04:43:52Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2018-04-30T04:43:52Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"terms"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"per_payout"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"max_amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"min_amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"per_frequency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"days"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"max_amount"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"your_customer_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"6041475e-c5b4-4abe-a8e9-e2c3620a0a3e"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"some_other_data"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stored on the agreement"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h3 id='properties-2'>Properties</h3>
+<p><em>Create a KYC Trusted Agreement (response)</em></p>
+
+<table><thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>data</td>
+<td>object</td>
+<td>true</td>
+<td>No description</td>
+</tr>
+</tbody></table>
+<h2 id='getagreementresponse'>GetAgreementResponse</h2>
 <p><a id="schemagetagreementresponse"></a></p>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -8570,7 +9038,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties'>Properties</h3>
+</span></code></pre></div><h3 id='properties-3'>Properties</h3>
 <p><em>Get an Agreement (response)</em></p>
 
 <table><thead>
@@ -8730,7 +9198,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-2'>Properties</h3>
+</span></code></pre></div><h3 id='properties-4'>Properties</h3>
 <p><em>List outgoing Agreements (response)</em></p>
 
 <table><thead>
@@ -8778,7 +9246,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-3'>Properties</h3>
+</span></code></pre></div><h3 id='properties-5'>Properties</h3>
 <p><em>List all Bank Accounts (response)</em></p>
 
 <table><thead>
@@ -8808,7 +9276,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="nl">"max_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000000</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-4'>Properties</h3>
+</span></code></pre></div><h3 id='properties-6'>Properties</h3>
 <p><em>Agreement terms</em></p>
 
 <table><thead>
@@ -8838,7 +9306,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
   </span><span class="nl">"min_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"max_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-5'>Properties</h3>
+</span></code></pre></div><h3 id='properties-7'>Properties</h3>
 <p><em>Per payout terms</em></p>
 
 <table><thead>
@@ -8868,7 +9336,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
   </span><span class="nl">"days"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
   </span><span class="nl">"max_amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000000</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-6'>Properties</h3>
+</span></code></pre></div><h3 id='properties-8'>Properties</h3>
 <p><em>Per frequency terms</em></p>
 
 <table><thead>
@@ -8978,7 +9446,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-7'>Properties</h3>
+</span></code></pre></div><h3 id='properties-9'>Properties</h3>
 <p><em>List all Contacts (response)</em></p>
 
 <table><thead>
@@ -9008,7 +9476,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="nl">"another_custom_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Maybe a URL"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-8'>Properties</h3>
+</span></code></pre></div><h3 id='properties-10'>Properties</h3>
 <p><em>Add a Contact (request)</em></p>
 
 <table><thead>
@@ -9078,7 +9546,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-9'>Properties</h3>
+</span></code></pre></div><h3 id='properties-11'>Properties</h3>
 <p><em>Add a Contact (response)</em></p>
 
 <table><thead>
@@ -9120,7 +9588,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-10'>Properties</h3>
+</span></code></pre></div><h3 id='properties-12'>Properties</h3>
 <p><em>Get a BankConnection (response)</em></p>
 
 <table><thead>
@@ -9173,7 +9641,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-11'>Properties</h3>
+</span></code></pre></div><h3 id='properties-13'>Properties</h3>
 <p><em>Get a Contact (response)</em></p>
 
 <table><thead>
@@ -9321,7 +9789,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="nl">"another_custom_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Maybe a URL"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-12'>Properties</h3>
+</span></code></pre></div><h3 id='properties-14'>Properties</h3>
 <p><em>Update a Contact (request)</em></p>
 
 <table><thead>
@@ -9394,7 +9862,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-13'>Properties</h3>
+</span></code></pre></div><h3 id='properties-15'>Properties</h3>
 <p><em>Update a Contact (response)</em></p>
 
 <table><thead>
@@ -9436,7 +9904,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="nl">"another_custom_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Maybe a URL"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-14'>Properties</h3>
+</span></code></pre></div><h3 id='properties-16'>Properties</h3>
 <p><em>Make a Payment (request)</em></p>
 
 <table><thead>
@@ -9486,7 +9954,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
   </span><span class="nl">"recipient_contact_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"48b89364-1577-4c81-ba02-96705895d457"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-15'>Properties</h3>
+</span></code></pre></div><h3 id='properties-17'>Properties</h3>
 <p><em>Payout</em></p>
 
 <table><thead>
@@ -9527,7 +9995,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"details"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Incorrect recipient"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-16'>Properties</h3>
+</span></code></pre></div><h3 id='properties-18'>Properties</h3>
 <p><em>Void a Payout (request)</em></p>
 
 <table><thead>
@@ -9551,7 +10019,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
   </span><span class="nl">"custom_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Custom string"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"another_custom_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Maybe a URL"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-17'>Properties</h3>
+</span></code></pre></div><h3 id='properties-19'>Properties</h3>
 <p><em>Metadata</em></p>
 
 <p><em>None</em></p>
@@ -9587,7 +10055,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-18'>Properties</h3>
+</span></code></pre></div><h3 id='properties-20'>Properties</h3>
 <p><em>Make a Payment (response)</em></p>
 
 <table><thead>
@@ -9651,7 +10119,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-19'>Properties</h3>
+</span></code></pre></div><h3 id='properties-21'>Properties</h3>
 <p><em>List all Payments (response)</em></p>
 
 <table><thead>
@@ -9701,7 +10169,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-20'>Properties</h3>
+</span></code></pre></div><h3 id='properties-22'>Properties</h3>
 <p><em>Get a Payment (response)</em></p>
 
 <table><thead>
@@ -9732,7 +10200,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="nl">"another_custom_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Maybe a URL"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-21'>Properties</h3>
+</span></code></pre></div><h3 id='properties-23'>Properties</h3>
 <p><em>Make a Payment Request (request)</em></p>
 
 <table><thead>
@@ -9808,7 +10276,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-22'>Properties</h3>
+</span></code></pre></div><h3 id='properties-24'>Properties</h3>
 <p><em>Make a Payment Request (response)</em></p>
 
 <table><thead>
@@ -9975,7 +10443,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"errors"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Authoriser contact (de86472c-c027-4735-a6a7-234366a27fc7) is not a Zepto account holder and therefore must have a valid agreement in place before a Payment Request can be issued."</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-23'>Properties</h3>
+</span></code></pre></div><h3 id='properties-25'>Properties</h3>
 <p><em>Make a Payment Request to an Anyone Contact with no valid Agreement (response)</em></p>
 
 <table><thead>
@@ -10021,7 +10489,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-24'>Properties</h3>
+</span></code></pre></div><h3 id='properties-26'>Properties</h3>
 <p><em>Get a Payment Request (response)</em></p>
 
 <table><thead>
@@ -10223,7 +10691,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-25'>Properties</h3>
+</span></code></pre></div><h3 id='properties-27'>Properties</h3>
 <p><em>List Collections (response)</em></p>
 
 <table><thead>
@@ -10396,7 +10864,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="nl">"another_custom_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Maybe a URL"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-26'>Properties</h3>
+</span></code></pre></div><h3 id='properties-28'>Properties</h3>
 <p><em>Issue a Refund (request)</em></p>
 
 <table><thead>
@@ -10453,7 +10921,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-27'>Properties</h3>
+</span></code></pre></div><h3 id='properties-29'>Properties</h3>
 <p><em>Issue a Refund (response)</em></p>
 
 <table><thead>
@@ -10538,7 +11006,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-28'>Properties</h3>
+</span></code></pre></div><h3 id='properties-30'>Properties</h3>
 <p><em>List outgoing Refunds (response)</em></p>
 
 <table><thead>
@@ -10573,7 +11041,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-29'>Properties</h3>
+</span></code></pre></div><h3 id='properties-31'>Properties</h3>
 <p><em>Retrieve a Refund (response)</em></p>
 
 <table><thead>
@@ -10613,7 +11081,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-30'>Properties</h3>
+</span></code></pre></div><h3 id='properties-32'>Properties</h3>
 <p><em>Retry a payout (response)</em></p>
 
 <table><thead>
@@ -10710,7 +11178,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-31'>Properties</h3>
+</span></code></pre></div><h3 id='properties-33'>Properties</h3>
 <p><em>List all transactions (response)</em></p>
 
 <table><thead>
@@ -10748,7 +11216,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="nl">"another_custom_key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Maybe a URL"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-32'>Properties</h3>
+</span></code></pre></div><h3 id='properties-34'>Properties</h3>
 <p><em>Propose an Unassigned Agreement (request)</em></p>
 
 <table><thead>
@@ -10811,7 +11279,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-33'>Properties</h3>
+</span></code></pre></div><h3 id='properties-35'>Properties</h3>
 <p><em>Propose an Unassigned Agreement (response)</em></p>
 
 <table><thead>
@@ -10873,7 +11341,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-34'>Properties</h3>
+</span></code></pre></div><h3 id='properties-36'>Properties</h3>
 <p><em>List Unassigned Agreements (response)</em></p>
 
 <table><thead>
@@ -10914,7 +11382,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="nl">"link"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://go.nz.sandbox.zepto.money/unassigned_agreements/b61fc159-8779-4a17-a826-e398e3e7e211/invitation"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-35'>Properties</h3>
+</span></code></pre></div><h3 id='properties-37'>Properties</h3>
 <p><em>Get an Unassigned Agreement (response)</em></p>
 
 <table><thead>
@@ -10951,7 +11419,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-36'>Properties</h3>
+</span></code></pre></div><h3 id='properties-38'>Properties</h3>
 <p><em>Get User details (response)</em></p>
 
 <table><thead>
@@ -10975,7 +11443,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
   </span><span class="nl">"to_account_number"</span><span class="p">:</span><span class="w"> </span><span class="s2">"88888888"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-37'>Properties</h3>
+</span></code></pre></div><h3 id='properties-39'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11024,7 +11492,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
   </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Float account balance adjustment"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"matures_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-06-06T00:00:00Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-38'>Properties</h3>
+</span></code></pre></div><h3 id='properties-40'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11076,7 +11544,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="nl">"matures_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-06-06T00:00:00Z"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-39'>Properties</h3>
+</span></code></pre></div><h3 id='properties-41'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11140,7 +11608,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="nl">"matures_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-06-03T00:00:00Z"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-40'>Properties</h3>
+</span></code></pre></div><h3 id='properties-42'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11213,7 +11681,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-41'>Properties</h3>
+</span></code></pre></div><h3 id='properties-43'>Properties</h3>
 <p><em>List all Webhooks (response)</em></p>
 
 <table><thead>
@@ -11264,7 +11732,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-42'>Properties</h3>
+</span></code></pre></div><h3 id='properties-44'>Properties</h3>
 <table><thead>
 <tr>
 <th>Name</th>
@@ -11328,7 +11796,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
   </span><span class="nl">"response_status_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
   </span><span class="nl">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2021-09-02T02:24:50.000Z"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-43'>Properties</h3>
+</span></code></pre></div><h3 id='properties-45'>Properties</h3>
 <p><em>Get a WebhookDelivery (response)</em></p>
 
 <table><thead>
@@ -11409,7 +11877,7 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
     </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h3 id='properties-44'>Properties</h3>
+</span></code></pre></div><h3 id='properties-46'>Properties</h3>
 <p><em>Resend a WebhookDelivery (response)</em></p>
 
 <table><thead>
