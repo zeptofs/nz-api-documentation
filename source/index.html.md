@@ -2120,9 +2120,6 @@ Use this endpoint when you want to pay somebody.
         "debits_blocked": false,
         "credits_blocked": false
       }
-    },
-    "links": {
-      "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -2306,9 +2303,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
           "debits_blocked": false,
           "credits_blocked": false
         }
-      },
-      "bank_connection": {
-        "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
       }
     },
     {
@@ -2326,9 +2320,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
           "debits_blocked": false,
           "credits_blocked": false
         }
-      },
-      "bank_connection": {
-        "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
       }
     },
     {
@@ -2346,9 +2337,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
           "debits_blocked": false,
           "credits_blocked": false
         }
-      },
-      "links": {
-        "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     },
     {
@@ -2366,9 +2354,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
           "debits_blocked": false,
           "credits_blocked": false
         }
-      },
-      "links": {
-        "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     }
   ]
@@ -2554,12 +2539,6 @@ Get a single Contact by its ID
     },
     "anyone_account": {
       "id": "31a05f81-25a2-4085-92ef-0d16d0263bff"
-    },
-    "bank_connection": {
-      "id": null
-    },
-    "links": {
-      "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -2944,9 +2923,6 @@ You can update the name, email, bank account and metadata of any Contact.
     },
     "anyone_account": {
       "id": "63232c0a-a783-4ae9-ae73-f0974fe1e345"
-    },
-    "links": {
-      "add_bank_connection": "http://go.nz.sandbox.zepto.money/invite_contact/dog-bones-inc/fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb"
     }
   }
 }
@@ -7393,9 +7369,6 @@ Use this endpoint to resend a failed webhook delivery.
           "debits_blocked": false,
           "credits_blocked": false
         }
-      },
-      "bank_connection": {
-        "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
       }
     },
     {
@@ -7413,9 +7386,6 @@ Use this endpoint to resend a failed webhook delivery.
           "debits_blocked": false,
           "credits_blocked": false
         }
-      },
-      "bank_connection": {
-        "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
       }
     },
     {
@@ -7433,9 +7403,6 @@ Use this endpoint to resend a failed webhook delivery.
           "debits_blocked": false,
           "credits_blocked": false
         }
-      },
-      "links": {
-        "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     },
     {
@@ -7453,9 +7420,6 @@ Use this endpoint to resend a failed webhook delivery.
           "debits_blocked": false,
           "credits_blocked": false
         }
-      },
-      "links": {
-        "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     }
   ]
@@ -7524,9 +7488,6 @@ Use this endpoint to resend a failed webhook delivery.
         "debits_blocked": false,
         "credits_blocked": false
       }
-    },
-    "links": {
-      "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -7535,43 +7496,6 @@ Use this endpoint to resend a failed webhook delivery.
 ### Properties
 
 *Add a Contact (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|object|true|No description|
-
-## GetABankConnectionResponse
-
-<a id="schemagetabankconnectionresponse"></a>
-
-```json
-{
-  "data": {
-    "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7",
-    "provider_name": "split",
-    "state": "credentials_invalid",
-    "refreshed_at": "2020-02-13T09:01:00Z",
-    "removed_at": null,
-    "failure_reason": null,
-    "institution": {
-      "short_name": "ASB",
-      "full_name": "Auckland Savings Bank"
-    },
-    "contact": {
-      "id": "72e37667-6364-440f-b1bd-56df5654e258",
-      "name": "Joel Boyle",
-      "email": "travis@hermanntorp.net"
-    },
-    "links": {
-      "update_bank_connection": "https://go.nz.sandbox.zepto.money/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
-    }
-  }
-}
-```
-
-### Properties
-
-*Get a BankConnection (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
@@ -7606,12 +7530,6 @@ Use this endpoint to resend a failed webhook delivery.
     },
     "anyone_account": {
       "id": "31a05f81-25a2-4085-92ef-0d16d0263bff"
-    },
-    "bank_connection": {
-      "id": null
-    },
-    "links": {
-      "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -7637,10 +7555,6 @@ Use this endpoint to resend a failed webhook delivery.
 |»»» debits_blocked|boolean|false|Used by Zepto admins. Defines whether the bank account is blocked from being debited|
 |»»» credits_blocked|boolean|false|Used by Zepto admins. Defined Whether this bank account is blocked from being credited|
 |»» anyone_account|object|true|No description|
-|»» bank_connection|object|false|No description|
-|»»» id|string(uuid)|false|The bank connection ID|
-|»» links|object|false|No description|
-|»»» add_bank_connection|string(url)|false|A unique URL to share with the Contact in order to establish a new bank connection to their bank account|
 
 #### Enumerated Values
 
@@ -7706,9 +7620,6 @@ Use this endpoint to resend a failed webhook delivery.
     },
     "anyone_account": {
       "id": "63232c0a-a783-4ae9-ae73-f0974fe1e345"
-    },
-    "links": {
-      "add_bank_connection": "http://go.nz.sandbox.zepto.money/invite_contact/dog-bones-inc/fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb"
     }
   }
 }
