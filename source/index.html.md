@@ -1134,7 +1134,7 @@ Creates a KYC Trusted Agreement, which also finds or creates the given authorise
 |»» name|body|string|true|The name of the Contact (140 max. characters)|
 |»» email|body|string|true|The email of the Contact (256 max. characters)|
 |»» phone|body|string|true|The phone number of the Contact (11 max. characters)|
-|»» account_number|body|string|true|The bank account number of the Contact|
+|»» account_number|body|string|true|The bank account number of the Contact (15-16 characters)|
 |»» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 |» terms|body|[Terms](#schematerms)|true|Terms|
 |»» per_payout|body|[PerPayout](#schemaperpayout)|true|No description|
@@ -1873,7 +1873,7 @@ By default, all Bank Accounts will be returned.
     {
       "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
       "bank_name": "Bank of New Zealand",
-      "account_number": "3993013",
+      "account_number": "200100693049678",
       "status": "active",
       "title": "NZ.020100.3993013'",
       "available_balance": null
@@ -1881,18 +1881,10 @@ By default, all Bank Accounts will be returned.
     {
       "id": "56df206a-aaff-471a-b075-11882bc8906a",
       "bank_name": "Bank of New Zealand",
-      "account_number": "119302",
+      "account_number": "2001001059493024",
       "status": "active",
       "title": "Trust Account",
       "available_balance": null
-    },
-    {
-      "id": "ab3de19b-709b-4a41-82a5-3b43b3dc58c9",
-      "bank_name": "Zepto Float Account",
-      "account_number": "1748212",
-      "status": "active",
-      "title": "Float Account",
-      "available_balance": 10000
     }
   ]
 }
@@ -1920,7 +1912,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"name":"Hunter Thompson","email":"hunter@batcountry.com","phone":"0256945832","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"name":"Hunter Thompson","email":"hunter@batcountry.com","phone":"0256945832","account_number":"200100693049678","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -1937,7 +1929,7 @@ request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"phone\":\"0256945832\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"phone\":\"0256945832\",\"account_number\":\"200100693049678\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -1975,7 +1967,7 @@ req.write(JSON.stringify({
   name: 'Hunter Thompson',
   email: 'hunter@batcountry.com',
   phone: '0256945832',
-  account_number: '13048322',
+  account_number: '200100693049678',
   metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
 }));
 req.end();
@@ -1986,7 +1978,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.nz.sandbox.zepto.money")
 
-payload = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"phone\":\"0256945832\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"phone\":\"0256945832\",\"account_number\":\"200100693049678\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -2007,7 +1999,7 @@ HttpResponse<String> response = Unirest.post("https://api.nz.sandbox.zepto.money
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"phone\":\"0256945832\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"phone\":\"0256945832\",\"account_number\":\"200100693049678\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -2018,7 +2010,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"name":"Hunter Thompson","email":"hunter@batcountry.com","phone":"0256945832","account_number":"13048322","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"name":"Hunter Thompson","email":"hunter@batcountry.com","phone":"0256945832","account_number":"200100693049678","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api.nz.sandbox.zepto.money/contacts/anyone');
 $request->setRequestMethod('POST');
@@ -2050,7 +2042,7 @@ func main() {
 
 	url := "https://api.nz.sandbox.zepto.money/contacts/anyone"
 
-	payload := strings.NewReader("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"phone\":\"0256945832\",\"account_number\":\"13048322\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"name\":\"Hunter Thompson\",\"email\":\"hunter@batcountry.com\",\"phone\":\"0256945832\",\"account_number\":\"200100693049678\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("POST", url, payload)
 
@@ -2084,7 +2076,7 @@ Use this endpoint when you want to pay somebody.
   "name": "Hunter Thompson",
   "email": "hunter@batcountry.com",
   "phone": "0256945832",
-  "account_number": "13048322",
+  "account_number": "200100693049678",
   "metadata": {
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
@@ -2100,7 +2092,7 @@ Use this endpoint when you want to pay somebody.
 |» name|body|string|true|The name of the Contact (140 max. characters)|
 |» email|body|string|true|The email of the Contact (256 max. characters)|
 |» phone|body|string|true|The phone number of the Contact (11 max. characters)|
-|» account_number|body|string|true|The bank account number of the Contact|
+|» account_number|body|string|true|The bank account number of the Contact (15-16 characters)|
 |» metadata|body|[Metadata](#schemametadata)|false|Use for your custom data and certain Zepto customisations.|
 
 > Example responses
@@ -2121,16 +2113,13 @@ Use this endpoint when you want to pay somebody.
     },
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-      "account_number": "13048322",
+      "account_number": "200100693049678",
       "bank_name": "Bank of New Zealand",
       "state": "active",
       "blocks": {
         "debits_blocked": false,
         "credits_blocked": false
       }
-    },
-    "links": {
-      "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -2307,16 +2296,13 @@ By default, all Contacts will be returned. You can apply filters to your query t
       "type": "Zepto account",
       "bank_account": {
         "id": "095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc",
-        "account_number": "494307",
+        "account_number": "200100671453378",
         "bank_name": "Bank of New Zealand",
         "state": "active",
         "blocks": {
           "debits_blocked": false,
           "credits_blocked": false
         }
-      },
-      "bank_connection": {
-        "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
       }
     },
     {
@@ -2327,16 +2313,13 @@ By default, all Contacts will be returned. You can apply filters to your query t
       "type": "Zepto account",
       "bank_account": {
         "id": "861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0",
-        "account_number": "4395959",
+        "account_number": "200100471453444",
         "bank_name": "Bank of New Zealand",
         "state": "active",
         "blocks": {
           "debits_blocked": false,
           "credits_blocked": false
         }
-      },
-      "bank_connection": {
-        "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
       }
     },
     {
@@ -2354,9 +2337,6 @@ By default, all Contacts will be returned. You can apply filters to your query t
           "debits_blocked": false,
           "credits_blocked": false
         }
-      },
-      "links": {
-        "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     },
     {
@@ -2367,16 +2347,13 @@ By default, all Contacts will be returned. You can apply filters to your query t
       "type": "anyone",
       "bank_account": {
         "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-        "account_number": "13048322",
+        "account_number": "200100693049678",
         "bank_name": "Bank of New Zealand",
         "state": "pending_verification",
         "blocks": {
           "debits_blocked": false,
           "credits_blocked": false
         }
-      },
-      "links": {
-        "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     }
   ]
@@ -2552,7 +2529,7 @@ Get a single Contact by its ID
     },
     "bank_account": {
       "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
-      "account_number": "947434694",
+      "account_number": "200100693049678",
       "bank_name": "Bank of New Zealand",
       "state": "active",
       "blocks": {
@@ -2562,12 +2539,6 @@ Get a single Contact by its ID
     },
     "anyone_account": {
       "id": "31a05f81-25a2-4085-92ef-0d16d0263bff"
-    },
-    "bank_connection": {
-      "id": null
-    },
-    "links": {
-      "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -2737,7 +2708,7 @@ curl --request PATCH \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
-  --data '{"name":"My very own alias","email":"updated@email.com","phone":"0226644022","account_number":"99887766","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
+  --data '{"name":"My very own alias","email":"updated@email.com","phone":"0226644022","account_number":"200111930276531","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
 ```ruby
@@ -2754,7 +2725,7 @@ request = Net::HTTP::Patch.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
 request["authorization"] = 'Bearer {access-token}'
-request.body = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"phone\":\"0226644022\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+request.body = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"phone\":\"0226644022\",\"account_number\":\"200111930276531\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 response = http.request(request)
 puts response.read_body
@@ -2792,7 +2763,7 @@ req.write(JSON.stringify({
   name: 'My very own alias',
   email: 'updated@email.com',
   phone: '0226644022',
-  account_number: '99887766',
+  account_number: '200111930276531',
   metadata: { custom_key: 'Custom string', another_custom_key: 'Maybe a URL' }
 }));
 req.end();
@@ -2803,7 +2774,7 @@ import http.client
 
 conn = http.client.HTTPSConnection("api.nz.sandbox.zepto.money")
 
-payload = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"phone\":\"0226644022\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
+payload = "{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"phone\":\"0226644022\",\"account_number\":\"200111930276531\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
 headers = {
     'content-type': "application/json",
@@ -2824,7 +2795,7 @@ HttpResponse<String> response = Unirest.patch("https://api.nz.sandbox.zepto.mone
   .header("content-type", "application/json")
   .header("accept", "application/json")
   .header("authorization", "Bearer {access-token}")
-  .body("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"phone\":\"0226644022\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+  .body("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"phone\":\"0226644022\",\"account_number\":\"200111930276531\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
 ```
 
@@ -2835,7 +2806,7 @@ $client = new http\Client;
 $request = new http\Client\Request;
 
 $body = new http\Message\Body;
-$body->append('{"name":"My very own alias","email":"updated@email.com","phone":"0226644022","account_number":"99887766","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
+$body->append('{"name":"My very own alias","email":"updated@email.com","phone":"0226644022","account_number":"200111930276531","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}');
 
 $request->setRequestUrl('https://api.nz.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608');
 $request->setRequestMethod('PATCH');
@@ -2867,7 +2838,7 @@ func main() {
 
 	url := "https://api.nz.sandbox.zepto.money/contacts/55afddde-4296-4daf-8e49-7ba481ef9608"
 
-	payload := strings.NewReader("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"phone\":\"0226644022\",\"account_number\":\"99887766\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
+	payload := strings.NewReader("{\"name\":\"My very own alias\",\"email\":\"updated@email.com\",\"phone\":\"0226644022\",\"account_number\":\"200111930276531\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
 
 	req, _ := http.NewRequest("PATCH", url, payload)
 
@@ -2904,7 +2875,7 @@ You can update the name, email, bank account and metadata of any Contact.
   "name": "My very own alias",
   "email": "updated@email.com",
   "phone": "0226644022",
-  "account_number": "99887766",
+  "account_number": "200111930276531",
   "metadata": {
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
@@ -2942,7 +2913,7 @@ You can update the name, email, bank account and metadata of any Contact.
     },
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-      "account_number": "99887766",
+      "account_number": "200111930276531",
       "bank_name": "Zepto SANDBOX Bank",
       "state": "active",
       "blocks": {
@@ -2952,9 +2923,6 @@ You can update the name, email, bank account and metadata of any Contact.
     },
     "anyone_account": {
       "id": "63232c0a-a783-4ae9-ae73-f0974fe1e345"
-    },
-    "links": {
-      "add_bank_connection": "http://go.nz.sandbox.zepto.money/invite_contact/dog-bones-inc/fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb"
     }
   }
 }
@@ -7284,7 +7252,7 @@ Use this endpoint to resend a failed webhook delivery.
     {
       "id": "6a7ed958-f1e8-42dc-8c02-3901d7057357",
       "bank_name": "Bank of New Zealand",
-      "account_number": "3993013",
+      "account_number": "200100693049678",
       "status": "active",
       "title": "NZ.020100.3993013'",
       "available_balance": null
@@ -7292,18 +7260,10 @@ Use this endpoint to resend a failed webhook delivery.
     {
       "id": "56df206a-aaff-471a-b075-11882bc8906a",
       "bank_name": "Bank of New Zealand",
-      "account_number": "119302",
+      "account_number": "2001001059493024",
       "status": "active",
       "title": "Trust Account",
       "available_balance": null
-    },
-    {
-      "id": "ab3de19b-709b-4a41-82a5-3b43b3dc58c9",
-      "bank_name": "Zepto Float Account",
-      "account_number": "1748212",
-      "status": "active",
-      "title": "Float Account",
-      "available_balance": 10000
     }
   ]
 }
@@ -7398,16 +7358,13 @@ Use this endpoint to resend a failed webhook delivery.
       "type": "Zepto account",
       "bank_account": {
         "id": "095c5ab7-7fa8-40fd-b317-cddbbf4c8fbc",
-        "account_number": "494307",
+        "account_number": "200100671453378",
         "bank_name": "Bank of New Zealand",
         "state": "active",
         "blocks": {
           "debits_blocked": false,
           "credits_blocked": false
         }
-      },
-      "bank_connection": {
-        "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
       }
     },
     {
@@ -7418,16 +7375,13 @@ Use this endpoint to resend a failed webhook delivery.
       "type": "Zepto account",
       "bank_account": {
         "id": "861ff8e4-7acf-4897-9e53-e7c5ae5f7cc0",
-        "account_number": "4395959",
+        "account_number": "200100471453444",
         "bank_name": "Bank of New Zealand",
         "state": "active",
         "blocks": {
           "debits_blocked": false,
           "credits_blocked": false
         }
-      },
-      "bank_connection": {
-        "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
       }
     },
     {
@@ -7445,9 +7399,6 @@ Use this endpoint to resend a failed webhook delivery.
           "debits_blocked": false,
           "credits_blocked": false
         }
-      },
-      "links": {
-        "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     },
     {
@@ -7458,16 +7409,13 @@ Use this endpoint to resend a failed webhook delivery.
       "type": "anyone",
       "bank_account": {
         "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-        "account_number": "13048322",
+        "account_number": "200100693049678",
         "bank_name": "Bank of New Zealand",
         "state": "pending_verification",
         "blocks": {
           "debits_blocked": false,
           "credits_blocked": false
         }
-      },
-      "links": {
-        "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
       }
     }
   ]
@@ -7491,7 +7439,7 @@ Use this endpoint to resend a failed webhook delivery.
   "name": "Hunter Thompson",
   "email": "hunter@batcountry.com",
   "phone": "0256945832",
-  "account_number": "13048322",
+  "account_number": "200100693049678",
   "metadata": {
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
@@ -7508,7 +7456,7 @@ Use this endpoint to resend a failed webhook delivery.
 |name|string|true|The name of the Contact (140 max. characters)|
 |email|string|true|The email of the Contact (256 max. characters)|
 |phone|string|true|The phone number of the Contact (11 max. characters)|
-|account_number|string|true|The bank account number of the Contact|
+|account_number|string|true|The bank account number of the Contact (15-16 characters)|
 |metadata|[Metadata](#schemametadata)|false|No description|
 
 ## AddAnAnyoneContactResponse
@@ -7529,16 +7477,13 @@ Use this endpoint to resend a failed webhook delivery.
     },
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-      "account_number": "13048322",
+      "account_number": "200100693049678",
       "bank_name": "Bank of New Zealand",
       "state": "active",
       "blocks": {
         "debits_blocked": false,
         "credits_blocked": false
       }
-    },
-    "links": {
-      "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -7547,43 +7492,6 @@ Use this endpoint to resend a failed webhook delivery.
 ### Properties
 
 *Add a Contact (response)*
-
-|Name|Type|Required|Description|
-|---|---|---|---|
-|data|object|true|No description|
-
-## GetABankConnectionResponse
-
-<a id="schemagetabankconnectionresponse"></a>
-
-```json
-{
-  "data": {
-    "id": "c397645b-bd4f-4fc6-b1fe-4993fef6c3c7",
-    "provider_name": "split",
-    "state": "credentials_invalid",
-    "refreshed_at": "2020-02-13T09:01:00Z",
-    "removed_at": null,
-    "failure_reason": null,
-    "institution": {
-      "short_name": "ASB",
-      "full_name": "Auckland Savings Bank"
-    },
-    "contact": {
-      "id": "72e37667-6364-440f-b1bd-56df5654e258",
-      "name": "Joel Boyle",
-      "email": "travis@hermanntorp.net"
-    },
-    "links": {
-      "update_bank_connection": "https://go.nz.sandbox.zepto.money/authorise_bank_connections/thomas-morgan-1/c397645b-bd4f-4fc6-b1fe-4993fef6c3c7"
-    }
-  }
-}
-```
-
-### Properties
-
-*Get a BankConnection (response)*
 
 |Name|Type|Required|Description|
 |---|---|---|---|
@@ -7608,7 +7516,7 @@ Use this endpoint to resend a failed webhook delivery.
     },
     "bank_account": {
       "id": "fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb",
-      "account_number": "947434694",
+      "account_number": "200100693049678",
       "bank_name": "Bank of New Zealand",
       "state": "active",
       "blocks": {
@@ -7618,12 +7526,6 @@ Use this endpoint to resend a failed webhook delivery.
     },
     "anyone_account": {
       "id": "31a05f81-25a2-4085-92ef-0d16d0263bff"
-    },
-    "bank_connection": {
-      "id": null
-    },
-    "links": {
-      "add_bank_connection": "https://go.nz.sandbox.zepto.money/invite_contact/thomas-morgan-1/1030bfef-cef5-4938-b10b-5841cafafc80"
     }
   }
 }
@@ -7649,10 +7551,6 @@ Use this endpoint to resend a failed webhook delivery.
 |»»» debits_blocked|boolean|false|Used by Zepto admins. Defines whether the bank account is blocked from being debited|
 |»»» credits_blocked|boolean|false|Used by Zepto admins. Defined Whether this bank account is blocked from being credited|
 |»» anyone_account|object|true|No description|
-|»» bank_connection|object|false|No description|
-|»»» id|string(uuid)|false|The bank connection ID|
-|»» links|object|false|No description|
-|»»» add_bank_connection|string(url)|false|A unique URL to share with the Contact in order to establish a new bank connection to their bank account|
 
 #### Enumerated Values
 
@@ -7670,7 +7568,7 @@ Use this endpoint to resend a failed webhook delivery.
   "name": "My very own alias",
   "email": "updated@email.com",
   "phone": "0226644022",
-  "account_number": "99887766",
+  "account_number": "200111930276531",
   "metadata": {
     "custom_key": "Custom string",
     "another_custom_key": "Maybe a URL"
@@ -7708,7 +7606,7 @@ Use this endpoint to resend a failed webhook delivery.
     },
     "bank_account": {
       "id": "55afddde-4296-4daf-8e49-7ba481ef9608",
-      "account_number": "99887766",
+      "account_number": "200111930276531",
       "bank_name": "Zepto SANDBOX Bank",
       "state": "active",
       "blocks": {
@@ -7718,9 +7616,6 @@ Use this endpoint to resend a failed webhook delivery.
     },
     "anyone_account": {
       "id": "63232c0a-a783-4ae9-ae73-f0974fe1e345"
-    },
-    "links": {
-      "add_bank_connection": "http://go.nz.sandbox.zepto.money/invite_contact/dog-bones-inc/fcabeacb-2ef6-4b27-ba19-4f6fa0d57dcb"
     }
   }
 }
@@ -8727,7 +8622,7 @@ Use this endpoint to resend a failed webhook delivery.
 
 ```json
 {
-  "to_account_number": "88888888",
+  "to_account_number": "888888888888888",
   "amount": 10000
 }
 ```
@@ -8739,7 +8634,7 @@ Use this endpoint to resend a failed webhook delivery.
 |to_account_number|string|true|Zepto float account number|
 |amount|integer|true|Amount in cents (Min: 1 - Max: 99999999999)|
 |payment_reference|string|false|Max 18 characters. Default: "simulated-de-pymt"|
-|from_account_number|string|false|Default: "12345678"|
+|from_account_number|string|false|Default: "123456789012345"|
 |debtor_name|string|false|Max 16 characters. Default: "Simulated Debtor"|
 
 ## AddATransferRequest
