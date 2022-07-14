@@ -377,7 +377,7 @@ Common use cases:
 ```
 
 The Zepto API supports idempotency for safely retrying requests without accidentally performing the same operation twice.
-For example, if a [Payment](#Zepto-API-Payments) is `POST`ed and a there is a network connection error, you can retry the Payment with the same idempotency key to guarantee that only a single Payment is created.
+For example, if a [Payment](#Zepto-API-Payments) is `POST`ed and a there is a network connection error, you can retry the Payment with the same idempotency key to guarantee that only a single Payment is created.  In case an idempotency key is not supplied and a Payment is retried,  we would treat this as two different payments being made.
 
 To perform an idempotent request, provide an additional `Idempotency-Key: <key>` header to the request.
 You can pass any value as the key but we suggest that you use [V4 UUIDs](https://www.uuidtools.com/generate/v4) or another appropriately random string.
@@ -389,6 +389,12 @@ Keys expire after 24 hours. If there is a subsequent request with the same idemp
 * Only the `POST` action for the Payments, Payment Requests and Refunds endpoints support the use of the `Idempotency-Key`.
 * Endpoints that use the `GET` or `DELETE` actions are idempotent by nature.
 * A request that quickly follows another with the same idempotency key may return with `503 Service Unavailable`. If so, retry the request after the number of seconds specified in the `Retry-After` response header.
+
+Currently the following `POST` requests can be made idempotent.  We **strongly recommend** sending a unique `Idempotency-Key` header  when making those requests to allow for safe retries:
+
+* [Request Payment](/#request-payment)
+* [Make a Payment](/#make-a-payment)
+* [Issue a Refund](/#issue-a-refund)
 
 ## Error responses
 
@@ -2968,6 +2974,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
+  --header 'idempotency-key: {unique-uuid-per-payment-request}' \
   --data '{"description":"Visible to both initiator and authoriser","matures_at":"2016-12-19T02:10:56.000Z","amount":99000,"authoriser_contact_id":"de86472c-c027-4735-a6a7-234366a27fc7","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
@@ -2984,6 +2991,7 @@ http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
+request["idempotency-key"] = '{unique-uuid-per-payment-request}'
 request["authorization"] = 'Bearer {access-token}'
 request.body = "{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
@@ -3002,6 +3010,7 @@ var options = {
   "headers": {
     "content-type": "application/json",
     "accept": "application/json",
+    "idempotency-key": "{unique-uuid-per-payment-request}",
     "authorization": "Bearer {access-token}"
   }
 };
@@ -3040,6 +3049,7 @@ payload = "{\"description\":\"Visible to both initiator and authoriser\",\"matur
 headers = {
     'content-type': "application/json",
     'accept': "application/json",
+    'idempotency-key': "{unique-uuid-per-payment-request}",
     'authorization': "Bearer {access-token}"
     }
 
@@ -3055,6 +3065,7 @@ print(data.decode("utf-8"))
 HttpResponse<String> response = Unirest.post("https://api.nz.sandbox.zepto.money/payment_requests")
   .header("content-type", "application/json")
   .header("accept", "application/json")
+  .header("idempotency-key", "{unique-uuid-per-payment-request}")
   .header("authorization", "Bearer {access-token}")
   .body("{\"description\":\"Visible to both initiator and authoriser\",\"matures_at\":\"2016-12-19T02:10:56.000Z\",\"amount\":99000,\"authoriser_contact_id\":\"de86472c-c027-4735-a6a7-234366a27fc7\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
@@ -3075,6 +3086,7 @@ $request->setBody($body);
 
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
+  'idempotency-key' => '{unique-uuid-per-payment-request}',
   'accept' => 'application/json',
   'content-type' => 'application/json'
 ));
@@ -3105,6 +3117,7 @@ func main() {
 
 	req.Header.Add("content-type", "application/json")
 	req.Header.Add("accept", "application/json")
+	req.Header.Add("idempotency-key", "{unique-uuid-per-payment-request}")
 	req.Header.Add("authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
@@ -3119,6 +3132,8 @@ func main() {
 ```
 
 `POST /payment_requests`
+
+<aside class="notice">We strongly recommend to supply an <code>Idempotency-Key</code> header when performing this request to ensure you can safely retry the action in case of an issue. If a header value is omitted or is different to one provided previously, we will be treating a request as a new operation which may lead to a duplicate funds collection. To understand more on how to make idempotent requests, please refer to our <a href="#idempotent-requests">Idempotent requests guide</a>.</aside>
 
 > Body parameter
 
@@ -3140,6 +3155,7 @@ func main() {
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
+|Idempotency-Key|header|string|false|Idempotency key to support safe retries for 24h|
 |body|body|[MakeAPaymentRequestRequest](#schemamakeapaymentrequestrequest)|true|No description|
 |» description|body|string|true|Description visible to the initiator (payee). The first 9 characters supplied will be visible to the authoriser (payer)|
 |» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 that the Payment will be processed if the request is approved. (If the request is approved after this point in time, it will be processed straight away)|
@@ -3767,6 +3783,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
+  --header 'idempotency-key: {unique-uuid-per-payment}' \
   --data '{"description":"The SuperPackage","matures_at":"2021-06-13T00:00:00Z","your_bank_account_id":"83623359-e86e-440c-9780-432a3bc3626f","payouts":[{"amount":30000,"description":"A tandem skydive jump SB23094","recipient_contact_id":"48b89364-1577-4c81-ba02-96705895d457","metadata":{"invoice_ref":"BILL-0001","invoice_id":"c80a9958-e805-47c0-ac2a-c947d7fd778d","custom_key":"Custom string","another_custom_key":"Maybe a URL"}}],"metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
@@ -3783,6 +3800,7 @@ http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
+request["idempotency-key"] = '{unique-uuid-per-payment}'
 request["authorization"] = 'Bearer {access-token}'
 request.body = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
@@ -3801,6 +3819,7 @@ var options = {
   "headers": {
     "content-type": "application/json",
     "accept": "application/json",
+    "idempotency-key": "{unique-uuid-per-payment}",
     "authorization": "Bearer {access-token}"
   }
 };
@@ -3850,6 +3869,7 @@ payload = "{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:
 headers = {
     'content-type': "application/json",
     'accept': "application/json",
+    'idempotency-key': "{unique-uuid-per-payment}",
     'authorization': "Bearer {access-token}"
     }
 
@@ -3865,6 +3885,7 @@ print(data.decode("utf-8"))
 HttpResponse<String> response = Unirest.post("https://api.nz.sandbox.zepto.money/payments")
   .header("content-type", "application/json")
   .header("accept", "application/json")
+  .header("idempotency-key", "{unique-uuid-per-payment}")
   .header("authorization", "Bearer {access-token}")
   .body("{\"description\":\"The SuperPackage\",\"matures_at\":\"2021-06-13T00:00:00Z\",\"your_bank_account_id\":\"83623359-e86e-440c-9780-432a3bc3626f\",\"payouts\":[{\"amount\":30000,\"description\":\"A tandem skydive jump SB23094\",\"recipient_contact_id\":\"48b89364-1577-4c81-ba02-96705895d457\",\"metadata\":{\"invoice_ref\":\"BILL-0001\",\"invoice_id\":\"c80a9958-e805-47c0-ac2a-c947d7fd778d\",\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}],\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
@@ -3885,6 +3906,7 @@ $request->setBody($body);
 
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
+  'idempotency-key' => '{unique-uuid-per-payment}',
   'accept' => 'application/json',
   'content-type' => 'application/json'
 ));
@@ -3915,6 +3937,7 @@ func main() {
 
 	req.Header.Add("content-type", "application/json")
 	req.Header.Add("accept", "application/json")
+	req.Header.Add("idempotency-key", "{unique-uuid-per-payment}")
 	req.Header.Add("authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
@@ -3929,6 +3952,8 @@ func main() {
 ```
 
 `POST /payments`
+
+<aside class="notice">We strongly recommend to supply an <code>Idempotency-Key</code> header when performing this request to ensure you can safely retry the action in case of an issue. If a header value is omitted or is different to one provided previously, we will be treating a request as a new operation which may lead to duplicate payments. To understand more on how to make idempotent requests, please refer to our <a href="#idempotent-requests">Idempotent requests guide</a>.</aside>
 
 > Body parameter
 
@@ -3961,6 +3986,7 @@ func main() {
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
+|Idempotency-Key|header|string|false|Idempotency key to support safe retries for 24h|
 |body|body|[MakeAPaymentRequest](#schemamakeapaymentrequest)|true|No description|
 |» description|body|string|true|User description. Only visible to the payer|
 |» matures_at|body|string(date-time)|true|Date & time in UTC ISO8601 the Payment should be processed. (Can not be earlier than the start of current day in NZST)|
@@ -4421,6 +4447,7 @@ curl --request POST \
   --header 'accept: application/json' \
   --header 'authorization: Bearer {access-token}' \
   --header 'content-type: application/json' \
+  --header 'idempotency-key: {unique-uuid-per-refund}' \
   --data '{"amount":500,"reason":"Because reason","your_bank_account_id":"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679","metadata":{"custom_key":"Custom string","another_custom_key":"Maybe a URL"}}'
 ```
 
@@ -4437,6 +4464,7 @@ http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 request = Net::HTTP::Post.new(url)
 request["content-type"] = 'application/json'
 request["accept"] = 'application/json'
+request["idempotency-key"] = '{unique-uuid-per-refund}'
 request["authorization"] = 'Bearer {access-token}'
 request.body = "{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}"
 
@@ -4455,6 +4483,7 @@ var options = {
   "headers": {
     "content-type": "application/json",
     "accept": "application/json",
+    "idempotency-key": "{unique-uuid-per-refund}",
     "authorization": "Bearer {access-token}"
   }
 };
@@ -4491,6 +4520,7 @@ payload = "{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\
 headers = {
     'content-type': "application/json",
     'accept': "application/json",
+    'idempotency-key': "{unique-uuid-per-refund}",
     'authorization': "Bearer {access-token}"
     }
 
@@ -4506,6 +4536,7 @@ print(data.decode("utf-8"))
 HttpResponse<String> response = Unirest.post("https://api.nz.sandbox.zepto.money/credits/string/refunds")
   .header("content-type", "application/json")
   .header("accept", "application/json")
+  .header("idempotency-key", "{unique-uuid-per-refund}")
   .header("authorization", "Bearer {access-token}")
   .body("{\"amount\":500,\"reason\":\"Because reason\",\"your_bank_account_id\":\"9c70871d-8e36-4c3e-8a9c-c0ee20e7c679\",\"metadata\":{\"custom_key\":\"Custom string\",\"another_custom_key\":\"Maybe a URL\"}}")
   .asString();
@@ -4526,6 +4557,7 @@ $request->setBody($body);
 
 $request->setHeaders(array(
   'authorization' => 'Bearer {access-token}',
+  'idempotency-key' => '{unique-uuid-per-refund}',
   'accept' => 'application/json',
   'content-type' => 'application/json'
 ));
@@ -4556,6 +4588,7 @@ func main() {
 
 	req.Header.Add("content-type", "application/json")
 	req.Header.Add("accept", "application/json")
+	req.Header.Add("idempotency-key", "{unique-uuid-per-refund}")
 	req.Header.Add("authorization", "Bearer {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
@@ -4577,6 +4610,7 @@ Certain rules apply to the issuance of a refund:
   <li>Many refunds may be created against the original Payment Request</li>
   <li>The total refunded amount must not exceed the original value</li>
 </ul>
+<aside class="notice">We strongly recommend to supply an <code>Idempotency-Key</code> header when performing this request to ensure you can safely retry the action in case of an issue. If a header value is omitted or is different to one provided previously, we will be treating a request as a new operation which may lead to duplicate refunds. To understand more on how to make idempotent requests, please refer to our <a href="#idempotent-requests">Idempotent requests guide</a>.</aside>
 
 > Body parameter
 
@@ -4596,6 +4630,7 @@ Certain rules apply to the issuance of a refund:
 
 |Parameter|In|Type|Required|Description|
 |---|---|---|---|---|
+|Idempotency-Key|header|string|false|Idempotency key to support safe retries for 24h|
 |credit_ref|path|string|true|The credit reference number e.g C.625v|
 |body|body|[IssueARefundRequest](#schemaissuearefundrequest)|true|No description|
 |» amount|body|integer|true|Amount in cents refund (Min: 1 - Max: 99999999999)|
