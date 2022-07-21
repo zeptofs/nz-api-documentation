@@ -1505,6 +1505,22 @@ tags:
       When Zepto is unable to credit funds to a recipient, we will automatically create a payout reversal credit back to the payer.
       Furthermore, within the payout reversal credit, Zepto will include details in the `description` and under the `reversal_details` key
       as to why the original credit to the recipient failed.
+  - name: Payouts
+    description: >
+      This endpoint gives you some control over a transaction:
+
+
+      * After it has been created; and
+
+      * Before it has been submitted to the banks; or
+
+      * If it was Prefailed, due to insufficient funds, and was therefore not submitted to the banks.
+
+
+      <aside class="notice">
+        Payments and Payment Requests are made up of individual Debits and Credits. These debits and credits
+        were once referred to as Payouts [Legacy naming].
+      </aside>
   - name: Payment Requests
     description: >
       A Payment Request (PR) is used to collect funds, via direct debit, from one of your Contacts (as long as there is an accepted Agreement in place).
@@ -2130,6 +2146,33 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetAPaymentResponse'
+  '/payouts/{ref}':
+    delete:
+      tags:
+        - Payouts
+      summary: Void a Payment
+      description: >
+        You can void any Payment from your account that has not yet matured.
+      operationId: VoidAPayment
+      parameters:
+        - name: ref
+          in: path
+          description: Payment debit reference number e.g D.48
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+          example: D.48
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VoidAPayment'
+      responses:
+        '204':
+          description: No Content
   /payment_requests:
     post:
       tags:

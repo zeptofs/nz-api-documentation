@@ -4429,6 +4429,188 @@ Get a single payment by its reference
 |---|---|---|---|
 |200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|OK|[GetAPaymentResponse](#schemagetapaymentresponse)|
 
+<h1 id="Zepto-API-Payouts">Payouts</h1>
+
+This endpoint gives you some control over a transaction:
+
+* After it has been created; and
+* Before it has been submitted to the banks; or
+* If it was Prefailed, due to insufficient funds, and was therefore not submitted to the banks.
+
+<aside class="notice">
+  Payments and Payment Requests are made up of individual Debits and Credits. These debits and credits
+  were once referred to as Payouts [Legacy naming].
+</aside>
+
+## Void a Payment
+
+<a id="opIdVoidAPayment"></a>
+
+> Code samples
+
+```shell
+curl --request DELETE \
+  --url https://api.nz.sandbox.zepto.money/payouts/D.48 \
+  --header 'authorization: Bearer {access-token}' \
+  --header 'content-type: application/json' \
+  --data false
+```
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://api.nz.sandbox.zepto.money/payouts/D.48")
+
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+
+request = Net::HTTP::Delete.new(url)
+request["content-type"] = 'application/json'
+request["authorization"] = 'Bearer {access-token}'
+request.body = "false"
+
+response = http.request(request)
+puts response.read_body
+```
+
+```javascript--node
+var http = require("https");
+
+var options = {
+  "method": "DELETE",
+  "hostname": "api.nz.sandbox.zepto.money",
+  "port": null,
+  "path": "/payouts/D.48",
+  "headers": {
+    "content-type": "application/json",
+    "authorization": "Bearer {access-token}"
+  }
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function () {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+```
+
+```python
+import http.client
+
+conn = http.client.HTTPSConnection("api.nz.sandbox.zepto.money")
+
+payload = "false"
+
+headers = {
+    'content-type': "application/json",
+    'authorization': "Bearer {access-token}"
+    }
+
+conn.request("DELETE", "/payouts/D.48", payload, headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+```java
+HttpResponse<String> response = Unirest.delete("https://api.nz.sandbox.zepto.money/payouts/D.48")
+  .header("content-type", "application/json")
+  .header("authorization", "Bearer {access-token}")
+  .body("false")
+  .asString();
+```
+
+```php
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append('false');
+
+$request->setRequestUrl('https://api.nz.sandbox.zepto.money/payouts/D.48');
+$request->setRequestMethod('DELETE');
+$request->setBody($body);
+
+$request->setHeaders(array(
+  'authorization' => 'Bearer {access-token}',
+  'content-type' => 'application/json'
+));
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+```
+
+```go
+package main
+
+import (
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://api.nz.sandbox.zepto.money/payouts/D.48"
+
+	payload := strings.NewReader("false")
+
+	req, _ := http.NewRequest("DELETE", url, payload)
+
+	req.Header.Add("content-type", "application/json")
+	req.Header.Add("authorization", "Bearer {access-token}")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+`DELETE /payouts/{ref}`
+
+You can void any Payment from your account that has not yet matured.
+
+> Body parameter
+
+```json
+false
+```
+
+<h3 id="Void-a-Payment-parameters" class="parameters">Parameters</h3>
+
+|Parameter|In|Type|Required|Description|
+|---|---|---|---|---|
+|ref|path|string|true|Payment debit reference number e.g D.48|
+
+<h3 id="Void a Payment-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|204|[No Content](https://tools.ietf.org/html/rfc7231#section-6.3.5)|No Content|None|
+
 <h1 id="Zepto-API-Refunds">Refunds</h1>
 
 Refunds can be issued for any successfully completed Payment Request transaction. This includes Payment Requests for direct debit payments.
