@@ -4435,7 +4435,6 @@ This endpoint gives you some control over a transaction:
 
 * After it has been created; and
 * Before it has been submitted to the banks; or
-* If it was Prefailed, due to insufficient funds, and was therefore not submitted to the banks.
 
 <aside class="notice">
   Payments and Payment Requests are made up of individual Debits and Credits. These debits and credits
