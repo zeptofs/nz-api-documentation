@@ -470,6 +470,14 @@
               </ul>
           </li>
           <li>
+            <a href="#Zepto-API-Payouts" class="toc-h1 toc-link" data-title="Payouts">Payouts</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#void-a-payment" class="toc-h2 toc-link" data-title="Void a Payment">Void a Payment</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#Zepto-API-Refunds" class="toc-h1 toc-link" data-title="Refunds">Refunds</a>
               <ul class="toc-list-h2">
                   <li>
@@ -5735,6 +5743,193 @@ Please refer to the <a href="https://help.zepto.money/en/articles/6210894-nz-agr
 <td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.1">OK</a></td>
 <td>OK</td>
 <td><a href="#schemagetapaymentresponse">GetAPaymentResponse</a></td>
+</tr>
+</tbody></table>
+
+<h1 id="Zepto-API-Payouts">Payouts</h1>
+
+<p>This endpoint gives you some control over a transaction:</p>
+
+<ul>
+<li>After it has been created; and</li>
+<li>Before it has been submitted to the banks; or</li>
+</ul>
+
+<aside class="notice">
+  Payments and Payment Requests are made up of individual Debits and Credits. These debits and credits
+  were once referred to as Payouts [Legacy naming].
+</aside>
+<h2 id='void-a-payment'>Void a Payment</h2>
+<p><a id="opIdVoidAPayment"></a></p>
+
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="nt">--request</span> DELETE <span class="se">\</span>
+  <span class="nt">--url</span> https://api.nz.sandbox.zepto.money/payouts/D.48 <span class="se">\</span>
+  <span class="nt">--header</span> <span class="s1">'authorization: Bearer {access-token}'</span> <span class="se">\</span>
+  <span class="nt">--header</span> <span class="s1">'content-type: application/json'</span> <span class="se">\</span>
+  <span class="nt">--data</span> <span class="nb">false</span>
+</code></pre></div><div class="highlight"><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'uri'</span>
+<span class="nb">require</span> <span class="s1">'net/http'</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://api.nz.sandbox.zepto.money/payouts/D.48"</span><span class="p">)</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
+<span class="n">http</span><span class="p">.</span><span class="nf">use_ssl</span> <span class="o">=</span> <span class="kp">true</span>
+<span class="n">http</span><span class="p">.</span><span class="nf">verify_mode</span> <span class="o">=</span> <span class="no">OpenSSL</span><span class="o">::</span><span class="no">SSL</span><span class="o">::</span><span class="no">VERIFY_NONE</span>
+
+<span class="n">request</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Delete</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">request</span><span class="p">[</span><span class="s2">"content-type"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'application/json'</span>
+<span class="n">request</span><span class="p">[</span><span class="s2">"authorization"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'Bearer {access-token}'</span>
+<span class="n">request</span><span class="p">.</span><span class="nf">body</span> <span class="o">=</span> <span class="s2">"false"</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">response</span><span class="p">.</span><span class="nf">read_body</span>
+</code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript--node"><code><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">https</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="dl">"</span><span class="s2">method</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">DELETE</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">hostname</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">api.nz.sandbox.zepto.money</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">port</span><span class="dl">"</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">path</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">/payouts/D.48</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">headers</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">content-type</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">authorization</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Bearer {access-token}</span><span class="dl">"</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">req</span> <span class="o">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">chunks</span> <span class="o">=</span> <span class="p">[];</span>
+
+  <span class="nx">res</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">data</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">chunk</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">chunks</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">chunk</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">res</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">end</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="nx">Buffer</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">chunks</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">.</span><span class="nx">toString</span><span class="p">());</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="nx">req</span><span class="p">.</span><span class="nx">end</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">http.client</span>
+
+<span class="n">conn</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="n">client</span><span class="p">.</span><span class="n">HTTPSConnection</span><span class="p">(</span><span class="s">"api.nz.sandbox.zepto.money"</span><span class="p">)</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="s">"false"</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'content-type'</span><span class="p">:</span> <span class="s">"application/json"</span><span class="p">,</span>
+    <span class="s">'authorization'</span><span class="p">:</span> <span class="s">"Bearer {access-token}"</span>
+    <span class="p">}</span>
+
+<span class="n">conn</span><span class="p">.</span><span class="n">request</span><span class="p">(</span><span class="s">"DELETE"</span><span class="p">,</span> <span class="s">"/payouts/D.48"</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">headers</span><span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">getresponse</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">res</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">data</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">))</span>
+</code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="nc">HttpResponse</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">response</span> <span class="o">=</span> <span class="nc">Unirest</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="s">"https://api.nz.sandbox.zepto.money/payouts/D.48"</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"content-type"</span><span class="o">,</span> <span class="s">"application/json"</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">header</span><span class="o">(</span><span class="s">"authorization"</span><span class="o">,</span> <span class="s">"Bearer {access-token}"</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">body</span><span class="o">(</span><span class="s">"false"</span><span class="o">)</span>
+  <span class="o">.</span><span class="na">asString</span><span class="o">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+
+<span class="nv">$client</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">http\Client</span><span class="p">;</span>
+<span class="nv">$request</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">http\Client\Request</span><span class="p">;</span>
+
+<span class="nv">$body</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">http\Message\Body</span><span class="p">;</span>
+<span class="nv">$body</span><span class="o">-&gt;</span><span class="nf">append</span><span class="p">(</span><span class="s1">'false'</span><span class="p">);</span>
+
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">setRequestUrl</span><span class="p">(</span><span class="s1">'https://api.nz.sandbox.zepto.money/payouts/D.48'</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">setRequestMethod</span><span class="p">(</span><span class="s1">'DELETE'</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">setBody</span><span class="p">(</span><span class="nv">$body</span><span class="p">);</span>
+
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="nf">setHeaders</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+  <span class="s1">'authorization'</span> <span class="o">=&gt;</span> <span class="s1">'Bearer {access-token}'</span><span class="p">,</span>
+  <span class="s1">'content-type'</span> <span class="o">=&gt;</span> <span class="s1">'application/json'</span>
+<span class="p">));</span>
+
+<span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">enqueue</span><span class="p">(</span><span class="nv">$request</span><span class="p">)</span><span class="o">-&gt;</span><span class="nf">send</span><span class="p">();</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="nf">getResponse</span><span class="p">();</span>
+
+<span class="k">echo</span> <span class="nv">$response</span><span class="o">-&gt;</span><span class="nf">getBody</span><span class="p">();</span>
+</code></pre></div><div class="highlight"><pre class="highlight go tab-go"><code><span class="k">package</span> <span class="n">main</span>
+
+<span class="k">import</span> <span class="p">(</span>
+    <span class="s">"fmt"</span>
+    <span class="s">"strings"</span>
+    <span class="s">"net/http"</span>
+    <span class="s">"io/ioutil"</span>
+<span class="p">)</span>
+
+<span class="k">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="n">url</span> <span class="o">:=</span> <span class="s">"https://api.nz.sandbox.zepto.money/payouts/D.48"</span>
+
+    <span class="n">payload</span> <span class="o">:=</span> <span class="n">strings</span><span class="o">.</span><span class="n">NewReader</span><span class="p">(</span><span class="s">"false"</span><span class="p">)</span>
+
+    <span class="n">req</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">NewRequest</span><span class="p">(</span><span class="s">"DELETE"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+
+    <span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="s">"content-type"</span><span class="p">,</span> <span class="s">"application/json"</span><span class="p">)</span>
+    <span class="n">req</span><span class="o">.</span><span class="n">Header</span><span class="o">.</span><span class="n">Add</span><span class="p">(</span><span class="s">"authorization"</span><span class="p">,</span> <span class="s">"Bearer {access-token}"</span><span class="p">)</span>
+
+    <span class="n">res</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">http</span><span class="o">.</span><span class="n">DefaultClient</span><span class="o">.</span><span class="n">Do</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+
+    <span class="k">defer</span> <span class="n">res</span><span class="o">.</span><span class="n">Body</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+    <span class="n">body</span><span class="p">,</span> <span class="n">_</span> <span class="o">:=</span> <span class="n">ioutil</span><span class="o">.</span><span class="n">ReadAll</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">Body</span><span class="p">)</span>
+
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="kt">string</span><span class="p">(</span><span class="n">body</span><span class="p">))</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<p><code>DELETE /payouts/{ref}</code></p>
+
+<p>You can void any Payment from your account that has not yet matured.</p>
+
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="kc">false</span><span class="w">
+</span></code></pre></div>
+<h3 id="Void-a-Payment-parameters" class="parameters">Parameters</h3>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>ref</td>
+<td>path</td>
+<td>string</td>
+<td>true</td>
+<td>Payment debit reference number e.g D.48</td>
+</tr>
+</tbody></table>
+
+<h3 id="Void a Payment-responses">Responses</h3>
+
+<table><thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Description</th>
+<th>Schema</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>204</td>
+<td><a href="https://tools.ietf.org/html/rfc7231#section-6.3.5">No Content</a></td>
+<td>No Content</td>
+<td>None</td>
 </tr>
 </tbody></table>
 
